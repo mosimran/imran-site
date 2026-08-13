@@ -1177,7 +1177,7 @@ only primary URLs, zero alias leakage. Security headers present on the aliases.
 
 ## Section 5 written · Thirteen listed entries became papers
 
-2026-08-14 · not yet committed, not yet deployed
+2026-08-14 · https://github.com/mosimran/imran-site/pull/37 · live
 
 **What changed.**
 
@@ -1229,8 +1229,24 @@ on all fifteen documents; `draft-imran-competence-porn-04` and
 Not validated: the bodies have not had an editorial pass by the owner, and the figures
 report ordinal rankings rather than measurements, which each figure says on its face.
 
-**What is deployed.** Nothing. The working tree is not committed. The site is unchanged.
+**What is deployed.** All of it. PR #37, `check` green, squash-merged as `cd2ae49`,
+signed with `6E6B690C`. Deployed by hand to `imran-site` at `bc0446cd`, 60 files uploaded.
+
+Verified on the live primary, not on `dist/`: all four sampled routes 200 in under 0.65 s;
+the only `<script>` on any of them is `application/ld+json`, so the zero-JavaScript budget
+holds in production and not just in the build; `/papers/` shows 11 holding, 1 revising,
+1 draft, 1 retracted and **zero unwritten chips**; the expiry banner is gone from
+`kubernetes-for-a-bicycle`; the masthead reads `draft-imran-systems-and-arguments-04`.
+`imran.com.bd` serves the new papers. `johnefemer.com` still 404s, which is the T28
+blocker (nameservers parked at Namecheap) and predates this change.
+
+**The `deploy` job reported success while deploying nothing.** Repository secrets are
+unset, so the credential gate set `ready=false`, every subsequent step was skipped, and
+the job went green. A green deploy job that did not deploy is worse than a red one,
+because the badge says shipped. The manual deploy above is why the site is actually
+current. Worth a follow-up: the gate should fail on `main` when credentials are absent,
+and only skip on other branches.
 
 **What is next.** The owner reads the fourteen papers and either keeps the positions or
-changes them, which closes P19. Then the branch, the PR and the deploy. Implementation
-notes 3.1, 3.3, 3.4 and 3.5 are still front matter only, which is the rest of P11.
+changes them, which closes P19. Implementation notes 3.1, 3.3, 3.4 and 3.5 are still front
+matter only, which is the rest of P11.
