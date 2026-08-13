@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import Doc from '../../layouts/Doc.astro'
-import { identifier, expiresOn, isExpired, fmt, iso } from '../../lib/draft'
+import { iso } from '../../lib/draft'
 
 const all = await getCollection('papers')
 const sorted = all.sort((a, b) => +b.data.revised - +a.data.revised)

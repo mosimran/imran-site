@@ -13,7 +13,7 @@ résumé gate translated off Postgres and Redis onto D1 and R2 without losing a 
 security property it claims.
 
 - [1. Document identifier](#1-document-identifier)
-- [2. Three domains](#2-three-domains)
+- [2. Four domains](#2-four-domains)
 - [3. Architecture](#3-architecture)
 - [4. Repository layout](#4-repository-layout)
 - [5. Route map](#5-route-map)
@@ -156,14 +156,16 @@ explanation before the joke lands.
 
 ---
 
-## 2. Three domains
+## 2. Four domains
 
 | Host | Role | Behaviour |
 | --- | --- | --- |
 | `mosthofaimran.com` | Canonical | Serves. Indexed. Every canonical, feed ID, mailbox and signature URL points here. All content was written against it. |
 | `johnefemer.com` | Alias | Serves identical bytes. Canonical in the HTML points at the primary. |
-| `imran.com.bd` | Alias | Same. Long DNS lead time, see 2.2. |
-| `www.*` (all three) | Redirect | 301 to their own apex, then the alias rules apply. |
+| `imran.com.bd` | Alias | Serves identical bytes, canonical to the primary. Attached and live. |
+| `efemer.me` | Alias | Same. Attached and live. Found already configured rather than planned for. |
+| `johnefemer.com` | Alias, not started | Registered at Namecheap, parked on `ns1/ns2.lander.d.parity.domains`. Nameservers must move to Cloudflare first. |
+| `www.*` | Redirect | 301 to their own apex, then the alias rules apply. `www.mosthofaimran.com` and `www.imran.com.bd` are attached to the Pages project but **pending**: each needs a CNAME in its zone, and creating DNS records needs an access level the current token does not have. |
 
 ### 2.1 How aliasing works here
 
@@ -189,8 +191,8 @@ current decision; the alternative is one rule away at any point.
 - ~~**`.com.bd` has a long lead time.**~~ **Resolved, T00 cancelled.** `imran.com.bd`
   was already an active Cloudflare zone in the John Efemer account. No BTCL work is
   needed. The domain is attached to the Pages project and serving.
-- **security.txt lists all three.** RFC 9116 wants a `Canonical` line for every URI the
-  file is reachable at, so three lines, not one. A scanner that fetches it from an
+- **security.txt lists every reachable host.** RFC 9116 wants a `Canonical` line for every
+  URI the file is reachable at. That is three today and grows with each alias. A scanner that fetches it from an
   alias and finds only the primary listed treats the file as untrustworthy.
 - **The CV gate is host-agnostic.** A form posted from `johnefemer.com` hits `/api/cv`
   on that host, and the mailed link points at the primary. `form-action 'self'`
