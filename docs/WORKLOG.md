@@ -1303,7 +1303,20 @@ result for a prose edit and is the check earning its keep in the quiet direction
 pa11y both schemes, 0 WCAG2AA errors. Mechanical greps confirm zero em dashes and zero
 hits on the banned phrasing list across all fourteen bodies.
 
-**What is deployed.** See the next entry.
+**What is deployed.** All of it. PR #38, `check` green, squash-merged as `5822abf`,
+signed. Deployed by hand to `imran-site` at `4532093e`, since the CI deploy job still
+skips on absent credentials.
+
+Verified on the live primary across all ten edited papers: zero occurrences of the old
+abstract template and zero of the old closing construction. The only `<script>` on any
+sampled page is `application/ld+json`. Section 5 still reports 11 holding, 1 revising,
+1 draft, 1 retracted.
+
+Two pages read stale on the first check immediately after deploy while the rest read
+fresh. `cf-cache-status: DYNAMIC` with `max-age=0, must-revalidate`, a cache-busted
+fetch and the deployment URL all returned the new bytes, so it was edge propagation lag
+and not a partial upload. Recorded because "some pages updated and some did not" is
+worth being able to recognise as benign next time rather than diagnosing twice.
 
 **What is next.** P19 stays open. A copy-edit is not the editorial pass that entry is
 about: the prose is now the owner's style, and the positions are still not the owner's
