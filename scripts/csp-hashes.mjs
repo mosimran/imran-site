@@ -23,10 +23,14 @@ for (const f of walk('dist').filter((x) => x.endsWith('.html'))) {
     hashes.push(`'sha256-${createHash('sha256').update(m[1], 'utf8').digest('base64')}'`)
     blocks++
   }
-  if (!hashes.length) continue
+  // Every HTML page gets exactly one policy. Pages without JSON-LD get the base
+  // with no script-src at all, so default-src 'none' governs and nothing runs.
   let route = '/' + f.replace(/^dist\//, '').replace(/index\.html$/, '')
   route = route.replace(/\/{2,}/g, '/')
-  rules.push(`${route}\n  Content-Security-Policy: ${BASE}; script-src ${[...new Set(hashes)].join(' ')}\n`)
+  const policy = hashes.length
+    ? `${BASE}; script-src ${[...new Set(hashes)].join(' ')}`
+    : `${BASE}; script-src 'none'`
+  rules.push(`${route}\n  Content-Security-Policy: ${policy}\n`)
 }
 
 const headers = readFileSync('dist/_headers', 'utf8')

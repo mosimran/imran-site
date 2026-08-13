@@ -850,3 +850,71 @@ https://mosthofaimran.com. 22 tasks of 31.
 
 **Next**
 T18 JSON-LD, T20 Lighthouse and pa11y. T05 still blocked on Email Obfuscation.
+
+---
+
+## T05, T18, T21 · Headers, CSP, structured data, editorial gates
+
+2026-08-13 · https://mosthofaimran.com
+
+**T05 unblocked itself.** It had been waiting on Email Address Obfuscation being turned
+off in the dashboard. Cloudflare documents a per-page opt-out, `<!--email_off-->`, so the
+document opts out of it directly and no account change was needed.
+
+First attempt wrapped each `mailto:` anchor individually and missed one: Section 6.5 has
+`<a href="#s14">hey@mosthofaimran.com</a>`, where the text is an address but the href is
+an anchor, so a mailto-only pattern skipped it. Per-address wrapping was the wrong
+granularity. The whole document body is wrapped instead, one marker pair, nothing to miss.
+
+Result, and it is the important one: **the served bytes are now identical to the build.**
+Zero injected scripts, zero `__cf_email__` spans. The zero-JavaScript budget now holds on
+the wire rather than only in `dist/`, which is the distinction that failed silently at
+T04.
+
+**Headers** are HSTS, CSP, nosniff, `Referrer-Policy: no-referrer`, Permissions-Policy,
+COOP, CORP, `X-Frame-Options: DENY`, and a `rel=license` Link. `/cv/*` and `/api/*` add
+`noindex` and `no-store`.
+
+HSTS ships **without** `preload`. Preloading is close to irreversible and belongs at T29
+after a week of clean serving, not bundled into the commit that first sets the header.
+
+**T18.** JSON-LD: `WebSite` plus `Person` on the index, `TechArticle` on every paper
+carrying `alternateName` (the draft identifier), `dateModified`, `expires`, `license`, and
+`additionalProperty` entries for confidence, state and the count of retirement conditions.
+A consumer that reads the claim gets the numbers in the same object and cannot take one
+without the other.
+
+`scripts/csp-hashes.mjs` hashes every block at build and emits a per-path `script-src`, so
+the policy stays strict without dropping the structured data.
+
+**Two bugs found here, one mine and one not.**
+
+Mine: `_headers` rules are **additive**, and two CSP headers **intersect** rather than the
+more specific winning. The wildcard policy therefore silently overrode every per-path one
+and the JSON-LD was blocked anyway. Fixed by removing CSP from the wildcard entirely and
+emitting exactly one policy per HTML page, 24 of them, with `script-src 'none'` on pages
+that carry no structured data.
+
+Not mine: the browser check found Cloudflare **Web Analytics injecting
+`static.cloudflareinsights.com/beacon.min.js`**, a third-party script on a site whose
+budget is zero of them. It was invisible to every previous check because it is injected
+only for browser-like requests; plain `curl` never receives it. The CSP blocks it, so it
+never executes, but it is an attempted third-party request and one console error. Turning
+it off is a zone setting and needs an access level this token does not have. This is the
+second time a Cloudflare feature has quietly contradicted the colophon.
+
+**T21.** `check-errata.mjs` and `check-expiry.mjs`, wired into `npm run check`.
+
+The errata gate was proven in both directions: changing paper 5.1's confidence from 0.8 to
+0.55 with no erratum fails with the diff printed; adding an errata file makes it pass.
+That is BUILD.md section 3 enforced at the point where obeying it is cheapest.
+
+The expiry check produced real information immediately: **6 of 14 documents are already
+expired** under the 185-day rule, and one more expires in four days. It warns and never
+fails, because an expired paper is a fact about the paper rather than a broken build.
+
+**Deployed**
+https://mosthofaimran.com. One CSP per page, no JSON-LD violations, structured data valid.
+
+**Next**
+T20 Lighthouse and pa11y. Then the domain and signing tasks.

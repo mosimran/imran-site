@@ -1,4 +1,8 @@
-# BUILD.md section 5. The CSP has no script-src because production ships no
+# BUILD.md section 5. The CSP is NOT here: _headers rules are additive and two
+# CSP headers intersect, so a wildcard policy would override every per-path one.
+# scripts/csp-hashes.mjs emits exactly one policy per HTML page.
+#
+# Original note: The CSP has no script-src because production ships no
 # script; default-src 'none' therefore governs every fetch the page could make.
 #
 # This is only truthful with Cloudflare Email Address Obfuscation neutralised.
@@ -8,7 +12,6 @@
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains
-  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()

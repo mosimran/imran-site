@@ -54,7 +54,7 @@ something on every task after it rather than only at the end.
   CV form now degrades loudly, favicon set and OG card live. robots.txt pulled forward
   from T17 with Google and AI crawlers explicitly allowed. See WORKLOG.
 
-- [ ] **T05** `_headers`, `_redirects`, security headers, **and zone hardening**
+- [x] **T05** `_headers`, `_redirects`, security headers, **and zone hardening**
   <br>*Ships:* yes. *Validated by:* `curl -I` shows HSTS, CSP, nosniff.
   securityheaders.com grade A or better. **Plus: 0 script tags on the LIVE page, not
   just in `dist/`.**
@@ -118,7 +118,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* sitemap validates, `lastmod` matches `revised` and
   not file mtime.
 
-- [ ] **T18** JSON-LD and the CSP hash integration
+- [x] **T18** JSON-LD and the CSP hash integration
   <br>*Ships:* yes. *Validated by:* Rich Results Test passes. Real browser, real
   domain, zero console CSP violations.
 
@@ -132,7 +132,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* no. *Validated by:* LCP under 1.2 s on simulated 3G. AA contrast in
   light and dark. Tap targets pass. Print check by hand.
 
-- [ ] **T21** Link check, errata check, expiry check
+- [x] **T21** Link check, errata check, expiry check
   <br>*Ships:* no. *Validated by:* change a confidence value with no errata file, PR
   fails; add the file, green.
 
