@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
 import Doc from '../../layouts/Doc.astro'
-import { iso } from '../../lib/draft'
 
 export async function getStaticPaths() {
   const notes = await getCollection('impl')

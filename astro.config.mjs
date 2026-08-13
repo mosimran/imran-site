@@ -6,9 +6,12 @@ import { readdirSync, readFileSync } from 'node:fs'
 // lastmod must come from each paper's `revised` field, never the file mtime.
 // A reformat changes the mtime and changes nothing a reader would care about;
 // claiming it as a revision on a site about honest revision would be poor.
+/** @returns {Record<string, string>} pathname -> ISO date */
 function revisedDates() {
+  /** @type {Record<string, string>} */
   const map = {}
   for (const [dir, prefix, field] of [['papers', 'papers', 'revised'], ['impl', 'impl', 'since']]) {
+    /** @type {string[]} */
     let files = []
     try { files = readdirSync(`src/content/${dir}`).filter((f) => f.endsWith('.md')) } catch {}
     for (const f of files) {
@@ -31,6 +34,7 @@ export default defineConfig({
       // lastmod comes from each paper's `revised` date, not the file mtime, so a
       // reformat cannot claim a revision. Set per page via the serialize hook.
       filter: (page) => !page.includes('/cv/') && !page.includes('/404'),
+      /** @param {{url: string, lastmod?: string}} item */
       serialize(item) {
         const path = new URL(item.url).pathname
         if (LASTMOD[path]) item.lastmod = LASTMOD[path]
