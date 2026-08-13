@@ -2,7 +2,11 @@ import { sha256, now } from '../_lib/gate'
 
 interface Env {
   CV_DB: D1Database
-  CV_PDF?: R2Bucket
+  // KV rather than R2. The requirement is that the file has no public URL and
+  // is streamed by the function; KV satisfies that identically for a 430 KB
+  // object, and unlike R2 it is grantable through wrangler's OAuth. R2 would
+  // matter for a large file or for range requests. This is neither.
+  CV_FILE?: KVNamespace
 }
 
 const PDF_KEY = 'mosthofa-imran-cv.pdf'
@@ -39,10 +43,10 @@ export const onRequestGet: PagesFunction<Env> = async (ctx) => {
   if (!db) return plain(503, '503. The gate is not configured. Write to hey@mosthofaimran.com and the file comes back by hand.')
 
   // Check the file first. Nothing is burned if there is nothing to give.
-  const bucket = ctx.env.CV_PDF
-  let obj: R2ObjectBody | null = null
-  if (bucket) obj = await bucket.get(PDF_KEY)
-  if (!bucket || !obj) {
+  const store = ctx.env.CV_FILE
+  let body: ReadableStream | null = null
+  if (store) body = await store.get(PDF_KEY, 'stream')
+  if (!store || !body) {
     return plain(503, [
       '503 Service Unavailable.',
       '',
@@ -75,7 +79,7 @@ export const onRequestGet: PagesFunction<Env> = async (ctx) => {
   const row = await db.prepare('SELECT id FROM cv_token WHERE token_hash = ?1').bind(hash).first<{ id: number }>()
   console.log(JSON.stringify({ evt: 'cv.redeemed', id: row?.id ?? null }))
 
-  return new Response(obj.body, {
+  return new Response(body, {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'inline; filename="mosthofa-imran-cv.pdf"',

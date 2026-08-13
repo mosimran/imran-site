@@ -216,7 +216,7 @@ that cannot be a file, so the gate failing cannot take the document down.
 | Hosting | Cloudflare Pages | Three custom domains on one project. `_headers` and `_redirects` honoured natively. |
 | Gate runtime | Pages Functions | Scoped to two paths via `_routes.json` so nothing else invokes a function. |
 | Token store | D1 | Supports `UPDATE ... RETURNING`, the single-atomic-burn primitive. KV cannot do it. |
-| PDF store | R2, private | No public bucket URL, no signed link. The function streams it. |
+| PDF store | **KV**, not R2 | The requirement is no public URL and a streamed response. KV meets it for a 430 KB object and is grantable through wrangler OAuth, which R2 is not. R2 would matter for a large file or range requests. |
 | Mail | Resend | MailChannels' free Workers relay closed in 2024. Resend's free tier covers this and verifies the domain with SPF, DKIM and DMARC. |
 | Retention | Cron Worker | Pages Functions have no scheduled handler. A short Worker on a daily trigger executes the 12-month delete section 6.4 promises. |
 | CI/CD | Actions then wrangler | Checks first, deploy only on green. Native Pages Git integration stays off so a failing check cannot ship. |
@@ -370,7 +370,7 @@ edge.
 | Single use under concurrency | Atomic UPDATE RETURNING | CAS on `changes`, D1. See 6.1 |
 | No enumeration oracle | Always 202 | Same, one identical HTML acknowledgement regardless of outcome |
 | Not indexable | X-Robots-Tag, robots.txt | `_headers` rule on `/cv/*` plus the header in the response |
-| No object storage leak | App streams the PDF | R2 private binding, streamed |
+| No object storage leak | App streams the PDF | KV binding, streamed. No public URL exists |
 | Retention honoured | Daily DELETE plus forget | Cron Worker plus `/api/cv/forget` |
 | One tenant cannot spend the budget | Two limit dimensions | Address and /24, plus the edge rate limiter |
 

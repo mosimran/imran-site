@@ -138,7 +138,7 @@ something on every task after it rather than only at the end.
 
 ## Track 6: the gate
 
-- [~] **T22** D1 database, migration, private R2 bucket
+- [x] **T22** D1 database, migration, private object store (KV, not R2)
   <br>*Ships:* no. *Validated by:* migration applies, PDF uploaded, guessing the
   bucket URL from outside finds no route.
 
@@ -155,7 +155,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* forget deletes the rows, janitor runs on its
   trigger against a backdated row.
 
-- [~] **T26** Adversarial pass over the whole gate
+- [x] **T26** Adversarial pass over the whole gate
   <br>*Ships:* no. *Validated by:* two simultaneous redeems give exactly one 200 and
   one 410. Expired token 410s. Limits trip at 4 and 61. Nothing in the logs is PII.
 

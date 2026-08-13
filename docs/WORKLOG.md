@@ -747,3 +747,48 @@ burns exactly once, and deletes on request.
 **Blocked**
 The file itself. R2 needs a token scope that does not exist yet, and the PDF needs to be
 supplied. Until both, a valid token gets an honest 503 rather than a burned capability.
+
+---
+
+## T22, T26 · The gate, finished. KV instead of R2
+
+2026-08-13 · https://mosthofaimran.com
+
+Closed by a question: "why do we need r2?" The answer was that we did not.
+
+`BUILD.md` says the PDF lives in a "private bucket", and that word went into the plan
+unexamined. The actual requirement is narrower: **no public URL, streamed by the
+function.** Workers KV meets it identically for a 430 KB object, has a 25 MB ceiling, and
+is grantable through wrangler's OAuth, which R2 is not. Confirmed by dumping the full
+OAuth scope list: zero matches for `r2`, so no amount of re-running `wrangler login`
+would ever have worked. R2 needs a dashboard API token.
+
+R2 would be the right choice for a large file or where range requests matter, so a PDF
+viewer could load progressively. A 430 KB résumé is neither. R2 has since been enabled and
+is deliberately not being switched to, because the gate is live and verified on KV and
+churn against working code buys nothing.
+
+**Validated, end to end, against the live domain.**
+
+A token minted locally, its SHA-256 inserted into D1 by hand, then redeemed twice over
+HTTPS.
+
+| Check | Result |
+| --- | --- |
+| First redemption | 200, `application/pdf`, 430,118 bytes |
+| Bytes returned | **Byte-identical to the source PDF** |
+| Headers | `X-Robots-Tag: noindex, nofollow, noarchive`, `Cache-Control: no-store, private`, `Content-Disposition: inline` |
+| Second redemption, same token | **410 Gone** |
+| KV round trip | 430,118 bytes out, 430,118 back, still a valid 7-page PDF |
+
+One wrong turn worth recording: the first `kv key put` wrote to the local simulator, not
+the remote namespace, and said so in a line easy to skim past. Re-run with `--remote` and
+verified by reading the object back and comparing byte counts, rather than trusting that
+the write had gone where intended.
+
+**Section 6 is complete.** It issues tokens, mails them, rate limits on two dimensions,
+burns exactly once under contention, streams the file from a store with no public URL, and
+deletes on request.
+
+**Next**
+T05 is the last thing blocked on the account: Email Obfuscation off. Then T17, T19, T20.
