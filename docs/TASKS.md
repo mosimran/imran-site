@@ -23,7 +23,9 @@ something on every task after it rather than only at the end.
 - [x] **T01** gh auth as mosimran, repo init, git identity, docs, 31 issues, milestone
   <br>*Ships:* no. *Validated by:* `gh api /user` returns mosimran; the first commit's
   author is correct on github.com, not just locally.
-  <br>*Status:* local half done, push blocked on `gh auth`. See WORKLOG.
+  <br>*Status:* done, pushed. All 3 commits linked to the mosimran account.
+  Issues and milestone NOT created: the token lacks `Issues: write`. TASKS.md is the
+  source of truth meanwhile. See WORKLOG.
 
 - [x] **T02** Astro skeleton, index page, `rfc.css` extracted from the prototype
   <br>*Ships:* no. *Validated by:* `npm run build` clean; local render matches the
