@@ -121,3 +121,66 @@ Push, same as T01. `gh auth` is still `johnefemer`.
 T03, Cloudflare Pages project and the first deploy. This one cannot proceed without
 the Cloudflare account ID and API token, so it is a genuine stop rather than a
 local-only one.
+
+---
+
+## T03 · Cloudflare Pages project, first deploy
+
+2026-08-13 · not yet pushed
+
+The block cleared itself. `wrangler whoami` showed an existing OAuth session for
+`efemer@gmail.com` with access to twelve accounts, so no new token was needed.
+
+Account chosen: **John Efemer**, `f697cce1cf00f8132c900d2c643ad935`. A personal site
+belongs in a personal account, and it keeps the site independent of any employer's
+billing or access. Kensink Labs was the alternative, matching `imran@kensink.com` on
+the GitHub account, and was rejected for the same reason the signing key will be fresh
+rather than reused: this document is explicitly not an employer identity.
+
+The choice is close to permanent. Pages, D1, R2 and all three domain zones have to sit
+in one account, and moving later means recreating the database and re-verifying DNS.
+
+```
+wrangler pages project create imran-site --production-branch main
+wrangler pages deploy dist --project-name imran-site --branch main
+```
+
+**Validated**
+Against the live edge, not the local build.
+
+`https://imran-site.pages.dev/` returns 200 in 0.62 s, 50,344 bytes, TLS verified.
+The served bytes are byte-identical to `dist/index.html`, so nothing was rewritten in
+transit.
+
+Probes on the live response: 0 `<script>` tags, 0 external stylesheet links, 50,344
+bytes against the 60 KB budget, and `<link rel="canonical" href="https://mosthofaimran.com/">`.
+That canonical matters more than it looks: it is why the pages.dev URL cannot compete
+with the real domain for indexing, and it is the same mechanism that will make the two
+alias domains safe at T28.
+
+Headers present: `x-content-type-options: nosniff`. HSTS and CSP are absent, which is
+correct, they arrive with `_headers` at T05.
+
+One cosmetic failure worth recording: the per-deployment URL
+`6419ec01.imran-site.pages.dev` fails the TLS handshake from this machine's LibreSSL
+3.3.6. Two-label subdomains under `pages.dev` need a cert this client will not
+negotiate. The production alias works, so this is a local client limitation and not a
+deployment fault. Not chased.
+
+**Deployed**
+https://imran-site.pages.dev, production branch `main`. **The site is live from here**,
+and every task after this one is an increment on something already serving.
+
+**Blocked**
+Push, still. `gh auth login` has been running under a pty with device code `EAA5-C0D1`
+for some minutes; `gh api /user` still returns `johnefemer`, so the code has not been
+entered yet. Deployment did not depend on it.
+
+Noted for later: the Cloudflare OAuth token carries `pages`, `d1`, `workers` and
+`zone (read)` but **no `r2` scope**. T22 needs R2 write, so the token needs
+re-authorising or a scoped API token before then. `zone (read)` is also likely
+insufficient for creating DNS records at T27.
+
+**Next**
+T04, the Actions pipeline. It needs the repo to exist on GitHub, so it is the first
+task genuinely blocked by the push.

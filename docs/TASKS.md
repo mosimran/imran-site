@@ -31,9 +31,12 @@ something on every task after it rather than only at the end.
   <br>*Status:* done. Rendered text identical at 22,043 chars, compared mechanically.
   50,344 bytes, 0 scripts, CSS inlined at 9,634 bytes. See WORKLOG.
 
-- [ ] **T03** Pages project, first deploy by hand
+- [x] **T03** Pages project, first deploy by hand
   <br>*Ships:* **live from here.** *Validated by:* the pages.dev URL serves the index
   over HTTPS.
+  <br>*Status:* done. https://imran-site.pages.dev, 200 in 0.62 s, served bytes
+  identical to `dist/`. Account `John Efemer` / `f697cce1cf00f8132c900d2c643ad935`,
+  project `imran-site`. See WORKLOG.
 
 - [ ] **T04** Actions pipeline, build and deploy on green
   <br>*Ships:* yes. *Validated by:* push a one-word change, it appears without

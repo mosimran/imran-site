@@ -626,8 +626,26 @@ employer identity that this document is explicitly not.
 
 ### 13.3 Cloudflare and Resend
 
-- Account ID and an API token scoped to Pages Edit, D1 Edit, R2 Edit, Workers Scripts
-  Edit, into Actions secrets as `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
+Settled at T03:
+
+| | |
+| --- | --- |
+| Account | `John Efemer` |
+| Account ID | `f697cce1cf00f8132c900d2c643ad935` |
+| Pages project | `imran-site` |
+| Production URL | https://imran-site.pages.dev |
+
+The account is close to permanent. Pages, D1, R2 and all three domain zones have to
+sit in one account, and moving later means recreating the database and re-verifying
+DNS.
+
+**Token gap.** The existing wrangler OAuth session carries `pages`, `d1`, `workers`
+and `zone (read)`. It has **no `r2` scope**, which T22 needs, and `zone (read)` is
+likely insufficient for creating DNS records at T27. Re-authorise or mint a scoped API
+token before either.
+
+- An API token scoped to Pages Edit, D1 Edit, R2 Edit, Workers Scripts Edit, into
+  Actions secrets as `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 - Resend account, primary domain verified, key into Pages secrets as
   `RESEND_API_KEY`.
 - Sending address: `no-reply@` contradicts section 6.5, which promises replies.
