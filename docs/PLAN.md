@@ -592,6 +592,19 @@ already a changelog.
 
 ### 11.3 Issues and visibility
 
+**Not done, and blocked rather than skipped.** Every GitHub token supplied has carried
+`Contents` and `Workflows` but not `Issues` or `Pull requests`, so both the issue board
+and the PR-per-task loop have been unavailable since T01. `GET /repos/.../milestones`
+still returns 403 with `x-accepted-github-permissions: issues=write; pull_requests=write`.
+
+The record lives in the repository instead: `docs/TASKS.md` for status and
+`docs/WORKLOG.md` for one entry per task. Both are version controlled and signed, which
+is a durable record, but there is no public board and no per-task discussion thread.
+
+`scripts/sync-issues.mjs` closes the gap in one command once a token with `Issues: write`
+exists. It parses `docs/TASKS.md`, creates the milestone and one issue per task, closes
+the issues for completed tasks, and is idempotent so it can be re-run to resync.
+
 - All 31 issues created in bulk at T01, one per task, labelled by track and grouped
   into one milestone.
 - Commit subjects reference them: `T07: papers migrated (#7)`.
