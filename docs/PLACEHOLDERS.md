@@ -34,6 +34,8 @@ of the site, where nothing is deleted.
   written on 2026-08-14. Closed the same day by the author: this is a personal site, the
   positions in Section 5 are his, and they are attributed to him as they already were in
   the masthead, the JSON-LD and the feed. No disclosure row, no Appendix B note.
+  <br>The reading pass over the fourteen bodies is tracked separately as issue #39. It is
+  ordinary editorial work rather than a placeholder, so it does not belong in this file.
 
 ## Medium: figures and claims
 
