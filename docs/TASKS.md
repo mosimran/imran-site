@@ -96,7 +96,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* all routes 200. The CV form is real HTML, not
   `onsubmit="return false"`.
 
-- [ ] **T13** Router deleted, anchors preserved, 404 page
+- [x] **T13** Router deleted, anchors preserved, 404 page
   <br>*Status:* 404 page done; router was never carried over. *Ships:* yes. *Validated by:* zero `<script>` tags in `dist/`. Every anchor from
   the prototype resolves; scripted check over the list.
 
@@ -114,7 +114,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* JSON parses, schema URL present, every paper
   carries confidence, state and expires.
 
-- [ ] **T17** robots.txt, sitemap, Content Signals
+- [x] **T17** robots.txt, sitemap, Content Signals
   <br>*Ships:* yes. *Validated by:* sitemap validates, `lastmod` matches `revised` and
   not file mtime.
 
@@ -124,7 +124,7 @@ something on every task after it rather than only at the end.
 
 ## Track 5: quality gates
 
-- [ ] **T19** Budget scripts wired into `npm run check`
+- [x] **T19** Budget scripts wired into `npm run check`
   <br>*Ships:* no. *Validated by:* add a fake webfont, check fails; remove, green.
   Index under 60 KB, CSS under 12 KB.
 

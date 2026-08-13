@@ -34,20 +34,18 @@ jobs:
       - run: npm run build
       - run: npm run check
 
-      # The full budget suite lands at T19. These two are cheap, they are the
-      # constraints most likely to regress silently, and a budget nobody enforces
-      # is a preference.
-      - name: reading path carries no javascript
-        run: |
-          n=$(grep -o '<script' dist/index.html | wc -l | tr -d ' ')
-          echo "script tags: $n"
-          [ "$n" -eq 0 ] || { echo "::error::reading path must ship 0 bytes of javascript"; exit 1; }
+      # BUILD.md section 6, in full. Each of these has been proven to fail on a
+      # deliberate breakage, which is the only reason to trust one that passes.
+      - name: budgets
+        run: node scripts/check-budget.mjs
 
-      - name: index html within budget
-        run: |
-          b=$(wc -c < dist/index.html | tr -d ' ')
-          echo "index.html: $b bytes (budget 60000)"
-          [ "$b" -lt 60000 ] || { echo "::error::index.html over the 60 KB budget"; exit 1; }
+      - name: internal links and published anchors
+        run: node scripts/check-links.mjs
+
+      # Reports, never fails. Shipping the prototype content as-is is a decision
+      # on record; this is the register of that debt.
+      - name: placeholder ledger
+        run: node scripts/placeholders.mjs
 
       - uses: actions/upload-artifact@v4
         with:

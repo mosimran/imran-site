@@ -1,0 +1,8 @@
+# www to apex on every host
+https://www.mosthofaimran.com/*  https://mosthofaimran.com/:splat  301
+https://www.johnefemer.com/*     https://johnefemer.com/:splat     301
+https://www.imran.com.bd/*       https://imran.com.bd/:splat       301
+
+# The handoff's robots.txt advertised /sitemap.xml; Astro emits an index.
+# Cheaper to redirect than to break a published URL.
+/sitemap.xml   /sitemap-index.xml   301

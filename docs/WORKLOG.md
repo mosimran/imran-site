@@ -792,3 +792,61 @@ deletes on request.
 
 **Next**
 T05 is the last thing blocked on the account: Email Obfuscation off. Then T17, T19, T20.
+
+---
+
+## T13, T17, T19 · Sitemap, budget scripts, link and anchor checks
+
+2026-08-13 · https://mosthofaimran.com
+
+**T17.** `@astrojs/sitemap`, with `lastmod` taken from each paper's `revised` field rather
+than the file mtime. That distinction is the whole point: a reformat changes the mtime and
+changes nothing a reader would care about, and claiming it as a revision on a site about
+honest revision would be poor. `/cv/` and `/404` are excluded, the first because it is
+`noindex` and the second because it is not a document.
+
+Verified per URL, not in aggregate: all 14 paper entries compared against their source
+front matter, 0 mismatches. 22 URLs, all https and all on the apex.
+
+robots.txt can now advertise the sitemap honestly, and `/sitemap.xml`, which the handoff's
+robots.txt published, 301s to the index rather than breaking a URL that was already out
+there.
+
+**T19 and T13.** Three scripts: `check-budget.mjs` for BUILD.md section 6,
+`check-links.mjs` for internal links and published anchors, `placeholders.mjs` for the
+ledger. All wired into `npm run check` and into CI, replacing the two inline probes that
+stood in from T04.
+
+The anchor check is T13's real content. It holds the list of 32 anchors the prototype
+published and fails if any disappears. Renaming a heading is the easy way to break a URL
+somebody already bookmarked, and section 2.2 forbids exactly that.
+
+**Validated by breaking them.** Every check was proven to fail before being trusted to
+pass, which is the lesson from the acknowledgement-page comparison earlier today that
+returned a false pass because the `sed` had errored and it compared four empty files.
+
+| Deliberate breakage | Result |
+| --- | --- |
+| `@font-face` added | failed correctly |
+| Executable `<script>` added | failed correctly |
+| Off-origin `<img src>` added | failed correctly |
+| Link to a nonexistent path | failed correctly |
+| Prototype anchor `s14` renamed | failed correctly |
+| 20 KB of padding pushing past 60 KB | failed correctly |
+
+Restored, everything green: index 53,189 bytes of 60,000, CSS 9,087 of 12,000, 0
+executable scripts, 0 emitted `.js`, 0 off-origin references, 0 webfonts, 0 pages missing
+a canonical, 0 broken links, 0 lost anchors.
+
+**A wrong call of mine, corrected in the same session.** The sitemap 404'd on both the
+origin and the custom domain after deploying, and I concluded it was a routing problem
+rather than propagation, because I had checked the origin and assumed the origin is
+immediate. It is not. A second deploy and a few seconds later both returned 200 with no
+change to the configuration. The earlier lesson was to check the URL rather than `dist/`;
+the addition is that the URL needs time before its answer means anything.
+
+**Deployed**
+https://mosthofaimran.com. 22 tasks of 31.
+
+**Next**
+T18 JSON-LD, T20 Lighthouse and pa11y. T05 still blocked on Email Obfuscation.
