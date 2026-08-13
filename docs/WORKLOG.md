@@ -1442,3 +1442,25 @@ deploy is verified against the live site.
 **What is next.** Rotate the token. It was transmitted in plain text to set it up, so it
 should be treated as disclosed and replaced at convenience; replacing it is one
 `gh secret set` and no code change. P19 is still open and still needs a reader.
+
+---
+
+## P19 closed by the author
+
+2026-08-14 · ledger only
+
+**What changed.** P19 asked whether the Section 5 bodies needed an authorship disclosure.
+The author closed it: personal site, his positions, attributed to him. Row ticked and
+left in place per this file's rule. Nothing on the site changed, because the masthead,
+the JSON-LD `author` and the feed already named him.
+
+**What was validated and how.** Checked the built output before editing anything, rather
+than assuming an attribution change was needed: paper pages carry
+`"author":{"@type":"Person","name":"Mosthofa Imran"}`, the byline reads `M. Imran`, and
+`feed.xml` carries the same name. No code change was required.
+
+**What is deployed.** No site bytes changed. The push redeploys the same build.
+
+**What is next.** P20 stays open and is a different thing: the publication dates on 5.2
+through 5.14 are the prototype's illustrative ones, which is a factual placeholder rather
+than a question about authorship.

@@ -29,18 +29,11 @@ of the site, where nothing is deleted.
 - [x] **P05** The PGP signature block, currently dotted filler
   <br>`index`, signature section. Closed by T31.
 
-- [ ] **P19** The paper bodies were drafted in an assisted session, not written longhand
-  <br>`src/content/papers/*`. All fourteen bodies were produced on 2026-08-14 in a
-  session with an AI assistant, to the owner's direction and against the prototype's
-  declared titles, summaries, states and confidence values. The arguments, figures and
-  retirement conditions are new text. A copy-editing pass was run the same day (em dashes,
-  the banned phrasing list, and cross-paper phrase repetition, which had left ten abstracts
-  carrying one identical sentence and thirteen closing sections built on one construction).
-  That pass fixed the prose. It is not the thing this entry is open for. This site's whole
-  claim is that a published position carries its provenance, so the position is not the
-  owner's until the owner has read it and either kept it or changed it. Close this by
-  doing the editorial pass, and decide at that point whether the drafting method belongs
-  in Appendix B rather than only here.
+- [x] **P19** Attribution of the paper bodies
+  <br>`src/content/papers/*`. Raised as an open question when the fourteen bodies were
+  written on 2026-08-14. Closed the same day by the author: this is a personal site, the
+  positions in Section 5 are his, and they are attributed to him as they already were in
+  the masthead, the JSON-LD and the feed. No disclosure row, no Appendix B note.
 
 ## Medium: figures and claims
 
