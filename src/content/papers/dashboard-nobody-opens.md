@@ -23,7 +23,8 @@ result is a wall of accurate panels that answers none of the five things anyone 
 needs to know at 03:00, and which is therefore not opened during the incident it was
 built for. The fix is to invert the construction order: enumerate the questions first,
 build one view per question, and delete anything that answers none of them.
-<b>Confidence 0.75.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.75.</b> Section 5 carries a cost I cannot price: views built from
+questions over-fit the failures already survived.</div>
 
 ## 1. The claim
 
@@ -106,7 +107,7 @@ dashboard is the deliverable, not the diagnosis.
 </div>
 
 <p class="dim">Figure 2. How often each question is already answered, ranked from
-the systems I have reviewed. Ordinal, not a survey.</p>
+the systems I have reviewed. A ranking from memory, not a survey.</p>
 
 ## 5. The strongest objection
 
@@ -124,9 +125,10 @@ would make things worse. That is most of the gap from 0.75 to 0.9.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim component metrics are unnecessary; questions 1 and 5 are answered from
-them. It does not claim the five questions are complete, only that they have been
-sufficient for first-response triage in the systems I have run. It does not claim
-dashboards cause slow incident response. The claim is that a dashboard built from what
-was easy to emit is answering a question nobody asked, and that the cost of this is
-invisible because nobody measures whether it was opened.
+Component metrics are necessary. Questions 1 and 5 are answered from them, and a system
+that does not emit them cannot answer either. The five questions are not a complete set;
+they are what has been sufficient for first-response triage in the systems I have run.
+
+Dashboards do not cause slow incident response. The claim is smaller and more specific: a
+dashboard assembled from what was easy to emit is answering a question nobody asked, and
+that cost stays invisible because almost nobody measures whether it was opened.

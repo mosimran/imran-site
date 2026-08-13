@@ -23,7 +23,8 @@ it is routinely estimated at a fraction of its real size. I have made this mista
 in both cases having costed the infrastructure and not the practice that has to surround
 it. The claim is not that orchestration is wrong. It is that the sizing question is
 "how many operators do we have" rather than "how many nodes do we need".
-<b>Confidence 0.70.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.70.</b> Section 5 has two objections I cannot weigh against each other,
+and I have been burned by the second one as well.</div>
 
 ## 1. The claim
 
@@ -85,8 +86,8 @@ placed by what is on the list in Section 3 rather than by the orchestrator itsel
 <div class="r"><span class="k">On-call knowledge</span><span class="b"><i class="f" style="width:100%"></i></span><span class="v">missed</span></div>
 </div>
 
-<p class="dim">Figure 2. What I costed against what it cost, both times. Ordinal
-and retrospective, drawn from two cases, which is not a sample.</p>
+<p class="dim">Figure 2. What I costed against what it cost, both times. Drawn from
+two cases in hindsight, which is not a sample.</p>
 
 ## 4. The ladder, and the triggers for climbing it
 
@@ -119,14 +120,16 @@ is not, and that people systematically overweight visible costs. I believe that,
 cannot demonstrate it, and it is most of the distance from 0.70 to a higher number.
 There is a second objection with force: premature simplicity is also a failure mode, and
 migrating a running system up a rung under load is more expensive than starting one rung
-high. I have watched that go badly too. I do not have a principled way to compare the two
-regrets, and until I do, this paper is advice rather than analysis.</div>
+high. I have watched that go badly too. Nobody has given me a principled way to weigh the
+two regrets against each other, so what follows Section 4 is advice and not analysis.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim orchestration is over-engineering; at sufficient scale it is the
-cheapest option available and the fixed cost is trivially recovered. It does not claim
-managed offerings do not help, only that they absorb less of the list in Section 3 than
-their marketing implies. It does not claim the ladder in Section 4 is the only sensible
-one. And it does not claim I have fully learned this: two occurrences is a pattern, not a
-cure.
+Orchestration is not over-engineering. At sufficient scale it is the cheapest option
+available and the fixed cost is recovered without anyone noticing. Managed offerings do
+help; they absorb less of the list in Section 3 than their marketing implies, which is a
+complaint about the marketing rather than about the product. The ladder in Section 4 is
+one sensible ordering and not the only one.
+
+Nor have I fully learned this. Two occurrences is a pattern, not a cure, and I would not
+bet against a third.

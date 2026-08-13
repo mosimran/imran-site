@@ -24,7 +24,8 @@ through every subsequent round, and the recovery attempt arrives as a series of 
 that grow with the length of the outage. The failure is not that engineers do not know
 about jitter. It is that retries are budgeted as a count per call instead of as a
 fraction of forward traffic, and that nobody writes down which layer is allowed to retry.
-<b>Confidence 0.95.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.95.</b> The missing 0.05 is Section 5: the sharper version of this
+paper is about budgets alone, and I have not rewritten it that way yet.</div>
 
 ## 1. The claim
 
@@ -147,8 +148,8 @@ is invisible until it is an incident. See 5.13.
 ## 5. The strongest objection
 
 <div class="note"><b>Jitter is textbook, and this paper is scolding people for something
-they already know.</b> That is close to right and it is the reason the confidence is not
-higher. Nearly every engineer who reads this can define jitter. The claim survives on a
+they already know.</b> That is close to right, and it is what keeps the confidence off
+1.0. Nearly every engineer who reads this can define jitter. The claim survives on a
 narrower footing: knowing about jitter has not translated into budgets, and budgets are
 the part that actually bounds the blast radius. Jitter spreads the same total load;
 only a budget reduces it. I hold 0.95 rather than 1.0 because the sharper version of
@@ -158,13 +159,14 @@ of a single transient error, and for small fleets that cost can exceed the benef
 
 ## 6. What this paper does not claim
 
-It does not claim retries are bad. A system without retries converts every transient
-fault into a user-visible error, which is worse. It does not claim jitter is sufficient;
-Section 4.2 exists because it is not. It does not claim a specific numeric budget is
-correct for every system. Ten percent is a starting point that has held for me across
-several systems, not a derived constant.
+Retries are not the problem. A system without them converts every transient fault into a
+user-visible error, which is worse than a storm you can bound. Jitter alone is not the
+remedy either, and Section 4.2 exists because of that. The ten percent figure is a
+starting point that has held for me across several systems rather than a derived
+constant, and I would expect it to be wrong for anything with a very different ratio of
+read to write traffic.
 
-It also does not claim novelty. The mechanism is well described in the literature. The
-claim is about the gap between that description and what is configured in production,
-and that gap is what erratum 7.3 records me falling into myself, in code I reviewed and
-approved.
+Nor is any of this novel. The mechanism is well described in the literature. What the
+paper claims is a gap between that description and what is actually configured in
+production, and erratum 7.3 records me falling into that gap myself, in code I reviewed
+and approved.

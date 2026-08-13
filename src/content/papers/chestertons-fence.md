@@ -24,7 +24,8 @@ therefore easier to obey here than anywhere else, and it is still routinely diso
 because the recoverable context decays on a schedule nobody plans around. This paper is
 about the case the parable does not cover: when the history is one line and a date, and
 the honest answer to "why is this here" is that nobody knows.
-<b>Confidence 0.80.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.80.</b> Section 5 is why it is not higher: I cannot separate a
+load-bearing fence from a decorative one before instrumenting it.</div>
 
 ## 1. The claim
 
@@ -75,8 +76,8 @@ relying on.
 <div class="r"><span class="k">The author</span><span class="b"><i class="f" style="width:12%"></i></span><span class="v">tenure</span></div>
 </div>
 
-<p class="dim">Figure 2. Ordinal. The bars rank expected survival, not measured
-half-lives, and the ranking is the claim.</p>
+<p class="dim">Figure 2. The bars rank expected survival rather than measured
+half-lives. The ranking is the claim; the lengths are only a drawing of it.</p>
 
 ## 3. The obligation this puts on the author
 
@@ -140,8 +141,10 @@ wearing a rule's clothing, and I know it.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim old code should be preserved. It does not claim `git blame` is
-sufficient; Section 2 exists because it usually is not. It does not claim the ordering in
-Figure 1 is measured, only that it has been stable everywhere I have looked. And it does
-not claim the instrumentation procedure is novel. It is ordinary practice for feature
-flags, applied to deletions, where it is rarely used.
+Old code has no special claim on survival, and `git blame` is not sufficient: Section 2
+exists because it usually is not. The ordering in Figure 1 is not a measurement. It is
+what I have seen hold everywhere I have looked, which is a weaker thing.
+
+The procedure in Section 4 is not novel either. It is ordinary feature-flag practice
+pointed at a deletion instead of a release, which is the one place almost nobody points
+it.

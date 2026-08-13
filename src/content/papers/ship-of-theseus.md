@@ -87,8 +87,8 @@ that the habit of not maintaining them outlives it.
 </div>
 
 <p class="dim">Figure 2. What incremental migration verifies well against what it
-leaves open. Ordinal and impressionistic; this is a draft and the bars are a
-hypothesis rather than a finding.</p>
+leaves open. An impression rather than a finding; this is a draft, and the bars
+are part of what Section 6 is asking about.</p>
 
 ## 3. Why "it is done when the last route moves" is not enough
 
@@ -124,9 +124,8 @@ declaration could be nostalgia for the ceremony of a cutover dressed up as a ris
 argument. Every cost I list in Section 2 has an alternative explanation that has nothing
 to do with the missing moment: spanning invariants decay in systems that never migrate at
 all, ownership drifts under reorganisation regardless (see 5.12), and old code survives
-for ordinary reasons of priority. I have not separated the migration-specific effect from
-the background rate, and until I do, this paper is a hypothesis with a plausible
-mechanism and no evidence. That is what a draft is, and it is why the confidence is where
+for ordinary reasons of priority. Nothing here separates the migration-specific effect
+from that background rate, which leaves a plausible mechanism standing on no evidence. That is what a draft is, and it is why the confidence is where
 it is.</div>
 
 ## 6. Open questions
@@ -145,7 +144,9 @@ the failure mode the rest of the site is about.
 
 ## 7. What this paper does not claim
 
-It does not claim big-bang rewrites are better. They are worse, and the pattern this
-paper criticises is the correct default. It does not claim incremental migrations fail.
-Most of the ones I have seen succeeded. The claim is about what they leave behind, and at
-0.55 it is a claim I would not want quoted without its confidence value attached.
+Big-bang rewrites are not better. They are worse, and the pattern this paper criticises
+is the correct default. Incremental migrations do not fail; most of the ones I have seen
+succeeded on their own terms.
+
+The claim is only about what they leave behind, and at 0.55 it is a claim I would not
+want quoted without its confidence value attached to it.

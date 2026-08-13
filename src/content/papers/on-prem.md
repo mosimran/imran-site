@@ -23,7 +23,8 @@ it is not a downgrade, and the discipline it forces (one artifact, explicit
 dependencies, an offline supply chain, configuration as data) improves the cloud build
 as well. The cost of sovereignty is not hardware. It is the number of assumptions you
 can no longer make, and that number is finite, enumerable and mostly known on day one.
-<b>Confidence 0.90.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.90.</b> Section 5 holds it there: elastic workloads are a real
+exception and I have not sized how large that exception is.</div>
 
 ## 1. The claim
 
@@ -105,9 +106,9 @@ by hand in a console two years ago.
 <div class="r"><span class="k">Port at v3</span><span class="b"><i class="f" style="width:100%"></i></span><span class="v">highest</span></div>
 </div>
 
-<p class="dim">Figure 2. The shape of the cost, not its magnitude. The bars are
-ordinal. I do not have defensible figures for the ratios and will not invent
-them; see docs/PLACEHOLDERS.md.</p>
+<p class="dim">Figure 2. The shape of the cost, not its magnitude. I do not have
+defensible figures for the ratios and will not invent them; see
+docs/PLACEHOLDERS.md.</p>
 
 ## 4. What this looks like as a rule set
 
@@ -138,10 +139,11 @@ can be fatal. The constraint pays back over years. Not every project has years.<
 
 ## 6. What this paper does not claim
 
-It does not claim on-premise is cheaper. Total cost of ownership is usually higher and
-the customer is usually paying it deliberately, for reasons of jurisdiction, audit or
-counterparty risk that have nothing to do with engineering. It does not claim cloud
-teams are undisciplined; it claims the sovereign constraint removes the option of
-skipping the discipline. And it does not claim the assumption ledger in Section 2 is
-complete. It is the list I have needed so far, across six sites, and it is a list that
-grows.
+On-premise is not cheaper. Total cost of ownership is usually higher, and the customer is
+usually paying it deliberately, for reasons of jurisdiction, audit or counterparty risk
+that have nothing to do with engineering. Nothing here says cloud teams are
+undisciplined, only that the sovereign constraint removes the option of skipping the
+discipline, which is a different and much weaker statement about them.
+
+The assumption ledger in Section 2 is not complete. It is the list I have needed so far,
+across six sites, and every new estate has added to it.

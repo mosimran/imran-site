@@ -22,7 +22,8 @@ else in the document (the timeline, the graphs, the contributing factors) exists
 that decision legible and to let a reader disagree with it. A postmortem that names no
 decision has recorded the weather. It reads as diligence, it costs several engineer-days
 to produce, and the same incident recurs because nothing changed that a future engineer
-can trip over. <b>Confidence 0.90.</b> The gap from 1.0 is Section 5.</div>
+can trip over. <b>Confidence 0.90.</b> Section 5 is the part I cannot resolve: a rule that demands a
+decision will get some manufactured ones.</div>
 
 ## 1. The claim
 
@@ -128,7 +129,9 @@ follows a quarter later.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim timelines are useless; they are the evidence the decision rests on. It
-does not claim postmortems should be short. It does not claim every incident deserves
-one. And it does not claim the four obligations in Section 3 are sufficient, only that
-in my experience a document missing any of them fails to change the system it describes.
+Timelines are not useless. They are the evidence the decision rests on, and a decision
+without them is an assertion. Nothing here argues for shorter documents, or for writing
+one after every incident. The four obligations in Section 3 are not sufficient either. My
+claim about them is weaker than it may read: a document missing any of the four has, in
+my experience, failed to change the system it describes, which is not the same as saying
+that a document containing all four succeeds.

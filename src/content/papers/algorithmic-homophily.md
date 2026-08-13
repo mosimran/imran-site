@@ -102,8 +102,8 @@ nothing to do with media at all. Until I can, this section stays marked.
 The observation in Section 1 survives the correction, and so does the practical advice,
 which is why the paper is being revised rather than retracted. Advice that survives the
 falsification of its own mechanism should be treated with suspicion, and I am treating it
-with suspicion: it may be surviving because it is robust, or because it was never
-load-bearing on the mechanism in the first place.
+with suspicion: it may be surviving because it stands on its own, or because it was
+never load-bearing on the mechanism in the first place.
 
 ## 5. The practice, offered at 0.60
 

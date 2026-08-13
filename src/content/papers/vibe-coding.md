@@ -23,8 +23,8 @@ ownership is real, but the labour was integration and the understanding it purch
 of the seams rather than of the parts. The gap is invisible while the system works and
 becomes the whole problem the first time it fails in a way the assembly did not cover.
 This is not an argument about who or what wrote the code. It is an argument about what
-reading buys and what assembling does not. <b>Confidence 0.75.</b> The gap from 1.0 is
-Section 5.</div>
+reading buys and what assembling does not. <b>Confidence 0.75.</b> Section 5 has the
+objection I cannot answer: nobody reads their TLS library either.</div>
 
 ## 1. The claim
 
@@ -93,8 +93,7 @@ confirms the happy path twice and records it as two independent confirmations.
 <div class="r"><span class="k">Error paths, generated</span><span class="b"><i class="f" style="width:10%"></i></span><span class="v">rarely</span></div>
 </div>
 
-<p class="dim">Figure 2. Ordinal, from code review observation rather than
-measurement. The bottom row is the claim; the others are context for it.</p>
+<p class="dim">Figure 2. Ranked from code review, not measured. The bottom row is the claim; the others are context for it.</p>
 
 ## 4. The remedy, which is not "write it yourself"
 
@@ -138,9 +137,11 @@ the wrong target.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim generated code is lower quality. In my experience it is often better
-than the median hand-written equivalent on the happy path. It does not claim engineers
-using these tools are less skilled. It does not claim reading is always worth the time;
-Section 4.2 exists precisely because it usually is not. The claim is narrow: assembly
-produces two of three kinds of knowledge, the missing one is the one incidents require,
-and the feeling of understanding does not report which you have.
+Generated code is not lower quality. In my experience it is often better than the median
+hand-written equivalent on the happy path, and the engineers using these tools are not
+less skilled than the ones who do not. Reading is not always worth the time either;
+Section 4.2 exists precisely because it usually is not.
+
+The claim is narrow. Assembly produces two of the three kinds of knowledge in Section 2,
+the missing one is the one incidents require, and the feeling of understanding does not
+report which of them you are holding.

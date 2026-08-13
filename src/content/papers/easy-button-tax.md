@@ -23,7 +23,8 @@ constraint does not disappear; it reappears at incident time, in front of a pers
 did not choose the abstraction, priced in hours they do not have. This is not an argument
 against abstraction. It is an argument for reading the invoice before signing, and for
 insisting that every easy button ship with a tested escape hatch.
-<b>Confidence 0.85.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.85.</b> The missing 0.15 is Section 5, where the argument still cannot
+tell a good abstraction from a costly one in advance.</div>
 
 ## 1. The claim
 
@@ -99,8 +100,8 @@ in the commons and you will be rebuilding it yourself.
 <div class="r"><span class="k">Public failure record</span><span class="b"><i style="width:85%"></i></span><span class="v">rare</span></div>
 </div>
 
-<p class="dim">Figure 2. Ordinal, not measured. The bars rank how much each test
-tells you against how often it can be satisfied.</p>
+<p class="dim">Figure 2. The bars rank how much each test tells you against how often
+it can be satisfied. Ranked, not measured.</p>
 
 ## 4. The outcome this argues for
 
@@ -134,8 +135,8 @@ and it is why this paper is not at 0.95.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim the tax is always worth avoiding; usually it is worth paying. It does
-not claim abstractions should be shallow. It does not claim the author of a convenience
-layer is careless, and in the cases that cost the most the author was unusually careful,
-which is precisely why the abstraction was adopted so widely. The claim is about
-disclosure and about who receives the bill.
+The tax is usually worth paying, and nothing here argues for shallow abstractions or for
+building it yourself. The authors of convenience layers are not the target either. In the
+cases that cost the most, the author was unusually careful, which is exactly why the
+abstraction was adopted widely enough to cost anything. The claim is about disclosure,
+and about who receives the bill.

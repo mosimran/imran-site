@@ -22,8 +22,8 @@ other people's systems. It is more useful as a design constraint with a predicta
 timescale. Across three reorganisations I watched the service graph converge on the
 reporting graph within roughly two quarters, in every case, regardless of what the
 architecture documents said. The practical consequence is that a boundary you want must
-be paid for in organisational structure, not in diagrams. <b>Confidence 0.85.</b> The gap
-from 1.0 is Section 5.</div>
+be paid for in organisational structure, not in diagrams. <b>Confidence 0.85.</b> Three cases in
+one company is not a sample, and the causal direction is not settled. Both are Section 5.</div>
 
 ## 1. The claim
 
@@ -141,9 +141,10 @@ moved than defended.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim service boundaries should follow team boundaries as a matter of design
-preference; sometimes the right architecture cuts against the org chart, and then the
-work is to change the org chart. It does not claim that microservices are an
-organisational artefact, which is a stronger and separate argument. And it does not claim
-the effect is inevitable, only that resisting it costs continuous effort that must be
-budgeted rather than assumed.
+Boundaries should not follow the org chart as a matter of preference. Sometimes the right
+architecture cuts against it, and then the work is to change the org chart, which is the
+whole point of Section 4. The stronger argument that microservices are themselves an
+organisational artefact is a separate paper and I am not making it here.
+
+The effect is also not inevitable. Resisting it works. It costs continuous effort, and
+the failure I keep watching is that the effort is assumed rather than budgeted.
