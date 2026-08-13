@@ -1,0 +1,89 @@
+# Checks first, deploy only on green. BUILD.md section 7 asks for exactly this,
+# which is why the native Cloudflare Pages git integration stays switched off:
+# it would deploy on push regardless of whether the checks passed.
+name: build and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # check-errata.mjs (T21) diffs against origin/main, so it needs history.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check
+
+      # The full budget suite lands at T19. These two are cheap, they are the
+      # constraints most likely to regress silently, and a budget nobody enforces
+      # is a preference.
+      - name: reading path carries no javascript
+        run: |
+          n=$(grep -o '<script' dist/index.html | wc -l | tr -d ' ')
+          echo "script tags: $n"
+          [ "$n" -eq 0 ] || { echo "::error::reading path must ship 0 bytes of javascript"; exit 1; }
+
+      - name: index html within budget
+        run: |
+          b=$(wc -c < dist/index.html | tr -d ' ')
+          echo "index.html: $b bytes (budget 60000)"
+          [ "$b" -lt 60000 ] || { echo "::error::index.html over the 60 KB budget"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    name: deploy
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: do we have deploy credentials
+        id: creds
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$TOKEN" ] && [ -n "$ACCOUNT" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID not set, skipping deploy. See docs/PLAN.md section 13.3."
+          fi
+
+      - uses: actions/download-artifact@v4
+        if: steps.creds.outputs.ready == 'true'
+        with:
+          name: dist
+          path: dist
+
+      - name: deploy to cloudflare pages
+        if: steps.creds.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name imran-site --branch main

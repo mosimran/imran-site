@@ -184,3 +184,51 @@ insufficient for creating DNS records at T27.
 **Next**
 T04, the Actions pipeline. It needs the repo to exist on GitHub, so it is the first
 task genuinely blocked by the push.
+
+---
+
+## Note · GitHub access, three attempts
+
+2026-08-13
+
+Not a task. Recorded because the push has blocked T01 through T03 and the reasons are
+worth keeping.
+
+**Attempt 1, device flow.** `gh auth login --web` refuses a non-TTY stdin, so it was
+run under `script -q /dev/null` to give it a pty. The code displayed, but stdin hit
+EOF before the "Press Enter" prompt was reached and the process blocked. Killed.
+
+**Attempt 2, device flow with held stdin.** Same, with the input rewritten as
+`{ printf 'y\n'; sleep 5; printf '\n'; sleep 1200; }` so the pty stays open while gh
+polls. Mechanically correct: the code displayed and the process polled. Not completed
+within the window.
+
+**Attempt 3, a pasted personal access token.** Authenticated successfully.
+`gh auth status` showed mosimran active, `gh api /user` returned `mosimran`, and repo
+metadata returned 200. Then, within about a minute, every call including `/user`
+returned `401 Bad credentials`.
+
+The token was revoked between one request and the next. The likely cause is GitHub
+secret scanning detecting it as exposed and auto-revoking, which is the documented
+behaviour for a leaked PAT and the reason a token should not travel through a channel
+that keeps a transcript.
+
+No side effects. The three write probes returned 403 then 401, so nothing was created
+or modified on the repository. The dead credential was removed from the keyring with
+`gh auth logout` rather than left to produce confusing failures later.
+
+One diagnostic worth keeping: `GET /repos/{owner}/{repo}` reports
+`permissions: {push: true, admin: true}`, which describes **the authenticated user's
+rights on the repository, not the token's**. A fine-grained PAT can return `push: true`
+there and still 403 on `git push` because it lacks `Contents: write`. The honest probe
+is the transport itself, or the `x-accepted-github-permissions` response header on a
+write attempt.
+
+**Resolution.** Back to the device flow, which puts no secret in the transcript.
+
+If a token is preferred later, a classic PAT with `repo` and `workflow` covers
+everything this project needs. A fine-grained PAT needs, at minimum: repository access
+to `mosimran/imran-site`, `Contents: read and write` for pushing, `Issues: read and
+write` for the 31 issues, `Pull requests: read and write` for the per-task loop, and
+`Workflows: read and write` for T04. `Administration` is not needed; it only appeared
+because one probe tried to PATCH the repo description.
