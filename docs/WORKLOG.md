@@ -456,3 +456,68 @@ https://mosthofaimran.com and https://imran.com.bd, both current.
 
 **Next**
 T05 still, blocked on Email Obfuscation being turned off.
+
+---
+
+## T06 to T16 · Content model, routes, feeds, machine surface
+
+2026-08-13 · https://mosthofaimran.com
+
+Driven by a report that links on the page did not work. An audit of `dist/index.html`
+found **26 of 30 internal routes returning 404**. All 19 in-page anchors were fine, so
+the problem was entirely missing routes rather than broken markup.
+
+**The schema problem, and the deviation it forced.** BUILD.md section 2 makes `retires`
+mandatory: a paper without retirement conditions fails the build, which is the rule the
+whole site rests on. But the prototype lists 14 papers and carries a body, and retirement
+conditions, for exactly one. Under the specified schema the other 13 cannot exist.
+
+Three options: invent 13 sets of falsification conditions, relax the rule, or say plainly
+that a listed title is not yet a paper. Took the third. `unwritten` is a new state meaning
+an index entry rather than an argument: no body, no retirement conditions, and a page that
+says so above the fold. Everything that IS a paper still must carry `retires`, so the rule
+holds exactly where it matters, and the moment a body is written the state changes and the
+schema starts enforcing again.
+
+This is a deviation from the specified enum and is recorded as one. The alternative was
+fabricating falsification conditions for 13 arguments that have not been made, on a site
+whose entire premise is that claims arrive with the evidence that would retire them.
+
+**Migrated** 14 papers, 5 implementation notes, 4 errata. Everything transcribed from the
+prototype's own tables: title, summary, confidence, state, revised date. Slugs for 5.1 to
+5.10 came from llms.txt and errata.xml; 5.11 to 5.14 had none and are derived from titles.
+Bodies exist for 5.1 and 3.2 only, which is what the prototype had.
+
+**Built** the papers index, paper pages, implementation pages, errata page, CV page, 404,
+three Atom feeds, `llms.txt`, `llms-full.txt`, `papers/index.json`, per-paper Markdown
+mirrors, and `.well-known/security.txt`. 24 pages.
+
+The identifier from PLAN section 1 is live and computed, not typed:
+`draft-imran-competence-porn-03` from four history entries,
+`draft-imran-vibe-coding-00` from none. Expiry is derived as `revised + 185 days` and an
+expired paper says so on its own page.
+
+**Validated**
+
+Link audit re-run across all 24 built pages, not just the index: **0 broken internal
+links**, from 26. Every route confirmed 200 on the live domain with the right content
+type: feeds as `application/xml`, `index.json` as `application/json`, the mirrors as
+`text/markdown`, `llms.txt` and `security.txt` as `text/plain`.
+
+Two links could not be made to work and were not left to fail quietly. `/pgp.asc` and the
+document signature both need a key that does not exist until T30. Rather than ship two
+dead links on a site that forbids them, both are now plain text marked as not yet
+published, matching how the CV form was handled.
+
+**Three mistakes worth recording.** zsh expanded `[slug].astro` as a glob and silently
+wrote nothing for two route files. `slug` turned out to be a reserved field in Astro
+content collections, consumed as the entry slug and never reaching `data`, so the schema
+rejected every note. And the blanket fix for that replaced `.data.slug` but missed
+`d.slug` where `d` was already `p.data`, which shipped `draft-imran-undefined-03` into the
+build. Caught by grepping the output for `undefined` rather than by reading the diff.
+
+**Deployed**
+https://mosthofaimran.com, 24 pages.
+
+**Next**
+The MCP server plan, then T05 once Email Obfuscation is off.

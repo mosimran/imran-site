@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+import { identifier, expiresOn, isExpired, fmt, iso } from '../../lib/draft'
+
+export async function getStaticPaths() {
+  const papers = await getCollection('papers')
+  return papers.map((p) => ({ params: { slug: p.slug }, props: { p } }))
+}
+const { p } = Astro.props
+const { Content } = await p.render()
+const d = p.data
+const ident = identifier(p.slug, d.history.length)
+const expires = expiresOn(d.revised)
+const expired = isExpired(d.revised)
+---
+<Doc title={`§${d.section} ${d.title}`} description={d.summary}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Position Paper {d.section}</b>
+Internet-Draft
+{ident}
+Confidence: {d.confidence ?? 'n/a'}
+State: {d.state}</div>
+    <div class="r"><b>M. Imran</b>
+{d.published ? `Published ${iso(d.published)}` : 'Not yet published'}
+Revised {iso(d.revised)}
+Expires: {fmt(expires)}</div>
+  </div>
+
+  <div class="title">
+    <h1>{d.state === 'retracted' ? <s>{d.title}</s> : d.title}</h1>
+    <div class="sub">{d.summary}</div>
+  </div>
+
+  {expired && (
+    <div class="ind">
+      <div class="memo"><b>This draft has expired.</b> It was last revised {iso(d.revised)}, more than 185
+      days ago, so under the rule this document borrows from the Internet-Draft series it is out of date
+      until revised. It is not withdrawn and not hidden. It simply says so.</div>
+    </div>
+  )}
+
+  {d.state === 'unwritten' && (
+    <div class="ind">
+      <div class="memo"><b>Listed, not written.</b> This entry has a title, a summary and a date. It has no
+      body and no retirement conditions, so it is not presented as an argument. See Principle 4.8.</div>
+    </div>
+  )}
+
+  {d.retraction && (
+    <div class="ind">
+      <div class="memo"><b>Retracted {iso(d.retraction.date)}.</b> {d.retraction.reason} See erratum {d.retraction.erratum}.</div>
+    </div>
+  )}
+
+  <h2 id="body">Text</h2>
+  <div class="ind prose"><Content /></div>
+
+  {d.retires.length > 0 && (
+    <>
+      <h2 id="retires">Retirement conditions</h2>
+      <div class="ind">
+        <p>This paper <span class="kw">MUST</span> be retracted if any of the following is demonstrated.</p>
+        <table class="rt">
+          <thead><tr><th style="width:46px">&#167;</th><th>Condition</th></tr></thead>
+          <tbody>{d.retires.map((r, i) => (
+            <tr><td class="n" data-l="Section">{i + 1}</td><td data-l="Condition">{r}</td></tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  {d.history.length > 0 && (
+    <>
+      <h2 id="history">Revision history</h2>
+      <div class="ind">
+        <table class="rt">
+          <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
+          <tbody>{d.history.map((h) => (
+            <tr><td class="hd n" data-l="Date">{iso(h.date)}</td><td data-l="Change">{h.note}</td></tr>
+          ))}</tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  <h2 id="machine">Machine readable</h2>
+  <div class="ind">
+    <p><a href={`/papers/${p.slug}.md`}>Markdown source</a> &#183;
+       <a href="/papers/index.json">JSON index</a> &#183;
+       <a href="/feed.xml">Atom</a></p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>{ident}</span><span>conf {d.confidence ?? 'n/a'}</span></div>
+</Doc>

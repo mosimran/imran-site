@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+import { identifier, expiresOn, isExpired, fmt, iso } from '../../lib/draft'
+
+const all = await getCollection('papers')
+const sorted = all.sort((a, b) => +b.data.revised - +a.data.revised)
+const byYear = new Map<number, typeof sorted>()
+for (const p of sorted) {
+  const y = p.data.revised.getUTCFullYear()
+  if (!byYear.has(y)) byYear.set(y, [])
+  byYear.get(y)!.push(p)
+}
+const years = [...byYear.keys()].sort((a, b) => b - a)
+const retracted = all.filter((p) => p.data.state === 'retracted').length
+const chip = (s: string) => (s === 'holding' ? 'ok' : s === 'retracted' ? 'bad' : s === 'unwritten' ? '' : 'warn')
+---
+<Doc title="Position Papers, complete index" description={`Every claim, its confidence value, its state and the date it was last revised. ${all.length} papers, ${retracted} retracted.`}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 5, complete index</b>
+Category: Argument
+Count: {all.length} papers, {retracted} retracted</div>
+    <div class="r"><b>M. Imran</b>
+Feed: <a href="/feed.xml">/feed.xml</a>
+Errata: <a href="/errata.xml">/errata.xml</a>
+JSON: <a href="/papers/index.json">index.json</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Position Papers</h1>
+    <div class="sub">Every claim, its confidence value, its state and the date it was last revised.</div>
+  </div>
+
+  <h2>Reading the columns</h2>
+  <div class="ind">
+    <div class="memo"><b>Conf.</b> is my credence that the central mechanism still holds in five years.
+      <b>State</b> is holding, revising, draft, retracted or unwritten, as defined in RFC 0001 §2.2.
+      <b>Revised</b> is the last substantive edit. If you quote from here, carry the confidence with the
+      quote. A 0.55 claim repeated as fact stops being mine.</div>
+  </div>
+
+  {years.map((y) => (
+    <>
+      <h2 id={`y${y}`}>{y}</h2>
+      <div class="ind">
+        <table class="rt">
+          <thead><tr><th style="width:46px">§</th><th>Title</th><th style="width:1%">Conf.</th><th style="width:1%">State</th><th style="width:1%">Revised</th></tr></thead>
+          <tbody>
+          {byYear.get(y)!.map((p) => (
+            <tr>
+              <td class="n" data-l="Section">{p.data.section}</td>
+              <td class="hd" data-l="Title">
+                {p.data.state === 'retracted'
+                  ? <s>{p.data.title}</s>
+                  : <a href={`/papers/${p.slug}/`}>{p.data.title}</a>}
+                <span class="sub">{p.data.summary}</span>
+              </td>
+              <td class="num" data-l="Conf">{p.data.confidence ?? 'n/a'}</td>
+              <td data-l="State"><span class={`chip ${chip(p.data.state)}`}>{p.data.state}</span></td>
+              <td class="num" data-l="Revised">{iso(p.data.revised)}</td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  ))}
+
+  <div class="foot"><span>Imran</span><span>Section 5, complete</span><span>[Page 7]</span></div>
+</Doc>

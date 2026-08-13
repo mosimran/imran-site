@@ -1,0 +1,58 @@
+---
+// Shared document shell. index.astro still carries its own head and migrates
+// here at T10, when the masthead changes to the Internet-Draft form.
+import '../styles/rfc.css'
+
+interface Props {
+  title: string
+  description: string
+  back?: boolean
+}
+const { title, description, back = true } = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const cover = new URL('/og-cover.jpg', Astro.site).href
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+<link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="Errata" href="/errata.xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mosthofa Imran">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={cover}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content={cover}>
+</head>
+<body>
+<a class="skip" href="#main">Skip to document</a>
+<header class="rh">
+  <div class="in">
+    <a class="doc" href="/">RFC 0001</a>
+    <nav>
+      <a href="/papers/">Papers</a>
+      <a href="/errata/">Errata</a>
+      <a href="/cv/">CV</a>
+      <a href="/#s14">Contact</a>
+    </nav>
+  </div>
+</header>
+<div class="page" id="main">
+  {back && <a class="back" href="/">&#8592; RFC 0001</a>}
+  <slot />
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# mosthofaimran.com
+# The only thing on this site with an attack surface is Section 6, the resume gate.
+# If you found a way to enumerate tokens, bypass the burn, or read the PDF without one,
+# please tell me. You will be credited in Section 7 unless you would rather not be.
+
+Contact: mailto:security@mosthofaimran.com
+Contact: https://mosthofaimran.com/#s14
+Preferred-Languages: en, bn
+Canonical: https://mosthofaimran.com/.well-known/security.txt
+Canonical: https://imran.com.bd/.well-known/security.txt
+Expires: 2027-08-13T00:00:00.000Z
+Acknowledgments: https://mosthofaimran.com/errata/

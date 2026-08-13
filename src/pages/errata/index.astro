@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+import { iso } from '../../lib/draft'
+const items = (await getCollection('errata')).sort((a, b) => +b.data.date - +a.data.date)
+const rendered = await Promise.all(items.map(async (e) => ({ e, Content: (await e.render()).Content })))
+---
+<Doc title="Errata and Retractions" description="Corrections, confidence downgrades and retractions, credited to whoever sent them.">
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 7, Errata and Retractions</b>
+Category: Informational
+Count: {items.length} entries</div>
+    <div class="r"><b>M. Imran</b>
+Feed: <a href="/errata.xml">/errata.xml</a></div>
+  </div>
+  <div class="title">
+    <h1>Errata and Retractions</h1>
+    <div class="sub">Subscribe to this one if you want to know whether I can be trusted, rather than what I think this week.</div>
+  </div>
+  <div class="ind">
+    <div class="memo">This section is load bearing. A body of opinion with no retraction log records positions
+      rather than learning. Corrections are credited to the person who sent them.</div>
+  </div>
+  {rendered.map(({ e, Content }) => (
+    <>
+      <h2 id={`e${e.data.section.replace('.', '-')}`}>{e.data.section}. {e.data.title}</h2>
+      <div class="ind">
+        <p class="dim">{iso(e.data.date)} · {e.data.kind}{e.data.creditedTo ? ` · reported by ${e.data.creditedTo}` : ''}</p>
+        <div class="prose"><Content /></div>
+      </div>
+    </>
+  ))}
+  <div class="foot"><span>Imran</span><span>Section 7</span><span>[Page 10]</span></div>
+</Doc>

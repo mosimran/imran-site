@@ -65,15 +65,15 @@ something on every task after it rather than only at the end.
 
 ## Track 2: content model
 
-- [ ] **T06** Collections, Zod schema, `draft.ts` identifier and expiry
+- [x] **T06** Collections, Zod schema, `draft.ts` identifier and expiry
   <br>*Ships:* no. *Validated by:* remove `retires` from one paper, build fails with
   the schema message; restore. Identifier computes to `-03` for the index.
 
-- [ ] **T07** 14 papers migrated, front matter complete
+- [x] **T07** 14 papers migrated, front matter complete
   <br>*Ships:* no. *Validated by:* build green, `astro check` zero errors, count
   matches the index table.
 
-- [ ] **T08** 5 implementation notes and 4 errata migrated
+- [x] **T08** 5 implementation notes and 4 errata migrated
   <br>*Ships:* no. *Validated by:* same, and slugs match llms.txt exactly.
 
 - [ ] **T09** Paper count reconciled to one generated source
@@ -85,29 +85,29 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* masthead renders the identifier and a correct
   `Expires` date computed from `revised`. GitHub link fixed to `mosimran`.
 
-- [ ] **T11** `/papers/` and `/papers/<slug>/`
+- [x] **T11** `/papers/` and `/papers/<slug>/`
   <br>*Ships:* yes. *Validated by:* 14 pages build, index sorted by confidence,
   retracted paper renders struck through.
 
-- [ ] **T12** `/impl/<slug>/`, `/errata/`, `/cv/`
+- [x] **T12** `/impl/<slug>/`, `/errata/`, `/cv/`
   <br>*Ships:* yes. *Validated by:* all routes 200. The CV form is real HTML, not
   `onsubmit="return false"`.
 
 - [ ] **T13** Router deleted, anchors preserved, 404 page
-  <br>*Ships:* yes. *Validated by:* zero `<script>` tags in `dist/`. Every anchor from
+  <br>*Status:* 404 page done; router was never carried over. *Ships:* yes. *Validated by:* zero `<script>` tags in `dist/`. Every anchor from
   the prototype resolves; scripted check over the list.
 
 ## Track 4: machine surface
 
-- [ ] **T14** Three Atom feeds
+- [x] **T14** Three Atom feeds
   <br>*Ships:* yes. *Validated by:* W3C Feed Validator clean. Bump a version locally,
   the entry updates rather than duplicating.
 
-- [ ] **T15** `llms.txt` and `llms-full.txt`, generated
+- [x] **T15** `llms.txt` and `llms-full.txt`, generated
   <br>*Ships:* yes. *Validated by:* diff the generated llms.txt against the
   handwritten handoff, every difference explainable.
 
-- [ ] **T16** `index.json` and the `.md` mirrors
+- [x] **T16** `index.json` and the `.md` mirrors
   <br>*Ships:* yes. *Validated by:* JSON parses, schema URL present, every paper
   carries confidence, state and expires.
 

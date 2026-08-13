@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+import { iso } from '../../lib/draft'
+
+export async function getStaticPaths() {
+  const notes = await getCollection('impl')
+  return notes.map((n) => ({ params: { slug: n.slug }, props: { n } }))
+}
+const { n } = Astro.props
+const { Content } = await n.render()
+const d = n.data
+---
+<Doc title={`§${d.section} ${d.title}`} description={d.summary}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Implementation {d.section}</b>
+Category: System
+State: {d.state}</div>
+    <div class="r"><b>{d.title}</b>
+{d.result.join('\n')}</div>
+  </div>
+
+  <div class="title">
+    <h1>{d.title}</h1>
+    <div class="sub">{d.summary}</div>
+  </div>
+
+  <h2 id="stack">Stack</h2>
+  <div class="ind"><p>{d.stack.join(' · ')}</p></div>
+
+  <h2 id="text">Text</h2>
+  <div class="ind prose"><Content /></div>
+
+  {d.metrics.length > 0 && (
+    <>
+      <h2 id="metrics">Measurements</h2>
+      <div class="ind">
+        <table class="rt">
+          <thead><tr><th>Metric</th><th style="width:150px">Value</th><th>Note</th></tr></thead>
+          <tbody>{d.metrics.map((m) => (
+            <tr><td class="hd" data-l="Metric">{m.name}</td><td class="num" data-l="Value">{m.value}</td><td data-l="Note">{m.note}</td></tr>
+          ))}</tbody>
+        </table>
+        {d.fallsOverAt && <p><b>Falls over at:</b> {d.fallsOverAt}</p>}
+      </div>
+    </>
+  )}
+
+  {d.failures.length > 0 && (
+    <>
+      <h2 id="failures">Known failure modes</h2>
+      <div class="ind">{d.failures.map((f) => (
+        <div class="note"><b>{f.id}, {f.status}.</b> {f.note}</div>
+      ))}</div>
+    </>
+  )}
+
+  <div class="foot"><span>Imran</span><span>Implementation {d.section}</span><span>{d.state}</span></div>
+</Doc>
