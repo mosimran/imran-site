@@ -42,6 +42,11 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 <meta name="twitter:image" content={cover}>
 </head>
 <body>
+<!-- Cloudflare Email Address Obfuscation is disabled for this document.
+     It rewrites addresses and injects /cdn-cgi/scripts/../email-decode.min.js,
+     which the CSP in public/_headers forbids and which would break the
+     zero-JavaScript budget. The addresses here are published on purpose. -->
+<!--email_off-->
 <a class="skip" href="#main">Skip to document</a>
 <header class="rh">
   <div class="in">
@@ -58,5 +63,6 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
   {back && <a class="back" href="/">&#8592; {ident}</a>}
   <slot />
 </div>
+<!--/email_off-->
 </body>
 </html>

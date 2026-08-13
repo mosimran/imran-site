@@ -64,7 +64,7 @@ p{font-family:var(--text);font-size:17px;line-height:1.58;max-width:60ch;margin:
 a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--rule)}
 </style>
 </head>
-<body><div class="p">
+<body><!--email_off--><div class="p">
 <div class="ep">202 Accepted</div>
 <h1>Request received</h1>
 <p>If that address was well formed and inside the rate limit, a single-use link is on its
@@ -77,7 +77,7 @@ not that.</p>
 <a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a> and it comes back by
 hand. Section 6.5 lists that path first anyway.</p>
 <p class="d"><a href="/cv/">Back to Section 6</a></p>
-</div></body>
+</div><!--/email_off--></body>
 </html>`
 }
 

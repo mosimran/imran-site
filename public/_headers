@@ -1,0 +1,33 @@
+# BUILD.md section 5. The CSP has no script-src because production ships no
+# script; default-src 'none' therefore governs every fetch the page could make.
+#
+# This is only truthful with Cloudflare Email Address Obfuscation neutralised.
+# It rewrites mailto: links and injects /cdn-cgi/scripts/…/email-decode.min.js,
+# which this policy forbids. Every mailto on the site is wrapped in the
+# documented <!--email_off--> opt-out so there is nothing to inject.
+
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Content-Security-Policy: default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  X-Frame-Options: DENY
+  Link: <https://creativecommons.org/licenses/by/4.0/>; rel="license"
+
+# The résumé and everything that issues it. Never indexed, never cached.
+/cv/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, private
+
+/api/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: no-store, private
+
+# Immutable, content-addressed by name and regenerated only by hand.
+/og-cover.jpg
+  Cache-Control: public, max-age=604800
+/favicon.svg
+  Cache-Control: public, max-age=604800

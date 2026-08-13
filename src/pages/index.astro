@@ -7,6 +7,7 @@
 // Internet-Draft identifier at T10. See docs/PLAN.md section 1.
 import '../styles/rfc.css'
 import { identifier, expiresOn, isExpired, fmt } from '../lib/draft'
+import { website } from '../lib/ld'
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href
 const cover = new URL('/og-cover.jpg', Astro.site).href
@@ -56,8 +57,14 @@ const expired = isExpired(revised)
 <meta name="twitter:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
 <meta name="twitter:image" content={cover}>
 <meta name="twitter:image:alt" content="Mosthofa Imran, Lead Solutions Architect, Dhaka.">
+<script type="application/ld+json" set:html={JSON.stringify(website(ident))}></script>
 </head>
 <body>
+<!-- Cloudflare Email Address Obfuscation is disabled for this document.
+     It rewrites addresses and injects /cdn-cgi/scripts/../email-decode.min.js,
+     which the CSP in public/_headers forbids and which would break the
+     zero-JavaScript budget. The addresses here are published on purpose. -->
+<!--email_off-->
 <a class="skip" href="#main">Skip to document</a>
 
 <header class="rh">
@@ -665,5 +672,6 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
 
   <div class="foot"><span>Imran</span><span>Informational</span><span>[Page 1]</span></div>
 </div>
+<!--/email_off-->
 </body>
 </html>

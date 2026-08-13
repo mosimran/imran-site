@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import Doc from '../../layouts/Doc.astro'
 import { identifier, expiresOn, isExpired, fmt, iso } from '../../lib/draft'
+import { paper as paperLd } from '../../lib/ld'
 
 export async function getStaticPaths() {
   const papers = await getCollection('papers')
@@ -13,8 +14,14 @@ const d = p.data
 const ident = identifier(p.slug, d.history.length)
 const expires = expiresOn(d.revised)
 const expired = isExpired(d.revised)
+const ld = paperLd({
+  slug: p.slug, section: d.section, title: d.title, summary: d.summary,
+  identifier: ident, state: d.state, confidence: d.confidence ?? null,
+  published: d.published, revised: d.revised, expires, retires: d.retires, seeAlso: d.seeAlso,
+})
 ---
 <Doc title={`§${d.section} ${d.title}`} description={d.summary}>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)}></script>
   <div class="mast">
     <div>Off the Bit
 <b>Position Paper {d.section}</b>
