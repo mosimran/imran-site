@@ -1129,3 +1129,46 @@ an aspiration in a config file.
 
 **Second PR, second green run.** The type errors fixed in #34 mean CI is now doing real
 work rather than failing on the same twenty errors every time.
+
+---
+
+## Sweep · Five things not on the open list
+
+2026-08-14 · https://github.com/mosimran/imran-site/pull/36
+
+Prompted by being asked whether anything remained besides the known blockers. Rather than
+restate the list, swept the repository and the live site for things nobody had raised.
+
+**Fixed in #36.**
+
+The handoff prototype and `BUILD.md` were committed **twice**, byte-identical, 84 KB each.
+That duplication was noted in the very first read of this project, in the T01 entry, and
+then never acted on for the rest of the build. Two copies of one file is two things to
+keep in step and only one of them would have been. A README replaces them recording what
+went and why.
+
+`lighthouse` was a devDependency that **cannot run**. npm treats `tslib` as satisfied
+through an optional `sharp-wasm32` dependency skipped on this platform, so the module is
+never installed while npm reports "up to date". A dependency that cannot run is worse than
+an absent one, because it implies a command that works. Removed. The accessibility half of
+T20 is unaffected.
+
+CI actions bumped from v4 to v5. v4 printed a Node 20 deprecation warning on every run,
+which trains you to ignore warnings.
+
+**Raised, not fixed.**
+
+`docs/john - avatar 2022.png` is a **2.1 MB personal photo committed to a public
+repository** and the largest object in it. Only `scripts/make-social.mjs` reads it, by
+hand. It is already public through the OG card so this is not a leak, but it is in git
+history now and removing it from history is a rewrite rather than a delete.
+
+**The real email path has never been tested end to end.** `/api/cv` returns 202, the
+template renders, and a hand-composed message was delivered at T23. But no form submission
+with a deliverable address has been followed through to an inbox. The three test rows went
+to `example.com`, which cannot receive. The gate is verified everywhere except the one
+place that matters most to a requester.
+
+**Verified clean.** No secrets in tracked files. D1 has 0 rows. The expiry notice renders
+on all six expired papers. The gate returns 410 from every host. Sitemap and feeds carry
+only primary URLs, zero alias leakage. Security headers present on the aliases.
