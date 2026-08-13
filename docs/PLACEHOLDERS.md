@@ -60,6 +60,28 @@ of the site, where nothing is deleted.
   The rest have front matter, abstract and retirement conditions. Nothing is invented
   to fill them.
 
+## Contradicted by the real CV
+
+Found when the résumé PDF was checked before upload, 2026-08-13. The site carries the
+prototype's illustrative biography; the CV carries the real one. Both are handed to the
+same reader, so they cannot disagree.
+
+- [ ] **P15** Location: site says "Dhaka, Bangladesh (UTC+6)", CV says Kuala Lumpur
+  <br>`index §14`, masthead, `llms.txt`, `security.txt` languages, the OG card.
+  The timezone claim about overlapping with CET mornings and US Pacific evenings is
+  computed from the wrong city.
+
+- [ ] **P16** Tenure: site says "Eleven years of production engineering", CV says 15+
+  <br>`index` abstract.
+
+- [ ] **P17** Title: site says "Lead Solutions Architect", CV says "Senior AI Engineering
+  and Delivery Leader"
+  <br>masthead, `index §14`, `llms.txt`, the OG card, the email signature.
+
+- [ ] **P18** Employer and scale: CV names Mevrik (UK) and ~3M conversations per month;
+  site §3.1 claims 40M events/day and §3.2 claims 3.1M calls/day
+  <br>Different units, so not necessarily a contradiction, but they read as one.
+
 ## Low
 
 - [ ] **P12** Confidence values on all 14 papers
