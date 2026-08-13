@@ -374,6 +374,31 @@ edge.
 | Retention honoured | Daily DELETE plus forget | Cron Worker plus `/api/cv/forget` |
 | One tenant cannot spend the budget | Two limit dimensions | Address and /24, plus the edge rate limiter |
 
+### 6.4 Spam protection, and why not Turnstile
+
+Decided against Turnstile. It fights three things at once: the zero-JavaScript budget,
+the zero-third-party-request budget, and `BUILD.md` section 4.4, which says in the
+original spec "No password. No account. No 'verify you are human' widget." Turnstile is a
+third-party script, an iframe and a `challenges.cloudflare.com` request.
+
+The same protection, with none of that:
+
+1. **The D1 limits already specced.** Three per address per day, sixty per /24 per hour.
+   These are the real defence against volume and they cost nothing extra.
+2. **A honeypot field.** A visually hidden input that a human never fills and a naive bot
+   always does. Submissions with it populated get the same 202 as everything else and are
+   silently dropped, because the response must stay byte-identical regardless of outcome
+   or it becomes the enumeration oracle 4.3 promises it is not. Zero JavaScript, zero
+   third-party requests, no CSP change.
+3. **A Cloudflare WAF rate-limiting rule on `/api/cv`** at the zone level. No page change
+   at all, and it stops a flood before it reaches a function invocation.
+
+Layer 3 needs zone edit, which the current token lacks. Layers 1 and 2 land with T23.
+
+If a determined bot ever gets past this, the honest escalation is Turnstile on `/cv/`
+alone, accepting the budget and spec costs explicitly rather than pretending they are not
+there.
+
 ### 6.4 The constraint the prototype hides
 
 The form is `<form onsubmit="return false">` with no handler, and the budget is zero
