@@ -76,7 +76,7 @@ something on every task after it rather than only at the end.
 - [x] **T08** 5 implementation notes and 4 errata migrated
   <br>*Ships:* no. *Validated by:* same, and slugs match llms.txt exactly.
 
-- [ ] **T09** Paper count reconciled to one generated source
+- [x] **T09** Paper count reconciled to one generated source
   <br>*Ships:* no. *Validated by:* `grep -r "34 papers" src/` returns nothing.
 
 ## Track 3: routes
@@ -138,24 +138,24 @@ something on every task after it rather than only at the end.
 
 ## Track 6: the gate
 
-- [ ] **T22** D1 database, migration, private R2 bucket
+- [~] **T22** D1 database, migration, private R2 bucket
   <br>*Ships:* no. *Validated by:* migration applies, PDF uploaded, guessing the
   bucket URL from outside finds no route.
 
-- [ ] **T23** `POST /api/cv`, no-JS acknowledgement page, Resend
+- [x] **T23** `POST /api/cv`, no-JS acknowledgement page, Resend
   <br>*Ships:* yes. *Validated by:* real mail arrives. Acknowledgement page is
   byte-identical for valid, rate-limited and malformed addresses; diffed, not
   eyeballed.
 
-- [ ] **T24** `GET /cv/<token>`, `_routes.json`, collision test
+- [x] **T24** `GET /cv/<token>`, `_routes.json`, collision test
   <br>*Ships:* yes. *Validated by:* `/cv/` serves as a static asset, `/cv/deadbeef`
   hits the function and 410s.
 
-- [ ] **T25** `/api/cv/forget` and the cron janitor Worker
+- [x] **T25** `/api/cv/forget` and the cron janitor Worker
   <br>*Ships:* yes. *Validated by:* forget deletes the rows, janitor runs on its
   trigger against a backdated row.
 
-- [ ] **T26** Adversarial pass over the whole gate
+- [~] **T26** Adversarial pass over the whole gate
   <br>*Ships:* no. *Validated by:* two simultaneous redeems give exactly one 200 and
   one 410. Expired token 410s. Limits trip at 4 and 61. Nothing in the logs is PII.
 

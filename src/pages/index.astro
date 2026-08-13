@@ -324,7 +324,7 @@ August 2026</div>
         <td class="num" data-l="Confidence">n/a</td><td data-l="State"><span class="chip bad">Retracted</span></td><td class="num" data-l="Revised">2025-11-14</td></tr>
       </tbody>
     </table>
-    <p style="margin-top:14px"><a href="/papers/">Complete index, 34 papers →</a></p>
+    <p style="margin-top:14px"><a href="/papers/">Complete index →</a></p>
   </div>
 
   <!-- ---------------- 6 ---------------- -->
@@ -344,15 +344,14 @@ August 2026</div>
   <div class="ind">
     <div class="gate">
       <div class="ep">POST /api/cv</div>
-      <p class="pending"><b>Not built yet.</b> The endpoint ships with Section 6 and this form is
-      inert until it does. Principle 4.1 says a service must degrade loudly, so it says so here
-      rather than accepting an address and dropping it. Until then use the path 6.5 lists first
-      anyway: write to <a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a> and
-      say what the role is.</p>
       <form method="post" action="/api/cv" aria-describedby="cv-pending">
         <label class="skip" for="cv-email">Email address</label>
-        <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required disabled>
-        <button type="submit" disabled>Request link</button>
+        <div class="hp" aria-hidden="true">
+          <label for="cv-company">Company</label>
+          <input id="cv-company" type="text" name="company" tabindex="-1" autocomplete="off">
+        </div>
+        <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
+        <button type="submit">Request link</button>
       </form>
       <p class="fine" id="cv-pending">Returns <code>202 Accepted</code> and mails a signed URL. Time to live 86400 seconds,
       single use, <code>X-Robots-Tag: noindex</code>. Rate limited to three requests per address per day and

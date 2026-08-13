@@ -679,3 +679,71 @@ https://mosthofaimran.com, 24 pages.
 
 **Next**
 T09, then T17. T05 is still blocked on Email Obfuscation.
+
+---
+
+## T09, T22 to T26 · The Section 6 gate
+
+2026-08-13 · https://mosthofaimran.com
+
+Built after the link was reported dead twice. It was not a bug: the token in the test
+email was fabricated to render the template and the handler did not exist. It exists now.
+
+**T09** first, since it was one line: the index said "Complete index, 34 papers" against a
+collection of 14. Removed rather than corrected, because the papers index already derives
+its own count and a second number in a second place is how they disagreed in the first
+place.
+
+**Provisioned.** D1 `imran-cv`, `a3c657c9-3f6c-4199-bf6d-b21bb951426d`, migration applied
+remotely. R2 refused: the Cloudflare token carries no `r2` scope, as flagged at T03.
+
+**The ordering decision that matters.** `GET /cv/:token` checks the file exists **before**
+burning the token. A token is single use, so consuming one and then discovering there is
+nothing to serve would destroy a capability for nothing and leave the requester holding a
+dead link with no recourse. Without R2 the route returns 503 and says explicitly that
+nothing was consumed and the link still works.
+
+**Spam handling per PLAN 6.4**, no Turnstile: the two D1 limits, plus a honeypot field
+positioned off-screen rather than `display:none`, because a bot that honours
+`display:none` would skip it and the field would catch nothing.
+
+**Validated**
+
+| Check | Result |
+| --- | --- |
+| `/cv/` stays a static asset | 200, 13,846 bytes, not a function |
+| `/cv/<short>` | 410 Gone |
+| `/cv/<long>` | 503, nothing burned |
+| `GET /api/cv` | 405 with `Allow: POST` |
+| Enumeration oracle | Identical across valid, malformed, honeypot and empty |
+| Honeypot submission | Never reached the database |
+| Rate limit, 4th request for an address at 3 | 202 as always, no row inserted, count stayed 3 |
+| CAS burn under contention | changes 1 then 0. Exactly one winner |
+| Forget endpoint | Rows deleted, count 0 |
+
+**Two false results of my own, both caught.**
+
+The first oracle check reported 404 on `/cv/<token>` and 0-byte bodies on two of four
+POSTs. Neither was real; the deployment had not propagated. Re-run on the settled
+deploy, everything behaved.
+
+The second was worse and nearly got reported. The four acknowledgement responses came back
+byte-different, so I stripped the Cloudflare rewrite and compared again, and the comparison
+said IDENTICAL. It was a false pass: the `sed` had errored on all four files, so the
+comparison was between four empty files. Redone in Python with the lengths asserted
+non-empty, it genuinely passes at 2,144 bytes each. A test that cannot fail is not a test,
+and this one had quietly become one.
+
+**What the oracle check actually exposed.** The raw responses differ because Cloudflare
+Email Obfuscation rewrites the `mailto:` in the acknowledgement page with a per-response
+random key. Same length, different bytes, every time. That is noise rather than a signal
+so it is not an oracle, but it does mean byte-identity cannot be asserted on the wire until
+the feature is off. One more reason it should be.
+
+**Deployed**
+https://mosthofaimran.com. The gate is live: it issues tokens, mails them, rate limits,
+burns exactly once, and deletes on request.
+
+**Blocked**
+The file itself. R2 needs a token scope that does not exist yet, and the PDF needs to be
+supplied. Until both, a valid token gets an honest 503 rather than a burned capability.

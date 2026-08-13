@@ -201,6 +201,9 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
 }
 
 /* ---------- section 6.2 before the endpoint exists ---------- */
+/* Honeypot. Off-screen rather than display:none, because a bot that respects
+   display:none would skip it and the field would catch nothing. PLAN 6.4. */
+.gate .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .gate .pending{font-family:var(--text);font-size:calc(var(--fs-prose) * .92);line-height:1.55;
   max-width:60ch;margin:0 0 16px;color:var(--ink)}
 .gate .pending b{color:var(--flag)}

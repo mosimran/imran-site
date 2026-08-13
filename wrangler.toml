@@ -1,0 +1,15 @@
+name = "imran-site"
+compatibility_date = "2026-08-13"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "CV_DB"
+database_name = "imran-cv"
+database_id = "a3c657c9-3f6c-4199-bf6d-b21bb951426d"
+
+# R2 binding for the resume PDF. Commented until the bucket exists: the token
+# needs an r2 scope it does not currently carry. functions/cv/[token].ts checks
+# for the binding and returns 503 without burning a token when it is absent.
+# [[r2_buckets]]
+# binding = "CV_PDF"
+# bucket_name = "imran-cv-private"
