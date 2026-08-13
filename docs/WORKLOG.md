@@ -1250,3 +1250,62 @@ and only skip on other branches.
 **What is next.** The owner reads the fourteen papers and either keeps the positions or
 changes them, which closes P19. Implementation notes 3.1, 3.3, 3.4 and 3.5 are still front
 matter only, which is the rest of P11.
+
+---
+
+## T07a follow-up · Copy-edit pass over the fourteen papers
+
+2026-08-14 · prose only, no claim changed
+
+**What changed.**
+
+A style pass over the bodies shipped that morning. Prose only: no confidence value, no
+state, no retirement condition and no figure was touched, which the errata gate confirms
+by reporting zero claims changed.
+
+Three findings, all of them repetition rather than error.
+
+Ten of the thirteen abstracts ended with the identical sentence, "The gap from 1.0 is
+Section 5." The convention itself is 5.1's, and it is a good one: say where the confidence
+gap comes from. Repeated verbatim it stopped being a convention and became a template.
+Each now names the specific objection holding the number down, which is more informative
+and no longer interchangeable. 5.1's original wording is untouched, so it reads as the
+source of the habit rather than one of fourteen copies.
+
+Thirteen closing sections were built on the same anaphora, "It does not claim X. It does
+not claim Y." Within one paper that is a device. Across thirteen it is a tic, and several
+were the parallel triplets the style rules ban outright. Eleven were rewritten into plain
+prose; the count of that phrase went from 32 to 1.
+
+Eight figure captions opened on the word "Ordinal". The disclaimer is necessary, since
+every bar chart on this site ranks rather than measures. The wording did not have to be
+identical.
+
+A five and six-word n-gram scan across all fourteen bodies now reports **zero phrases
+appearing in three or more papers**, down from four. One of those four was a construction
+lifted from 5.1 and reused twice, which is the specific way this kind of writing goes
+wrong: the good sentence gets copied.
+
+Two section headings remain uniform across thirteen papers, "The strongest objection" and
+"What this paper does not claim". That is deliberate and it stays. A series where every
+paper answers the same two questions is the discipline; a series where every paper answers
+them in the same words is not.
+
+Also fixed: a broken antecedent in 5.8, where a sentence asserted that vector indexes are
+necessary and the next one referred back to "that second over-claim", which by then
+pointed at the opposite of what had just been said.
+
+**What was validated and how.**
+
+`astro check` 0 errors, 0 warnings. Budgets unchanged and green. Links 24 pages, 0 broken,
+0 anchors lost. Errata gate: **0 claims changed, 0 errata needed**, which is the correct
+result for a prose edit and is the check earning its keep in the quiet direction. Expiry 0.
+pa11y both schemes, 0 WCAG2AA errors. Mechanical greps confirm zero em dashes and zero
+hits on the banned phrasing list across all fourteen bodies.
+
+**What is deployed.** See the next entry.
+
+**What is next.** P19 stays open. A copy-edit is not the editorial pass that entry is
+about: the prose is now the owner's style, and the positions are still not the owner's
+positions until the owner has read them and kept or changed them. The ledger entry now
+says exactly that, so the distinction cannot quietly collapse into "it was edited".

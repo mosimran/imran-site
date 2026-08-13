@@ -24,7 +24,8 @@ query is constructed, and whether ranking is hybrid. Those decisions are usually
 one afternoon by whoever set the system up, and then never revisited, while the team
 spends the following two quarters comparing embedding models. This paper is deliberately
 narrower than the claim I got wrong in 5.10, and erratum 7.2 is the reason.
-<b>Confidence 0.70.</b> The gap from 1.0 is Section 5.</div>
+<b>Confidence 0.70.</b> Section 5 is why it is not higher: long context may retire the
+retrieval stage rather than improve it.</div>
 
 ## 1. The claim
 
@@ -143,8 +144,11 @@ technology.</div>
 
 ## 6. What this paper does not claim
 
-It does not claim embedding models do not matter. It does not claim vector indexes are
-unnecessary, which is the over-claim that retired 5.10. It does not claim these numbers
-generalise; Figure 2 is explicitly a hypothesis. And it does not claim retrieval is
-solved by classical information retrieval alone, only that the classical parts are where
-the unspent engineering hours are.
+Embedding models matter, and vector indexes are necessary. Saying otherwise about the
+second of those is the over-claim that retired 5.10, and I am not making it again.
+Figure 2 does not generalise; it is labelled a hypothesis because that is what it is.
+
+Classical information retrieval does not solve this on its own either. The claim is only
+that the classical parts are where the unspent engineering hours are, and that a team
+without the measurement in Section 3 has no way to find out whether that is true of their
+corpus.

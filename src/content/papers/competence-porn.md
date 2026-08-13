@@ -143,9 +143,11 @@ counterexample. This objection is the entire reason confidence sits at 0.80 rath
 
 ## 7. What this paper does not claim
 
-It does not claim technical content is worthless, and the sharpest version of the
-objection above is that it is the primary way most people learn. It does not claim the
-producers are dishonest; the removals are what make the form work and everyone knows they
-are there. It does not claim a measurement, and Section 4 is an argument rather than a
-finding. The retirement conditions are stated in the form of the evidence that would end
-it, and the first of them is the study I would most like someone else to run.
+Technical content is not worthless. The sharpest version of the objection above is that
+it is the primary way most people learn, and I have no answer to that. The producers are
+not dishonest either: the removals are what make the form work, and everybody involved
+knows they are there.
+
+Section 4 is an argument, not a measurement, and it should be read as one. The retirement
+conditions state the evidence that would end this paper, and the first of them is the
+study I would most like somebody else to run.

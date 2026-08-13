@@ -33,7 +33,10 @@ of the site, where nothing is deleted.
   <br>`src/content/papers/*`. All fourteen bodies were produced on 2026-08-14 in a
   session with an AI assistant, to the owner's direction and against the prototype's
   declared titles, summaries, states and confidence values. The arguments, figures and
-  retirement conditions are new text that the owner has not yet edited. This site's whole
+  retirement conditions are new text. A copy-editing pass was run the same day (em dashes,
+  the banned phrasing list, and cross-paper phrase repetition, which had left ten abstracts
+  carrying one identical sentence and thirteen closing sections built on one construction).
+  That pass fixed the prose. It is not the thing this entry is open for. This site's whole
   claim is that a published position carries its provenance, so the position is not the
   owner's until the owner has read it and either kept it or changed it. Close this by
   doing the editorial pass, and decide at that point whether the drafting method belongs
