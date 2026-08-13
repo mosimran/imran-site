@@ -299,3 +299,66 @@ does not yet deploy, pending the secrets.
 
 **Next**
 T05, `_headers` and `_redirects`. Fully unblocked, needs nothing from anyone.
+
+---
+
+## Finding · The domains were already wired, and something is injecting script
+
+2026-08-13
+
+Not a task. Prompted by being told the BTCL work was unnecessary, which turned out to
+understate things considerably.
+
+**Zone audit.** Reading the zone list against the Cloudflare API:
+
+| Domain | State |
+| --- | --- |
+| `mosthofaimran.com` | Active zone, John Efemer account, `aiden`/`tiffany.ns.cloudflare.com` |
+| `imran.com.bd` | Active zone, John Efemer account, `greg`/`may.ns.cloudflare.com` |
+| `johnefemer.com` | **Not on Cloudflare.** Registered at Namecheap 2022-07-29, expires 2027-07-29, parked on `ns1`/`ns2.lander.d.parity.domains` |
+
+Both existing zones sit in the same account chosen at T03, which was luck rather than
+judgement, and worth recording as such.
+
+**T00 is cancelled.** The BTCL delegation request does not exist as a problem. What was
+described in the plan as the longest lead time and the only thing on the critical path
+for T28 was already done before the plan was written.
+
+**T27 and T28 are largely done too.** The `imran-site` Pages project already lists
+`imran-site.pages.dev`, `imran.com.bd` and `mosthofaimran.com` as custom domains. Both
+apexes serve the current build over HTTPS today. What remains for T27 is `www`, the two
+mailboxes and the Resend records. What remains for T28 is `johnefemer.com` alone, whose
+nameservers must move off the parking service first.
+
+**The thing worth catching.** Both live hosts serve 50,692 bytes where `dist/index.html`
+is 50,344. The 348-byte difference is Cloudflare Email Address Obfuscation rewriting the
+two `imran@mosthofaimran.com` addresses and injecting a decoder:
+
+```
+<script data-cfasync="false" src="/cdn-cgi/scripts/…/email-decode.min.js"></script>
+```
+
+Reversing the obfuscation reproduces `dist/index.html` byte for byte, so the deployment
+is exactly right and the edge is adding to it.
+
+That injection breaks two of the site's hard constraints at once. The reading path is
+supposed to carry **0 bytes of JavaScript** and make **0 third-party requests**; the
+served page has one script tag and two `/cdn-cgi/` requests. It would also be blocked
+outright by the CSP planned for T05, since `default-src 'none'` with no `script-src`
+forbids exactly this, so every visitor would collect a console violation.
+
+**The lesson, which is the site's own argument turned on the build.** The CI budget
+check passes. It asserts against `dist/`, which is the artifact, not against the URL,
+which is what a reader receives. A check that validates the thing you built rather than
+the thing you shipped will report green through precisely this failure. T05 and T19 both
+need to assert on the live URL.
+
+**Blocked.** Turning Email Obfuscation off is a zone setting, and the wrangler OAuth
+token cannot reach it. `GET /zones/{id}/settings` returns 9109 Unauthorized, as does
+`GET /zones/{id}/dns_records`. The token carries `zone (read)` in the sense of listing
+zones and nothing further. This needs the dashboard or an API token with Zone Settings
+Edit and DNS Edit.
+
+**Next**
+T05 still, now with the zone hardening folded in and its validation moved from `dist/`
+to the live URL.
