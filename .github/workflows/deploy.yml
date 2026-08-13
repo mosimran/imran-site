@@ -20,12 +20,12 @@ jobs:
     name: check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # check-errata.mjs (T21) diffs against origin/main, so it needs history.
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
@@ -47,7 +47,7 @@ jobs:
       - name: placeholder ledger
         run: node scripts/placeholders.mjs
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist
@@ -72,7 +72,7 @@ jobs:
             echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID not set, skipping deploy. See docs/PLAN.md section 13.3."
           fi
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         if: steps.creds.outputs.ready == 'true'
         with:
           name: dist

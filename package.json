@@ -17,7 +17,8 @@
     "social": "node scripts/make-social.mjs",
     "errata": "node scripts/check-errata.mjs",
     "expiry": "node scripts/check-expiry.mjs",
-    "sign": "node scripts/sign.mjs"
+    "sign": "node scripts/sign.mjs",
+    "a11y": "node scripts/check-a11y.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"
@@ -26,9 +27,7 @@
     "@astrojs/check": "^0.9.0",
     "@astrojs/sitemap": "^3.7.3",
     "@cloudflare/workers-types": "^5.20260813.1",
-    "lighthouse": "^13.4.1",
     "pa11y": "^9.1.1",
-    "tslib": "2.8.1",
     "typescript": "^5.6.0"
   }
 }
