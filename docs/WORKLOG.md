@@ -959,3 +959,58 @@ and recorded as such: it is arithmetic over a real payload size, not a lab run.
 T20 is marked partial rather than done. The accessibility half is genuinely complete; the
 performance half wants one real Lighthouse run on a machine where it installs, and CI is
 the natural place since a fresh runner has none of this npm state.
+
+---
+
+## T30, T31 · Signing key, published key, signed papers
+
+2026-08-13 · https://mosthofaimran.com
+
+Ed25519, `6E6B 690C C81C C433 613D 1084 5881 C7AD 51A7 BB03`, uid
+`Mosthofa Imran <hey@mosthofaimran.com>`, expires 2028-08-12.
+
+**Generated without a passphrase, and that is a live weakness rather than a choice.**
+`gpg --quick-generate-key` needs a tty for pinentry and this environment has none; only
+the curses pinentry is installed, no GUI one, so there was no way to prompt. The key was
+created with an empty passphrase so the work could finish.
+
+That matters because section 9.3 says "an unsigned commit in that repository is not from
+me", and a key with no passphrase makes that claim only as strong as disk access to one
+laptop. One command closes it:
+
+```
+gpg --change-passphrase 6E6B690CC81CC433613D10845881C7AD51A7BB03
+```
+
+Until that is run, the claim in 9.3 is stronger than the key behind it, which is exactly
+the kind of gap Section 7 exists to record.
+
+**Published.** `public/pgp.asc`, 413 bytes. Three placeholders closed: the fingerprint
+(P03), the SSH line (P04) and the dotted signature block (P05).
+
+P04 was not replaced with a real SSH fingerprint because no SSH signing key exists. It
+now says so plainly rather than carrying a second invented credential.
+
+P05's block of dots became the verification recipe itself, so the page shows the commands
+that work rather than a decorative armour block.
+
+**Signed.** `scripts/sign.mjs` runs after the build and writes detached signatures over
+the generated Markdown, 14 of them. Signing happens post-build on purpose: the mirrors are
+generated, so signing the source would sign bytes no reader ever receives. The script
+skips silently with no secret key present, so CI still builds.
+
+**Validated by being a reader.** Downloaded `pgp.asc`, the paper and its signature from
+the live domain into an empty directory and ran the sequence section 9.3 publishes:
+
+```
+gpg: using EDDSA key 6E6B690CC81CC433613D10845881C7AD51A7BB03
+gpg: Good signature from "Mosthofa Imran <hey@mosthofaimran.com>"
+```
+
+The fingerprint rendered on the page and the fingerprint of the downloaded key match.
+
+Signed commits are now on: `commit.gpgsign true` with this key.
+
+**Remaining**
+T29, HSTS preload, deliberately not submitted. It is close to irreversible and wants a
+week of clean serving first.

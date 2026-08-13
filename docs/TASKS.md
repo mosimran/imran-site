@@ -182,11 +182,11 @@ something on every task after it rather than only at the end.
 
 ## Track 8: signatures
 
-- [ ] **T30** New key, pgp.asc, real fingerprints replace the placeholders
+- [x] **T30** New key, pgp.asc, real fingerprints replace the placeholders
   <br>*Ships:* yes. *Validated by:* `gpg --recv-keys` against the published
   fingerprint returns the key.
 
-- [ ] **T31** Sign the index draft and every paper, signed commits on
+- [x] **T31** Sign the index draft and every paper, signed commits on
   <br>*Ships:* yes. *Validated by:* the section 9.3 curl-and-verify sequence, run
   verbatim from a clean machine, verifies.
 

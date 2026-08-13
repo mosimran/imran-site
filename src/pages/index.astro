@@ -529,7 +529,7 @@ August 2026</div>
 <pre>
 $ curl -sO https://mosthofaimran.com/papers/competence-porn.md
 $ curl -sO https://mosthofaimran.com/papers/competence-porn.md.asc
-$ gpg --recv-keys 0xREPLACE_WITH_REAL_KEY_ID
+$ gpg --recv-keys 6E6B690CC81CC433613D10845881C7AD51A7BB03
 $ gpg --verify competence-porn.md.asc competence-porn.md
 </pre>
       <figcaption>Figure 2: verifying a paper. The résumé PDF is signed the same way, with the signature
@@ -538,8 +538,8 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:190px">Key</th><th>Fingerprint</th></tr></thead>
       <tbody>
-      <tr><td class="hd" data-l="Key">OpenPGP</td><td data-l="Fingerprint"><code>REPL ACEM EWIT HREA LFIN GERP RINT 0000 0000 0000</code> · <code>/pgp.asc</code> <span class="dim">(not yet published: no key exists, see the ledger)</span></td></tr>
-      <tr><td class="hd" data-l="Key">SSH (signing)</td><td data-l="Fingerprint"><code>SHA256:replace-with-real-ssh-signing-key-fingerprint</code></td></tr>
+      <tr><td class="hd" data-l="Key">OpenPGP</td><td data-l="Fingerprint"><code>6E6B 690C C81C C433 613D 1084 5881 C7AD 51A7 BB03</code> · <a href="/pgp.asc">/pgp.asc</a></td></tr>
+      <tr><td class="hd" data-l="Key">SSH (signing)</td><td data-l="Fingerprint"><span class="dim">Not used. Commits and documents are signed with the OpenPGP key above.</span></td></tr>
       <tr><td class="hd" data-l="Key">Commits</td><td data-l="Fingerprint">Every commit in the site repository is signed. An unsigned commit in that repository is not from me.</td></tr>
       </tbody>
     </table>
@@ -659,15 +659,13 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
 
   <h2 id="sig">Signature <a class="hash" href="#sig">#</a></h2>
   <div class="ind">
-    <div class="sig">-----BEGIN PGP SIGNATURE-----
-
-  iQIzBAEBCgAdFiEE.......REPLACE.WITH.A.REAL.DETACHED.SIGNATURE
-  .......................................................
-  .......................................................
-  =0000
------END PGP SIGNATURE-----</div>
+    <div class="sig">$ curl -sO https://mosthofaimran.com/pgp.asc
+$ gpg --import pgp.asc
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md.asc
+$ gpg --verify competence-porn.md.asc competence-porn.md</div>
     <p class="dim" style="margin-top:10px">Detached signature over the canonical Markdown source of this
-    document, published at <code>/draft-imran-systems-and-arguments-03.md.asc</code> <span class="dim">(not yet published)</span>.</p>
+    document, published at each paper carries one at <code>/papers/&lt;slug&gt;.md.asc</code>.</p>
   </div>
 
   <div class="foot"><span>Imran</span><span>Informational</span><span>[Page 1]</span></div>

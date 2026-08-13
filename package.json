@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/csp-hashes.mjs",
+    "build": "astro build && node scripts/csp-hashes.mjs && node scripts/sign.mjs",
     "preview": "astro preview",
     "check": "astro check && node scripts/check-budget.mjs && node scripts/check-links.mjs && node scripts/check-errata.mjs && node scripts/check-expiry.mjs",
     "budget": "node scripts/check-budget.mjs",
@@ -16,7 +16,8 @@
     "placeholders": "node scripts/placeholders.mjs",
     "social": "node scripts/make-social.mjs",
     "errata": "node scripts/check-errata.mjs",
-    "expiry": "node scripts/check-expiry.mjs"
+    "expiry": "node scripts/check-expiry.mjs",
+    "sign": "node scripts/sign.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"

@@ -20,13 +20,13 @@ of the site, where nothing is deleted.
 - [ ] **P02** Errata 7.4 credited to S. Datta
   <br>`index §7`, `errata.xml`. Same.
 
-- [ ] **P03** OpenPGP fingerprint `REPL ACEM EWIT HREA LFIN GERP RINT 0000 0000 0000`
+- [x] **P03** OpenPGP fingerprint `REPL ACEM EWIT HREA LFIN GERP RINT 0000 0000 0000`
   <br>`index §9.3`. Closed by T30.
 
-- [ ] **P04** SSH signing fingerprint `SHA256:replace-with-real-ssh-signing-key-fingerprint`
+- [x] **P04** SSH signing fingerprint `SHA256:replace-with-real-ssh-signing-key-fingerprint`
   <br>`index §9.3`. Closed by T30.
 
-- [ ] **P05** The PGP signature block, currently dotted filler
+- [x] **P05** The PGP signature block, currently dotted filler
   <br>`index`, signature section. Closed by T31.
 
 ## Medium: figures and claims
