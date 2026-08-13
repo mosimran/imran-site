@@ -918,3 +918,44 @@ https://mosthofaimran.com. One CSP per page, no JSON-LD violations, structured d
 
 **Next**
 T20 Lighthouse and pa11y. Then the domain and signing tasks.
+
+---
+
+## T20 · Accessibility and performance
+
+2026-08-13
+
+**Accessibility: complete and clean.** pa11y with both the axe and htmlcs runners, WCAG2AA,
+across six representative pages, run twice with the colour scheme forced light then dark.
+The palette is defined twice so checking one scheme checks half the site.
+
+**0 errors, 12 page-scheme combinations.** `scripts/check-a11y.mjs` runs it against any
+base URL.
+
+**Performance: measured, but not with Lighthouse.** Lighthouse would not run. It needs
+`tslib`, which npm believes is already satisfied through an optional `sharp-wasm32`
+dependency that is skipped on this platform, so the module is never actually installed and
+npm reports "up to date" while the file is absent. A tooling defect rather than a site
+one, and not worth more time than it already took.
+
+Measured directly instead, which for a document with no render-blocking subresources is
+the thing that actually determines LCP.
+
+| Page | TTFB median | Total median | Wire |
+| --- | --- | --- | --- |
+| `/` | 578 ms | 769 ms | 16,128 B |
+| `/papers/competence-porn/` | 566 ms | 567 ms | 6,310 B |
+| `/papers/` | 699 ms | 699 ms | 5,477 B |
+
+Render-blocking subresources: 0 external stylesheets, 0 executable scripts, 0 webfonts,
+0 above-fold images. The only `<script>` on the page is `application/ld+json`, which is
+data and never executed.
+
+Index compresses to 16,212 bytes gzip and 13,248 brotli. On Lighthouse's slow-3G profile,
+400 kbps and 300 ms RTT, that is roughly 324 ms of transfer plus about 600 ms of setup,
+so an estimated LCP near 924 ms against a 1,200 ms budget. **Estimated, not measured**,
+and recorded as such: it is arithmetic over a real payload size, not a lab run.
+
+T20 is marked partial rather than done. The accessibility half is genuinely complete; the
+performance half wants one real Lighthouse run on a machine where it installs, and CI is
+the natural place since a fresh runner has none of this npm state.

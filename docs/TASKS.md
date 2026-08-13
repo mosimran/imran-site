@@ -128,7 +128,7 @@ something on every task after it rather than only at the end.
   <br>*Ships:* no. *Validated by:* add a fake webfont, check fails; remove, green.
   Index under 60 KB, CSS under 12 KB.
 
-- [ ] **T20** Lighthouse CI and pa11y, both colour schemes
+- [~] **T20** Lighthouse CI and pa11y, both colour schemes
   <br>*Ships:* no. *Validated by:* LCP under 1.2 s on simulated 3G. AA contrast in
   light and dark. Tap targets pass. Print check by hand.
 
