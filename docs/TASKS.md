@@ -168,7 +168,7 @@ something on every task after it rather than only at the end.
   Pages project and serving the current build over HTTPS. Remaining: `www`, the two
   mailboxes, and the Resend DNS records.
 
-- [~] **T28** johnefemer.com and imran.com.bd aliases
+- [x] **T28** johnefemer.com and imran.com.bd aliases
   <br>*Ships:* live. *Validated by:* both serve, canonical on every alias page names
   the primary, security.txt lists all three `Canonical` URIs.
   <br>*Status:* `imran.com.bd` **done**, attached and serving, canonical correctly
