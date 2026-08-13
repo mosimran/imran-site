@@ -59,11 +59,12 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
-      # Not a secret. A Cloudflare account ID is an identifier, it appears in
-      # dashboard URLs, and it is already written down in docs/TASKS.md T03.
-      # Keeping it here means exactly one thing has to be configured to make
-      # deploys work, and that one thing is the only real credential.
-      CLOUDFLARE_ACCOUNT_ID: f697cce1cf00f8132c900d2c643ad935
+      # The secret wins if it is set. The literal is the fallback, because an
+      # account ID is an identifier rather than a credential: it appears in
+      # dashboard URLs and is already written down in docs/TASKS.md T03 and
+      # PLAN.md 13.3. So the deploy keeps working if the secret is ever removed,
+      # and only one thing, the token, is genuinely required.
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || 'f697cce1cf00f8132c900d2c643ad935' }}
       WRANGLER_VERSION: 4.71.0
 
     steps:
