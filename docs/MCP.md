@@ -1,203 +1,285 @@
 # Content MCP server
 
-A plan for editing the site's content from an MCP client instead of a text editor.
+Rev B. Rev A planned a local stdio server. This one is a Cloudflare Worker, revised
+against the Builders Lab guidelines, with the parts that exist to solve multi-user
+problems left out.
 
-Single user, single writer, no multi-tenancy, no auth server, no queue, no admin UI. The
-whole point is to remove steps, and a plan that adds infrastructure to a site whose
-architecture is "files on a CDN" would be Principle 4.5 in miniature: friction relocated
-rather than removed.
+Single user, single writer. No staff table, no domains, no federation.
 
-Status: **not started.** This is a design, not a build. Tasks are at the end.
+Status: **not started.** Design only. Tasks at section 10.
 
-- [1. What it is for](#1-what-it-is-for)
-- [2. The one design decision](#2-the-one-design-decision)
-- [3. Shape](#3-shape)
-- [4. Tools](#4-tools)
-- [5. The editorial rules it must not let you break](#5-the-editorial-rules-it-must-not-let-you-break)
-- [6. Deploy path](#6-deploy-path)
-- [7. Auth and secrets](#7-auth-and-secrets)
+- [1. What changed from rev A, and why](#1-what-changed-from-rev-a-and-why)
+- [2. Transport](#2-transport)
+- [3. Identity](#3-identity)
+- [4. Tiers, and the branch that makes them mean something](#4-tiers-and-the-branch-that-makes-them-mean-something)
+- [5. Tools](#5-tools)
+- [6. Errors](#6-errors)
+- [7. Deliberately skipped](#7-deliberately-skipped)
 - [8. Failure modes](#8-failure-modes)
-- [9. What is deliberately absent](#9-what-is-deliberately-absent)
+- [9. Testing](#9-testing)
 - [10. Tasks](#10-tasks)
 
 ---
 
-## 1. What it is for
+## 1. What changed from rev A, and why
 
-Today, publishing a paper means: write Markdown with correct front matter, remember that
-`retires` is mandatory, remember that changing a confidence value needs an errata entry,
-commit, push, wait for CI, check the deploy. That is fine at a desk and useless from a
-phone, and it is six chances to forget the errata rule.
+Rev A ran on stdio against a local clone. That is simpler and it is wrong for the actual
+use, which is changing a confidence value from a phone. stdio requires the laptop the
+clone is on. A Worker does not.
 
-The MCP server collapses that to a conversation:
+So: **stateless Streamable HTTP Worker, writing to GitHub over the API.**
 
-> Draft a paper at 5.15 called "The Dashboard Nobody Opens", confidence 0.7, holding.
-> Retirement conditions: ...
+One thing survives from rev A unchanged, and it is the load-bearing decision:
 
-and later:
+> **The server writes to git. It does not write to the site.**
 
-> Drop 5.3 to 0.55, an objection landed about private mailing lists. Credit K. Osei.
+The reading path grows no dependency, the schema stays enforced by the same build CI
+runs, a bad edit is a `git revert`, and the deploy path is the one already proven at T04.
 
-The second one is the interesting case. It is a change to a published claim, so it must
-produce an errata entry, and the server should refuse to make the change without one.
-
-## 2. The one design decision
-
-**The server writes to git. It does not write to the site.**
-
-Everything else follows. The site stays a static build from a repository, the history
-stays in the commit log, the schema stays enforced by the same build that CI runs, and a
-bad edit is reverted with `git revert` rather than with a database migration.
-
-The alternative, a server that writes content into a database the site reads at request
-time, would mean the reading path grows a dependency, the schema moves out of
-`src/content/config.ts`, and "the backup is the clone" from BUILD.md section 7 stops
-being true. Not worth it to save one commit.
-
-So: **MCP server → GitHub API → push to main → existing Actions pipeline → Cloudflare
-Pages.** The deploy path is the one that already exists and is already validated. The
-server adds no new way for the site to go down.
-
-## 3. Shape
-
-One TypeScript process, stdio transport, run locally by the MCP client. No hosting, no
-public endpoint, no inbound network surface at all.
+**Its own Worker, not a Pages Function on the site.** `mcp.mosthofaimran.com`, deployed
+separately. BUILD.md section 1 says the gate is "a separate small service... so a failure
+there cannot take the document down". The same argument applies twice over to a service
+whose whole job is accepting instructions from a language model.
 
 ```
-Claude / any MCP client
-        |  stdio
+Claude Code / claude.ai
+        |  POST /mcp   JSON-RPC 2.0   Authorization: Bearer …
         v
-  content-mcp  (node, ~400 lines)
+  mcp.mosthofaimran.com   (Worker, stateless)
         |
-        +-- reads   a local clone of mosimran/imran-site
-        +-- validates against src/content/config.ts (the same Zod schema)
-        +-- writes  Markdown files, commits, pushes
+        +-- D1: one token row, an audit table
+        +-- GitHub API: read and write src/content/**
         |
         v
-  GitHub -> Actions (check, then deploy) -> Cloudflare Pages
+  drafts branch  --(publish)-->  main  -->  Actions  -->  Pages
 ```
 
-Why a local clone rather than the GitHub Contents API: the schema check needs the whole
-collection in hand (to compute the next section number, to diff a confidence value
-against what is published, to know whether a slug is taken). A clone gives that for free
-and makes a dry run genuinely dry.
+---
 
-Repo layout: `services/content-mcp/`, its own `package.json`, not part of the site build.
+## 2. Transport
 
-## 4. Tools
+POST-only Streamable HTTP, no session state. A Worker isolate is not a process you can
+hold a session in, and a Durable Object for chat transport is a lot of machinery for a
+protocol that works request by request.
 
-Nine, deliberately. Each maps to something you would otherwise do by hand.
+Four details that are easy to get wrong and cost nothing to get right:
 
-| Tool | Does | Notes |
+- **Notifications get no response.** A message with no `id` is a notification.
+  `notifications/initialized` arrives straight after `initialize` and must produce no
+  JSON-RPC reply. Return `202` with an empty body.
+- **Batches are real.** If the payload is an array, dispatch each element and return an
+  array of the non-null results. All notifications means `202` and no body.
+- **Echo the client's protocol version** when it is one you know, otherwise your default.
+  Refusing an older version buys nothing.
+- **Answer `GET /mcp`.** The transport is POST-only, but clients probe with an
+  unauthenticated GET to discover the auth challenge. Give the 401 with its
+  `WWW-Authenticate`, then a 405 saying to POST.
+
+---
+
+## 3. Identity
+
+One user, so this is short, but two rules from the guidelines still earn their place.
+
+**The token stores who you are, not what you may do.** Even at one user, the tier cap is
+read from the token row on every call and the kill switch is read from config. Revocation
+is then immediate and there is nothing to sweep.
+
+**Hash at rest, show the plaintext once.** `sha256(token)` in the row, look up by hash.
+The real value is printed at mint and never again.
+
+**Say why a token failed.** "Invalid or revoked" makes an orphaned token undebuggable.
+Naming the reason is safe here because you only reach that message by presenting a token
+that resolved.
+
+**A kill switch in one place every path passes through.** A single `enabled` flag checked
+before dispatch. When something goes wrong at 03:00 the fix should be one row, not a
+redeploy.
+
+---
+
+## 4. Tiers, and the branch that makes them mean something
+
+Tier is about **consequence**, not difficulty:
+
+- **T0** reads. Nothing changes.
+- **T1** produces a draft nobody would call real.
+- **T2** changes a record.
+- **T3** is irreversible **OR** visible outside. Either is sufficient.
+
+That OR is where this project got interesting. Every write here ends in a git push, and a
+push to `main` deploys to a public site. Applied naively, **every write tool is T3**, the
+model stops discriminating, and the tier gate becomes a rubber stamp.
+
+The fix is not to fudge the tiers. It is to make the writes genuinely not outward-facing:
+
+> **Write tools commit to a `drafts` branch. Only `publish` touches `main`.**
+
+Actions deploys on push to `main` only, so a commit to `drafts` changes a record and
+reaches nobody. Now the tiers discriminate honestly:
+
+| Tier | Tools | Why |
 | --- | --- | --- |
-| `list_papers` | Every paper with section, state, confidence, revised, expiry | The read that makes the others usable |
-| `get_paper` | One paper, front matter plus body | |
-| `draft_paper` | Create a new paper | Defaults to `state: unwritten` unless `retires` is supplied |
-| `revise_paper` | Edit body or front matter | Refuses a confidence or state change without `erratum`, see section 5 |
-| `retract_paper` | Set `retracted`, require a retraction block | Always writes an erratum |
-| `add_erratum` | Create a Section 7 entry | Takes `creditedTo` |
-| `list_impl` / `get_impl` / `revise_impl` | Same three for implementation notes | Refuses to save a note with no named failure mode |
-| `preview` | Build locally, return the rendered page and the budget report | Never touches the remote |
-| `publish` | Commit and push, return the run URL | Optional `dryRun` |
+| T0 | `list_papers`, `get_paper`, `list_impl`, `get_impl`, `diff` | Reads |
+| T2 | `draft_paper`, `revise_paper`, `revise_impl`, `add_erratum`, `retract_paper` | Commit to `drafts`. Changes a record, reaches nobody |
+| T3 | `publish` | Merges `drafts` to `main`. Outward-facing, and a deploy is awkward to unwind |
 
-`publish` is separate from the write tools on purpose. Writing is cheap and reversible;
-pushing starts a deploy. Two steps means a conversation can draft, look, and change its
-mind without anything leaving the machine.
+**Mode is derived from tier, never stored beside it.** Two fields encoding overlapping
+truth is how they drift. `mode = tier === 'T0' ? 'read' : 'write'`, conservative on
+purpose: a mis-tiered tool then demands a stronger token than it needed, rather than
+accepting a weaker one it should have refused. Get the direction of the failure right.
 
-## 5. The editorial rules it must not let you break
+**Default the token to T2.** A fresh connector drafts and revises but cannot publish.
+Raising to T3 is deliberate.
 
-This is most of the value. The server is not a file writer with a chat interface, it is
-the editorial policy made conversational, and the rules are the same ones CI enforces.
+---
 
-1. **A paper with a body must carry retirement conditions.** `draft_paper` with prose and
-   no `retires` fails with the reason, not a warning.
-2. **Changing a published `confidence` or `state` requires an erratum.** `revise_paper`
-   refuses without one and tells you exactly what changed. This is the `check-errata.mjs`
-   rule from BUILD.md section 3, moved to the point of authorship where it is cheaper to
-   obey.
-3. **A retraction keeps the text.** `retract_paper` never deletes a body. Section 2.2 says
-   nothing here is deleted.
-4. **An implementation note needs a named failure mode.** `revise_impl` refuses to move a
-   note to `production` without at least one entry in `failures`.
-5. **Confidence is a number you have to type.** No default, no inherit, no "same as last
-   time". If a claim's confidence is not worth stating, the claim is not worth publishing.
-6. **The identifier and expiry are computed, never accepted as input.** The suffix is
-   `history.length - 1`. A tool that let you set it would let the record lie.
+## 5. Tools
 
-Every refusal returns the rule and the file it comes from, so the answer is never just
-"no".
+Eleven. One definition each, one object consumed by the dispatcher.
 
-## 6. Deploy path
+| Tool | Tier | Does |
+| --- | --- | --- |
+| `list_papers` | T0 | Section, state, confidence, revised, expiry, identifier |
+| `get_paper` | T0 | Front matter plus body |
+| `list_impl` / `get_impl` | T0 | Same for implementation notes |
+| `diff` | T0 | What is on `drafts` and not yet on `main` |
+| `draft_paper` | T2 | Create. Defaults to `state: unwritten` unless `retires` is given |
+| `revise_paper` | T2 | Edit. Refuses a confidence or state change without an erratum |
+| `revise_impl` | T2 | Refuses to move a note to `production` with no named failure |
+| `add_erratum` | T2 | Section 7 entry. `creditedTo` must be supplied, never inferred |
+| `retract_paper` | T2 | Sets `retracted`, requires a retraction block, never deletes the body |
+| `publish` | T3 | Merge `drafts` to `main`, return the Actions run URL |
 
-Nothing new. `publish` pushes to `main`, and from there:
+**Lock every schema with `additionalProperties: false`.** Models invent fields. Better to
+refuse loudly than to silently ignore something the model believed it had set.
+
+**Coerce, do not trust.** Small typed helpers that clamp, trim and throw a typed
+`McpInputError`. Accept an array or a comma-separated string for lists, because models
+produce both. If a helper takes a default, pass it rather than `??`-ing the result, which
+produces a dead branch.
+
+**Write descriptions for a model, not a changelog.** Say what the tool does, what it does
+not do, and what to use instead. A description that describes a two-call dance will reliably
+get the first call and not the second, and the model will report success.
+
+**Handlers go through one content module**, the same one that reads and writes the
+collection files, never ad-hoc string surgery on YAML. Two implementations of the front
+matter rules means one of them is wrong.
+
+### The editorial rules, which are the actual product
+
+The server is not a file writer with a chat interface. These are the same rules CI
+enforces, moved to the point of authorship where obeying them is cheaper.
+
+1. A paper with a body must carry retirement conditions.
+2. Changing a published `confidence` or `state` requires an erratum. Refuse, and show the diff.
+3. A retraction keeps the text. Nothing here is deleted.
+4. An implementation note reaching `production` needs a named failure mode.
+5. Confidence has no default. If it is not worth stating, the claim is not worth publishing.
+6. The identifier and expiry are computed, never accepted as input. A tool that let you
+   set the version would let the record lie.
+
+Every refusal returns the rule and the file it comes from.
+
+---
+
+## 6. Errors
+
+Two kinds, and they are not interchangeable.
+
+| | Vehicle | Who sees it |
+| --- | --- | --- |
+| Protocol error | JSON-RPC `error` | the client |
+| Tool error | `{ content: [...], isError: true }` in a **result** | the model |
+
+Unknown method is a protocol error. Unknown tool, denied tier, bad input, handler threw:
+all `isError` results, because the model can read those and correct itself. A JSON-RPC
+error usually just ends the turn.
+
+Refusals say what would make it work:
 
 ```
-push -> Actions: check (build, astro check, budgets) -> deploy (wrangler pages deploy)
+'publish' is a T3 action and this token is capped at T2.
+Raise the cap on the token if that is intended.
 ```
 
-`publish` returns the Actions run URL and, once `CLOUDFLARE_API_TOKEN` is in secrets, the
-deployment URL. If the check fails the deploy does not run, which was proven at T04 rather
-than assumed.
+For unexpected throws, return something generic. Do not leak a stack trace into a model's
+context.
 
-**The server does not deploy.** It has no Cloudflare credential and no wrangler dependency.
-One deploy path, already tested, already gated.
+---
 
-## 7. Auth and secrets
+## 7. Deliberately skipped
 
-Single user, so there is no auth model beyond the machine you are sitting at.
+Named, with the reason, so the omissions are decisions rather than gaps.
 
-- **GitHub**: a fine-grained PAT with `Contents: read and write` on this one repository,
-  in the MCP client's env, never in the repo. `Pull requests: write` too if the PR loop is
-  wanted; direct-to-main is the simpler default for one writer.
-- **No Cloudflare credential.** See above.
-- **No inbound port.** stdio only, so there is nothing to attack from the network.
+| Skipped | Why |
+| --- | --- |
+| **OAuth 2.1, DCR, PKCE** | Exists so a browser client with no header field can sign in. One user with Claude Code mints a bearer token by hand. This is the single biggest chunk of the guidelines and the least applicable. It is the upgrade path if editing from claude.ai in a browser ever matters, and nothing here forecloses it. |
+| **The permission gate** | Third of the three gates, and it answers "does this human have this domain". There is one human and no domains. Mode and tier remain; perm would be a constant. |
+| **Live staff resolution** | No staff table to resolve against. The equivalent is the kill switch. |
+| **Federation** | The server calls no other MCP servers. If that changes, the guidelines' rules apply in full and none of them are optional. |
+| **Durable Objects** | Nothing is remembered between calls by design. |
+| **Two-transport parity tests** | There is no in-house agent to be at parity with. |
+| **Cron triggers** | None needed. Worth knowing the account cap is five, and the CV janitor at T25 will want one of them. |
 
-The threat model is honestly small: the server can commit to one public repository that
-already contains everything it can write. The worst case is a bad commit, and the fix for
-a bad commit is `git revert`.
+---
 
 ## 8. Failure modes
 
-Naming them, per Principle 4.8.
-
 | Failure | Blast radius | Handling |
 | --- | --- | --- |
-| Clone drifts behind the remote | Edits conflict on push | `pull --ff-only` before every write; refuse and report if it fails |
-| Two clients write at once | Lost edit | Out of scope by construction, single user. A push rejection is the backstop |
-| A tool writes valid front matter that fails the build | Red CI, no deploy | `preview` runs the real build; `publish` can be told to run it first |
-| The model invents a metric or a correction | **Published falsehood** | The worst one. See below |
-| PAT leaks | Commits to one public repo | Revoke, rotate. Happened twice already this project |
+| `drafts` diverges from `main` | Publish conflicts | Refuse and report; never force |
+| Model invents a metric or a correction | **Published falsehood** | The worst one. `creditedTo` must be supplied, numeric fields have no defaults, `publish` is a separate deliberate act |
+| Bad edit reaches `main` | Public wrong page | `git revert`, and the errata rule means the change left a trail |
+| Token leaks | Commits to one public repo | Kill switch, then rotate. Has happened twice on this project already |
+| Rate limiter unavailable | None | **Fail open.** A limiter outage must not take the server down |
+| Audit write fails | A missing row | Swallow it. An audit failure that fails the call is worse than a missing row |
+| GitHub API down | No writes | Report plainly. The site is unaffected, being static |
 
-The fourth is the one that matters, because it is the failure this whole site is against.
-Mitigation is structural rather than hopeful: `add_erratum` requires `creditedTo` to be
-supplied explicitly and never infers it; numeric fields have no defaults; and the tool
-descriptions state that unknown values are left blank rather than estimated. The residual
-risk is real and is why `publish` is a separate, deliberate step.
+**Audit what a call did, not that it happened.** Tool name alone cannot answer "what did
+it change", which is the only question worth asking about a T3 call. Record token id,
+tool, ok, duration, error, tier, and arguments for anything above T0, capped. Reads are
+omitted: they are the bulk of the traffic and their arguments are the query, not the
+consequence.
 
-## 9. What is deliberately absent
+Git is the audit log for anything that lands on `drafts`. The D1 table exists for the
+calls that did not land: refusals, throws, and the publish that failed halfway.
 
-No web UI. No scheduling. No draft workflow with states beyond the ones the schema
-already has. No image upload. No analytics. No multi-user anything. No hosted deployment
-of the server itself.
+---
 
-Each of those is a reasonable feature for a CMS. This is not a CMS; it is a way to avoid
-opening an editor to change one number, and every feature that would make it a CMS is a
-feature that puts something between the author and a git commit.
+## 9. Testing
+
+In rough order of value.
+
+1. **A golden snapshot** of every `(name, tier, mode)` triple. This is the thing that
+   makes a later refactor safe.
+2. **Tier invariants**: no T3 tool is read-mode, a T0 cap admits exactly the read tools.
+3. **Round-trips through the real handler**, against an in-memory D1 built from the actual
+   migration files. A test database assembled by hand drifts from production; one built
+   from migrations cannot.
+4. **The editorial rules**, one test each: body without `retires` refused, confidence
+   change without erratum refused, retraction preserving the body, identifier computed
+   and not settable.
+5. **Schema hygiene**: every tool has `additionalProperties: false`, a tier, and a
+   description over a minimum length.
+6. **Transport conformance**: notification returns 202 with no body, batch returns an
+   array, unknown protocol version falls back, `GET /mcp` returns the challenge.
+
+---
 
 ## 10. Tasks
 
-Slots in after the site's own build. Numbered separately so the main sequence stays
-readable.
-
 | # | Task | Validated by |
 | --- | --- | --- |
-| M01 | Scaffold `services/content-mcp`, stdio server, no tools | Client lists the server, zero tools |
-| M02 | Repo adapter: clone, `pull --ff-only`, read collections | `list_papers` returns all 14 with correct expiry |
-| M03 | Schema bridge, reusing `src/content/config.ts` | Invalid front matter is rejected with the schema's own message |
-| M04 | Read tools: `list_papers`, `get_paper`, `list_impl`, `get_impl` | Round-trip a paper unchanged |
-| M05 | `draft_paper`, `revise_impl` | A paper with a body and no `retires` is refused |
-| M06 | `revise_paper` with the errata rule | A confidence change without an erratum is refused, with the diff |
-| M07 | `retract_paper`, `add_erratum` | Retraction keeps the body; erratum requires `creditedTo` |
-| M08 | `preview`: local build plus budget report | Catches a deliberate over-budget page |
-| M09 | `publish`: commit, push, return the run URL | Dry run pushes nothing; real run turns CI green |
-| M10 | Failure-mode pass | Every row in section 8 reproduced deliberately |
+| M01 | Worker scaffold, `POST /mcp`, `initialize`, `tools/list` empty | Claude Code connects and lists zero tools |
+| M02 | Transport conformance: notifications, batches, version echo, GET challenge | The six checks in section 9.6 |
+| M03 | D1 schema, token mint, hash at rest, kill switch | A revoked token refuses with a reason |
+| M04 | Tier and mode gates, cap on the token | T3 tool with a T2 token refuses and says how to fix it |
+| M05 | Content module over the GitHub API, `drafts` branch | Round-trip a paper unchanged |
+| M06 | Read tools | `list_papers` returns 14 with correct identifiers and expiry |
+| M07 | Write tools with the editorial rules | Each rule in section 5 has a test that proves the refusal |
+| M08 | `publish` and `diff` | Publish turns CI green; a conflicting publish refuses |
+| M09 | Rate limit failing open, audit table | Limiter outage does not take the server down; a T2 call records its arguments |
+| M10 | Golden snapshot and tier invariants | Snapshot committed, invariants green |
+| M11 | Failure-mode pass | Every row in section 8 reproduced deliberately |

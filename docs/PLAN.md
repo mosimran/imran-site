@@ -329,11 +329,18 @@ CREATE INDEX cv_token_email  ON cv_token (email, issued_at);
 CREATE INDEX cv_token_net    ON cv_token (src_net, issued_at);
 CREATE INDEX cv_token_expiry ON cv_token (expires_at) WHERE redeemed_at IS NULL;
 
--- single atomic burn: two simultaneous requests, exactly one winner
+-- Single atomic burn: two simultaneous requests, exactly one winner.
+--
+-- Compare-and-set on `changes`, NOT `RETURNING`. D1 accepts RETURNING but it is
+-- not a clause to lean on for single-use semantics; the same CAS pattern is what
+-- the Workers guidance uses for OAuth codes and job claims. Two statements, and
+-- the atomicity that matters lives entirely in the first.
 UPDATE cv_token SET redeemed_at = unixepoch()
  WHERE token_hash = ?1 AND redeemed_at IS NULL
-   AND revoked = 0 AND expires_at > unixepoch()
- RETURNING id, email;
+   AND revoked = 0 AND expires_at > unixepoch();
+-- then: if meta.changes !== 1 the token was already burned, expired or revoked.
+-- Only on changes === 1 do you SELECT the row and stream the file.
+SELECT id, email FROM cv_token WHERE token_hash = ?1;
 ```
 
 ### 6.2 Rate limiting without Redis
@@ -360,7 +367,7 @@ edge.
 | --- | --- | --- |
 | Token unguessable | 256-bit CSPRNG | `crypto.getRandomValues`, 32 bytes, base64url |
 | Breach does not leak links | Store SHA-256 only | `crypto.subtle.digest` into a BLOB |
-| Single use under concurrency | Atomic UPDATE RETURNING | Same statement, D1 |
+| Single use under concurrency | Atomic UPDATE RETURNING | CAS on `changes`, D1. See 6.1 |
 | No enumeration oracle | Always 202 | Same, one identical HTML acknowledgement regardless of outcome |
 | Not indexable | X-Robots-Tag, robots.txt | `_headers` rule on `/cv/*` plus the header in the response |
 | No object storage leak | App streams the PDF | R2 private binding, streamed |
