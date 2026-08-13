@@ -36,7 +36,7 @@ export const GET: APIRoute = async () => {
   <link href="${SITE}/" rel="alternate" type="text/html"/>
   <id>${SITE}/</id>
   <updated>${iso(items[0]?.updated ?? new Date())}</updated>
-  <author><name>Mosthofa Imran</name><email>imran@mosthofaimran.com</email></author>
+  <author><name>Mosthofa Imran</name><email>hey@mosthofaimran.com</email></author>
   <rights>CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</rights>
 ${items.map((i) => `  <entry>
     <title>${esc(i.title)}</title>

@@ -649,7 +649,7 @@ token before either.
 - Resend account, primary domain verified, key into Pages secrets as
   `RESEND_API_KEY`.
 - Sending address: `no-reply@` contradicts section 6.5, which promises replies.
-  `imran@` is the consistent choice.
+  `hey@` is the consistent choice.
 
 ### 13.4 Signing key
 

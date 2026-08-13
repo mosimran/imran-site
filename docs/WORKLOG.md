@@ -521,3 +521,39 @@ https://mosthofaimran.com, 24 pages.
 
 **Next**
 The MCP server plan, then T05 once Email Obfuscation is off.
+
+---
+
+## Change · Contact address moves to hey@
+
+2026-08-13 · https://mosthofaimran.com
+
+`imran@mosthofaimran.com` becomes `hey@mosthofaimran.com`. 13 occurrences across five
+source files: the `rel="me"` link and Sections 6.5 and 14 of the index, the CV page, the
+Atom author element on both feeds, and the llms.txt contact block.
+
+`docs/WORKLOG.md` is deliberately **not** rewritten. Its earlier mentions of the old
+address are a factual record of what the page contained when the Cloudflare email
+obfuscation finding was made, and editing history to match the present would falsify the
+log. Same rule the site applies to itself in Section 2.2.
+
+`docs/intitial-handoff/` is likewise untouched, being the preserved reference copy.
+
+Forward-looking references in PLAN and TASKS updated, since those describe the mailbox
+still to be created rather than one that existed.
+
+**Validated**
+Build clean, 24 pages. 13 `hey@` occurrences in `dist/`, 0 of the old address, 5 mailto
+links. Confirmed live on both the pages.dev origin and the custom domain: `rel="me"`, both
+feed `<email>` elements, and the llms.txt contact line all read `hey@`.
+
+One false alarm of my own: the first live probe reported the old address on three of four
+checks while the fourth counted zero. That contradiction was Cloudflare edge cache serving
+different objects per cache key, not a partial deploy. Confirmed by checking the pages.dev
+origin directly. Third time this project that a cache read has looked like a bug.
+
+**Outstanding**
+The mailbox does not exist yet. `hey@mosthofaimran.com` needs to receive before T27, and
+`security.txt` still advertises `security@mosthofaimran.com`, so that is two mailboxes.
+Until they exist the site publishes addresses that bounce, which is the same class of
+problem as the dead form and is tracked the same way.

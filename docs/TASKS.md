@@ -159,7 +159,7 @@ something on every task after it rather than only at the end.
 ## Track 7: domains
 
 - [~] **T27** mosthofaimran.com cutover, mailboxes, Resend DNS
-  <br>*Ships:* live. *Validated by:* apex and www resolve, `imran@` and `security@`
+  <br>*Ships:* live. *Validated by:* apex and www resolve, `hey@` and `security@`
   both receive, SPF, DKIM and DMARC pass.
   <br>*Status:* **routing already done.** The apex is attached to the `imran-site`
   Pages project and serving the current build over HTTPS. Remaining: `www`, the two

@@ -14,7 +14,7 @@ export const GET: APIRoute = async () => {
   <link href="${SITE}/errata/" rel="alternate" type="text/html"/>
   <id>${SITE}/errata.xml</id>
   <updated>${iso(items[0]?.data.date ?? new Date())}</updated>
-  <author><name>Mosthofa Imran</name><email>imran@mosthofaimran.com</email></author>
+  <author><name>Mosthofa Imran</name><email>hey@mosthofaimran.com</email></author>
   <rights>CC BY 4.0</rights>
 ${items.map((e) => `  <entry>
     <title>${esc(e.data.section)} ${esc(e.data.title)}</title>

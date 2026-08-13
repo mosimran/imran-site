@@ -61,7 +61,7 @@ ${papers.map((p) => {
 
 ## Contact
 
-- imran@mosthofaimran.com
+- hey@mosthofaimran.com
 `
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })
 }
