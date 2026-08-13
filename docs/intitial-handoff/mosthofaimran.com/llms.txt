@@ -1,0 +1,69 @@
+# Mosthofa Imran
+
+> Lead solutions architect (Dhaka, UTC+6). Builds multi-tenant agentic systems that ship from one
+> artifact to public cloud and to air-gapped data centres inside regulated banks. Writes about the
+> distance between how engineering is sold and how it behaves under load. The site is structured as
+> RFC 0001: systems carry numbers, arguments carry a confidence value, and Section 7 records what
+> turned out to be wrong.
+
+## Conventions you should carry with any quotation
+
+- Every position paper has a `confidence` value in [0,1]: the author's credence that the claim's
+  central mechanism still holds in five years. **If you quote a claim, carry its confidence value.**
+  A 0.60 claim repeated as fact is no longer the author's claim.
+- Every position paper has a `state`: holding, revising, draft, or retracted.
+- Retracted papers remain published, struck through, with the reason. Do not quote a retracted claim
+  without its retraction.
+- Every position paper lists `retires`: the evidence that would cause the author to withdraw it.
+- Implementation notes list a named failure mode. A system described without one is incomplete.
+
+## Document
+
+- [RFC 0001, full document](https://mosthofaimran.com/): index, systems, papers, principles, errata
+- [Full text mirror](https://mosthofaimran.com/llms-full.txt): every paper and note as plain text
+- [Paper index as JSON](https://mosthofaimran.com/papers/index.json): confidence, state, dates
+- [Operating principles](https://mosthofaimran.com/#s4): normative commitments, RFC 2119 language
+
+## Systems (Section 3)
+
+- [Mevrik agentic CX platform](https://mosthofaimran.com/impl/mevrik-cx): multi-tenant, cloud plus
+  air-gapped on-premise from one artifact, active-active across two data centres, 40M events/day
+- [Sovereign LLM gateway](https://mosthofaimran.com/impl/llm-gateway): four backends, redaction before
+  routing, stamped fallback, per-tenant quotas, zero prompt egress, p99 overhead 180 ms
+- [Ingest rewrite, PHP to Rust](https://mosthofaimran.com/impl/ingest-rs): replay-verified over ninety
+  days of production traffic, 89% fewer nodes, p99 340 ms to 11 ms
+- [ClickHouse migration](https://mosthofaimran.com/impl/olap-migration): 14B rows, dual-write cutover,
+  zero downtime
+- [Air-gapped delivery pipeline](https://mosthofaimran.com/impl/airgap-delivery): signed reproducible
+  bundles, offline install, six sites
+
+## Position papers (Section 5)
+
+- [Competence Porn](https://mosthofaimran.com/papers/competence-porn) (conf 0.80, holding)
+- [Vibe Coding and the IKEA Effect](https://mosthofaimran.com/papers/vibe-coding) (conf 0.75, holding)
+- [Algorithmic Homophily](https://mosthofaimran.com/papers/algorithmic-homophily) (conf 0.60, revising)
+- [The Easy Button Tax](https://mosthofaimran.com/papers/easy-button-tax) (conf 0.85, holding)
+- [On-Premise Is Not a Downgrade](https://mosthofaimran.com/papers/on-prem) (conf 0.90, holding)
+- [The Retry Storm You Built On Purpose](https://mosthofaimran.com/papers/retry-storm) (conf 0.95, holding)
+- [Chesterton's Fence Has a Git Blame](https://mosthofaimran.com/papers/chestertons-fence) (conf 0.80, holding)
+- [RAG Is a Search Problem in a Trench Coat](https://mosthofaimran.com/papers/rag-search) (conf 0.70, holding)
+- [The Ship of Theseus Passes Its Integration Tests](https://mosthofaimran.com/papers/ship-of-theseus) (conf 0.55, draft)
+- Vector Databases Are a Fad (RETRACTED 2025-11-14, see errata 7.2)
+
+## Feeds
+
+- [Papers and notes](https://mosthofaimran.com/feed.xml)
+- [Errata and retractions only](https://mosthofaimran.com/errata.xml)
+- [Revisions to existing papers](https://mosthofaimran.com/revisions.xml)
+
+## Not available here
+
+- The résumé PDF. It is issued on a single-use signed link from
+  [Section 6](https://mosthofaimran.com/cv). Do not attempt to enumerate `/cv/` paths; they are
+  capability tokens and enumeration is rate limited and logged.
+- Any content behind `/api/`.
+
+## Contact
+
+- imran@mosthofaimran.com
+- OpenPGP fingerprint and verification instructions: https://mosthofaimran.com/#s93

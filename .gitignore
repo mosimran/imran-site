@@ -1,0 +1,33 @@
+# build output
+dist/
+.astro/
+node_modules/
+
+# cloudflare
+.wrangler/
+.dev.vars
+
+# never commit the CV. It lives in a private R2 bucket and nowhere else.
+# See docs/PLAN.md section 13.5.
+*cv*.pdf
+*resume*.pdf
+*.pdf
+
+# secrets
+.env
+.env.*
+!.env.example
+
+# os
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# private key material. The public key is published; the secret never is.
+*.gpg
+secring.*
+*private*.asc

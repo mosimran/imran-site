@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Mosthofa Imran: Position Papers and Implementation Notes</title>
+  <subtitle>Systems with numbers. Arguments with confidence values.</subtitle>
+  <link href="https://mosthofaimran.com/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://mosthofaimran.com/" rel="alternate" type="text/html"/>
+  <id>https://mosthofaimran.com/</id>
+  <updated>2026-08-09T00:00:00Z</updated>
+  <author><name>Mosthofa Imran</name><email>imran@mosthofaimran.com</email></author>
+  <rights>CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</rights>
+
+  <entry>
+    <title>5.9 The Ship of Theseus Passes Its Integration Tests</title>
+    <link href="https://mosthofaimran.com/papers/ship-of-theseus" rel="alternate" type="text/html"/>
+    <link href="https://mosthofaimran.com/papers/ship-of-theseus.md.asc" rel="related" type="application/pgp-signature"/>
+    <id>tag:mosthofaimran.com,2026:papers/ship-of-theseus</id>
+    <published>2026-08-09T00:00:00Z</published>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <category term="draft"/>
+    <category term="confidence:0.55"/>
+    <summary type="text">Strangler-fig migrations, and the moment where the new system is technically
+complete and nobody can name the day it became itself. State: draft. Confidence: 0.55.</summary>
+  </entry>
+
+  <entry>
+    <title>5.6 The Retry Storm You Built On Purpose</title>
+    <link href="https://mosthofaimran.com/papers/retry-storm" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2026:papers/retry-storm</id>
+    <published>2026-07-28T00:00:00Z</published>
+    <updated>2026-07-28T00:00:00Z</updated>
+    <category term="holding"/>
+    <category term="confidence:0.95"/>
+    <summary type="text">Exponential backoff without jitter synchronises your clients into a distributed
+metronome. You shipped the accelerant, then wrote a postmortem about the fire. State: holding.
+Confidence: 0.95.</summary>
+  </entry>
+
+  <entry>
+    <title>5.1 Competence Porn (revision 4)</title>
+    <link href="https://mosthofaimran.com/papers/competence-porn" rel="alternate" type="text/html"/>
+    <link href="https://mosthofaimran.com/papers/competence-porn.md.asc" rel="related" type="application/pgp-signature"/>
+    <id>tag:mosthofaimran.com,2025:papers/competence-porn</id>
+    <published>2025-09-03T00:00:00Z</published>
+    <updated>2026-06-11T00:00:00Z</updated>
+    <category term="holding"/>
+    <category term="confidence:0.80"/>
+    <summary type="text">Watching a skilled person work occupies the same reward slot as being one, and
+the industry has industrialised the confusion. Section 3 rewritten after a correction from a reader in
+bank operations. State: holding. Confidence: 0.80. Strongest unanswered objection is listed in the
+paper itself.</summary>
+  </entry>
+
+  <entry>
+    <title>3.2 Sovereign LLM Gateway (implementation note)</title>
+    <link href="https://mosthofaimran.com/impl/llm-gateway" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2026:impl/llm-gateway</id>
+    <published>2026-05-20T00:00:00Z</published>
+    <updated>2026-05-20T00:00:00Z</updated>
+    <category term="production"/>
+    <summary type="text">One control plane over four model backends with no prompt leaving the perimeter.
+Redaction before routing, deterministic stamped fallback, per-tenant quotas. 3.1M calls/day, p99
+overhead 180 ms, falls over at roughly 11k rps and degrades to fail-open with an alarm.</summary>
+  </entry>
+</feed>

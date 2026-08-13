@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>RFC 0001: Mosthofa Imran, Systems and Arguments</title>
+<meta name="description" content="Mosthofa Imran. Lead solutions architect. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.">
+<link rel="canonical" href="https://mosthofaimran.com/">
+<link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="Errata" href="/errata.xml">
+<link rel="me" href="mailto:imran@mosthofaimran.com">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RFC 0001: Mosthofa Imran">
+<meta property="og:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
+<meta property="og:url" content="https://mosthofaimran.com/">
+<!--
+  REPLACE BEFORE PUBLISHING: every figure in sections 3 and 5 is illustrative.
+  Swap in verified numbers, real dates, and a real OpenPGP fingerprint.
+-->
+<style>
+/* ============================================================
+   RFC 0001 stylesheet. No webfonts, no third party requests.
+   Chrome is monospace. Prose is a text face. Everything is fluid.
+   ============================================================ */
+:root{
+  --mono: ui-monospace,"SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --text: "Charter","Iowan Old Style","Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
+
+  --paper:#fdfdfb; --sheet:#f5f5f1; --ink:#14171a; --dim:#586470;
+  --rule:#e3e7eb; --hard:#14171a;
+  --link:#123c8a; --link-v:#5a3488;
+  --flag:#8c1d13; --ok:#155f39; --warn:#845d06;
+
+  --fs: clamp(13.5px, 0.55rem + 0.55vw, 14.5px);      /* chrome / mono */
+  --fs-prose: clamp(16.5px, 0.9rem + 0.55vw, 18.5px);  /* reading */
+  --pad: clamp(16px, 4vw, 30px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0d1013; --sheet:#151a1e; --ink:#dde2e6; --dim:#8d97a1;
+    --rule:#222a31; --hard:#5c6873;
+    --link:#83aaff; --link-v:#bda2e8;
+    --flag:#e4867c; --ok:#68c48d; --warn:#d6a94b;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--mono);font-size:var(--fs);line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-wrap:break-word;
+}
+.page{max-width:880px;margin:0 auto;padding:0 var(--pad) 96px}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--link) 32%, transparent)}
+a:visited{color:var(--link-v);border-bottom-color:color-mix(in srgb, var(--link-v) 30%, transparent)}
+a:hover{border-bottom-color:currentColor}
+a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:1px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--pad);top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:99;border:0}
+
+/* ---------- sticky running head ---------- */
+.rh{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--rule)}
+.rh .in{max-width:880px;margin:0 auto;padding:0 var(--pad);
+        display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px}
+.rh a{border:0;color:var(--dim);font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+      padding:12px 0;min-height:44px;display:flex;align-items:center}
+.rh a:hover,.rh a[aria-current="page"]{color:var(--ink)}
+.rh nav{display:flex;gap:clamp(10px,3.2vw,20px);overflow-x:auto;scrollbar-width:none}
+.rh nav::-webkit-scrollbar{display:none}
+.rh .doc{font-weight:700;color:var(--ink);white-space:nowrap}
+@media (max-width:520px){
+  .rh a{font-size:11px;letter-spacing:.06em}
+  .rh nav a[data-opt]{display:none}   /* keep the bar readable, Contents covers the rest */
+}
+
+/* ---------- masthead ---------- */
+.mast{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;
+      border-bottom:1px solid var(--hard);padding:26px 0 14px;margin-top:6px}
+.mast div{font-size:clamp(12px,3vw,12.8px);line-height:1.9;color:var(--dim);white-space:pre-line}
+.mast .r{text-align:right}
+.mast b{color:var(--ink);font-weight:600}
+@media (max-width:600px){
+  .mast{grid-template-columns:1fr;gap:14px}
+  .mast .r{text-align:left;padding-top:10px;border-top:1px dotted var(--rule)}
+}
+.title{text-align:center;margin:clamp(26px,7vw,42px) 0 clamp(24px,6vw,36px)}
+.title h1{font-size:clamp(16px,4.2vw,19px);letter-spacing:.03em;text-transform:uppercase;
+          font-weight:700;margin:0 0 8px;line-height:1.45}
+.title .sub{font-size:clamp(12.5px,3.2vw,13.5px);color:var(--dim);max-width:60ch;margin:0 auto}
+
+/* ---------- structure ---------- */
+h2{font-size:clamp(14px,3.6vw,15px);font-weight:700;margin:clamp(32px,7vw,44px) 0 12px;
+   letter-spacing:.02em;scroll-margin-top:60px}
+h3{font-size:var(--fs);font-weight:700;margin:24px 0 8px;scroll-margin-top:60px}
+h2 .hash{color:var(--dim);font-weight:400;opacity:0;transition:opacity .12s;padding-left:8px;border:0}
+h2:hover .hash{opacity:1}
+p{margin:0 0 14px;max-width:82ch}
+.ind{padding-left:clamp(0px,3vw,26px)}
+.prose{font-family:var(--text);font-size:var(--fs-prose);line-height:1.58;max-width:62ch}
+.prose p{margin:0 0 17px}
+.prose b{font-weight:700}
+.dim{color:var(--dim)}
+.kw{font-weight:700;letter-spacing:.04em}
+code{font-family:var(--mono);font-size:.88em;background:var(--sheet);padding:1px 5px;border-radius:2px}
+s{color:var(--dim)}
+hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
+
+/* ---------- boxed memo ---------- */
+.memo{border:1px solid var(--hard);padding:clamp(14px,3.5vw,18px);max-width:82ch;
+      font-size:clamp(12.8px,3.2vw,13.4px);color:var(--dim)}
+.memo b{color:var(--ink)}
+.note{border-left:2px solid var(--hard);padding-left:14px;color:var(--dim);max-width:80ch;margin:14px 0}
+.note b{color:var(--ink)}
+
+/* ---------- table of contents ---------- */
+.toc{max-width:70ch;margin-top:4px}
+.toc a{display:flex;align-items:baseline;gap:8px;border:0;color:var(--ink);padding:7px 0;min-height:36px}
+.toc a:visited{color:var(--ink)}
+.toc a:hover{color:var(--link)}
+.toc .n{white-space:nowrap;color:var(--dim);min-width:3.6em}
+.toc .t{white-space:nowrap}
+.toc .fill{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px);min-width:12px}
+.toc .p{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+@media (max-width:560px){ .toc .t{white-space:normal} .toc .fill{display:none} }
+
+/* ---------- tables that survive a phone ---------- */
+table{border-collapse:collapse;width:100%;margin:8px 0 6px;font-size:clamp(13px,3.3vw,13.4px)}
+th,td{text-align:left;padding:9px 16px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);
+   font-weight:600;border-bottom:1px solid var(--hard)}
+td.n{color:var(--dim);white-space:nowrap;width:1%;font-variant-numeric:tabular-nums}
+td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
+td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
+@media (max-width:680px){
+  table.rt, table.rt tbody, table.rt tr, table.rt td{display:block;width:100%}
+  table.rt thead{position:absolute;left:-9999px}
+  table.rt tr{border-bottom:1px solid var(--rule);padding:12px 0}
+  table.rt td{border:0;padding:1px 0}
+  table.rt td.num{text-align:left}
+  table.rt td[data-l]::before{content:attr(data-l) ": ";color:var(--dim);
+    font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  table.rt td.hd{font-weight:700;padding-bottom:3px}
+  table.rt td.hd::before{content:none}
+}
+.chip{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+      border:1px solid var(--rule);padding:1px 7px;color:var(--dim);white-space:nowrap;border-radius:2px}
+.chip.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 55%,transparent)}
+.chip.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
+.chip.bad{color:var(--flag);border-color:color-mix(in srgb,var(--flag) 55%,transparent)}
+
+/* ---------- ascii figures ---------- */
+figure{margin:18px 0;max-width:100%}
+pre{font-family:var(--mono);font-size:clamp(10.5px,2.9vw,12.5px);line-height:1.5;
+    background:var(--sheet);border:1px solid var(--rule);border-radius:2px;
+    padding:14px 16px;overflow-x:auto;margin:0;-webkit-overflow-scrolling:touch}
+figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em}
+
+/* ---------- request form ---------- */
+.gate{border:1px solid var(--hard);padding:clamp(16px,4vw,20px);max-width:78ch}
+.gate .ep{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.gate form{display:flex;flex-wrap:wrap;gap:8px}
+.gate input{font-family:var(--mono);font-size:15px;padding:11px 12px;min-height:44px;
+  border:1px solid var(--hard);background:var(--paper);color:var(--ink);flex:1 1 240px;border-radius:2px}
+.gate input::placeholder{color:var(--dim)}
+.gate button{font-family:var(--mono);font-size:14px;letter-spacing:.08em;padding:11px 20px;min-height:44px;
+  border:1px solid var(--hard);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:2px;flex:0 0 auto}
+.gate button:hover{opacity:.86}
+.gate .fine{font-size:12.4px;color:var(--dim);margin:14px 0 0;max-width:74ch}
+
+/* ---------- signature block ---------- */
+.sig{font-size:clamp(10px,2.6vw,11.5px);line-height:1.5;color:var(--dim);background:var(--sheet);
+     border:1px solid var(--rule);padding:12px 14px;overflow-x:auto;white-space:pre;border-radius:2px}
+
+/* ---------- page footer band ---------- */
+.foot{display:flex;justify-content:space-between;gap:14px;border-top:1px solid var(--hard);
+      margin-top:52px;padding:12px 0 0;font-size:12px;color:var(--dim);flex-wrap:wrap}
+
+.view{display:none}
+.view.on{display:block}
+.back{display:inline-block;font-size:12.5px;color:var(--dim);border:0;margin:18px 0 0}
+.back:hover{color:var(--link)}
+
+/* ---------- print like a real RFC ---------- */
+@media print{
+  :root{--paper:#fff;--ink:#000;--dim:#444;--rule:#bbb;--hard:#000;--link:#000;--link-v:#000}
+  .rh,.back,.gate form{display:none}
+  .view{display:block !important;page-break-before:always}
+  #v-home{page-break-before:auto}
+  a{border:0}
+  body{font-size:10.5pt}
+  .prose{font-size:11.5pt;max-width:none}
+  pre{border:1px solid #999}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to document</a>
+
+<header class="rh">
+  <div class="in">
+    <a class="doc" href="#/" aria-current="page">RFC 0001</a>
+    <nav>
+      <a href="#toc">Contents</a>
+      <a href="#/papers">Papers</a>
+      <a href="#s3" data-opt>Systems</a>
+      <a href="#/cv">CV</a>
+      <a href="#s14">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<noscript><style>
+  /* No scripting: degrade to one long document, which is the correct failure mode
+     for a specification. In production each view is its own page and this is moot. */
+  .view{display:block !important}
+  .view + .view{border-top:1px solid var(--rule);margin-top:44px;padding-top:8px}
+  .back{display:none}
+</style></noscript>
+
+<div class="page" id="main">
+
+<!-- ==================================================================
+     RFC 0001 : the index document
+     ================================================================== -->
+<section class="view on" id="v-home">
+
+  <div class="mast">
+    <div>Off the Bit
+<b>Request for Comments: 0001</b>
+Category: Informational
+ISSN: not assigned, deliberately
+Obsoletes: every CV I have written
+Updates: your priors, if it earns it</div>
+    <div class="r"><b>M. Imran</b>
+Lead Solutions Architect
+Dhaka, Bangladesh (UTC+6)
+mosthofaimran.com
+August 2026</div>
+  </div>
+
+  <div class="title">
+    <h1>Mosthofa Imran: Systems, Arguments,<br>and Known Failure Modes</h1>
+    <div class="sub">A living document. Revised in place, never quietly. Section 7 records where it was wrong.</div>
+  </div>
+
+  <h2 id="status">Status of This Memo</h2>
+  <div class="ind">
+    <div class="memo">This memo provides information about one engineer. It does not specify a standard of
+      any kind, and its normative language in Section 4 binds nobody but the author. Distribution is
+      unlimited. It is <b>not</b> a résumé; it is the record from which a résumé would be an abridgement.
+      Systems appear with the numbers they produced. Arguments appear with a confidence value and the
+      conditions under which the author would abandon them. Section 6 is access controlled.
+      Corrections are published in Section 7 with credit to the person who sent them.</div>
+  </div>
+
+  <h2 id="abstract">Abstract</h2>
+  <div class="ind prose">
+    <p>Eleven years of production engineering. I design multi-tenant agentic systems that ship from a single
+    build into public cloud and into air-gapped data centres inside regulated banks: active-active across two
+    sites, tens of millions of events a day, recovery objectives measured in minutes because the alternative
+    is a conversation with a regulator.</p>
+    <p>I also write. The running argument is that this industry has learned to manufacture the feeling of
+    competence faster than it can produce the thing itself, and that a good deal of what is sold as developer
+    experience is friction relocated to a worse hour. Section 5 states those claims in a form that can be
+    attacked, and Section 7 lists the ones that were.</p>
+  </div>
+
+  <h2 id="toc">Table of Contents</h2>
+  <div class="ind toc">
+    <a href="#s1"><span class="n">1.</span><span class="t">Introduction</span><span class="fill"></span><span class="p">2</span></a>
+    <a href="#s2"><span class="n">2.</span><span class="t">Conventions and Terminology</span><span class="fill"></span><span class="p">2</span></a>
+    <a href="#s3"><span class="n">3.</span><span class="t">Implementations</span><span class="fill"></span><span class="p">3</span></a>
+    <a href="#s4"><span class="n">4.</span><span class="t">Operating Principles</span><span class="fill"></span><span class="p">5</span></a>
+    <a href="#s5"><span class="n">5.</span><span class="t">Position Papers</span><span class="fill"></span><span class="p">6</span></a>
+    <a href="#s6"><span class="n">6.</span><span class="t">Curriculum Vitae (access controlled)</span><span class="fill"></span><span class="p">8</span></a>
+    <a href="#s7"><span class="n">7.</span><span class="t">Errata and Retractions</span><span class="fill"></span><span class="p">10</span></a>
+    <a href="#s8"><span class="n">8.</span><span class="t">Publishing Model</span><span class="fill"></span><span class="p">11</span></a>
+    <a href="#s9"><span class="n">9.</span><span class="t">Machine Readability, Feeds and Signatures</span><span class="fill"></span><span class="p">12</span></a>
+    <a href="#s10"><span class="n">10.</span><span class="t">Security and Privacy Considerations</span><span class="fill"></span><span class="p">13</span></a>
+    <a href="#s11"><span class="n">11.</span><span class="t">IANA Considerations</span><span class="fill"></span><span class="p">14</span></a>
+    <a href="#s12"><span class="n">12.</span><span class="t">Acknowledgements</span><span class="fill"></span><span class="p">14</span></a>
+    <a href="#s13"><span class="n">13.</span><span class="t">References</span><span class="fill"></span><span class="p">15</span></a>
+    <a href="#s14"><span class="n">14.</span><span class="t">Author's Address</span><span class="fill"></span><span class="p">16</span></a>
+    <a href="#sa"><span class="n">A.</span><span class="t">Document History</span><span class="fill"></span><span class="p">17</span></a>
+    <a href="#sb"><span class="n">B.</span><span class="t">Colophon</span><span class="fill"></span><span class="p">17</span></a>
+  </div>
+
+  <!-- ---------------- 1 ---------------- -->
+  <h2 id="s1">1. Introduction <a class="hash" href="#s1">#</a></h2>
+  <div class="ind prose">
+    <p>Most personal sites are a pitch. This one is a specification, because a specification is the only
+    format I trust to survive contact with a reader who knows more than I do. A pitch invites agreement.
+    A specification invites a diff.</p>
+    <p>Two kinds of object live here, and they are held to the same standard. <b>Implementations</b> are
+    systems I built; they carry throughput, latency and a named failure. <b>Position papers</b> are claims
+    I make; they carry a confidence value and the evidence that would retire them. Anything that carries
+    neither is marketing, and marketing belongs on a different domain.</p>
+    <p>The order is deliberate. Systems come before opinions because the systems are what paid for the
+    opinions. The retraction log comes after both because it is the only section that proves either
+    was arrived at honestly.</p>
+  </div>
+
+  <!-- ---------------- 2 ---------------- -->
+  <h2 id="s2">2. Conventions and Terminology <a class="hash" href="#s2">#</a></h2>
+
+  <h3 id="s21">2.1. Requirements Language</h3>
+  <div class="ind">
+    <p>The key words <span class="kw">MUST</span>, <span class="kw">MUST NOT</span>,
+    <span class="kw">SHOULD</span>, <span class="kw">MAY</span> and <span class="kw">WILL NOT</span>
+    appear in Section 4 with their usual force [RFC2119], with one local amendment: here they describe
+    commitments already kept under production pressure, not intentions. Where one has been broken, it is
+    recorded in Section 7 with the incident that broke it.</p>
+  </div>
+
+  <h3 id="s22">2.2. Terminology</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:170px">Term</th><th>Definition</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Term">Confidence</td><td data-l="Definition">A number in [0,1]: my credence that a claim's central mechanism still holds in five years. Published even when it is low, because a low number is information and silence is not.</td></tr>
+      <tr><td class="hd" data-l="Term">Holding</td><td data-l="Definition">No material objection has landed since the last revision.</td></tr>
+      <tr><td class="hd" data-l="Term">Revising</td><td data-l="Definition">An objection landed. The text is currently wrong in a way I have not finished repairing, and it says so at the top.</td></tr>
+      <tr><td class="hd" data-l="Term">Retracted</td><td data-l="Definition">The central claim failed. The text stays, struck through, with the reason and the person who found it. Nothing here is deleted.</td></tr>
+      <tr><td class="hd" data-l="Term">Sovereign</td><td data-l="Definition">No prompt, completion, embedding, log line or metric leaves the customer's network boundary. Enforced at network policy and verified on a schedule, not asserted in a slide.</td></tr>
+      <tr><td class="hd" data-l="Term">Named failure</td><td data-l="Definition">A failure mode described with its trigger, its blast radius and whether it is fixed. A system listed without one is a system I do not understand yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 3 ---------------- -->
+  <h2 id="s3">3. Implementations <a class="hash" href="#s3">#</a></h2>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">Systems in production, with the numbers they produced. Each links
+    to a full implementation note carrying constraints, decisions, measurements and known failure modes.</p>
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>System</th><th style="width:130px">Result</th><th style="width:1%">State</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="n" data-l="Section">3.1</td>
+        <td class="hd" data-l="System"><a href="#/impl">Mevrik: agentic customer experience platform</a>
+          <span class="sub">Multi-tenant conversational automation. One artifact ships to public cloud and to
+          air-gapped on-premise estates inside regulated banks. Active-active across two data centres,
+          RTO under four minutes, tested quarterly with real failover rather than a tabletop.</span>
+          <span class="st">Rust · Python · ClickHouse · PostgreSQL · RabbitMQ · Redis · Kubernetes</span></td>
+        <td class="num" data-l="Result">40M events/day<br>3 regulated tenants</td>
+        <td data-l="State"><span class="chip ok">Production</span></td></tr>
+      <tr>
+        <td class="n" data-l="Section">3.2</td>
+        <td class="hd" data-l="System"><a href="#/impl">Sovereign LLM gateway</a>
+          <span class="sub">One control plane over four model backends. Redaction runs before routing,
+          fallback is deterministic and stamped, quotas are per tenant and per model. Tenants move between
+          hosted and local models with a config change rather than a rewrite.</span>
+          <span class="st">Python (FastAPI) · Redis · OpenSearch · PostgreSQL · Ollama</span></td>
+        <td class="num" data-l="Result">3.1M calls/day<br>p99 overhead 180 ms</td>
+        <td data-l="State"><span class="chip ok">Production</span></td></tr>
+      <tr>
+        <td class="n" data-l="Section">3.3</td>
+        <td class="hd" data-l="System"><a href="#/impl">Ingest path rewrite, PHP to Rust</a>
+          <span class="sub">Identical semantics. Verified by replaying ninety days of production traffic
+          through both implementations and diffing the outputs byte for byte before any customer saw it.</span>
+          <span class="st">Rust (tokio) · RabbitMQ · PostgreSQL · MinIO</span></td>
+        <td class="num" data-l="Result">89% fewer nodes<br>p99 340 ms → 11 ms</td>
+        <td data-l="State"><span class="chip ok">Production</span></td></tr>
+      <tr>
+        <td class="n" data-l="Section">3.4</td>
+        <td class="hd" data-l="System"><a href="#/impl">Analytics migration to ClickHouse</a>
+          <span class="sub">Fourteen billion rows moved under a dual-write cutover. Zero downtime, and one
+          rollback executed cleanly at 02:40 that nobody outside the team noticed. The rollback is the
+          part I am proud of.</span>
+          <span class="st">ClickHouse · Kafka Connect · Airflow</span></td>
+        <td class="num" data-l="Result">14B rows<br>query p95 9.4 s → 380 ms</td>
+        <td data-l="State"><span class="chip">Complete</span></td></tr>
+      <tr>
+        <td class="n" data-l="Section">3.5</td>
+        <td class="hd" data-l="System"><a href="#/impl">Air-gapped delivery pipeline</a>
+          <span class="sub">Signed, reproducible bundles carried across the gap on physical media, verified
+          on arrival, installed by an operator who has never met us and cannot phone us. Every assumption a
+          cloud deployment gets for free had to be paid for in cash.</span>
+          <span class="st">OCI bundles · cosign · Helm · offline registry</span></td>
+        <td class="num" data-l="Result">6 sites<br>0 failed installs since 2024-09</td>
+        <td data-l="State"><span class="chip ok">Production</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 4 ---------------- -->
+  <h2 id="s4">4. Operating Principles <a class="hash" href="#s4">#</a></h2>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">Normative language, applied to myself. Each of these cost
+    something to learn. Section 7.3 records the one I broke.</p>
+
+    <p><b>4.1.</b> A service <span class="kw">MUST</span> degrade loudly. A silent quality drop is worse
+    than an error, because an error gets investigated and a silent drop gets absorbed by the user until
+    they leave without telling you.</p>
+
+    <p><b>4.2.</b> A security control <span class="kw">MUST NOT</span> depend on the correctness of the
+    next hop. Redaction that runs after routing is decoration with a compliance budget.</p>
+
+    <p><b>4.3.</b> Retries <span class="kw">MUST</span> carry jitter, a budget and an idempotency key.
+    Two out of three builds a very reliable metronome for your own outage.</p>
+
+    <p><b>4.4.</b> On-premise and cloud <span class="kw">SHOULD</span> ship from one artifact. Two build
+    paths means the air-gapped customer runs the version nobody tests, and they find out first.</p>
+
+    <p><b>4.5.</b> Every abstraction that removes friction <span class="kw">MUST</span> document where the
+    friction went. It did not evaporate. It moved, usually into the incident, usually at 03:00.</p>
+
+    <p><b>4.6.</b> A fence in the codebase <span class="kw">SHOULD</span> be read before it is removed.
+    Chesterton's fence has a git blame, and the person who put it there left a commit message.</p>
+
+    <p><b>4.7.</b> Capacity plans <span class="kw">MUST</span> be stated as a failure point, not a target.
+    "Handles 10k rps" tells you nothing. "Falls over at 12k rps, and here is what it does on the way down"
+    tells you everything.</p>
+
+    <p><b>4.8.</b> I <span class="kw">WILL NOT</span> present an architecture without its failure mode.
+    Not in a talk, not in a proposal, not in this document. A design shown only in its best light is a jet
+    engine bench-tested at sea level and sold as a mountain crossing.</p>
+  </div>
+
+  <!-- ---------------- 5 ---------------- -->
+  <h2 id="s5">5. Position Papers <a class="hash" href="#s5">#</a></h2>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">Claims, with confidence values and revision dates. Full index at
+    <a href="#/papers">Section 5, complete</a>. Feed at <a href="#s9">/feed.xml</a>.</p>
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>Claim</th><th style="width:1%">Conf.</th><th style="width:1%">State</th><th style="width:1%">Revised</th></tr></thead>
+      <tbody>
+      <tr><td class="n" data-l="Section">5.1</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">Competence Porn</a>
+          <span class="sub">Watching a skilled person work occupies the same reward slot as being one, and the industry has industrialised the confusion.</span></td>
+        <td class="num" data-l="Confidence">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-06-11</td></tr>
+      <tr><td class="n" data-l="Section">5.2</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">Vibe Coding and the IKEA Effect</a>
+          <span class="sub">We overvalue systems assembled from parts we never read. Assembly produces the sensation of understanding without the substance.</span></td>
+        <td class="num" data-l="Confidence">0.75</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-05-02</td></tr>
+      <tr><td class="n" data-l="Section">5.3</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">Algorithmic Homophily</a>
+          <span class="sub">Your timeline is a cache with no invalidation policy. It returns the priors you arrived with, warmed.</span></td>
+        <td class="num" data-l="Confidence">0.60</td><td data-l="State"><span class="chip warn">Revising</span></td><td class="num" data-l="Revised">2026-08-02</td></tr>
+      <tr><td class="n" data-l="Section">5.4</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">The Easy Button Tax</a>
+          <span class="sub">Removed friction is relocated friction. The invoice arrives during the incident, denominated in hours you do not have.</span></td>
+        <td class="num" data-l="Confidence">0.85</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-04-20</td></tr>
+      <tr><td class="n" data-l="Section">5.5</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">On-Premise Is Not a Downgrade</a>
+          <span class="sub">Sovereignty is an architectural constraint, not a punishment. Design for it early and it stops costing you.</span></td>
+        <td class="num" data-l="Confidence">0.90</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-03-19</td></tr>
+      <tr><td class="n" data-l="Section">5.6</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">The Retry Storm You Built On Purpose</a>
+          <span class="sub">Exponential backoff without jitter synchronises your clients. You shipped the accelerant, then wrote a postmortem about the fire.</span></td>
+        <td class="num" data-l="Confidence">0.95</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-07-28</td></tr>
+      <tr><td class="n" data-l="Section">5.7</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">Chesterton's Fence Has a Git Blame</a>
+          <span class="sub">The argument for reading history before deleting it, aimed at the specific case where the history is one line and a date.</span></td>
+        <td class="num" data-l="Confidence">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-02-14</td></tr>
+      <tr><td class="n" data-l="Section">5.8</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">RAG Is a Search Problem in a Trench Coat</a>
+          <span class="sub">The embedding model is rarely the bottleneck. The chunking strategy is an information retrieval decision made in an afternoon and never revisited.</span></td>
+        <td class="num" data-l="Confidence">0.70</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-01-30</td></tr>
+      <tr><td class="n" data-l="Section">5.9</td>
+        <td class="hd" data-l="Paper"><a href="#/paper">The Ship of Theseus Passes Its Integration Tests</a>
+          <span class="sub">On strangler-fig migrations, and the moment where the new system is technically complete and nobody can say when it became itself.</span></td>
+        <td class="num" data-l="Confidence">0.55</td><td data-l="State"><span class="chip warn">Draft</span></td><td class="num" data-l="Revised">2026-08-09</td></tr>
+      <tr><td class="n" data-l="Section">5.10</td>
+        <td class="hd" data-l="Paper"><s>Vector Databases Are a Fad</s>
+          <span class="sub">Withdrawn in full. See Section 7.2.</span></td>
+        <td class="num" data-l="Confidence">n/a</td><td data-l="State"><span class="chip bad">Retracted</span></td><td class="num" data-l="Revised">2025-11-14</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:14px"><a href="#/papers">Complete index, 34 papers →</a></p>
+  </div>
+
+  <!-- ---------------- 6 ---------------- -->
+  <h2 id="s6">6. Curriculum Vitae (access controlled) <a class="hash" href="#s6">#</a></h2>
+
+  <h3 id="s61">6.1. Rationale</h3>
+  <div class="ind prose">
+    <p>Sections 3 through 5 are a more honest record than any résumé: they carry numbers, named failures and
+    revision dates, and they can be checked against people who were in the room. The document itself carries
+    client names, reference contacts and a phone number that belong to other people's privacy as much as to
+    my convenience, so it is issued on a signed link rather than served as a page.</p>
+    <p>This is not scarcity theatre. If you would rather not leave an address, write to me and I will send
+    the file back by hand. That path is listed first in 6.5 because it is the one I prefer.</p>
+  </div>
+
+  <h3 id="s62">6.2. Request</h3>
+  <div class="ind">
+    <div class="gate">
+      <div class="ep">POST /api/cv</div>
+      <form onsubmit="return false">
+        <label class="skip" for="cv-email">Email address</label>
+        <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
+        <button type="submit">Request link</button>
+      </form>
+      <p class="fine">Returns <code>202 Accepted</code> and mails a signed URL. Time to live 86400 seconds,
+      single use, <code>X-Robots-Tag: noindex</code>. Rate limited to three requests per address per day and
+      sixty per source network per hour. Your address is written to the access log described in 6.4 and to
+      nothing else. It is never added to a list, never sold, never used to start a sequence, and it is
+      deleted the same day you ask.</p>
+    </div>
+  </div>
+
+  <h3 id="s63">6.3. Protocol</h3>
+  <div class="ind">
+    <figure>
+<pre>
+  Requester                 mosthofaimran.com              Token store
+      |                            |                            |
+      |  POST /api/cv {email}      |                            |
+      |--------------------------->|                            |
+      |                            |  PUT token, ttl=86400s     |
+      |                            |--------------------------->|
+      |  202 Accepted              |                            |
+      |&lt;---------------------------|                            |
+      |                            |                            |
+      |     ...mail delivered, signed URL enclosed...           |
+      |                            |                            |
+      |  GET /cv/{token}           |                            |
+      |--------------------------->|  CONSUME token             |
+      |                            |--------------------------->|
+      |  200 application/pdf       |          ok, burn          |
+      |&lt;---------------------------|&lt;---------------------------|
+      |                            |                            |
+      |  GET /cv/{token}   (again) |                            |
+      |--------------------------->|  CONSUME token             |
+      |                            |--------------------------->|
+      |  410 Gone                  |         already burned     |
+      |&lt;---------------------------|&lt;---------------------------|
+</pre>
+      <figcaption>Figure 1: résumé issuance. The token is the capability. The PDF is never addressable
+      without one, and never sits in a public bucket.</figcaption>
+    </figure>
+  </div>
+
+  <h3 id="s64">6.4. What is logged</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:220px">Field</th><th style="width:170px">Retention</th><th>Purpose</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Field">Email address</td><td data-l="Retention">Until deletion requested</td><td data-l="Purpose">Issue the link, and revoke it if you ask</td></tr>
+      <tr><td class="hd" data-l="Field">Issued and redeemed timestamps</td><td data-l="Retention">12 months</td><td data-l="Purpose">Detect token sharing, which tells me a recruiter forwarded it</td></tr>
+      <tr><td class="hd" data-l="Field">Source network, truncated to /24</td><td data-l="Retention">30 days</td><td data-l="Purpose">Rate limiting only</td></tr>
+      <tr><td class="hd" data-l="Field">User agent</td><td data-l="Retention">Not stored</td><td data-l="Purpose">There is no purpose, so it is not collected</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s65">6.5. Alternatives</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:110px">Preference</th><th>Path</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Preference">Preferred</td><td data-l="Path">Write to <a href="#s14">imran@mosthofaimran.com</a> and say what the role is. I reply with the file and a paragraph about whether I think it is a fit, including when I think it is not.</td></tr>
+      <tr><td class="hd" data-l="Preference">Fine</td><td data-l="Path">Use the form in 6.2.</td></tr>
+      <tr><td class="hd" data-l="Preference">Also fine</td><td data-l="Path">Do not request it at all. Sections 3 through 5 will tell you more about how I work than two pages of reverse-chronological employment will.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 7 ---------------- -->
+  <h2 id="s7">7. Errata and Retractions <a class="hash" href="#s7">#</a></h2>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">This section is load bearing. A body of opinion with no retraction
+    log records positions rather than learning. Corrections are credited to the person who sent them, and
+    published to <a href="#s9">/errata.xml</a> so you can subscribe to my mistakes specifically.</p>
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>Correction</th><th style="width:110px">Date</th></tr></thead>
+      <tbody>
+      <tr><td class="n" data-l="Section">7.1</td>
+        <td class="hd" data-l="Correction">Paper 5.3 downgraded from 0.80 to 0.60.
+          <span class="sub">Two readers demonstrated the effect reproduces in private mailing lists with no
+          ranking algorithm present, which breaks the mechanism I proposed. Section 3 of that paper is being
+          rewritten and currently says so at the top. Reported by A. Rahman and K. Osei.</span></td>
+        <td class="num" data-l="Date">2026-08-02</td></tr>
+      <tr><td class="n" data-l="Section">7.2</td>
+        <td class="hd" data-l="Correction">Paper 5.10 retracted in full.
+          <span class="sub">The central claim failed. Retrieval quality at scale turned out to depend on
+          index properties I had dismissed, and the operational story matured faster than I predicted.
+          What I was actually right about was narrower and less quotable. Original text preserved, struck
+          through, with this note attached at the head.</span></td>
+        <td class="num" data-l="Date">2025-11-14</td></tr>
+      <tr><td class="n" data-l="Section">7.3</td>
+        <td class="hd" data-l="Correction">Principle 4.3 was violated in production, by me.
+          <span class="sub">The June 2025 ingest incident traced to a retry path with backoff and no budget,
+          in code I reviewed and approved. Ninety-four minutes of degraded intake. Postmortem published
+          unredacted, including the review comment where I did not ask the question.</span></td>
+        <td class="num" data-l="Date">2025-06-30</td></tr>
+      <tr><td class="n" data-l="Section">7.4</td>
+        <td class="hd" data-l="Correction">Figure 3 of the ClickHouse note had the axis mislabelled.
+          <span class="sub">Milliseconds, not seconds. The conclusion was unaffected but the chart was
+          flattering by a factor of a thousand, which is exactly the kind of error that should be
+          published rather than quietly swapped. Reported by S. Datta.</span></td>
+        <td class="num" data-l="Date">2025-02-11</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 8 ---------------- -->
+  <h2 id="s8">8. Publishing Model <a class="hash" href="#s8">#</a></h2>
+  <div class="ind prose">
+    <p>Papers are written in Markdown, held in git, signed, and rendered to static HTML at build time. There
+    is no database in the reading path and no third-party script on the page. A paper is a file; its history
+    is the commit log; its authority is a detached signature.</p>
+  </div>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:180px">Stage</th><th>Mechanism</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Stage">Authoring</td><td data-l="Mechanism">Markdown with front matter carrying <code>confidence</code>, <code>state</code>, <code>published</code>, <code>revised</code>, <code>retires</code> (the falsification conditions) and <code>errata</code>. The schema is validated at build; a paper without falsification conditions fails the build rather than shipping quietly.</td></tr>
+      <tr><td class="hd" data-l="Stage">Revision</td><td data-l="Mechanism">Papers are edited in place. Every substantive edit appends to the paper's history table and, if it changes the claim, an entry in Section 7. The URL never changes and nothing is deleted.</td></tr>
+      <tr><td class="hd" data-l="Stage">Rendering</td><td data-l="Mechanism">Static site generation. Every section of this document is a real page with a real URL; the client-side routing in this prototype is a convenience, not the architecture.</td></tr>
+      <tr><td class="hd" data-l="Stage">Signing</td><td data-l="Mechanism">Each published paper gets a detached OpenPGP signature at <code>/papers/&lt;slug&gt;.asc</code> over the canonical Markdown, so a quote can be checked against what was actually written.</td></tr>
+      <tr><td class="hd" data-l="Stage">Distribution</td><td data-l="Mechanism">Atom feeds, plain text mirrors, and an <code>llms.txt</code> for machine readers. No newsletter, no popup, no interstitial asking you to subscribe before you have read a sentence.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 9 ---------------- -->
+  <h2 id="s9">9. Machine Readability, Feeds and Signatures <a class="hash" href="#s9">#</a></h2>
+
+  <h3 id="s91">9.1. Feeds</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:190px">Resource</th><th>Contents</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Resource"><a href="/feed.xml">/feed.xml</a></td><td data-l="Contents">Atom. New position papers and implementation notes.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/errata.xml">/errata.xml</a></td><td data-l="Contents">Atom. Corrections, downgrades and retractions only. Subscribe to this one if you want to know whether I can be trusted, rather than what I think this week.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/revisions.xml">/revisions.xml</a></td><td data-l="Contents">Atom. Every substantive edit to an existing paper, with a diff summary.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/papers/index.json">/papers/index.json</a></td><td data-l="Contents">The full paper index with confidence, state and dates, as JSON. Stable schema, versioned.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s92">9.2. Machine readers</h3>
+  <div class="ind prose">
+    <p>A growing share of this document's readers are not people. That is fine, and it is planned for rather
+    than resented. The site publishes an <code>llms.txt</code> so a model retrieving it gets structure
+    instead of a scraped navigation bar, and a full-text mirror so nobody has to render JavaScript to read
+    prose that was written in Markdown.</p>
+    <p>One request, stated plainly because a robots directive cannot express it: if you quote a claim from
+    Section 5, carry its confidence value with it. A 0.60 claim repeated as fact is no longer my claim.</p>
+  </div>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:190px">Resource</th><th>Contents</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Resource"><a href="/llms.txt">/llms.txt</a></td><td data-l="Contents">Structured summary of the site, its sections and its conventions, including what the confidence values mean.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/llms-full.txt">/llms-full.txt</a></td><td data-l="Contents">Every paper and implementation note as one plain text document, with front matter preserved.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/robots.txt">/robots.txt</a></td><td data-l="Contents">Indexing is welcome. <code>/cv/</code> and <code>/api/</code> are disallowed and also enforced server side, because a robots file is a request and not a control.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s93">9.3. Signatures</h3>
+  <div class="ind prose">
+    <p>Anything worth attributing to me is signed. Verify before you trust, including when the thing you are
+    verifying is flattering.</p>
+  </div>
+  <div class="ind">
+    <figure>
+<pre>
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md.asc
+$ gpg --recv-keys 0xREPLACE_WITH_REAL_KEY_ID
+$ gpg --verify competence-porn.md.asc competence-porn.md
+</pre>
+      <figcaption>Figure 2: verifying a paper. The résumé PDF is signed the same way, with the signature
+      served alongside the token-gated file.</figcaption>
+    </figure>
+    <table class="rt">
+      <thead><tr><th style="width:190px">Key</th><th>Fingerprint</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Key">OpenPGP</td><td data-l="Fingerprint"><code>REPL ACEM EWIT HREA LFIN GERP RINT 0000 0000 0000</code> · <a href="/pgp.asc">/pgp.asc</a></td></tr>
+      <tr><td class="hd" data-l="Key">SSH (signing)</td><td data-l="Fingerprint"><code>SHA256:replace-with-real-ssh-signing-key-fingerprint</code></td></tr>
+      <tr><td class="hd" data-l="Key">Commits</td><td data-l="Fingerprint">Every commit in the site repository is signed. An unsigned commit in that repository is not from me.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 10 ---------------- -->
+  <h2 id="s10">10. Security and Privacy Considerations <a class="hash" href="#s10">#</a></h2>
+  <div class="ind">
+    <p>Every RFC has this section and most of them are honest, which is more than can be said for the
+    average privacy policy. Here is the whole of it.</p>
+    <table class="rt">
+      <thead><tr><th style="width:200px">Property</th><th>Statement</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Property">Third-party requests</td><td data-l="Statement">None. No fonts, no analytics, no tag manager, no embedded video, no comment widget. The page you are reading came from one origin.</td></tr>
+      <tr><td class="hd" data-l="Property">Cookies</td><td data-l="Statement">None are set. There is therefore no consent banner, which is the correct way to not need one.</td></tr>
+      <tr><td class="hd" data-l="Property">Server logs</td><td data-l="Statement">Source network truncated to /24, path, status, timestamp. Retained 30 days. Read roughly monthly.</td></tr>
+      <tr><td class="hd" data-l="Property">Résumé tokens</td><td data-l="Statement">Single use, 86400 second lifetime, revocable, never guessable. See 6.3 and 6.4.</td></tr>
+      <tr><td class="hd" data-l="Property">Transport</td><td data-l="Statement">HTTPS only, HSTS with preload, a content security policy that forbids inline and remote script in production, and no mixed content anywhere.</td></tr>
+      <tr><td class="hd" data-l="Property">Data subject requests</td><td data-l="Statement">Mail me. Deletion happens the same day, and I will tell you what was held before it goes.</td></tr>
+      <tr><td class="hd" data-l="Property">Disclosure</td><td data-l="Statement">Found something broken in the gate? <a href="/.well-known/security.txt">/.well-known/security.txt</a>. I will credit you in Section 7 unless you would rather I did not.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 11 ---------------- -->
+  <h2 id="s11">11. IANA Considerations <a class="hash" href="#s11">#</a></h2>
+  <div class="ind">
+    <p>This document has no IANA actions.</p>
+    <p class="dim">It is included because every RFC has one, and because a document that only contains the
+    sections it needs has quietly told you it was written for the reader's convenience rather than the
+    form's integrity.</p>
+  </div>
+
+  <!-- ---------------- 12 ---------------- -->
+  <h2 id="s12">12. Acknowledgements <a class="hash" href="#s12">#</a></h2>
+  <div class="ind prose">
+    <p>To the operations engineer in Chattogram who took my call at 02:40 during the ClickHouse cutover and
+    talked me out of the clever fix, and to everyone who has sent a correction that made it into Section 7.
+    Being told you are wrong by someone who read carefully is the fastest form of professional development
+    available, and it is free.</p>
+  </div>
+
+  <!-- ---------------- 13 ---------------- -->
+  <h2 id="s13">13. References <a class="hash" href="#s13">#</a></h2>
+
+  <h3 id="s131">13.1. Normative References</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:120px">Tag</th><th>Reference</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Tag">[RFC2119]</td><td data-l="Reference">Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.</td></tr>
+      <tr><td class="hd" data-l="Tag">[RFC1925]</td><td data-l="Reference">Callon, R., "The Twelve Networking Truths", RFC 1925, April 1996. Truth (3) is load bearing in most architecture reviews I have attended.</td></tr>
+      <tr><td class="hd" data-l="Tag">[RFC8890]</td><td data-l="Reference">Nottingham, M., "The Internet is for End Users", RFC 8890, August 2020.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="s132">13.2. Informative References</h3>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:120px">Tag</th><th>Reference</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Tag">[PERROW]</td><td data-l="Reference">Perrow, C., "Normal Accidents: Living with High-Risk Technologies", 1984. The book that explains why your postmortem keeps finding a root cause that is not one.</td></tr>
+      <tr><td class="hd" data-l="Tag">[COOK]</td><td data-l="Reference">Cook, R., "How Complex Systems Fail", 1998. Four pages. Read it twice a year.</td></tr>
+      <tr><td class="hd" data-l="Tag">[SCOTT]</td><td data-l="Reference">Scott, J.C., "Seeing Like a State", 1998. Every argument about data sovereignty is downstream of this, whether or not the people having it know.</td></tr>
+      <tr><td class="hd" data-l="Tag">[CONWAY]</td><td data-l="Reference">Conway, M., "How Do Committees Invent?", 1968. Your service boundaries are an org chart with better uptime.</td></tr>
+      <tr><td class="hd" data-l="Tag">[NORMAN]</td><td data-l="Reference">Norman, D., "The Design of Everyday Things", 1988. Applies to APIs more than to doors.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 14 ---------------- -->
+  <h2 id="s14">14. Author's Address <a class="hash" href="#s14">#</a></h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:150px">Channel</th><th>Address</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Channel">Name</td><td data-l="Address">Mosthofa Imran</td></tr>
+      <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Lead Solutions Architect</td></tr>
+      <tr><td class="hd" data-l="Channel">Location</td><td data-l="Address">Dhaka, Bangladesh (UTC+6). Comfortable overlapping with CET mornings and US Pacific evenings.</td></tr>
+      <tr><td class="hd" data-l="Channel">Email</td><td data-l="Address"><a href="mailto:imran@mosthofaimran.com">imran@mosthofaimran.com</a>. I read everything and answer most things inside two working days.</td></tr>
+      <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/">github.com/mosthofaimran</a></td></tr>
+      <tr><td class="hd" data-l="Channel">Résumé</td><td data-l="Address"><a href="#/cv">Section 6</a></td></tr>
+      <tr><td class="hd" data-l="Channel">Key</td><td data-l="Address"><a href="/pgp.asc">/pgp.asc</a>, fingerprint in 9.3</td></tr>
+      <tr><td class="hd" data-l="Channel">Not present on</td><td data-l="Address">Any feed-ranked platform. Paper 5.3 explains the reasoning, and holds me to it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- appendices ---------------- -->
+  <h2 id="sa">Appendix A. Document History <a class="hash" href="#sa">#</a></h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
+      <tbody>
+      <tr><td class="hd n" data-l="Date">2026-08-13</td><td data-l="Change">Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.</td></tr>
+      <tr><td class="hd n" data-l="Date">2026-06-11</td><td data-l="Change">Paper 5.1 revised, fourth revision.</td></tr>
+      <tr><td class="hd n" data-l="Date">2026-01-04</td><td data-l="Change">Confidence values applied retroactively to all papers published before 2026. Six of them moved.</td></tr>
+      <tr><td class="hd n" data-l="Date">2025-08-20</td><td data-l="Change">First publication.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="sb">Appendix B. Colophon <a class="hash" href="#sb">#</a></h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:150px">Item</th><th>Detail</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Item">Typefaces</td><td data-l="Detail">Whatever your device already has. Charter or Georgia for prose, your system monospace for everything else. Nothing is downloaded, so nothing can be blocked, and nothing phones home.</td></tr>
+      <tr><td class="hd" data-l="Item">Build</td><td data-l="Detail">Static HTML from Markdown. One stylesheet, no framework in the reading path.</td></tr>
+      <tr><td class="hd" data-l="Item">Weight</td><td data-l="Detail">One HTML file, one stylesheet, inlined at build. No script in the reading path and no third-party request of any kind. It renders on a slow connection and prints as a passable specification.</td></tr>
+      <tr><td class="hd" data-l="Item">Hosting</td><td data-l="Detail">Static files on a CDN. One small function for Section 6, and nothing else that can page me.</td></tr>
+      <tr><td class="hd" data-l="Item">Licence</td><td data-l="Detail">Prose under CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="sig">Signature <a class="hash" href="#sig">#</a></h2>
+  <div class="ind">
+    <div class="sig">-----BEGIN PGP SIGNATURE-----
+
+  iQIzBAEBCgAdFiEE.......REPLACE.WITH.A.REAL.DETACHED.SIGNATURE
+  .......................................................
+  .......................................................
+  =0000
+-----END PGP SIGNATURE-----</div>
+    <p class="dim" style="margin-top:10px">Detached signature over the canonical Markdown source of this
+    document, published at <a href="/rfc0001.md.asc">/rfc0001.md.asc</a>.</p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Informational</span><span>[Page 1]</span></div>
+</section>
+
+<!-- ==================================================================
+     Position paper: full template
+     ================================================================== -->
+<section class="view" id="v-paper">
+  <a class="back" href="#/">&#8592; RFC 0001</a>
+  <div class="mast">
+    <div>Off the Bit
+<b>Position Paper 5.1</b>
+Category: Argument
+Confidence: 0.80
+State: Holding</div>
+    <div class="r"><b>M. Imran</b>
+Published 2025-09-03
+Revised 2026-06-11 (rev 4)
+3,400 words, about 14 minutes
+Signed: <a href="/papers/competence-porn.md.asc">.asc</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Competence Porn</h1>
+    <div class="sub">On the industrialised confusion between watching skill and having it</div>
+  </div>
+
+  <h2>Abstract</h2>
+  <div class="ind">
+    <div class="memo">The feedback loop that once rewarded building has been rerouted to reward the
+      performance of building. The performance is cheaper to produce, faster to distribute, and structurally
+      unfalsifiable. This paper states the mechanism, gives its strongest counter-argument the floor, and
+      lists the evidence that would retire it. <b>Confidence 0.80.</b> The gap from 0.95 is Section 4.</div>
+  </div>
+
+  <h2>1. The claim</h2>
+  <div class="ind prose">
+    <p><b>A pilot logs hours. A surgeon logs procedures. We log tabs.</b></p>
+    <p>Somewhere in the last decade this industry discovered that watching a competent person work is more
+    pleasurable than being one, and, more importantly, that from the inside the two feel nearly identical.
+    A twelve minute video of someone untangling a difficult module ends in the same warm, settled feeling as
+    having untangled it yourself. That is not a defect in you. It is the business model of the medium, and
+    it works because it is pointed at something real: the pleasure of watching craft is one of the oldest
+    pleasures there is.</p>
+    <p>Notice what a demo is engineered to remove. There is no data migration. There is no colleague who
+    left in 2019 carrying the only working mental model of the billing service. There is no compliance
+    officer, no partial failure, no clock skew, no forty page procurement questionnaire asking whether the
+    vector store is FIPS validated. A demo is a jet engine bench tested at sea level and sold as a mountain
+    crossing. Everyone involved knows this. Nobody is lying. The removal is what makes it watchable.</p>
+  </div>
+
+  <h2>2. Why the numbers look fine</h2>
+  <div class="ind prose">
+    <p>We have more available knowledge per practitioner than at any point in this industry's history, and a
+    persistent, widely reported sense among practitioners that they are behind. Those two facts are not in
+    tension. They are the same fact. The supply of things that resemble learning has outgrown the hours in
+    which learning can actually occur, and the surplus has to go somewhere. It goes into the feeling.</p>
+    <p class="dim" style="font-family:var(--mono);font-size:var(--fs)">Sections 3 to 7 continue: who absorbs
+    the cost, what survives contact with production, and a remedy that is not "log off".</p>
+  </div>
+
+  <h2>3. The strongest objection, unanswered</h2>
+  <div class="ind">
+    <div class="note"><b>Apprenticeship.</b> All pedagogy involves watching. The apprentice watches the
+      master, and this has worked for several thousand years. I do not yet have a clean line between
+      apprenticeship and spectatorship, and until I do, this paper is weaker than its prose sounds. The
+      distinction I am reaching for involves the presence of a feedback loop with consequences attached,
+      but I cannot yet state it in a way that survives a determined counterexample. This objection is the
+      entire reason confidence sits at 0.80 rather than 0.90.</div>
+  </div>
+
+  <h2>4. Retirement conditions</h2>
+  <div class="ind">
+    <p>This paper <span class="kw">MUST</span> be retracted if any of the following is demonstrated.</p>
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>Condition</th></tr></thead>
+      <tbody>
+      <tr><td class="n" data-l="Section">4.1</td><td data-l="Condition">A longitudinal study showing heavy consumers of technical content outperform matched peers on blind, time-boxed debugging tasks. A well-constructed natural experiment is sufficient; I am not asking for an RCT.</td></tr>
+      <tr><td class="n" data-l="Section">4.2</td><td data-l="Condition">Evidence that the effect is generational rather than structural, appearing at equal rate in cohorts who entered the field before ranked feeds existed.</td></tr>
+      <tr><td class="n" data-l="Section">4.3</td><td data-l="Condition">Any large publisher of technical content disclosing what fraction of the architectures it demonstrated reached production and survived twelve months, where that fraction is high.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5. Revision history</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
+      <tbody>
+      <tr><td class="hd n" data-l="Date">2026-06-11</td><td data-l="Change">Section 3 rewritten. A reader in bank operations showed the effect is strongest where tooling is locked down rather than where it is abundant, which inverts part of the proposed mechanism. Confidence held at 0.80 because the correction narrowed the claim rather than breaking it.</td></tr>
+      <tr><td class="hd n" data-l="Date">2026-02-08</td><td data-l="Change">Retirement conditions added. They should have shipped with the first version, and their absence is itself an instance of the thing this paper is about.</td></tr>
+      <tr><td class="hd n" data-l="Date">2025-11-22</td><td data-l="Change">A passage about bootcamp graduates removed. It was unsupported and it was aimed at the wrong people.</td></tr>
+      <tr><td class="hd n" data-l="Date">2025-09-03</td><td data-l="Change">Published at confidence 0.70.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>6. See also</h2>
+  <div class="ind">
+    <p><a href="#/paper">5.2 Vibe Coding and the IKEA Effect</a> ·
+       <a href="#/paper">5.4 The Easy Button Tax</a> ·
+       <a href="#/paper">5.3 Algorithmic Homophily</a> ·
+       [COOK] ·
+       <a href="#/">RFC 0001 §4.8</a></p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Position Paper 5.1, rev 4, conf 0.80</span><span>[Page 6]</span></div>
+</section>
+
+<!-- ==================================================================
+     Full paper index
+     ================================================================== -->
+<section class="view" id="v-papers">
+  <a class="back" href="#/">&#8592; RFC 0001</a>
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 5, complete index</b>
+Category: Argument
+Count: 34 papers, 3 retracted</div>
+    <div class="r"><b>M. Imran</b>
+Feed: <a href="/feed.xml">/feed.xml</a>
+Errata: <a href="/errata.xml">/errata.xml</a>
+JSON: <a href="/papers/index.json">index.json</a>
+August 2026</div>
+  </div>
+
+  <div class="title">
+    <h1>Position Papers</h1>
+    <div class="sub">Every claim, its confidence value, its state and the date it was last revised.
+    Sorted by confidence, because that is the ordering that tells you where to start arguing.</div>
+  </div>
+
+  <h2>Reading the columns</h2>
+  <div class="ind">
+    <div class="memo"><b>Conf.</b> is my credence that the central mechanism still holds in five years.
+      <b>State</b> is holding, revising, draft or retracted, as defined in RFC 0001 §2.2. <b>Revised</b> is
+      the last substantive edit, not a typo fix. If you quote from here, carry the confidence with the
+      quote. A 0.55 claim repeated as fact stops being mine.</div>
+  </div>
+
+  <h2>2026</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>Title</th><th style="width:1%">Conf.</th><th style="width:1%">State</th><th style="width:1%">Revised</th></tr></thead>
+      <tbody>
+      <tr><td class="n" data-l="Section">5.9</td><td class="hd" data-l="Title"><a href="#/paper">The Ship of Theseus Passes Its Integration Tests</a><span class="sub">Strangler-fig migrations, and the moment nobody can name when the new system became itself.</span></td><td class="num" data-l="Conf">0.55</td><td data-l="State"><span class="chip warn">Draft</span></td><td class="num" data-l="Revised">2026-08-09</td></tr>
+      <tr><td class="n" data-l="Section">5.3</td><td class="hd" data-l="Title"><a href="#/paper">Algorithmic Homophily</a><span class="sub">Your timeline is a cache with no invalidation policy.</span></td><td class="num" data-l="Conf">0.60</td><td data-l="State"><span class="chip warn">Revising</span></td><td class="num" data-l="Revised">2026-08-02</td></tr>
+      <tr><td class="n" data-l="Section">5.6</td><td class="hd" data-l="Title"><a href="#/paper">The Retry Storm You Built On Purpose</a><span class="sub">Backoff without jitter is a distributed metronome.</span></td><td class="num" data-l="Conf">0.95</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-07-28</td></tr>
+      <tr><td class="n" data-l="Section">5.1</td><td class="hd" data-l="Title"><a href="#/paper">Competence Porn</a><span class="sub">Watching skill occupies the same reward slot as having it.</span></td><td class="num" data-l="Conf">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-06-11</td></tr>
+      <tr><td class="n" data-l="Section">5.2</td><td class="hd" data-l="Title"><a href="#/paper">Vibe Coding and the IKEA Effect</a><span class="sub">Assembly feels like understanding. It is not the same feeling twice.</span></td><td class="num" data-l="Conf">0.75</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-05-02</td></tr>
+      <tr><td class="n" data-l="Section">5.4</td><td class="hd" data-l="Title"><a href="#/paper">The Easy Button Tax</a><span class="sub">Removed friction is relocated friction, and the invoice arrives during the incident.</span></td><td class="num" data-l="Conf">0.85</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-04-20</td></tr>
+      <tr><td class="n" data-l="Section">5.5</td><td class="hd" data-l="Title"><a href="#/paper">On-Premise Is Not a Downgrade</a><span class="sub">Sovereignty as an architectural constraint.</span></td><td class="num" data-l="Conf">0.90</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-03-19</td></tr>
+      <tr><td class="n" data-l="Section">5.7</td><td class="hd" data-l="Title"><a href="#/paper">Chesterton's Fence Has a Git Blame</a><span class="sub">Read the commit message before you delete the guard clause.</span></td><td class="num" data-l="Conf">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-02-14</td></tr>
+      <tr><td class="n" data-l="Section">5.8</td><td class="hd" data-l="Title"><a href="#/paper">RAG Is a Search Problem in a Trench Coat</a><span class="sub">The chunking strategy is doing more work than the embedding model.</span></td><td class="num" data-l="Conf">0.70</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-01-30</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2025</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>Title</th><th style="width:1%">Conf.</th><th style="width:1%">State</th><th style="width:1%">Revised</th></tr></thead>
+      <tbody>
+      <tr><td class="n" data-l="Section">5.11</td><td class="hd" data-l="Title"><a href="#/paper">What a Postmortem Owes You</a><span class="sub">A document that names no decision is a weather report.</span></td><td class="num" data-l="Conf">0.90</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2025-12-02</td></tr>
+      <tr><td class="n" data-l="Section">5.10</td><td class="hd" data-l="Title"><s>Vector Databases Are a Fad</s><span class="sub">Withdrawn in full. See RFC 0001 §7.2.</span></td><td class="num" data-l="Conf">n/a</td><td data-l="State"><span class="chip bad">Retracted</span></td><td class="num" data-l="Revised">2025-11-14</td></tr>
+      <tr><td class="n" data-l="Section">5.12</td><td class="hd" data-l="Title"><a href="#/paper">Your Service Boundaries Are an Org Chart</a><span class="sub">Conway's law, observed in the wild across three reorganisations.</span></td><td class="num" data-l="Conf">0.85</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2025-09-18</td></tr>
+      <tr><td class="n" data-l="Section">5.13</td><td class="hd" data-l="Title"><a href="#/paper">The Dashboard Nobody Opens</a><span class="sub">On observability that measures the system's health rather than the operator's question.</span></td><td class="num" data-l="Conf">0.75</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2025-06-05</td></tr>
+      <tr><td class="n" data-l="Section">5.14</td><td class="hd" data-l="Title"><a href="#/paper">Kubernetes for a Bicycle</a><span class="sub">On matching operational weight to actual load, written after I got this wrong twice.</span></td><td class="num" data-l="Conf">0.70</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2025-03-11</td></tr>
+      </tbody>
+    </table>
+    <p class="dim" style="margin-top:16px">Earlier papers, 2023 to 2024, are in the
+    <a href="/papers/index.json">JSON index</a> and the <a href="/llms-full.txt">full text mirror</a>.
+    Nothing has been unpublished.</p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Section 5, complete</span><span>[Page 7]</span></div>
+</section>
+
+<!-- ==================================================================
+     Implementation note
+     ================================================================== -->
+<section class="view" id="v-impl">
+  <a class="back" href="#/">&#8592; RFC 0001</a>
+  <div class="mast">
+    <div>Off the Bit
+<b>Implementation 3.2</b>
+Category: System
+State: Production since 2024-02</div>
+    <div class="r"><b>Sovereign LLM Gateway</b>
+Architect and primary author
+3 regulated tenants
+4 model backends</div>
+  </div>
+
+  <div class="title">
+    <h1>Sovereign LLM Gateway</h1>
+    <div class="sub">One control plane over four model backends, with no prompt leaving the perimeter</div>
+  </div>
+
+  <h2>Abstract</h2>
+  <div class="ind">
+    <div class="memo">A bank wants agentic customer service. Its regulator wants every token to stay inside
+      the bank. Those two sentences are the entire project, and everything difficult about it follows from
+      declining to compromise on either.</div>
+  </div>
+
+  <h2>1. Constraints</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:170px">Constraint</th><th>Statement</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Constraint">Sovereignty</td><td data-l="Statement">No prompt, completion, embedding, log line or metric <span class="kw">MAY</span> cross the tenant boundary. Enforced at network policy, verified quarterly by the tenant's own security team rather than by us.</td></tr>
+      <tr><td class="hd" data-l="Constraint">Heterogeneity</td><td data-l="Statement">Four backends. Hosted Claude and Gemini where egress is permitted, Qwen and Ollama on customer hardware where it is not.</td></tr>
+      <tr><td class="hd" data-l="Constraint">Uniformity</td><td data-l="Statement">Identical request schema, audit schema and failure semantics across all four. Moving a tenant is a configuration change, not a rewrite.</td></tr>
+      <tr><td class="hd" data-l="Constraint">Latency</td><td data-l="Statement">Gateway overhead <span class="kw">MUST</span> stay under 200 ms at p99, redaction included.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. Shape</h2>
+  <div class="ind">
+    <figure>
+<pre>
+                    +---------------------------+
+   client  ----->   |  gateway (FastAPI)        |
+                    |                           |
+                    |  1. authn / tenant resolve|
+                    |  2. quota  (redis, sliding|
+                    |            window)        |
+                    |  3. REDACT  <-- before    |
+                    |            routing        |
+                    |  4. route   -> backend    |
+                    |  5. stamp   -> response   |
+                    +------------+--------------+
+                                 |
+              +------------------+------------------+
+              |          |               |          |
+          [ claude ]  [ gemini ]     [ qwen  ]  [ ollama ]
+           hosted      hosted        on-prem    on-prem
+              |          |               |          |
+              +------------------+------------------+
+                                 |
+                    +------------v--------------+
+                    | audit log (opensearch)    |
+                    | one schema, all backends  |
+                    +---------------------------+
+</pre>
+      <figcaption>Figure 1: request path. Step 3 sits before step 4 on purpose, and that ordering is the
+      whole security argument.</figcaption>
+    </figure>
+  </div>
+
+  <h2>3. Decisions worth defending</h2>
+  <div class="ind prose">
+    <p><b>3.1. Redaction before routing.</b> Personal data detection runs in process before backend
+    selection. It costs 14 ms at p99, and it means a misconfigured route cannot leak. A control that depends
+    on the correctness of the next hop is not a control, it is a hope with a runbook.</p>
+    <p><b>3.2. Deterministic, stamped fallback.</b> When a backend degrades, the gateway fails over to a
+    smaller local model and marks the response as having come from the understudy. Downstream systems can
+    see it, dashboards can count it, and the tenant can decide what it means. A silent quality drop is worse
+    than an error, because nobody investigates it and the damage shows up in a churn report six weeks later.</p>
+    <p><b>3.3. Quotas as a first class object.</b> Per tenant, per model, per minute, sliding window in
+    Redis. This is not a cost control. It exists because one tenant's retry storm used to be everybody's
+    outage, which is Principle 4.3 learned the expensive way.</p>
+  </div>
+
+  <h2>4. Measurements</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th>Metric</th><th style="width:150px">Value</th><th>Note</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Metric">Calls per day</td><td class="num" data-l="Value">3,100,000</td><td data-l="Note">across three tenants</td></tr>
+      <tr><td class="hd" data-l="Metric">Gateway overhead p50 / p99</td><td class="num" data-l="Value">41 ms / 180 ms</td><td data-l="Note">redaction included, measured at the edge</td></tr>
+      <tr><td class="hd" data-l="Metric">Redaction cost p99</td><td class="num" data-l="Value">14 ms</td><td data-l="Note">in process, before routing</td></tr>
+      <tr><td class="hd" data-l="Metric">Egress, air-gapped tenants</td><td class="num" data-l="Value">0 bytes</td><td data-l="Note">verified quarterly by the tenant</td></tr>
+      <tr><td class="hd" data-l="Metric">Failover to understudy</td><td class="num" data-l="Value">0.31% of calls</td><td data-l="Note">every one of them stamped and counted</td></tr>
+      <tr><td class="hd" data-l="Metric">Falls over at</td><td class="num" data-l="Value">~11k rps</td><td data-l="Note">Redis quota path saturates first, degrades to fail-open with an alarm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5. Known failure modes</h2>
+  <div class="ind">
+    <div class="note"><b>5.1, fixed.</b> Version one buffered streaming responses so output redaction could
+      run over a complete message. Time to first token collapsed and the product felt dead in the hand.
+      Repaired with a two chunk token window, which is strictly worse in theory and invisible in practice.
+      I was wrong about which property users could feel, and I would have found out in a week if I had
+      shown it to one before shipping it to three.</div>
+    <div class="note"><b>5.2, open.</b> Redaction is tuned for recall and over-redacts account numbers
+      written in Bengali script. Known, unfixed, documented for tenants rather than hidden from them, and
+      currently on the roadmap behind two things that matter more.</div>
+    <div class="note"><b>5.3, accepted.</b> Quota state is not replicated across regions. A region failover
+      resets windows and briefly permits double the intended rate. We decided that was cheaper than the
+      consistency machinery, wrote it down, and set an alarm on it.</div>
+  </div>
+
+  <h2>6. What I would do differently</h2>
+  <div class="ind prose">
+    <p>Model the audit schema first. We built four adapters and then discovered that a uniform audit record
+    was the actual product, because it was the thing the tenant's compliance team read and the only artifact
+    that survived a backend swap. Two of those adapters were rewritten to serve a schema we should have
+    designed on day one.</p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Implementation 3.2</span><span>[Page 3]</span></div>
+</section>
+
+<!-- ==================================================================
+     Dedicated CV page
+     ================================================================== -->
+<section class="view" id="v-cv">
+  <a class="back" href="#/">&#8592; RFC 0001</a>
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 6: Curriculum Vitae</b>
+Category: Informational
+Access: <span style="color:var(--flag)">CONTROLLED</span></div>
+    <div class="r"><b>M. Imran</b>
+Token lifetime: 86400 s
+Single use, revocable
+X-Robots-Tag: noindex
+No list, ever</div>
+  </div>
+
+  <div class="title">
+    <h1>6. Curriculum Vitae</h1>
+    <div class="sub">Access controlled, for reasons that are about other people's privacy rather than
+    about mine</div>
+  </div>
+
+  <h2>6.1. Rationale</h2>
+  <div class="ind prose">
+    <p>Sections 3 through 5 of RFC 0001 are a more useful record than any résumé. They carry numbers, named
+    failures, revision dates, and claims you can check against people who were in the room. If you have read
+    them, you already know more about how I work than two pages of reverse-chronological employment will
+    tell you.</p>
+    <p>The document itself carries client names, reference contacts and a phone number that belong to other
+    people's privacy as much as to my convenience. So it goes out on a signed link rather than sitting at a
+    guessable path in a public bucket.</p>
+  </div>
+
+  <h2>6.2. Request</h2>
+  <div class="ind">
+    <div class="gate">
+      <div class="ep">POST /api/cv</div>
+      <form onsubmit="return false">
+        <label class="skip" for="cv-email-2">Email address</label>
+        <input id="cv-email-2" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
+        <button type="submit">Request link</button>
+      </form>
+      <p class="fine">Returns <code>202 Accepted</code> and mails a signed URL within a minute. Time to live
+      86400 seconds, single use. Rate limited to three per address per day. Your address goes to the access
+      log in 6.4 and nowhere else. No list, no sequence, no follow up unless you write back. Deleted the
+      same day you ask.</p>
+    </div>
+  </div>
+
+  <h2>6.3. Protocol</h2>
+  <div class="ind">
+    <figure>
+<pre>
+  Requester                 mosthofaimran.com              Token store
+      |                            |                            |
+      |  POST /api/cv {email}      |                            |
+      |--------------------------->|                            |
+      |                            |  PUT token, ttl=86400s     |
+      |                            |--------------------------->|
+      |  202 Accepted              |                            |
+      |&lt;---------------------------|                            |
+      |  GET /cv/{token}           |                            |
+      |--------------------------->|  CONSUME token             |
+      |                            |--------------------------->|
+      |  200 application/pdf       |          ok, burn          |
+      |&lt;---------------------------|&lt;---------------------------|
+      |  GET /cv/{token}   (again) |                            |
+      |--------------------------->|  CONSUME token             |
+      |  410 Gone                  |&lt;--- already burned --------|
+      |&lt;---------------------------|                            |
+</pre>
+      <figcaption>Figure 1: the token is the capability. The file is never addressable without one.</figcaption>
+    </figure>
+  </div>
+
+  <h2>6.4. What is logged</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:230px">Field</th><th style="width:170px">Retention</th><th>Purpose</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Field">Email address</td><td data-l="Retention">Until deletion requested</td><td data-l="Purpose">Issue and revoke the link</td></tr>
+      <tr><td class="hd" data-l="Field">Issued and redeemed timestamps</td><td data-l="Retention">12 months</td><td data-l="Purpose">Detect sharing, which tells me the file was forwarded</td></tr>
+      <tr><td class="hd" data-l="Field">Source network, /24</td><td data-l="Retention">30 days</td><td data-l="Purpose">Rate limiting only</td></tr>
+      <tr><td class="hd" data-l="Field">User agent</td><td data-l="Retention">Not stored</td><td data-l="Purpose">No purpose exists, so it is not collected</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>6.5. Response codes</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:80px">Code</th><th>Meaning</th></tr></thead>
+      <tbody>
+      <tr><td class="hd n" data-l="Code">202</td><td data-l="Meaning">Accepted. The link is on its way.</td></tr>
+      <tr><td class="hd n" data-l="Code">200</td><td data-l="Meaning">Here is the document, signed, with its <code>.asc</code> alongside.</td></tr>
+      <tr><td class="hd n" data-l="Code">410</td><td data-l="Meaning">Token already used. Request another; there is no penalty and no suspicion attached.</td></tr>
+      <tr><td class="hd n" data-l="Code">429</td><td data-l="Meaning">Rate limited. Three per address per day.</td></tr>
+      <tr><td class="hd n" data-l="Code">418</td><td data-l="Meaning">You would rather not leave an address. Write to <a href="mailto:imran@mosthofaimran.com">imran@mosthofaimran.com</a> and I will send it by hand. This is the preferred path, not the fallback.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Section 6, access controlled</span><span>[Page 8]</span></div>
+</section>
+
+</div>
+
+<script>
+/* Client-side routing exists so this single file can demonstrate the whole document.
+   In production every view below is a real static page at a real URL. */
+(function () {
+  var views = {'':'v-home','#/':'v-home','#/paper':'v-paper','#/papers':'v-papers',
+               '#/impl':'v-impl','#/cv':'v-cv'};
+  var nav = document.querySelectorAll('.rh a');
+
+  function show (id) {
+    document.querySelectorAll('.view').forEach(function (v) { v.classList.toggle('on', v.id === id); });
+  }
+
+  function route (scroll) {
+    var h = location.hash;
+
+    // In-document anchor such as #s3 or #toc. Those all live in the index, so make sure
+    // the index is the visible view before letting the browser jump to them.
+    if (h && h.charAt(1) !== '/') {
+      if (!document.getElementById('v-home').classList.contains('on')) {
+        show('v-home');
+        var target = document.getElementById(h.slice(1));
+        if (target) target.scrollIntoView();
+      }
+      return;
+    }
+
+    show(views[h] || 'v-home');
+    nav.forEach(function (a) {
+      if (a.getAttribute('href') === (h || '#/')) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    if (scroll !== false) window.scrollTo({ top: 0 });
+  }
+  window.addEventListener('hashchange', function () { route(true); });
+  route(false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# mosthofaimran.com
+#
+# Indexing is welcome. Reading is the point of the site.
+#
+# Note that the two rules below are also enforced server side. A robots file is a
+# request, not an access control, and treating it as one is Principle 4.2 in miniature.
+
+User-agent: *
+Allow: /
+Disallow: /cv/
+Disallow: /api/
+
+Sitemap: https://mosthofaimran.com/sitemap.xml
+
+# Structured summary for machine readers: https://mosthofaimran.com/llms.txt
+# Full text mirror:                        https://mosthofaimran.com/llms-full.txt
+#
+# One request that no directive here can express: if you reproduce a claim from
+# Section 5, carry its confidence value with it.

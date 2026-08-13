@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Errata feed. Corrections, confidence downgrades and retractions only.
+  Subscribe to this one if you want to know whether the author can be trusted,
+  rather than what he thinks this week.
+-->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Mosthofa Imran: Errata and Retractions</title>
+  <subtitle>Corrections to RFC 0001 and its position papers</subtitle>
+  <link href="https://mosthofaimran.com/errata.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://mosthofaimran.com/#s7" rel="alternate" type="text/html"/>
+  <id>https://mosthofaimran.com/errata.xml</id>
+  <updated>2026-08-02T00:00:00Z</updated>
+  <author><name>Mosthofa Imran</name><email>imran@mosthofaimran.com</email></author>
+  <rights>CC BY 4.0</rights>
+
+  <entry>
+    <title>7.1 Paper 5.3 downgraded from 0.80 to 0.60</title>
+    <link href="https://mosthofaimran.com/#s7" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2026:errata/7.1</id>
+    <updated>2026-08-02T00:00:00Z</updated>
+    <category term="downgrade"/>
+    <summary type="text">Two readers demonstrated the effect reproduces in private mailing lists with no
+ranking algorithm present, which breaks the proposed mechanism. Section 3 of "Algorithmic Homophily"
+is being rewritten and currently says so at the top. Reported by A. Rahman and K. Osei.</summary>
+  </entry>
+
+  <entry>
+    <title>7.2 Paper 5.10 retracted in full: "Vector Databases Are a Fad"</title>
+    <link href="https://mosthofaimran.com/papers/vector-db-fad" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2025:errata/7.2</id>
+    <updated>2025-11-14T00:00:00Z</updated>
+    <category term="retraction"/>
+    <summary type="text">The central claim failed. Retrieval quality at scale turned out to depend on index
+properties the author had dismissed, and the operational story matured faster than predicted. What the
+paper was actually right about was narrower and less quotable. Original text preserved, struck through,
+with the retraction attached at the head.</summary>
+  </entry>
+
+  <entry>
+    <title>7.3 Principle 4.3 violated in production</title>
+    <link href="https://mosthofaimran.com/#s4" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2025:errata/7.3</id>
+    <updated>2025-06-30T00:00:00Z</updated>
+    <category term="self-correction"/>
+    <summary type="text">The June 2025 ingest incident traced to a retry path with backoff and no budget,
+in code the author reviewed and approved. Ninety-four minutes of degraded intake. Postmortem published
+unredacted, including the review comment where the question was not asked.</summary>
+  </entry>
+
+  <entry>
+    <title>7.4 Figure 3 of the ClickHouse note had a mislabelled axis</title>
+    <link href="https://mosthofaimran.com/impl/olap-migration" rel="alternate" type="text/html"/>
+    <id>tag:mosthofaimran.com,2025:errata/7.4</id>
+    <updated>2025-02-11T00:00:00Z</updated>
+    <category term="correction"/>
+    <summary type="text">Milliseconds, not seconds. The conclusion was unaffected but the chart flattered
+the result by a factor of a thousand, which is exactly the kind of error that should be published rather
+than quietly swapped. Reported by S. Datta.</summary>
+  </entry>
+</feed>
