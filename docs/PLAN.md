@@ -695,6 +695,30 @@ The account is close to permanent. Pages, D1, R2 and all three domain zones have
 sit in one account, and moving later means recreating the database and re-verifying
 DNS.
 
+**The deploy credential.** The account ID above is an identifier rather than a secret,
+so it sits in the workflow as a plain value and exactly one thing has to be configured
+for CI to deploy:
+
+```
+CLOUDFLARE_API_TOKEN     repository secret, Account > Cloudflare Pages > Edit
+```
+
+It has to be made in the dashboard. `wrangler` cannot mint it: the CLI holds an OAuth
+session whose scopes stop at `pages:write`, and `POST /user/tokens` refuses it with
+code 9109. This was checked rather than assumed, on 2026-08-14.
+
+Until that secret exists, pushes to `main` **fail** at the deploy job rather than
+skipping it, and the site serves whatever was last published by hand with:
+
+```
+CLOUDFLARE_ACCOUNT_ID=f697cce1cf00f8132c900d2c643ad935 \
+  npx wrangler pages deploy dist --project-name imran-site --branch main
+```
+
+The job used to skip and report success, which meant three consecutive green runs on
+`main` had deployed nothing at all. A deploy job that cannot deploy should say so in
+the colour people actually read.
+
 **Token gap.** The existing wrangler OAuth session carries `pages`, `d1`, `workers`
 and `zone (read)`. It has **no `r2` scope**, which T22 needs, and `zone (read)` is
 likely insufficient for creating DNS records at T27. Re-authorise or mint a scoped API

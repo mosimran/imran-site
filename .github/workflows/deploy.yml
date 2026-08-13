@@ -58,30 +58,69 @@ jobs:
     needs: check
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    env:
+      # Not a secret. A Cloudflare account ID is an identifier, it appears in
+      # dashboard URLs, and it is already written down in docs/TASKS.md T03.
+      # Keeping it here means exactly one thing has to be configured to make
+      # deploys work, and that one thing is the only real credential.
+      CLOUDFLARE_ACCOUNT_ID: f697cce1cf00f8132c900d2c643ad935
+      WRANGLER_VERSION: 4.71.0
+
     steps:
-      - name: do we have deploy credentials
-        id: creds
+      # A deploy job that reports success without deploying is worse than one
+      # that fails, because the badge says shipped. On main, absent credentials
+      # are a failure and not a skip. Proven by the run on the commit that
+      # introduced this: deploy went red with no token set, where the previous
+      # three runs had gone green while uploading nothing.
+      - name: deploy credentials must be present on main
         env:
           TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if [ -n "$TOKEN" ] && [ -n "$ACCOUNT" ]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID not set, skipping deploy. See docs/PLAN.md section 13.3."
+          if [ -z "$TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set, so this push was NOT deployed."
+            echo "The site is still serving whatever was last published by hand."
+            echo "Create a token with Account > Cloudflare Pages > Edit and add it as a"
+            echo "repository secret. wrangler cannot mint one: its OAuth session is"
+            echo "refused by /user/tokens with code 9109. See docs/PLAN.md section 13.3."
+            exit 1
           fi
 
       - uses: actions/download-artifact@v5
-        if: steps.creds.outputs.ready == 'true'
         with:
           name: dist
           path: dist
 
+      # wrangler directly rather than through an action wrapper. One fewer
+      # third party in the release path, a pinned version rather than a
+      # floating tag, and the same command that is run by hand when this job
+      # cannot run at all.
       - name: deploy to cloudflare pages
-        if: steps.creds.outputs.ready == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name imran-site --branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          npx --yes wrangler@"$WRANGLER_VERSION" pages deploy dist \
+            --project-name imran-site \
+            --branch main
+
+      # Deployed and unverified is the same class of problem as green and
+      # undeployed. Check the live primary, not the artifact.
+      - name: verify the live site serves what was just built
+        run: |
+          set -e
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -fsS -o live.html -w '%{http_code}' https://mosthofaimran.com/ || true)
+            [ "$code" = "200" ] && break
+            echo "attempt $i: got '$code', retrying in 10s"
+            sleep 10
+          done
+          [ "$code" = "200" ] || { echo "::error::live site returned $code after deploy"; exit 1; }
+
+          # The zero-JavaScript budget, enforced against the bytes the edge
+          # actually served rather than against dist/.
+          scripts=$(grep -o '<script' live.html | wc -l | tr -d ' ')
+          ldjson=$(grep -o 'application/ld+json' live.html | wc -l | tr -d ' ')
+          if [ "$scripts" != "$ldjson" ]; then
+            echo "::error::live index has $scripts script tags but only $ldjson are ld+json"
+            exit 1
+          fi
+          echo "live: 200, $scripts script tags, all of them ld+json"
