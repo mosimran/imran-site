@@ -165,7 +165,7 @@ explanation before the joke lands.
 | `imran.com.bd` | Alias | Serves identical bytes, canonical to the primary. Attached and live. |
 | `efemer.me` | Alias | Same. Attached and live. Found already configured rather than planned for. |
 | `johnefemer.com` | Alias, not started | Registered at Namecheap, parked on `ns1/ns2.lander.d.parity.domains`. Nameservers must move to Cloudflare first. |
-| `www.*` | Redirect | 301 to their own apex, then the alias rules apply. `www.mosthofaimran.com` and `www.imran.com.bd` are attached to the Pages project but **pending**: each needs a CNAME in its zone, and creating DNS records needs an access level the current token does not have. |
+| `www.*` | Serves | `www.mosthofaimran.com`, `www.imran.com.bd` and `www.efemer.me` are attached and active. They **serve** rather than redirect: Pages matches `_redirects` on path only, so a host-based rule is silently ignored. The baked canonical still names the primary on every one, so consolidation works. A real 301 needs a zone-level Redirect Rule per zone. |
 
 ### 2.1 How aliasing works here
 
@@ -511,12 +511,18 @@ section 2.1 explains why the one you would reach for first is the one to avoid.
 
 ### 9.2 Redirects
 
+**Pages matches `_redirects` on the path, not the host.** A rule written as a full URL is
+silently ignored, which is a Netlify behaviour rather than a Pages one. Three host rules
+sat in this file doing nothing while implying a www-to-apex redirect that never happened.
+
 ```
 # public/_redirects
-https://www.mosthofaimran.com/*  https://mosthofaimran.com/:splat  301
-/sitemap.xml                     /sitemap-index.xml                301
-/papers/index.html               /papers/                          301
+/sitemap.xml   /sitemap-index.xml   301
 ```
+
+All seven hosts serve the document. The baked canonical names the primary on every one, so
+search engines consolidate correctly, and that is the same mechanism section 2.1 already
+relies on for the aliases. A genuine www-to-apex 301 needs a zone-level Redirect Rule.
 
 The sitemap redirect exists because robots.txt in the handoff advertises
 `/sitemap.xml` and Astro emits an index file. Cheaper to redirect than to break a

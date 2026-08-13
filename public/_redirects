@@ -1,8 +1,18 @@
-# www to apex on every host
-https://www.mosthofaimran.com/*  https://mosthofaimran.com/:splat  301
-https://www.johnefemer.com/*     https://johnefemer.com/:splat     301
-https://www.imran.com.bd/*       https://imran.com.bd/:splat       301
+# Cloudflare Pages matches _redirects on the PATH only, not the host. Rules
+# written as full URLs (https://www.example.com/*) are silently ignored here;
+# that is a Netlify feature, not a Pages one. Three such rules sat in this file
+# doing nothing and implying a www-to-apex redirect that never happened.
+#
+# All seven hosts therefore serve the document rather than redirecting. That is
+# safe, and it is the same mechanism already chosen for the alias domains: the
+# canonical is baked in at build and always names the primary, so search engines
+# consolidate on one URL. Verified on every host.
+#
+# A real 301 from www to apex needs a zone-level Redirect Rule, one per zone,
+# which needs an access level this token does not have. Worth doing when it is
+# available: www-to-apex is the classic duplication case and a redirect handles
+# it more decisively than a canonical hint.
 
-# The handoff's robots.txt advertised /sitemap.xml; Astro emits an index.
-# Cheaper to redirect than to break a published URL.
+# Path-based rules do work. The handoff's robots.txt advertised /sitemap.xml and
+# Astro emits an index, so this keeps a published URL alive.
 /sitemap.xml   /sitemap-index.xml   301
