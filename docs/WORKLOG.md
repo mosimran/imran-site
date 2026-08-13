@@ -623,3 +623,59 @@ The atomicity that matters still lives entirely in the first statement.
 **Outstanding**
 Email Obfuscation is still on, so the address in any page still gets rewritten and the
 script still injected. T05 remains blocked on it.
+
+---
+
+## T10 · The Internet-Draft masthead
+
+2026-08-13 · https://mosthofaimran.com
+
+The naming decision made in PLAN section 1 finally reaches the page it is about. Until
+now the identifier was live on every paper page while the index still called itself
+RFC 0001, and the share card said `INTERNET-DRAFT` while the page it linked to disagreed.
+That inconsistency was recorded at T04a rather than quietly reconciled; this closes it.
+
+The masthead is now `Internet-Draft` / `draft-imran-systems-and-arguments-03` /
+`Intended status: Informational` / `Expires: 14 February 2027`.
+
+**The identifier is computed, not typed.** Appendix A's four rows are declared once in
+the page's frontmatter and both the version suffix (`history.length - 1`) and the expiry
+(`revised + 185 days`) derive from them. Add a row to Appendix A and the masthead follows.
+There is no number anyone has to remember to bump, which was the whole argument for
+choosing this form over an RFC number.
+
+**Status of This Memo gained a paragraph.** The form is borrowed and now says so: no
+standing with the IETF, nothing reviewed by anybody but the author, and the form used
+because a working document that expires unless revised is the right shape for the
+argument, not to borrow authority. Borrowing a document form is a stylistic choice;
+letting a reader infer its provenance is not.
+
+**The dead link is fixed.** Section 14 read `github.com/mosthofaimran` over a bare
+`https://github.com/` href, and the account is `mosimran`. Wrong name and wrong target in
+one line, found in the T02 audit and open since.
+
+**Validated**
+
+`Expires: 14 February 2027` matches an independent computation of 2026-08-13 plus 185
+days to the day. Worth noting the build sheet artifact wrote "12 February" by hand and was
+wrong by two days; the code is right and the hand-written date was not, which is the
+argument for computing it.
+
+Swept the whole build, not just the index: 23 of 24 pages carried the old name through the
+shared layout and three more through prose. All 24 now carry the identifier. 0 occurrences
+of `RFC 0001` anywhere in `dist/`.
+
+Link audit re-run: 0 broken internal links. Index 53,381 bytes against 60,000, 0 script
+tags.
+
+**A validation habit, corrected.** The live check reported 2 occurrences of the old name
+while `dist/` had 0, and four other probes on the same page disagreed with it. Cause was
+Cloudflare edge cache serving different objects to separate requests. Fourth time this has
+looked like a bug. The rule now is one fetch into a file, then analyse the file, rather
+than a probe per assertion.
+
+**Deployed**
+https://mosthofaimran.com, 24 pages.
+
+**Next**
+T09, then T17. T05 is still blocked on Email Obfuscation.

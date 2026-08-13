@@ -68,6 +68,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .rh nav{display:flex;gap:clamp(10px,3.2vw,20px);overflow-x:auto;scrollbar-width:none}
 .rh nav::-webkit-scrollbar{display:none}
 .rh .doc{font-weight:700;color:var(--ink);white-space:nowrap}
+/* The identifier is 36 characters and the bar is 46px tall. Full name where
+   there is room, the category where there is not. */
+.rh .doc-short{display:none}
+@media (max-width:720px){
+  .rh .doc-long{display:none}
+  .rh .doc-short{display:inline}
+}
 @media (max-width:520px){
   .rh a{font-size:11px;letter-spacing:.06em}
   .rh nav a[data-opt]{display:none}   /* keep the bar readable, Contents covers the rest */

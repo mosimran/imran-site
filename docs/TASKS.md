@@ -81,9 +81,12 @@ something on every task after it rather than only at the end.
 
 ## Track 3: routes
 
-- [ ] **T10** Three layouts (Rfc, Paper, Impl), masthead in the Internet-Draft form
+- [x] **T10** Three layouts (Rfc, Paper, Impl), masthead in the Internet-Draft form
   <br>*Ships:* yes. *Validated by:* masthead renders the identifier and a correct
   `Expires` date computed from `revised`. GitHub link fixed to `mosimran`.
+  <br>*Status:* done. `draft-imran-systems-and-arguments-03`, expires 14 February 2027,
+  matching an independent computation to the day. 0 references to the old name anywhere
+  in the build. See WORKLOG.
 
 - [x] **T11** `/papers/` and `/papers/<slug>/`
   <br>*Ships:* yes. *Validated by:* 14 pages build, index sorted by confidence,

@@ -2,6 +2,10 @@
 // Shared document shell. index.astro still carries its own head and migrates
 // here at T10, when the masthead changes to the Internet-Draft form.
 import '../styles/rfc.css'
+import { identifier } from '../lib/draft'
+
+const DOC_HISTORY = 4  // Appendix A rows; keep in step with index.astro
+const ident = identifier('systems-and-arguments', DOC_HISTORY)
 
 interface Props {
   title: string
@@ -41,7 +45,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 <a class="skip" href="#main">Skip to document</a>
 <header class="rh">
   <div class="in">
-    <a class="doc" href="/">RFC 0001</a>
+    <a class="doc" href="/"><span class="doc-long">{ident}</span><span class="doc-short">Internet-Draft</span></a>
     <nav>
       <a href="/papers/">Papers</a>
       <a href="/errata/">Errata</a>
@@ -51,7 +55,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
   </div>
 </header>
 <div class="page" id="main">
-  {back && <a class="back" href="/">&#8592; RFC 0001</a>}
+  {back && <a class="back" href="/">&#8592; {ident}</a>}
   <slot />
 </div>
 </body>

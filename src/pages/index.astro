@@ -6,9 +6,19 @@
 // The masthead still reads "Request for Comments: 0001". It becomes an
 // Internet-Draft identifier at T10. See docs/PLAN.md section 1.
 import '../styles/rfc.css'
+import { identifier, expiresOn, isExpired, fmt } from '../lib/draft'
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href
 const cover = new URL('/og-cover.jpg', Astro.site).href
+
+// Appendix A, newest first. The identifier's version suffix is history.length - 1,
+// so this array is the single source for both. Add a row to Appendix A and the
+// masthead follows; there is no number to remember to bump.
+const history = ['2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
+const revised = new Date(history[0])
+const ident = identifier('systems-and-arguments', history.length)
+const expires = expiresOn(revised)
+const expired = isExpired(revised)
 ---
 <!doctype html>
 <html lang="en">
@@ -16,7 +26,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>RFC 0001: Mosthofa Imran, Systems and Arguments</title>
+<title>Mosthofa Imran: Systems, Arguments, and Known Failure Modes</title>
 <meta name="description" content="Mosthofa Imran. Lead solutions architect. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.">
 <link rel="canonical" href={canonical}>
 <link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
@@ -30,7 +40,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mosthofa Imran">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="RFC 0001: Mosthofa Imran">
+<meta property="og:title" content="Mosthofa Imran: Systems, Arguments, and Known Failure Modes">
 <meta property="og:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
 <meta property="og:url" content={canonical}>
 {/* Absolute, because every scraper resolves og:image against its own base and
@@ -52,7 +62,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 
 <header class="rh">
   <div class="in">
-    <a class="doc" href="/" aria-current="page">RFC 0001</a>
+    <a class="doc" href="/" aria-current="page"><span class="doc-long">{ident}</span><span class="doc-short">Internet-Draft</span></a>
     <nav>
       <a href="#toc">Contents</a>
       <a href="/papers/">Papers</a>
@@ -67,9 +77,10 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 
   <div class="mast">
     <div>Off the Bit
-<b>Request for Comments: 0001</b>
-Category: Informational
-ISSN: not assigned, deliberately
+<b>Internet-Draft</b>
+{ident}
+Intended status: Informational
+Expires: {fmt(expires)}
 Obsoletes: every CV I have written
 Updates: your priors, if it earns it</div>
     <div class="r"><b>M. Imran</b>
@@ -86,7 +97,12 @@ August 2026</div>
 
   <h2 id="status">Status of This Memo</h2>
   <div class="ind">
-    <div class="memo">This memo provides information about one engineer. It does not specify a standard of
+    <div class="memo">This document borrows the form of an IETF Internet-Draft. It is not one, it has no
+      standing with the IETF, and nothing here was reviewed by anybody but the author. The form
+      is used because a working document that expires unless revised is the right shape for the
+      argument this site is making, not to borrow authority.
+      <br><br>
+      This memo provides information about one engineer. It does not specify a standard of
       any kind, and its normative language in Section 4 binds nobody but the author. Distribution is
       unlimited. It is <b>not</b> a résumé; it is the record from which a résumé would be an abridgement.
       Systems appear with the numbers they produced. Arguments appear with a confidence value and the
@@ -599,7 +615,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
       <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Lead Solutions Architect</td></tr>
       <tr><td class="hd" data-l="Channel">Location</td><td data-l="Address">Dhaka, Bangladesh (UTC+6). Comfortable overlapping with CET mornings and US Pacific evenings.</td></tr>
       <tr><td class="hd" data-l="Channel">Email</td><td data-l="Address"><a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a>. I read everything and answer most things inside two working days.</td></tr>
-      <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/">github.com/mosthofaimran</a></td></tr>
+      <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/mosimran">github.com/mosimran</a></td></tr>
       <tr><td class="hd" data-l="Channel">Résumé</td><td data-l="Address"><a href="/cv/">Section 6</a></td></tr>
       <tr><td class="hd" data-l="Channel">Key</td><td data-l="Address"><code>/pgp.asc</code> <span class="dim">(not yet published: no key exists, see the ledger)</span>, fingerprint in 9.3</td></tr>
       <tr><td class="hd" data-l="Channel">Not present on</td><td data-l="Address">Any feed-ranked platform. Paper 5.3 explains the reasoning, and holds me to it.</td></tr>
