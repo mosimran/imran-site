@@ -29,6 +29,7 @@ Read these in order. `docs/TASKS.md` is the one you work from day to day.
 | [docs/TASKS.md](docs/TASKS.md) | 31 tasks, each with its validation step |
 | [docs/WORKLOG.md](docs/WORKLOG.md) | Append-only journal, one entry per completed task |
 | [docs/PLACEHOLDERS.md](docs/PLACEHOLDERS.md) | Content that is still illustrative and needs replacing |
+| [docs/MCP.md](docs/MCP.md) | Design for the content MCP server: entry, rules, deploy path |
 | [docs/intitial-handoff/](docs/intitial-handoff/) | The original prototype and spec, preserved untouched |
 
 ## Working on it
