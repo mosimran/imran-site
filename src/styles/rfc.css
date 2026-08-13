@@ -1,0 +1,177 @@
+/* ============================================================
+   rfc.css
+   Lifted verbatim from the handoff prototype's inline <style>.
+   Two groups of rules were dropped, both artifacts of the hash
+   router that does not survive into production:
+     .view / .view.on            (view switching)
+     .view + #v-home in @print   (page breaks between views)
+   Nothing else is changed. See docs/PLAN.md section 3.
+   ============================================================ */
+:root{
+  --mono: ui-monospace,"SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --text: "Charter","Iowan Old Style","Source Serif 4",ui-serif,Georgia,"Times New Roman",serif;
+
+  --paper:#fdfdfb; --sheet:#f5f5f1; --ink:#14171a; --dim:#586470;
+  --rule:#e3e7eb; --hard:#14171a;
+  --link:#123c8a; --link-v:#5a3488;
+  --flag:#8c1d13; --ok:#155f39; --warn:#845d06;
+
+  --fs: clamp(13.5px, 0.55rem + 0.55vw, 14.5px);      /* chrome / mono */
+  --fs-prose: clamp(16.5px, 0.9rem + 0.55vw, 18.5px);  /* reading */
+  --pad: clamp(16px, 4vw, 30px);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#0d1013; --sheet:#151a1e; --ink:#dde2e6; --dim:#8d97a1;
+    --rule:#222a31; --hard:#5c6873;
+    --link:#83aaff; --link-v:#bda2e8;
+    --flag:#e4867c; --ok:#68c48d; --warn:#d6a94b;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--mono);font-size:var(--fs);line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-wrap:break-word;
+}
+.page{max-width:880px;margin:0 auto;padding:0 var(--pad) 96px}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--link) 32%, transparent)}
+a:visited{color:var(--link-v);border-bottom-color:color-mix(in srgb, var(--link-v) 30%, transparent)}
+a:hover{border-bottom-color:currentColor}
+a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:1px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:var(--pad);top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:99;border:0}
+
+/* ---------- sticky running head ---------- */
+.rh{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--rule)}
+.rh .in{max-width:880px;margin:0 auto;padding:0 var(--pad);
+        display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:46px}
+.rh a{border:0;color:var(--dim);font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+      padding:12px 0;min-height:44px;display:flex;align-items:center}
+.rh a:hover,.rh a[aria-current="page"]{color:var(--ink)}
+.rh nav{display:flex;gap:clamp(10px,3.2vw,20px);overflow-x:auto;scrollbar-width:none}
+.rh nav::-webkit-scrollbar{display:none}
+.rh .doc{font-weight:700;color:var(--ink);white-space:nowrap}
+@media (max-width:520px){
+  .rh a{font-size:11px;letter-spacing:.06em}
+  .rh nav a[data-opt]{display:none}   /* keep the bar readable, Contents covers the rest */
+}
+
+/* ---------- masthead ---------- */
+.mast{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;
+      border-bottom:1px solid var(--hard);padding:26px 0 14px;margin-top:6px}
+.mast div{font-size:clamp(12px,3vw,12.8px);line-height:1.9;color:var(--dim);white-space:pre-line}
+.mast .r{text-align:right}
+.mast b{color:var(--ink);font-weight:600}
+@media (max-width:600px){
+  .mast{grid-template-columns:1fr;gap:14px}
+  .mast .r{text-align:left;padding-top:10px;border-top:1px dotted var(--rule)}
+}
+.title{text-align:center;margin:clamp(26px,7vw,42px) 0 clamp(24px,6vw,36px)}
+.title h1{font-size:clamp(16px,4.2vw,19px);letter-spacing:.03em;text-transform:uppercase;
+          font-weight:700;margin:0 0 8px;line-height:1.45}
+.title .sub{font-size:clamp(12.5px,3.2vw,13.5px);color:var(--dim);max-width:60ch;margin:0 auto}
+
+/* ---------- structure ---------- */
+h2{font-size:clamp(14px,3.6vw,15px);font-weight:700;margin:clamp(32px,7vw,44px) 0 12px;
+   letter-spacing:.02em;scroll-margin-top:60px}
+h3{font-size:var(--fs);font-weight:700;margin:24px 0 8px;scroll-margin-top:60px}
+h2 .hash{color:var(--dim);font-weight:400;opacity:0;transition:opacity .12s;padding-left:8px;border:0}
+h2:hover .hash{opacity:1}
+p{margin:0 0 14px;max-width:82ch}
+.ind{padding-left:clamp(0px,3vw,26px)}
+.prose{font-family:var(--text);font-size:var(--fs-prose);line-height:1.58;max-width:62ch}
+.prose p{margin:0 0 17px}
+.prose b{font-weight:700}
+.dim{color:var(--dim)}
+.kw{font-weight:700;letter-spacing:.04em}
+code{font-family:var(--mono);font-size:.88em;background:var(--sheet);padding:1px 5px;border-radius:2px}
+s{color:var(--dim)}
+hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
+
+/* ---------- boxed memo ---------- */
+.memo{border:1px solid var(--hard);padding:clamp(14px,3.5vw,18px);max-width:82ch;
+      font-size:clamp(12.8px,3.2vw,13.4px);color:var(--dim)}
+.memo b{color:var(--ink)}
+.note{border-left:2px solid var(--hard);padding-left:14px;color:var(--dim);max-width:80ch;margin:14px 0}
+.note b{color:var(--ink)}
+
+/* ---------- table of contents ---------- */
+.toc{max-width:70ch;margin-top:4px}
+.toc a{display:flex;align-items:baseline;gap:8px;border:0;color:var(--ink);padding:7px 0;min-height:36px}
+.toc a:visited{color:var(--ink)}
+.toc a:hover{color:var(--link)}
+.toc .n{white-space:nowrap;color:var(--dim);min-width:3.6em}
+.toc .t{white-space:nowrap}
+.toc .fill{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px);min-width:12px}
+.toc .p{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+@media (max-width:560px){ .toc .t{white-space:normal} .toc .fill{display:none} }
+
+/* ---------- tables that survive a phone ---------- */
+table{border-collapse:collapse;width:100%;margin:8px 0 6px;font-size:clamp(13px,3.3vw,13.4px)}
+th,td{text-align:left;padding:9px 16px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);
+   font-weight:600;border-bottom:1px solid var(--hard)}
+td.n{color:var(--dim);white-space:nowrap;width:1%;font-variant-numeric:tabular-nums}
+td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
+td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
+@media (max-width:680px){
+  table.rt, table.rt tbody, table.rt tr, table.rt td{display:block;width:100%}
+  table.rt thead{position:absolute;left:-9999px}
+  table.rt tr{border-bottom:1px solid var(--rule);padding:12px 0}
+  table.rt td{border:0;padding:1px 0}
+  table.rt td.num{text-align:left}
+  table.rt td[data-l]::before{content:attr(data-l) ": ";color:var(--dim);
+    font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  table.rt td.hd{font-weight:700;padding-bottom:3px}
+  table.rt td.hd::before{content:none}
+}
+.chip{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+      border:1px solid var(--rule);padding:1px 7px;color:var(--dim);white-space:nowrap;border-radius:2px}
+.chip.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 55%,transparent)}
+.chip.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,transparent)}
+.chip.bad{color:var(--flag);border-color:color-mix(in srgb,var(--flag) 55%,transparent)}
+
+/* ---------- ascii figures ---------- */
+figure{margin:18px 0;max-width:100%}
+pre{font-family:var(--mono);font-size:clamp(10.5px,2.9vw,12.5px);line-height:1.5;
+    background:var(--sheet);border:1px solid var(--rule);border-radius:2px;
+    padding:14px 16px;overflow-x:auto;margin:0;-webkit-overflow-scrolling:touch}
+figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em}
+
+/* ---------- request form ---------- */
+.gate{border:1px solid var(--hard);padding:clamp(16px,4vw,20px);max-width:78ch}
+.gate .ep{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.gate form{display:flex;flex-wrap:wrap;gap:8px}
+.gate input{font-family:var(--mono);font-size:15px;padding:11px 12px;min-height:44px;
+  border:1px solid var(--hard);background:var(--paper);color:var(--ink);flex:1 1 240px;border-radius:2px}
+.gate input::placeholder{color:var(--dim)}
+.gate button{font-family:var(--mono);font-size:14px;letter-spacing:.08em;padding:11px 20px;min-height:44px;
+  border:1px solid var(--hard);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:2px;flex:0 0 auto}
+.gate button:hover{opacity:.86}
+.gate .fine{font-size:12.4px;color:var(--dim);margin:14px 0 0;max-width:74ch}
+
+/* ---------- signature block ---------- */
+.sig{font-size:clamp(10px,2.6vw,11.5px);line-height:1.5;color:var(--dim);background:var(--sheet);
+     border:1px solid var(--rule);padding:12px 14px;overflow-x:auto;white-space:pre;border-radius:2px}
+
+/* ---------- page footer band ---------- */
+.foot{display:flex;justify-content:space-between;gap:14px;border-top:1px solid var(--hard);
+      margin-top:52px;padding:12px 0 0;font-size:12px;color:var(--dim);flex-wrap:wrap}
+
+.back{display:inline-block;font-size:12.5px;color:var(--dim);border:0;margin:18px 0 0}
+.back:hover{color:var(--link)}
+
+/* ---------- print like a real RFC ---------- */
+@media print{
+  :root{--paper:#fff;--ink:#000;--dim:#444;--rule:#bbb;--hard:#000;--link:#000;--link-v:#000}
+  .rh,.back,.gate form{display:none}
+  a{border:0}
+  body{font-size:10.5pt}
+  .prose{font-size:11.5pt;max-width:none}
+  pre{border:1px solid #999}
+}

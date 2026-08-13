@@ -25,9 +25,11 @@ something on every task after it rather than only at the end.
   author is correct on github.com, not just locally.
   <br>*Status:* local half done, push blocked on `gh auth`. See WORKLOG.
 
-- [ ] **T02** Astro skeleton, index page, `rfc.css` extracted from the prototype
+- [x] **T02** Astro skeleton, index page, `rfc.css` extracted from the prototype
   <br>*Ships:* no. *Validated by:* `npm run build` clean; local render matches the
   prototype's home view side by side.
+  <br>*Status:* done. Rendered text identical at 22,043 chars, compared mechanically.
+  50,344 bytes, 0 scripts, CSS inlined at 9,634 bytes. See WORKLOG.
 
 - [ ] **T03** Pages project, first deploy by hand
   <br>*Ships:* **live from here.** *Validated by:* the pages.dev URL serves the index

@@ -59,3 +59,65 @@ same block, since both need the mosimran token.
 **Next**
 T02, Astro skeleton and the stylesheet extracted from the prototype. Does not depend
 on the push, so it proceeds.
+
+---
+
+## T02 · Astro skeleton, index page, stylesheet extracted
+
+2026-08-13 · not yet pushed
+
+Astro 5 scaffolded by hand rather than through `npm create astro`, which wants an
+empty directory and an interactive prompt. `package.json`, `astro.config.mjs` and
+`tsconfig.json` written directly, then `npm install`. 447 packages.
+
+`astro.config.mjs` sets three things that matter later: `site` is the canonical
+origin, which is what makes the aliasing in PLAN section 2.1 safe; `inlineStylesheets:
+'always'` satisfies the one-stylesheet budget; `trailingSlash: 'always'` with
+`format: 'directory'` fixes one URL form so canonical and sitemap cannot disagree.
+
+`src/styles/rfc.css` lifted from the prototype's inline `<style>`. Two groups of rules
+dropped, both hash-router artifacts: `.view` / `.view.on`, and the `.view` plus
+`#v-home` page-break rules inside `@media print`. Nothing else changed. 9,634 bytes
+against a 12 KB budget.
+
+`src/pages/index.astro` generated from the prototype's `v-home` view. Three changes to
+the source, all mechanical:
+
+- Router links resolved to the real URLs they will occupy. 5 implementation links and
+  9 paper links mapped positionally onto the slugs already fixed by the handoff's
+  `llms.txt`, plus `/papers/`, `/cv/` and `/`. The generator asserts the counts and
+  throws on a mismatch rather than silently mapping fewer.
+- Braces escaped as `&#123;` / `&#125;`. Astro parses `{ }` in templates as
+  expressions and the ASCII figures contain `{email}` and `{token}`. 6 occurrences.
+- The `<style>` block replaced by an import.
+
+**Validated**
+`npm run build` clean, 1 page, 603 ms.
+
+Rendered text compared against the prototype mechanically rather than by eye: tags and
+entities stripped from both, whitespace normalised, then compared. 22,043 characters
+on each side, identical. Not a spot check.
+
+Probes on `dist/index.html`: 50,344 bytes against the 60 KB budget. 0 `<script>` tags.
+1 inlined `<style>`, 0 external stylesheet links. 0 router leftovers. Braces confirmed
+to survive as entities with no double-escaping, which is what the text comparison had
+already implied.
+
+One probe of mine was wrong and worth recording: it asserted literal `{email}` in the
+raw HTML, but the correct output is `&#123;email&#125;`, which renders as `{`. The
+build was right and the assertion was not.
+
+One off-origin reference remains, `https://github.com/`, which is the dead link in
+Section 14 whose anchor text reads `mosthofaimran` while the account is `mosimran`.
+Known, in the audit table, closed by T10.
+
+**Deployed**
+Nothing. No Pages project until T03.
+
+**Blocked**
+Push, same as T01. `gh auth` is still `johnefemer`.
+
+**Next**
+T03, Cloudflare Pages project and the first deploy. This one cannot proceed without
+the Cloudflare account ID and API token, so it is a genuine stop rather than a
+local-only one.
