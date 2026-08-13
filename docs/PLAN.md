@@ -186,9 +186,9 @@ current decision; the alternative is one rule away at any point.
 
 ### 2.2 Details that bite
 
-- **`.com.bd` has a long lead time.** The registry is administered by BTCL, delegation
-  changes are a manual process, and they can take days to weeks. Task T00 starts that
-  request on day one so it never sits on the critical path.
+- ~~**`.com.bd` has a long lead time.**~~ **Resolved, T00 cancelled.** `imran.com.bd`
+  was already an active Cloudflare zone in the John Efemer account. No BTCL work is
+  needed. The domain is attached to the Pages project and serving.
 - **security.txt lists all three.** RFC 9116 wants a `Canonical` line for every URI the
   file is reachable at, so three lines, not one. A scanner that fetches it from an
   alias and finds only the primary listed treats the file as untrustworthy.

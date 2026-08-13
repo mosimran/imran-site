@@ -14,9 +14,10 @@ something on every task after it rather than only at the end.
 
 ## Track 0: start the clock
 
-- [ ] **T00** Open the `.com.bd` delegation request with BTCL
-  <br>*Ships:* no. *Validated by:* ticket reference recorded here. Runs in parallel
-  with everything; blocks only T28.
+- [x] **T00** ~~Open the `.com.bd` delegation request with BTCL~~ **CANCELLED**
+  <br>Not needed. `imran.com.bd` is already an active Cloudflare zone
+  (`c566ee2a7cd380ccfe9bbd4b3ed48e85`) in the John Efemer account, on
+  `greg`/`may.ns.cloudflare.com`. The longest lead time in the plan does not exist.
 
 ## Track 1: get it live
 
@@ -47,9 +48,14 @@ something on every task after it rather than only at the end.
   `check: failure`, `deploy: skipped`, live site unaffected. Auto-deploy still gated on
   `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. See WORKLOG.
 
-- [ ] **T05** `_headers`, `_redirects`, security headers
+- [ ] **T05** `_headers`, `_redirects`, security headers, **and zone hardening**
   <br>*Ships:* yes. *Validated by:* `curl -I` shows HSTS, CSP, nosniff.
-  securityheaders.com grade A or better.
+  securityheaders.com grade A or better. **Plus: 0 script tags on the LIVE page, not
+  just in `dist/`.**
+  <br>*Blocked on:* Cloudflare Email Address Obfuscation must be turned off on both
+  zones first (Scrape Shield). It injects a `<script>` and two `/cdn-cgi/` requests
+  into every response, which breaks the zero-JavaScript budget and would be blocked by
+  the planned CSP. Needs dashboard access or a token with Zone Settings Edit.
 
 ## Track 2: content model
 
@@ -146,13 +152,20 @@ something on every task after it rather than only at the end.
 
 ## Track 7: domains
 
-- [ ] **T27** mosthofaimran.com cutover, mailboxes, Resend DNS
+- [~] **T27** mosthofaimran.com cutover, mailboxes, Resend DNS
   <br>*Ships:* live. *Validated by:* apex and www resolve, `imran@` and `security@`
   both receive, SPF, DKIM and DMARC pass.
+  <br>*Status:* **routing already done.** The apex is attached to the `imran-site`
+  Pages project and serving the current build over HTTPS. Remaining: `www`, the two
+  mailboxes, and the Resend DNS records.
 
-- [ ] **T28** johnefemer.com and imran.com.bd aliases
+- [~] **T28** johnefemer.com and imran.com.bd aliases
   <br>*Ships:* live. *Validated by:* both serve, canonical on every alias page names
   the primary, security.txt lists all three `Canonical` URIs.
+  <br>*Status:* `imran.com.bd` **done**, attached and serving, canonical correctly
+  names the primary. `johnefemer.com` **not started**: registered at Namecheap since
+  2022-07-29, expires 2027-07-29, but parked on `ns1/ns2.lander.d.parity.domains`.
+  Its nameservers must move to Cloudflare before it can be attached.
 
 - [ ] **T29** HSTS preload on the primary
   <br>*Ships:* live. *Validated by:* a week of clean serving first, then submit.
