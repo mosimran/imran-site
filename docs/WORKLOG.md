@@ -1049,3 +1049,43 @@ Both fixed, then verified by re-running: `created 0, updated 0`. Idempotent, as 
 `main`, which means T21's errata check has been falling back to diffing `HEAD~1` rather
 than a pull request against `origin/main`. It works, but it is checking the previous commit
 rather than the branch point, which is a weaker guarantee than the plan describes.
+
+---
+
+## T27 partial, and a miss · efemer.me, and CI red for eight runs
+
+2026-08-13 · https://github.com/mosimran/imran-site/pull/34
+
+**The miss first.** CI on `main` had been failing for at least eight consecutive runs and
+I had not noticed. I deployed manually with `wrangler` after each task and watched the
+pipeline exactly once, at T04. Because the deploy job is gated on `check`, it never ran,
+so the red was invisible from the outside: the site was correct because every manual
+deploy was verified against the live domain, but the gate built to prevent bad deploys had
+been inert since T22 and I was walking around it.
+
+Cause: `@cloudflare/workers-types` was never installed, so `PagesFunction`, `D1Database`
+and `KVNamespace` were unresolved and **the entire Section 6 gate had never been
+type-checked**. 20 errors, all in `functions/`. Four more came from `astro.config.mjs`
+needing JSDoc annotations for the sitemap lastmod map.
+
+Fixed, and `npm run check` is now clean: 0 errors, 0 warnings. The first green run in the
+project's history is PR #34.
+
+**T27, the reachable part.** `efemer.me` turned out to be already attached to the Pages
+project and serving, found rather than planned, from when it was mentioned earlier and no
+attachment came through. It serves bytes identical to the primary with the correct
+canonical, so consolidation was already working.
+
+What was missing: RFC 9116 wants a `Canonical` line for every URI the file is reachable
+at, and `security.txt` listed two hosts while three were serving it. A scanner fetching
+from `efemer.me` and not finding that host listed treats the file as untrustworthy. Fixed.
+
+PLAN section 2 now describes four domains rather than three.
+
+**Still blocked.** `www.mosthofaimran.com` and `www.imran.com.bd` are attached to the
+project but **pending**: each needs a CNAME in its zone, and DNS record creation returns
+403 on this token. `johnefemer.com` is still on its parking nameservers.
+
+**Restored.** The PR-per-task loop. `Pull requests: write` is now granted, so this task
+went through a branch and a pull request, and the errata check ran against `origin/main`
+rather than falling back to `HEAD~1` for the first time.
