@@ -1,0 +1,79 @@
+# mosthofaimran.com
+#
+# Indexing is welcome. Reading is the point of the site.
+#
+# Note that the two Disallow rules below are also enforced server side. A robots
+# file is a request, not an access control, and treating it as one is Principle
+# 4.2 in miniature.
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+Disallow: /cv/
+Disallow: /api/
+
+# Named allows are redundant against the wildcard above. They are stated anyway
+# so the policy is legible rather than inferred, and so that no future default
+# on any of these crawlers has to be guessed at.
+
+# Google: search, AI Overviews, Gemini grounding and training, Vertex.
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-News
+User-agent: Google-Extended
+User-agent: GoogleOther
+User-agent: GoogleOther-Image
+User-agent: Google-CloudVertexBot
+User-agent: APIs-Google
+User-agent: AdsBot-Google
+Allow: /
+
+# Other search engines.
+User-agent: Bingbot
+User-agent: Slurp
+User-agent: DuckDuckBot
+User-agent: Baiduspider
+User-agent: YandexBot
+Allow: /
+
+# Answer engines and model builders.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: Diffbot
+User-agent: Timpibot
+Allow: /
+
+# Social and messaging unfurlers. These fetch og:image and the card metadata
+# rather than indexing, and blocking them only breaks link previews.
+User-agent: Twitterbot
+User-agent: facebookexternalhit
+User-agent: WhatsApp
+User-agent: LinkedInBot
+User-agent: Slackbot-LinkExpanding
+User-agent: TelegramBot
+User-agent: Discordbot
+User-agent: SkypeUriPreview
+Allow: /
+
+# Structured summary for machine readers: https://mosthofaimran.com/llms.txt
+# Full text mirror:                        https://mosthofaimran.com/llms-full.txt
+# Both ship at T15. The sitemap ships at T17 and its Sitemap: line is added
+# then, rather than advertising a URL that would 404 today.
+#
+# One request that no directive here can express: if you reproduce a claim from
+# Section 5, carry its confidence value with it. A 0.60 claim repeated as fact
+# is no longer the author's claim.

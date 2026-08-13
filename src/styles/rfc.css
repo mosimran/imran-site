@@ -5,7 +5,11 @@
    router that does not survive into production:
      .view / .view.on            (view switching)
      .view + #v-home in @print   (page breaks between views)
-   Nothing else is changed. See docs/PLAN.md section 3.
+   It is no longer verbatim. T04a added a spot colour and moved four
+   blocks of continuous prose off monospace onto the text face. The
+   typographic rule is now: monospace is the apparatus (masthead,
+   headings, tables, chips, figures, TOC, footers); the text face is
+   anything read in sentences. See docs/PLAN.md section 3.
    ============================================================ */
 :root{
   --mono: ui-monospace,"SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -15,6 +19,14 @@
   --rule:#e3e7eb; --hard:#14171a;
   --link:#123c8a; --link-v:#5a3488;
   --flag:#8c1d13; --ok:#155f39; --warn:#845d06;
+
+  /* The spot colour. A printed specification is one ink plus, if the budget
+     allowed, exactly one more. This is the second ink, and it is spent only on
+     the numbering apparatus: section numbers, anchor marks, the endpoint label.
+     Verdigris rather than the usual red or blue, because red and blue are both
+     already carrying meaning above (--flag, --link) and a second job would make
+     them ambiguous. */
+  --accent:#0a6a67;
 
   --fs: clamp(13.5px, 0.55rem + 0.55vw, 14.5px);      /* chrome / mono */
   --fs-prose: clamp(16.5px, 0.9rem + 0.55vw, 18.5px);  /* reading */
@@ -26,6 +38,7 @@
     --rule:#222a31; --hard:#5c6873;
     --link:#83aaff; --link-v:#bda2e8;
     --flag:#e4867c; --ok:#68c48d; --warn:#d6a94b;
+    --accent:#4fbdb6;
   }
 }
 *{box-sizing:border-box}
@@ -40,7 +53,7 @@ body{
 a{color:var(--link);text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--link) 32%, transparent)}
 a:visited{color:var(--link-v);border-bottom-color:color-mix(in srgb, var(--link-v) 30%, transparent)}
 a:hover{border-bottom-color:currentColor}
-a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:1px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:1px}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:var(--pad);top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:99;border:0}
 
@@ -79,11 +92,11 @@ a:focus-visible{outline:2px solid var(--link);outline-offset:3px;border-radius:1
 h2{font-size:clamp(14px,3.6vw,15px);font-weight:700;margin:clamp(32px,7vw,44px) 0 12px;
    letter-spacing:.02em;scroll-margin-top:60px}
 h3{font-size:var(--fs);font-weight:700;margin:24px 0 8px;scroll-margin-top:60px}
-h2 .hash{color:var(--dim);font-weight:400;opacity:0;transition:opacity .12s;padding-left:8px;border:0}
-h2:hover .hash{opacity:1}
-p{margin:0 0 14px;max-width:82ch}
+h2 .hash{color:var(--accent);font-weight:400;opacity:0;transition:opacity .12s;padding-left:8px;border:0}
+h2:hover .hash,h2 .hash:focus-visible{opacity:1}
+p{margin:0 0 14px;max-width:74ch}
 .ind{padding-left:clamp(0px,3vw,26px)}
-.prose{font-family:var(--text);font-size:var(--fs-prose);line-height:1.58;max-width:62ch}
+.prose{font-family:var(--text);font-size:var(--fs-prose);line-height:1.6;max-width:64ch}
 .prose p{margin:0 0 17px}
 .prose b{font-weight:700}
 .dim{color:var(--dim)}
@@ -93,10 +106,12 @@ s{color:var(--dim)}
 hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
 
 /* ---------- boxed memo ---------- */
-.memo{border:1px solid var(--hard);padding:clamp(14px,3.5vw,18px);max-width:82ch;
-      font-size:clamp(12.8px,3.2vw,13.4px);color:var(--dim)}
+.memo{border:1px solid var(--hard);border-left:3px solid var(--accent);
+      padding:clamp(15px,3.5vw,19px) clamp(16px,3.5vw,21px);max-width:64ch;
+      font-family:var(--text);font-size:calc(var(--fs-prose) * .92);line-height:1.55;color:var(--dim)}
 .memo b{color:var(--ink)}
-.note{border-left:2px solid var(--hard);padding-left:14px;color:var(--dim);max-width:80ch;margin:14px 0}
+.note{border-left:2px solid var(--accent);padding-left:15px;color:var(--dim);max-width:62ch;margin:16px 0;
+      font-family:var(--text);font-size:calc(var(--fs-prose) * .92);line-height:1.55}
 .note b{color:var(--ink)}
 
 /* ---------- table of contents ---------- */
@@ -104,7 +119,7 @@ hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
 .toc a{display:flex;align-items:baseline;gap:8px;border:0;color:var(--ink);padding:7px 0;min-height:36px}
 .toc a:visited{color:var(--ink)}
 .toc a:hover{color:var(--link)}
-.toc .n{white-space:nowrap;color:var(--dim);min-width:3.6em}
+.toc .n{white-space:nowrap;color:var(--accent);min-width:3.6em}
 .toc .t{white-space:nowrap}
 .toc .fill{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px);min-width:12px}
 .toc .p{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
@@ -116,6 +131,7 @@ th,td{text-align:left;padding:9px 16px 9px 0;border-bottom:1px solid var(--rule)
 th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);
    font-weight:600;border-bottom:1px solid var(--hard)}
 td.n{color:var(--dim);white-space:nowrap;width:1%;font-variant-numeric:tabular-nums}
+td.n:not(.hd){color:var(--accent)}
 td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
 td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
 td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
@@ -145,7 +161,7 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
 
 /* ---------- request form ---------- */
 .gate{border:1px solid var(--hard);padding:clamp(16px,4vw,20px);max-width:78ch}
-.gate .ep{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+.gate .ep{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;font-weight:600}
 .gate form{display:flex;flex-wrap:wrap;gap:8px}
 .gate input{font-family:var(--mono);font-size:15px;padding:11px 12px;min-height:44px;
   border:1px solid var(--hard);background:var(--paper);color:var(--ink);flex:1 1 240px;border-radius:2px}
@@ -153,7 +169,8 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
 .gate button{font-family:var(--mono);font-size:14px;letter-spacing:.08em;padding:11px 20px;min-height:44px;
   border:1px solid var(--hard);background:var(--ink);color:var(--paper);cursor:pointer;border-radius:2px;flex:0 0 auto}
 .gate button:hover{opacity:.86}
-.gate .fine{font-size:12.4px;color:var(--dim);margin:14px 0 0;max-width:74ch}
+.gate .fine{font-family:var(--text);font-size:calc(var(--fs-prose) * .88);line-height:1.55;
+      color:var(--dim);margin:16px 0 0;max-width:60ch}
 
 /* ---------- signature block ---------- */
 .sig{font-size:clamp(10px,2.6vw,11.5px);line-height:1.5;color:var(--dim);background:var(--sheet);
@@ -175,3 +192,10 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
   .prose{font-size:11.5pt;max-width:none}
   pre{border:1px solid #999}
 }
+
+/* ---------- section 6.2 before the endpoint exists ---------- */
+.gate .pending{font-family:var(--text);font-size:calc(var(--fs-prose) * .92);line-height:1.55;
+  max-width:60ch;margin:0 0 16px;color:var(--ink)}
+.gate .pending b{color:var(--flag)}
+.gate input:disabled,.gate button:disabled{cursor:not-allowed;opacity:.45}
+.gate button:disabled:hover{opacity:.45}

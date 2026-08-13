@@ -48,6 +48,12 @@ something on every task after it rather than only at the end.
   `check: failure`, `deploy: skipped`, live site unaffected. Auto-deploy still gated on
   `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. See WORKLOG.
 
+- [x] **T04a** Readability pass, spot accent colour, dead form, favicon and share card
+  <br>*Ships:* yes. *Inserted* on request, not in the original 31.
+  <br>*Status:* done. Typographic rule applied, accent AA in both themes (10/10 pairs),
+  CV form now degrades loudly, favicon set and OG card live. robots.txt pulled forward
+  from T17 with Google and AI crawlers explicitly allowed. See WORKLOG.
+
 - [ ] **T05** `_headers`, `_redirects`, security headers, **and zone hardening**
   <br>*Ships:* yes. *Validated by:* `curl -I` shows HSTS, CSP, nosniff.
   securityheaders.com grade A or better. **Plus: 0 script tags on the LIVE page, not

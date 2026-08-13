@@ -8,6 +8,7 @@
 import '../styles/rfc.css'
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href
+const cover = new URL('/og-cover.jpg', Astro.site).href
 ---
 <!doctype html>
 <html lang="en">
@@ -21,10 +22,30 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href
 <link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
 <link rel="alternate" type="application/atom+xml" title="Errata" href="/errata.xml">
 <link rel="me" href="mailto:imran@mosthofaimran.com">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Mosthofa Imran">
+<meta property="og:locale" content="en">
 <meta property="og:title" content="RFC 0001: Mosthofa Imran">
 <meta property="og:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
 <meta property="og:url" content={canonical}>
+{/* Absolute, because every scraper resolves og:image against its own base and
+    several of them get a relative path wrong. */}
+<meta property="og:image" content={cover}>
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mosthofa Imran, Lead Solutions Architect, Dhaka. Systems with numbers, arguments with confidence values, a public retraction log.">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mosthofa Imran">
+<meta name="twitter:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
+<meta name="twitter:image" content={cover}>
+<meta name="twitter:image:alt" content="Mosthofa Imran, Lead Solutions Architect, Dhaka.">
 </head>
 <body>
 <a class="skip" href="#main">Skip to document</a>
@@ -307,12 +328,17 @@ August 2026</div>
   <div class="ind">
     <div class="gate">
       <div class="ep">POST /api/cv</div>
-      <form onsubmit="return false">
+      <p class="pending"><b>Not built yet.</b> The endpoint ships with Section 6 and this form is
+      inert until it does. Principle 4.1 says a service must degrade loudly, so it says so here
+      rather than accepting an address and dropping it. Until then use the path 6.5 lists first
+      anyway: write to <a href="mailto:imran@mosthofaimran.com">imran@mosthofaimran.com</a> and
+      say what the role is.</p>
+      <form method="post" action="/api/cv" aria-describedby="cv-pending">
         <label class="skip" for="cv-email">Email address</label>
-        <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
-        <button type="submit">Request link</button>
+        <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required disabled>
+        <button type="submit" disabled>Request link</button>
       </form>
-      <p class="fine">Returns <code>202 Accepted</code> and mails a signed URL. Time to live 86400 seconds,
+      <p class="fine" id="cv-pending">Returns <code>202 Accepted</code> and mails a signed URL. Time to live 86400 seconds,
       single use, <code>X-Robots-Tag: noindex</code>. Rate limited to three requests per address per day and
       sixty per source network per hour. Your address is written to the access log described in 6.4 and to
       nothing else. It is never added to a list, never sold, never used to start a sequence, and it is

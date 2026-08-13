@@ -362,3 +362,97 @@ Edit and DNS Edit.
 **Next**
 T05 still, now with the zone hardening folded in and its validation moved from `dist/`
 to the live URL.
+
+---
+
+## T04a · Readability, accent colour, the dead form, and social assets
+
+2026-08-13 · https://mosthofaimran.com
+
+Inserted on request, not one of the original 31. Three reported problems, all real.
+
+**The dead form.** Section 6.2 shipped the prototype's `<form onsubmit="return false">`
+with a live-looking "Request link" button that silently did nothing. That is the exact
+failure Principle 4.1 forbids, on the page that states the principle: a service must
+degrade loudly, and a control that accepts a click and discards it is the loudest
+possible counterexample. The form is now `method="post" action="/api/cv"` with both
+fields `disabled`, preceded by a notice saying the endpoint ships with Section 6 and
+pointing at the mailto path that 6.5 already lists as preferred. Reversed at T23.
+
+**The typefaces did not match, and there was a reason.** The stylesheet had no
+consistent rule. `.prose` was the text face at 16.5 to 18.5px, but four blocks of
+continuous reading prose were set in monospace at 12.4 to 13.4px: `.memo` (Status of
+This Memo and every abstract), `.note` (the strongest-objection callouts and the failure
+modes), `.gate .fine`, and the CV fine print. Small monospace is fine for apparatus and
+tiring for sentences, which is what the eye was catching.
+
+The rule now, stated once and applied everywhere: **monospace is the apparatus**
+(masthead, headings, tables, chips, figures, TOC, footers, labels, code); **the text
+face is anything read in sentences.** Measures came down with it, since 82ch of
+monospace is a very long line when every glyph is em-width.
+
+**The accent.** There was none. The palette was ink, dim, rule, plus four semantic
+colours, so the document read as uniformly grey. Added `--accent` as a spot colour on
+the printing analogy: a specification is one ink plus, if the budget allowed, exactly
+one more. Verdigris `#0a6a67` light, `#4fbdb6` dark, chosen because red and blue are
+both already carrying meaning (`--flag`, `--link`) and giving either a second job would
+make it ambiguous.
+
+It is spent only on the numbering apparatus, which is the thing that makes this a
+specification rather than a page: TOC section numbers, section-number table cells,
+anchor marks, the `POST /api/cv` label, the memo and note edges, focus rings. Appendix A
+reuses `.n` for dates, so the rule is `td.n:not(.hd)`, because a date is not part of the
+numbering.
+
+**Favicon and share card.** Built from the 2022 author photo. A candid photograph cannot
+be a favicon; at 16px a face is a smudge. So the two jobs were split: a typographic mark
+for the icon, the photograph for the card where it has room to work. Mark is `IM` in the
+mono stack, white on the accent, theme-aware SVG plus a multi-resolution `.ico` and a
+180px apple-touch-icon. Card is 1200x630 at 1.91:1, which serves Twitter's
+`summary_large_image` and WhatsApp's preview from one file, with an attention-weighted
+crop because the geometric centre of that frame is the laptop lid, not the face.
+
+**robots.txt**, pulled forward from T17 on request. Wildcard allow plus
+`Content-Signal: search=yes, ai-input=yes, ai-train=yes`, then explicit named allows for
+Google's full set including `Google-Extended`, `GoogleOther` and `Google-CloudVertexBot`,
+the other search engines, seventeen answer engines and model builders, and the social
+unfurlers. The `Sitemap:` line is deliberately absent until T17 rather than advertising
+a URL that would 404 today.
+
+**Validated**
+
+Contrast computed for ten foreground and ground pairs across both themes. All pass AA at
+4.5:1; the accent itself is 6.30:1 on light paper and 8.44:1 on dark. Not eyeballed.
+
+Budgets after the change: page 52,571 bytes against 60,000, CSS 8,899 against 12,000,
+0 script tags. Share card 115,536 bytes, under WhatsApp's 300 KB cutoff above which it
+silently drops a cover.
+
+Canonical verified as served on all three hosts. `mosthofaimran.com`, `imran.com.bd` and
+`imran-site.pages.dev` each return
+`<link rel="canonical" href="https://mosthofaimran.com/">`, which is the duplicate
+content protection working. No `noindex` anywhere, deliberately, for the reason in PLAN
+section 2.1.
+
+All assets 200 with correct content types on both hosts: `favicon.svg` as
+`image/svg+xml`, `favicon.ico` as `image/vnd.microsoft.icon`, `og-cover.jpg` as
+`image/jpeg`, `robots.txt` as `text/plain`.
+
+**Two mistakes of mine worth recording.** ImageMagick's built-in SVG renderer ignores
+`text-anchor`, so the first icon rasterised with the mark clipped. Re-rendered through
+librsvg, which honours it. And two "live" probes reported failures that were Cloudflare
+edge cache serving pre-deploy bytes: the assets and robots.txt both looked broken and
+were not. Validation probes now cache-bust, which is the same lesson as checking the URL
+rather than `dist/`, one layer further out.
+
+**Known inconsistency, short-lived.** The share card reads `INTERNET-DRAFT` and
+`draft-imran-systems-and-arguments-03` while the page still says `RFC 0001`. The card is
+correct for where the document is going; the page catches up at T10. Recorded rather
+than quietly reconciled, because the alternative was baking a name into an asset that
+has already been decided against.
+
+**Deployed**
+https://mosthofaimran.com and https://imran.com.bd, both current.
+
+**Next**
+T05 still, blocked on Email Obfuscation being turned off.
