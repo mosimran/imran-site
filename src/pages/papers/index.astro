@@ -4,7 +4,13 @@ import Doc from '../../layouts/Doc.astro'
 import { iso } from '../../lib/draft'
 
 const all = await getCollection('papers')
-const sorted = all.sort((a, b) => +b.data.revised - +a.data.revised)
+// Newest revision first. Where a batch of papers was revised on one day the dates
+// tie, so section order breaks it; alphabetical slug order would scramble the
+// numbering for no reason.
+const sec = (s: string) => Number(s.split('.')[1] ?? 0)
+const sorted = all.sort(
+  (a, b) => +b.data.revised - +a.data.revised || sec(a.data.section) - sec(b.data.section),
+)
 const byYear = new Map<number, typeof sorted>()
 for (const p of sorted) {
   const y = p.data.revised.getUTCFullYear()

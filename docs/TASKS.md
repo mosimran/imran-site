@@ -73,6 +73,16 @@ something on every task after it rather than only at the end.
   <br>*Ships:* no. *Validated by:* build green, `astro check` zero errors, count
   matches the index table.
 
+- [x] **T07a** Bodies written for all 14 papers, states restored, erratum 7.5
+  <br>*Ships:* yes. *Inserted* on request, not in the original 31.
+  <br>*Validated by:* `astro check` clean; expiry check reports 0 expired where it
+  reported 6; errata gate sees 12 state changes and 1 erratum and passes; pa11y 0 errors
+  in both schemes. Retirement conditions present on every paper that is not retracted, so
+  the schema is doing the work rather than the author remembering to.
+  <br>*Status:* done. 13 entries went from `unwritten` to the states the index had already
+  declared. No confidence value moved. Closes most of P11; P19 and P20 opened for the
+  drafting method and the illustrative publication dates. See WORKLOG.
+
 - [x] **T08** 5 implementation notes and 4 errata migrated
   <br>*Ships:* no. *Validated by:* same, and slugs match llms.txt exactly.
 

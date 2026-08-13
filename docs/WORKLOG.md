@@ -1172,3 +1172,65 @@ place that matters most to a requester.
 **Verified clean.** No secrets in tracked files. D1 has 0 rows. The expiry notice renders
 on all six expired papers. The gate returns 410 from every host. Sitemap and feeds carry
 only primary URLs, zero alias leakage. Security headers present on the aliases.
+
+---
+
+## Section 5 written · Thirteen listed entries became papers
+
+2026-08-14 · not yet committed, not yet deployed
+
+**What changed.**
+
+Section 5 listed fourteen papers. One carried an argument. The other thirteen carried a
+title, a summary, a confidence value and a date, under the `unwritten` state that T06
+added precisely so the gap could be stated rather than papered over. All thirteen now
+carry a body, at least one figure, and the retirement conditions the schema demands of
+anything presented as an argument. Paper 5.1 gained sections 3, 4 and 5, which the
+prototype had outlined and left as a one-line note since first publication.
+
+The retracted 5.10 has its original text restored, struck through, with a new section
+stating what actually failed and a narrower section stating what survived. It had said
+"the original body is not yet migrated from the prototype", which meant the rule that
+nothing is deleted was being kept in form and not in substance.
+
+No confidence value moved. The states now shown (`holding`, `revising`, `draft`) are the
+ones the prototype's own index declared before any body existed, so the papers were
+brought into line with the index rather than the reverse. That also resolves a live
+contradiction: the home page said "Holding" while `/papers/` said "unwritten".
+
+Erratum 7.5 records the state change. Appendix A gains a row, so the index draft's
+identifier moves from `-03` to `-04` on its own, computed rather than typed.
+
+`revised` moved to 2026-08-14 on all fourteen. This was not the first plan. Keeping the
+prototype's revision dates preserved the index chronology, but six papers would then have
+rendered the expiry banner, telling a reader that text written today had not been touched
+since 2025. That banner would have been a false statement in the most prominent position
+on the page, which is the one thing this site exists not to do. The publication dates
+stay as declared, each paper's revision history now says in plain words that the entry
+previously had no text, and both facts are registered as P20.
+
+`rfc.css` gained prose rules for markdown output (headings and captions stay monospace,
+the apparatus rule from the header still holds) and a CSS-only bar meter, so a figure
+with quantities needs no script, no image and no SVG text that shrinks to seven pixels
+on a phone. ASCII figures are capped at roughly 54 columns so they fit a 375px viewport
+without horizontal scrolling.
+
+**What was validated and how.**
+
+`astro check` 35 files, 0 errors, 0 warnings. Budgets green: index 56,384 / 60,000 bytes,
+inlined CSS 10,177 / 12,000, zero scripts, zero off-origin references, zero `@font-face`.
+Link check: 24 pages, 0 broken links, 0 prototype anchors lost. Errata gate: 12 state
+changes detected against `HEAD~1`, 1 erratum added, pass. Expiry check: **0 expired, 0
+within 30 days**, against six expired at the last sweep. pa11y over six routes in both
+colour schemes, 0 WCAG2AA errors. Identifiers verified by hand against `history.length`
+on all fifteen documents; `draft-imran-competence-porn-04` and
+`draft-imran-systems-and-arguments-04` are the two that moved.
+
+Not validated: the bodies have not had an editorial pass by the owner, and the figures
+report ordinal rankings rather than measurements, which each figure says on its face.
+
+**What is deployed.** Nothing. The working tree is not committed. The site is unchanged.
+
+**What is next.** The owner reads the fourteen papers and either keeps the positions or
+changes them, which closes P19. Then the branch, the PR and the deploy. Implementation
+notes 3.1, 3.3, 3.4 and 3.5 are still front matter only, which is the rest of P11.

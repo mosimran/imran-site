@@ -29,6 +29,16 @@ of the site, where nothing is deleted.
 - [x] **P05** The PGP signature block, currently dotted filler
   <br>`index`, signature section. Closed by T31.
 
+- [ ] **P19** The paper bodies were drafted in an assisted session, not written longhand
+  <br>`src/content/papers/*`. All fourteen bodies were produced on 2026-08-14 in a
+  session with an AI assistant, to the owner's direction and against the prototype's
+  declared titles, summaries, states and confidence values. The arguments, figures and
+  retirement conditions are new text that the owner has not yet edited. This site's whole
+  claim is that a published position carries its provenance, so the position is not the
+  owner's until the owner has read it and either kept it or changed it. Close this by
+  doing the editorial pass, and decide at that point whether the drafting method belongs
+  in Appendix B rather than only here.
+
 ## Medium: figures and claims
 
 - [ ] **P06** Errata 7.3, the June 2025 ingest incident
@@ -55,10 +65,19 @@ of the site, where nothing is deleted.
   1. Closed by T09, which makes the count generated from the collection so it cannot
   disagree with itself again.
 
-- [ ] **P11** Bodies missing for 17 of 19 documents
-  <br>Only paper 5.1 and implementation note 3.2 have full bodies in the prototype.
-  The rest have front matter, abstract and retirement conditions. Nothing is invented
-  to fill them.
+- [ ] **P11** Bodies missing for 4 of 19 documents
+  <br>Was 17 of 19. All fourteen papers in Section 5 now carry a body, at least one
+  figure and retirement conditions, written 2026-08-14 and recorded in erratum 7.5.
+  Implementation notes 3.1, 3.3, 3.4 and 3.5 still carry front matter only; note 3.2 has
+  a full body. Nothing is invented to fill the remaining four.
+
+- [ ] **P20** Publication dates and revision histories on papers 5.2 through 5.14
+  <br>`src/content/papers/*`. The `published` dates and the pre-2026-08-14 history rows
+  are the prototype's illustrative dates, carried forward so that the index, the home
+  page and erratum 7.1 continue to agree with each other. The `revised` dates are real:
+  every paper was substantively revised on 2026-08-14 and says so in its own revision
+  history. Swap the publication dates for real ones, or drop the field and let the
+  masthead say the text has no recorded first publication.
 
 ## Contradicted by the real CV
 
