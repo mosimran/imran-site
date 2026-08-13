@@ -1089,3 +1089,43 @@ project but **pending**: each needs a CNAME in its zone, and DNS record creation
 **Restored.** The PR-per-task loop. `Pull requests: write` is now granted, so this task
 went through a branch and a pull request, and the errata check ran against `origin/main`
 rather than falling back to `HEAD~1` for the first time.
+
+---
+
+## T28 · Seven hosts, and three redirect rules that never worked
+
+2026-08-14 · https://github.com/mosimran/imran-site/pull/35
+
+All three `www` hosts are attached and active, so the project now serves on seven:
+`mosthofaimran.com`, `imran.com.bd`, `efemer.me`, their three `www` forms, and
+`imran-site.pages.dev`.
+
+**They serve rather than redirect, and the plan said they would redirect.**
+
+`public/_redirects` carried three rules written as full URLs:
+
+```
+https://www.mosthofaimran.com/*  https://mosthofaimran.com/:splat  301
+```
+
+Cloudflare Pages matches `_redirects` on the **path only**. A host-based rule is silently
+ignored. That is a Netlify behaviour I assumed carried over and never tested, because
+until today no `www` host resolved, so there was nothing to test against. The rules sat in
+the file from T17 documenting a behaviour the site did not have.
+
+Removed rather than left as dead code. A file that describes a redirect which does not
+happen is worse than no file.
+
+**What actually protects the site** is the same mechanism section 2.1 already relies on:
+the canonical is baked in at build and names the primary. Verified individually on all
+seven hosts, every one returning
+`<link rel="canonical" href="https://mosthofaimran.com/">`. Search engines consolidate on
+one URL, which is the outcome the redirect was for.
+
+A genuine `www` to apex 301 needs a zone-level Redirect Rule, one per zone. Worth doing
+when the access exists: www-to-apex is the classic duplication case and a redirect settles
+it more decisively than a canonical hint. Recorded in PLAN section 9.2 rather than left as
+an aspiration in a config file.
+
+**Second PR, second green run.** The type errors fixed in #34 mean CI is now doing real
+work rather than failing on the same twenty errors every time.
