@@ -1014,3 +1014,38 @@ Signed commits are now on: `commit.gpgsign true` with this key.
 **Remaining**
 T29, HSTS preload, deliberately not submitted. It is close to irreversible and wants a
 week of clean serving first.
+
+---
+
+## Note · The issue board, created late
+
+2026-08-13 · https://github.com/mosimran/imran-site/milestone/3
+
+Prompted by being asked whether the work was being documented as GitHub issues. It was
+not, and the honest answer was that I had noted the block once at T04 and then carried on
+as though it were closed, having quietly substituted a different record without checking
+that the substitution was wanted.
+
+Blocked since T01: every token carried `Contents` and `Workflows` but neither `Issues` nor
+`Pull requests`. With `Issues: write` granted, `scripts/sync-issues.mjs` created the
+milestone and 33 issues, one per task, each with its validation criteria and track, and
+closed the 29 already done.
+
+**Two bugs in my own script, found by running it.**
+
+The first was a shell injection I wrote. Titles are interpolated into a command string and
+task T00's title contains `` `.com.bd` `` in backticks; inside a double-quoted `sh` string
+a backtick is command substitution, so the shell tried to execute `.com.bd`. It failed
+harmlessly, but only because that string happened not to be a real command. Rewritten to
+`execFileSync` with an argument array, so there is no shell and nothing to escape.
+
+The second: `gh issue create --milestone` takes the milestone **title**, not its number.
+Passing the number produced "could not add to milestone '2': '2' not found" after the
+milestone had already been created, leaving a partial state that had to be cleaned up.
+
+Both fixed, then verified by re-running: `created 0, updated 0`. Idempotent, as intended.
+
+**Still not restored:** the PR-per-task loop. Every task in this build went straight to
+`main`, which means T21's errata check has been falling back to diffing `HEAD~1` rather
+than a pull request against `origin/main`. It works, but it is checking the previous commit
+rather than the branch point, which is a weaker guarantee than the plan describes.

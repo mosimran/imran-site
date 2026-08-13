@@ -592,18 +592,21 @@ already a changelog.
 
 ### 11.3 Issues and visibility
 
-**Not done, and blocked rather than skipped.** Every GitHub token supplied has carried
-`Contents` and `Workflows` but not `Issues` or `Pull requests`, so both the issue board
-and the PR-per-task loop have been unavailable since T01. `GET /repos/.../milestones`
-still returns 403 with `x-accepted-github-permissions: issues=write; pull_requests=write`.
+**Done, late.** Blocked from T01 until `Issues: write` was granted, because every earlier
+token carried `Contents` and `Workflows` but neither `Issues` nor `Pull requests`. For
+most of the build the record lived only in `docs/TASKS.md` and `docs/WORKLOG.md`.
 
-The record lives in the repository instead: `docs/TASKS.md` for status and
-`docs/WORKLOG.md` for one entry per task. Both are version controlled and signed, which
-is a durable record, but there is no public board and no per-task discussion thread.
+Milestone `Launch: draft-imran-systems-and-arguments`, 33 issues, one per task, each
+carrying its validation criteria and track. Completed tasks are closed.
 
-`scripts/sync-issues.mjs` closes the gap in one command once a token with `Issues: write`
-exists. It parses `docs/TASKS.md`, creates the milestone and one issue per task, closes
-the issues for completed tasks, and is idempotent so it can be re-run to resync.
+`docs/TASKS.md` stays the source of truth and `scripts/sync-issues.mjs` mirrors it to the
+board. The script is idempotent: it matches on the task id prefix, so re-running only
+reconciles open and closed state and never duplicates. Run it after changing a task's
+status.
+
+The PR-per-task loop is a separate matter and was never restored. Every task went straight
+to `main`, so T21's errata check has had no pull request to diff against and has been
+falling back to `HEAD~1` throughout.
 
 - All 31 issues created in bulk at T01, one per task, labelled by track and grouped
   into one milestone.
