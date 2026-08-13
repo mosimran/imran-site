@@ -38,9 +38,12 @@ something on every task after it rather than only at the end.
   identical to `dist/`. Account `John Efemer` / `f697cce1cf00f8132c900d2c643ad935`,
   project `imran-site`. See WORKLOG.
 
-- [ ] **T04** Actions pipeline, build and deploy on green
+- [x] **T04** Actions pipeline, build and deploy on green
   <br>*Ships:* yes. *Validated by:* push a one-word change, it appears without
   touching wrangler locally. Break a check on purpose, deploy is skipped.
+  <br>*Status:* pipeline green. Failure path proven: a deliberate `<script>` tag gave
+  `check: failure`, `deploy: skipped`, live site unaffected. Auto-deploy still gated on
+  `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. See WORKLOG.
 
 - [ ] **T05** `_headers`, `_redirects`, security headers
   <br>*Ships:* yes. *Validated by:* `curl -I` shows HSTS, CSP, nosniff.

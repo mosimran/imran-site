@@ -224,6 +224,8 @@ there and still 403 on `git push` because it lacks `Contents: write`. The honest
 is the transport itself, or the `x-accepted-github-permissions` response header on a
 write attempt.
 
+**Attempt 4, a second pasted token.** Worked. Push succeeded before revocation.
+
 **Resolution.** Back to the device flow, which puts no secret in the transcript.
 
 If a token is preferred later, a classic PAT with `repo` and `workflow` covers
@@ -232,3 +234,68 @@ to `mosimran/imran-site`, `Contents: read and write` for pushing, `Issues: read 
 write` for the 31 issues, `Pull requests: read and write` for the per-task loop, and
 `Workflows: read and write` for T04. `Administration` is not needed; it only appeared
 because one probe tried to PATCH the repo description.
+
+---
+
+## T04 · Actions pipeline, checks first, deploy on green
+
+2026-08-13 · https://github.com/mosimran/imran-site
+
+The push landed first. All three earlier commits are on GitHub and, more importantly,
+**linked to the mosimran account** rather than merely carrying the name: the API's
+`author.login` field resolves to `mosimran` on all three, which is the thing the
+noreply address was chosen to guarantee.
+
+`.github/workflows/deploy.yml`, two jobs. `check` builds, runs `astro check`, and
+asserts two budgets inline. `deploy` runs only on push to main, only after check, and
+gates on the Cloudflare secrets existing rather than failing red on every push until
+they are added.
+
+The native Pages git integration stays switched off. It deploys on push regardless of
+whether checks passed, which is the opposite of what BUILD.md section 7 asks for.
+
+Only two budget probes are in the workflow, not the full suite: zero script tags and
+index under 60 KB. Those are the two most likely to regress quietly. The rest lands at
+T19 rather than being half-built now.
+
+**Validated**
+First run green: `check` 29s, `deploy` 3s. The deploy job emitted the expected notice,
+`CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID not set, skipping deploy`, confirming it
+skipped deliberately rather than passing without doing anything.
+
+The failure path was proven rather than assumed. A commit adding a `<script>` tag to
+`index.astro` was pushed on purpose. Result: `check: failure` on "reading path must
+ship 0 bytes of javascript", and `deploy: skipped`. The live site was unaffected
+throughout, still 200 at 50,344 bytes, because a failed check means no deploy job runs
+and the last good deployment keeps serving. Reverted, and the following run is
+`check: success`, `deploy: success`.
+
+One thing done differently than planned. The intent was to prove this on a branch with
+a PR. The workflow correctly declined to run, because it triggers only on push to main
+or on a pull request and the branch had neither. Opening the PR then failed on token
+permissions, so the test ran directly on main instead. Safe, because the failure mode
+under test is exactly the one that prevents a deploy.
+
+**Token permissions discovered**
+
+| Capability | Result |
+| --- | --- |
+| Contents write | works, push succeeded |
+| Workflows write | works, workflow file pushed |
+| Actions read | 200 |
+| Issues write | **403** |
+| Pull requests write | **403** |
+
+Two consequences. The 31 issues and the milestone could not be created; `docs/TASKS.md`
+is already pushed and remains the source of truth, so nothing is lost but visibility.
+More significantly, **the PR-per-task loop in PLAN section 11 cannot run with this
+token**. Tasks are going straight to main until a credential with `Pull requests: write`
+exists. That also disables the errata check at T21, which diffs a PR against
+`origin/main` and has nothing to diff without one.
+
+**Deployed**
+https://imran-site.pages.dev, unchanged bytes. CI now builds and checks every push but
+does not yet deploy, pending the secrets.
+
+**Next**
+T05, `_headers` and `_redirects`. Fully unblocked, needs nothing from anyone.
