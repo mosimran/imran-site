@@ -557,3 +557,69 @@ The mailbox does not exist yet. `hey@mosthofaimran.com` needs to receive before 
 `security.txt` still advertises `security@mosthofaimran.com`, so that is two mailboxes.
 Until they exist the site publishes addresses that bounce, which is the same class of
 problem as the dead form and is tracked the same way.
+
+---
+
+## Change · Resend wired, CV email template, MCP rev B
+
+2026-08-13
+
+**Resend.** Key stored as a Pages secret via stdin, never written to the repo. It is a
+send-only restricted key, which is the right kind to hand out and does mean the domains
+API returns `This API key is restricted to only send emails`, so domain verification could
+not be confirmed programmatically. Confirmed by the owner instead, and then by sending.
+
+**The email.** One template, because the site sends one email: the résumé link.
+
+Style follows the document. Dark ground `#0d1013`, verdigris spent once on the section
+label and the link panel edge, monospace for the apparatus and the text face for anything
+read in sentences. Everything inline and laid out in tables, because email clients strip
+`<style>` blocks and Outlook does not do flexbox.
+
+A plain text alternative always ships alongside. A signed link that only renders in an
+HTML client is a link some people cannot use, and Section 6 exists so that requesting the
+file costs the requester nothing.
+
+Absent on purpose: images, tracking pixel, unsubscribe footer. There is no list to leave.
+The subject is "Your link to the CV", not a first name and not an exclamation mark.
+
+**Validated.** Rendered headless and read. Zero em dashes across both parts. Sent live to
+the owner's address, accepted, id `a027e33c-5661-40cd-a45f-8166e6e250a9`.
+
+**The link in that test 404s, correctly.** The token was fabricated to render the template
+and `/cv/<token>` has no handler until T24. Worth stating what the real behaviour will be,
+because 404 is the wrong answer and the spec already says so: a used, expired or unknown
+token returns **410 Gone** with a message saying to request another and that nothing is
+held against you. 404 says the address was never right; 410 says it was and is finished.
+
+**MCP rev B.** Moved from a local stdio server to a stateless Worker, because rev A
+required the laptop the clone was on and the actual use is changing a confidence value
+from a phone. Its own Worker at `mcp.mosthofaimran.com`, not a Function on the site, for
+the reason BUILD.md gives about the gate: a failure there must not take the document down.
+
+The load-bearing decision survives unchanged: the server writes to git, not to the site.
+
+**The tier model needed real work to be honest.** Tier is about consequence, and T3 is
+irreversible OR outward-facing. But every write here ends in a git push, and a push to
+`main` deploys a public site, so applied naively **every write tool is T3** and the gate
+stops discriminating. Rather than fudge the tiers, the writes were made genuinely not
+outward-facing: write tools commit to a `drafts` branch, and only `publish` touches
+`main`. Actions deploys on `main` only, so a draft commit changes a record and reaches
+nobody. T0 reads, T2 drafts, T3 publishes.
+
+**Skipped, with reasons recorded in MCP.md section 7:** OAuth 2.1 and dynamic client
+registration (the largest chunk of the guidance, and it exists so a browser client with no
+header field can sign in; one user with Claude Code mints a token by hand), the permission
+gate (one human, no domains), live staff resolution (no staff), federation, Durable
+Objects, and two-transport parity tests.
+
+**A cross-document fix fell out of it.** PLAN section 6.1 specified the CV gate's single
+atomic burn as `UPDATE ... RETURNING`. The Workers guidance is explicit that RETURNING is
+not the clause to lean on in D1 for single-use semantics, and that compare-and-set on
+`changes` is the pattern used for OAuth codes and job claims. PLAN is corrected: the UPDATE
+carries the guard, `meta.changes === 1` decides the winner, and only then is the row read.
+The atomicity that matters still lives entirely in the first statement.
+
+**Outstanding**
+Email Obfuscation is still on, so the address in any page still gets rewritten and the
+script still injected. T05 remains blocked on it.
