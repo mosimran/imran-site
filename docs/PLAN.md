@@ -542,10 +542,27 @@ nobody enforces is a preference.
 | JS in the reading path | 0 bytes | Fails on any `<script>` that is not `application/ld+json`. |
 | Third-party requests | 0 | Fails on any off-origin `src`, `href` or `url()`, excepting `rel=license` and prose references. |
 | Webfonts | 0 | Fails on any `@font-face`. |
-| LCP on 3G | under 1.2 s | Lighthouse CI, simulated slow 3G, index plus one paper. |
+| LCP on 3G | under 1.2 s, **not met and not meetable, see below** | `check-lighthouse.mjs`, simulated slow 3G, index plus one paper. |
 | Contrast, both schemes | AA | axe-core via pa11y-ci, run twice with the colour scheme forced. |
 | Tap targets | 44 px | Lighthouse assertion. |
 | Print | renders | Manual, once, at T20. Not automatable and not worth pretending otherwise. |
+
+**The 1.2 s LCP budget is arithmetically impossible and needs replacing.** Measured on
+2026-08-14 with Lighthouse 12.8.2 at the stated profile (400 kbps, 300 ms RTT, 4x CPU):
+3,382 ms on `/` and 3,064 ms on a paper. The earlier estimate of about 924 ms in the T20
+worklog was wrong, because it counted transfer time and omitted connection setup.
+
+On that profile, setup alone is roughly four round trips, DNS plus TCP plus two for TLS,
+which is about 1,200 ms before a byte of HTML arrives. Lighthouse's own simulator is
+harsher still, applying 562.5 ms of latency per request. The budget is therefore below
+the floor for any origin serving over TLS, including one that returned an empty document.
+It cannot be met by making this site smaller, and no amount of optimisation reaches it.
+
+What the numbers actually say is that the document is fine and the network profile is
+brutal: 17.8 KB on the wire, 160 ms of server time, zero render-blocking subresources,
+zero blocking time. The budget needs to become a defensible number against a stated
+profile rather than an aspiration. **That is an open decision for the author**, not one
+to be settled by quietly editing the limit until it passes.
 
 Beyond the budget table:
 

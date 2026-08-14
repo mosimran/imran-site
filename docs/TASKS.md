@@ -141,6 +141,14 @@ something on every task after it rather than only at the end.
 - [~] **T20** Lighthouse CI and pa11y, both colour schemes
   <br>*Ships:* no. *Validated by:* LCP under 1.2 s on simulated 3G. AA contrast in
   light and dark. Tap targets pass. Print check by hand.
+  <br>*Status:* Lighthouse now runs. `npx` into a clean tree sidesteps the `tslib`
+  failure that blocked it; it must never become a dependency again. **Tap targets pass**
+  (score 1, both pages). **Accessibility 100.** **LCP fails at 3,382 ms against a 1,200 ms
+  budget**, and the budget is below the connection-setup floor for any TLS origin on that
+  profile, so it cannot be met. See PLAN section on quality gates. Two things remain, and
+  neither is mine to close: a defensible LCP number, and the print check by hand.
+  <br>The run also found a live violation of two hard constraints, recorded as erratum
+  7.6 and now caught by `check-live.mjs`.
 
 - [x] **T21** Link check, errata check, expiry check
   <br>*Ships:* no. *Validated by:* change a confidence value with no errata file, PR

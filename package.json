@@ -18,7 +18,9 @@
     "errata": "node scripts/check-errata.mjs",
     "expiry": "node scripts/check-expiry.mjs",
     "sign": "node scripts/sign.mjs",
-    "a11y": "node scripts/check-a11y.mjs"
+    "a11y": "node scripts/check-a11y.mjs",
+    "live": "node scripts/check-live.mjs",
+    "lighthouse": "node scripts/check-lighthouse.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"

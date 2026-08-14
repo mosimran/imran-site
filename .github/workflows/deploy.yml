@@ -86,6 +86,10 @@ jobs:
             exit 1
           fi
 
+      # Checkout first: download-artifact writes into the workspace and a
+      # checkout afterwards would clear it. Needed for scripts/check-live.mjs.
+      - uses: actions/checkout@v5
+
       - uses: actions/download-artifact@v5
         with:
           name: dist
@@ -104,24 +108,9 @@ jobs:
             --branch main
 
       # Deployed and unverified is the same class of problem as green and
-      # undeployed. Check the live primary, not the artifact.
-      - name: verify the live site serves what was just built
-        run: |
-          set -e
-          for i in 1 2 3 4 5 6; do
-            code=$(curl -fsS -o live.html -w '%{http_code}' https://mosthofaimran.com/ || true)
-            [ "$code" = "200" ] && break
-            echo "attempt $i: got '$code', retrying in 10s"
-            sleep 10
-          done
-          [ "$code" = "200" ] || { echo "::error::live site returned $code after deploy"; exit 1; }
-
-          # The zero-JavaScript budget, enforced against the bytes the edge
-          # actually served rather than against dist/.
-          scripts=$(grep -o '<script' live.html | wc -l | tr -d ' ')
-          ldjson=$(grep -o 'application/ld+json' live.html | wc -l | tr -d ' ')
-          if [ "$scripts" != "$ldjson" ]; then
-            echo "::error::live index has $scripts script tags but only $ldjson are ld+json"
-            exit 1
-          fi
-          echo "live: 200, $scripts script tags, all of them ld+json"
+      # undeployed. Checks the live primary, not the artifact, and asks for it
+      # as a browser would: the CDN features that inject script only do so on
+      # browser-shaped requests, so the curl this step used to run passed while
+      # every real visitor was served a third-party module.
+      - name: verify the live site against the budgets
+        run: node scripts/check-live.mjs https://mosthofaimran.com

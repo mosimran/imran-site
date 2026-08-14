@@ -1464,3 +1464,71 @@ than assuming an attribution change was needed: paper pages carry
 **What is next.** P20 stays open and is a different thing: the publication dates on 5.2
 through 5.14 are the prototype's illustrative ones, which is a factual placeholder rather
 than a question about authorship.
+
+---
+
+## T20 · Lighthouse runs, and finds a live budget violation
+
+2026-08-14 · erratum 7.6
+
+**What changed.**
+
+T20's accessibility half was already done. The performance half was open because
+Lighthouse would not install: npm treats `tslib` as satisfied through an optional
+`sharp-wasm32` dependency skipped on macOS, so the module is absent while npm reports
+"up to date". `npx --yes lighthouse@12.8.2` resolves into a clean temporary tree and does
+not inherit that state, so it runs. `scripts/check-lighthouse.mjs` uses it that way, and
+a comment says why it must never become a dependency again.
+
+The run immediately found something bigger than the metric it was measuring.
+
+**Cloudflare Web Analytics was injecting a beacon into every page.** Sections 8 and 10
+and Appendix B all state, in different words, that this site makes no third-party request
+and runs no script. For anyone using a browser, all three were false. The tag is not in
+the build and not in the repository, which is why nothing caught it: `dist/` was clean.
+
+The reason it survived is the part worth keeping. The injection is conditional on a
+browser-shaped request, so `curl` is served clean HTML. **The post-deploy verification I
+added earlier the same day used `curl`, and passed.** Two green checks, each correct about
+what it measured, neither measuring what the claim was about. Recorded as erratum 7.6,
+including that T05 had already documented this exact class of defect for Email Address
+Obfuscation and it was not generalised to the other feature that rewrites HTML.
+
+`scripts/check-live.mjs` now asserts both budgets against the live origin with a browser
+User-Agent, over four routes, and replaces the curl block in the deploy job. It fails
+today, correctly. It will keep failing until Web Analytics is turned off on the zone,
+which needs the dashboard: the Pages token cannot reach the RUM API, and neither can
+wrangler's OAuth session.
+
+**LCP fails, and the budget is the thing that is wrong.** Measured 3,382 ms on `/` and
+3,064 ms on a paper, against 1,200 ms. The estimate of about 924 ms in the earlier T20
+entry was wrong: it counted transfer and omitted connection setup. On this profile setup
+alone is roughly four round trips, about 1,200 ms, and Lighthouse's simulator applies
+562.5 ms of latency per request. The budget sits below the floor for any TLS origin,
+including one returning an empty document, so it cannot be met by making the site smaller.
+
+The document itself measures well: 17.8 KB on the wire, 160 ms server response, zero
+render-blocking subresources, zero total blocking time, tap targets score 1,
+accessibility 100. PLAN now records the measurement, the floor and the arithmetic, and
+marks the number as an open decision rather than quietly editing the limit until it
+passes.
+
+**What was validated and how.**
+
+Lighthouse 12.8.2, simulated slow 3G at the profile PLAN names, index plus one paper, run
+against the live origin rather than a local server, because a local server answers in a
+millisecond and would flatter the one number the site does not control.
+
+The beacon was confirmed four ways before anything was written: Lighthouse's network
+request list, a `curl` with a browser User-Agent showing the injected `<script
+type="module">`, a plain `curl` showing nothing, and `imran.com.bd` showing nothing, which
+places it on the primary zone rather than in the build.
+
+`astro check` 0 errors. Budgets, links, expiry green. Errata gate reports 1 erratum added
+and 0 claims changed.
+
+**What is deployed.** The erratum and the checks. The violation itself is still live.
+
+**What is next.** Turn off Web Analytics on the `mosthofaimran.com` zone, then rerun
+`npm run live`. After that, a defensible LCP budget and the print check, both of which
+are the author's calls. T20 stays partial and now says exactly which two things are open.

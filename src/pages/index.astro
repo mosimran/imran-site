@@ -434,6 +434,15 @@ August 2026</div>
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>Correction</th><th style="width:110px">Date</th></tr></thead>
       <tbody>
+      <tr><td class="n" data-l="Section">7.6</td>
+        <td class="hd" data-l="Correction">The site claimed zero third-party requests while serving an analytics beacon.
+          <span class="sub">Cloudflare Web Analytics was enabled on the zone and injected a beacon script
+          into every response sent to a browser. Sections 8 and 10 and Appendix B all said that could not
+          happen. It was not in the build, which is why nothing caught it: the injection is conditional on
+          a browser-shaped request, so <code>dist/</code> was clean and so was every check that used
+          <code>curl</code>. Now asserted against the live origin with a browser User-Agent after every
+          deploy.</span></td>
+        <td class="num" data-l="Date">2026-08-14</td></tr>
       <tr><td class="n" data-l="Section">7.5</td>
         <td class="hd" data-l="Correction">Thirteen entries in Section 5 changed state from listed to published.
           <span class="sub">Thirteen of the fourteen papers carried a title, a summary and a confidence
