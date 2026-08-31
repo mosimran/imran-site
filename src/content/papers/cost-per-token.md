@@ -17,271 +17,282 @@ history:
 seeAlso: ["5.4", "5.1", "5.8"]
 ---
 
+<div class="memo"><b>Abstract.</b> Almost everybody picks a model by looking at two numbers,
+the price per million tokens and a position on a leaderboard, and neither of those numbers
+is about your system. The price is the smallest term in what a model actually costs you,
+and the leaderboard is measuring a different workload than the one you run. The fix is not
+an evaluation platform or a quarter of work. It is about forty examples pulled out of your
+own logs, a rubric written on a Tuesday, and the discipline to run the thing again after
+somebody ships a new version. <b>Confidence 0.80.</b> The arithmetic in Section 2 is solid
+and the failure mode in Section 6 is one I have watched. The gap from 0.90 is Section 9,
+where I have no good answer to what happens when the evaluation itself goes stale.</div>
+
 ## 1. The claim
 
-**Model selection is an arithmetic problem that is almost always solved with a
-brand preference.**
+Somebody posts a thread where a model does something genuinely clever, you read it on a
+Thursday, and about six weeks later that model is in your architecture diagram without
+anybody having run a single test against your own traffic. The decision felt technical. It
+was made from a demo you did not design, on examples you did not choose, by someone who was
+pleased with the results.
 
-Two numbers drive the decision in most teams. The first is price per million
-tokens, which appears on a pricing page. The second is a position on a
-leaderboard, which appears in a blog post. Both are real numbers. Neither is a
-measurement of your system.
+This is not an argument that expensive models are a swindle, or that the cheap one is
+secretly good enough. Either can be true on any given day and neither is knowable from a
+pricing page. The argument is that the industry has settled on a way of comparing models
+that is easy to obtain and wrong, and that the correct comparison takes an afternoon to
+build and then works forever.
 
-The argument here is not that expensive models are a swindle, nor that the cheap
-one is secretly fine. Either can be true. The argument is that the industry has
-standardised on a denominator that is easy to obtain and wrong, and that the
-correct denominator costs about a day to build and is then reusable forever.
+The whole paper is one substitution. Stop dividing by tokens and start dividing by outputs
+that a human being was willing to accept.
 
-Everything below follows from one substitution: stop dividing by tokens and
-start dividing by **accepted outputs**.
+## 2. The number on the pricing page is the small one
 
-## 2. The denominator
-
-The quantity that governs a production system is cost per unit of work that
-survives review. Write it out:
-
-```
-cost_per_accepted =  (tokens_in x price_in  +  tokens_out x price_out)
-                     x  attempts_per_completion
-                     /  acceptance_rate
-                     +  (1 - acceptance_rate) x cost_of_human_review
-```
-
-Four terms. Only the first is on the pricing page. The other three are
-properties of the pairing between a model and your workload, and they are not
-knowable from any published source.
-
-Consider two models. The numbers below are stated inputs, not measurements, so
-that the arithmetic can be checked and your own figures substituted.
-
-| | Model A | Model B |
-| --- | --- | --- |
-| Input, per million tokens | $3.00 | $0.80 |
-| Output, per million tokens | $15.00 | $4.00 |
-| Output tokens on this task | 600 | 1,020 |
-| Tool-call schema violations | 1.5% | 8% |
-| Output accepted without review | 96% | 82% |
-
-Task takes 4,000 input tokens. On price alone, B looks 3.75 times cheaper.
-
-Per attempt, A costs $0.0210 and B costs $0.0073. B is more verbose, which eats
-into its advantage, but not much. Add retries for malformed tool calls and A
-costs $0.02132, B costs $0.00791.
-
-**B is 2.69 times cheaper, and the conclusion is still wrong**, because no term
-so far accounts for a person.
-
-Add review. The break-even is the review cost at which the two models cost the
-same:
+What governs your bill is not what a token costs. It is what a piece of finished, usable
+work costs, and that has four terms in it:
 
 ```
-review_breakeven  =  (token_cost_A - token_cost_B) / (review_rate_B - review_rate_A)
-                  =  (0.02132 - 0.00791) / (0.18 - 0.04)
-                  =  $0.0958 per review
+cost per accepted output =  (tokens in x price in  +  tokens out x price out)
+                            x  attempts before it parses
+                            /  fraction a human accepts as-is
+                            +  cost of a person fixing the rest
 ```
 
-At a loaded rate of $60 an hour, $0.0958 buys **5.7 seconds** of a person's
-attention. At $90 an hour it buys 3.8 seconds.
+Only the first term is published. The other three are properties of the marriage between
+one model and your particular workload, and no vendor can tell you what they are because
+no vendor has seen your workload.
 
-That is the whole paper in one number. If a human ever looks at the output of
-this system for longer than about six seconds, the cheaper model is the more
-expensive one, and the pricing page had no way of telling you.
+So let us do it properly with two models. Everything in the table below is an input I am
+stating rather than a measurement I am claiming, so you can put your own figures in and
+watch what happens.
 
-At a realistic four-minute review, A costs $0.181 per accepted output and B
-costs $0.728. The model that was 3.75 times cheaper on the pricing page is four
-times more expensive in production. Nothing exotic produced that inversion. It
-came from one term that nobody puts in the spreadsheet because nobody measures
-it.
+<table class="rt">
+<thead><tr><th style="width:230px">What you are comparing</th><th style="width:1%">Model A</th><th style="width:1%">Model B</th></tr></thead>
+<tbody>
+<tr><td class="hd" data-l="Item">Input, per million tokens</td><td class="num" data-l="A">$3.00</td><td class="num" data-l="B">$0.80</td></tr>
+<tr><td class="hd" data-l="Item">Output, per million tokens</td><td class="num" data-l="A">$15.00</td><td class="num" data-l="B">$4.00</td></tr>
+<tr><td class="hd" data-l="Item">Output tokens it actually emits</td><td class="num" data-l="A">600</td><td class="num" data-l="B">1,020</td></tr>
+<tr><td class="hd" data-l="Item">Tool calls that come back malformed</td><td class="num" data-l="A">1.5%</td><td class="num" data-l="B">8%</td></tr>
+<tr><td class="hd" data-l="Item">Output a human accepts untouched</td><td class="num" data-l="A">96%</td><td class="num" data-l="B">82%</td></tr>
+</tbody>
+</table>
 
-## 3. Where the hype gets in
+The task uses four thousand input tokens. On the pricing page B is three and three quarter
+times cheaper, which is the sort of gap that ends an argument before it starts.
 
-The proxies are not neutral. They fail in a direction.
+Work it through and B is more verbose, which eats some of the lead, and B fumbles the tool
+schema more often, which means retries, which eats a bit more. After both of those A costs
+$0.02132 per completion and B costs $0.00791. B is still cheaper by a factor of 2.69, and
+if you stop here you buy B and you are wrong, because nothing so far has accounted for a
+person.
 
-**Leaderboards measure general capability on public sets. Your task is neither
-general nor public.** A model tuned to do well across a broad aggregate is
-optimised for a distribution you do not have. The correlation between aggregate
-rank and performance on one narrow task is positive and much weaker than the
-confidence with which it is cited.
+Now put the person in. The interesting question is not what review costs, it is how cheap
+review would have to be before B wins, and that has an answer:
 
-**Preference arenas reward style.** When ranking is derived from humans choosing
-between two responses, the winner is systematically the one that is longer,
-better formatted and more confidently worded. Those three properties correlate
-with cost directly, because they are output tokens, and with correctness only
-loosely. A leaderboard built on preference is partly a verbosity ranking, and
-verbosity is the thing you are paying for.
+```
+break-even review cost = (0.02132 - 0.00791) / (0.18 - 0.04) = $0.0958
+```
 
-**Contamination makes scores non-comparable over time.** Public benchmarks leak
-into training corpora. A rising score across model generations is a mixture of
-genuine capability gain and increasing exposure, in an unknown ratio. The
-direction is knowable; the magnitude is not.
+At a loaded rate of sixty dollars an hour, nine and a half cents buys you **under six seconds**
+of somebody's attention. At ninety an hour it buys under four.
 
-**Release notes describe an aggregate you do not share.** "Better at coding" is
-a statement about a mean over a set of tasks selected by the vendor. Your agent
-does one task. The mean moved. Yours may have moved the other way, and the note
-will not tell you, because the vendor does not know either.
+So if any human being ever looks at the output of this system for longer than about six
+seconds, the cheap model is the expensive one, and every published number you used to
+choose it was pointing the other way. At a realistic four-minute review, A comes out at
+$0.18 per accepted output and B at $0.73. The model that was 3.75 times cheaper is now four
+times dearer. The whole inversion came out of a column nobody had put in the spreadsheet.
 
-None of this requires anybody to be lying. Every number is real. They are
-answers to questions you did not ask.
+<figure>
+<pre>
+  what you compared                    what you were billed for
+  -----------------                    ------------------------
+  price per token             ------>  price per token
+                                       retries on malformed output
+                                       the extra tokens it rambled
+                                       the reviewer's afternoon
+                                       the customer who left quietly
+       |                                        |
+       v                                        v
+  published by the vendor              measurable only by you
 
-## 4. The bias, named
+  share of the bill that is tokens, on the numbers above:
+      model A   11.8%
+      model B    1.1%
+</pre>
+<figcaption>Figure 1: the cheaper the model, the smaller the fraction of your bill it is
+responsible for, which is the opposite of the intuition that makes people choose it. On
+these inputs, ninety-nine cents of every dollar model B costs you is spent somewhere no
+pricing page has ever mentioned.</figcaption>
+</figure>
 
-The proxies would matter less if engineers held them loosely. They do not, and
-the reasons are ordinary.
+## 3. Why the published numbers point the wrong way
 
-**The demo prior.** A model does something impressive in a thread and the
-impression becomes a standing belief about capability. The sample was three
-examples, none from your distribution, all selected by someone who was pleased
-with them. This is the same failure as watching a refactoring video and feeling
-you have refactored, treated at length in paper 5.1.
+None of this needs anybody to be dishonest. Every number published is a real number. They
+are simply answers to questions you did not ask, and they fail in a consistent direction.
 
-**Recency as quality.** Newer is assumed better. Newer is different, which is a
-weaker and more useful claim. Version changes routinely alter refusal
-behaviour, verbosity, tool-call formatting and latency distribution, and those
-four things are what an agent is built against.
+**A leaderboard is an average over somebody else's work.** A model that does well across a
+broad aggregate has been tuned for a distribution you do not have, and your agent does one
+narrow thing all day. Aggregate rank does correlate with performance on your task. It correlates far more weakly
+than the confidence with which people quote it in planning meetings.
 
-**Capability insurance.** The frontier model is chosen for headroom nobody has
-measured needing. This feels prudent and is a standing charge against every
-request for a capability that may never be exercised. Headroom is not free and
-should be sized, like any other margin.
+**Preference rankings are partly a length contest.** When the ranking comes from humans
+picking a winner between two answers, the winner tends to be the longer one, the better
+formatted one and the one that sounds more sure of itself. Those three qualities correlate
+strongly with your bill, because they are output tokens, and much more loosely with being
+correct. You are reading a chart where "wordier" and "better" have been quietly added
+together, and then you are paying by the word.
 
-**Survivorship in the memory.** You remember the good completions. Failures are
-absorbed as one-offs, retried by hand and forgotten, which is precisely how a
-degraded acceptance rate stays invisible.
+**The scores are not comparable across years.** Public benchmarks leak into training data,
+so a rising score is some mixture of the model getting better and the model having seen the
+test, in a ratio nobody can give you. You know the direction of the bias. You do not know
+how big it is, which makes the year-on-year improvement a number you can read but cannot
+use.
 
-**Anchoring on the vendor's eval.** A published eval suite is a genuine
-contribution and a marketing artifact simultaneously. Nobody publishes the
-tasks their model handles badly.
+**"Better at coding" is a claim about a mean.** Somebody moved an average across a suite the vendor chose. Your workload is one point in
+that average. It was probably not in the suite at all, and it may have moved the other way. The release note cannot warn you about that because the people
+writing it genuinely do not know.
 
-The common structure is that all five substitute a cheap signal for a
-measurement, and then hold the result with a confidence appropriate to a
-measurement. That is the untested part, and it is untested in the strict sense:
-no experiment was run that could have come out the other way.
+## 4. The five ways an engineer talks himself into it
 
-## 5. Why choosing once is the wrong shape
+The published numbers would do less damage if we held them loosely, and we do not.
 
-Here is the part that matters more than model choice, and gets a fraction of the
-attention.
+**The demo you saw once.** Three examples, none of them yours, all of them chosen by
+somebody who liked how they turned out, and the impression hardens into a standing belief
+about what the model can do. This is the same machinery as watching somebody refactor a
+module on video and coming away feeling you have refactored something, which is paper 5.1
+in its entirety.
 
-**A model endpoint is not a stable artifact.** It is a service. It changes,
-sometimes announced and sometimes not, and your agent is built against
-behaviour rather than against an interface. An interface change breaks loudly. A
-behaviour change does not break at all. It degrades.
+**Newer must be better.** Newer is different, which is a smaller claim and a much more
+useful one. Point releases change refusal behaviour, verbosity, tool-call formatting and the shape of
+the latency tail. Those four things are precisely what your agent is wired into.
 
-The characteristic failure of an agent on a model upgrade:
+**Headroom nobody has measured.** You take the frontier model as insurance against
+difficulty you have never quantified, which feels responsible and is a standing charge on
+every request you will ever make for a capability you may never call on. It is buying a van
+because twice a year you move a sofa. Sometimes correct, worth actually checking.
 
-- Tool-call formatting drifts. A field that was reliably present becomes
-  occasionally absent. The parser catches it, retries, and the retry succeeds.
-  Nothing alerts. Latency and cost rise by a few percent.
-- Verbosity increases. Context accumulates faster per turn. Long conversations
-  begin hitting the window and truncating their own history. Answers get worse
-  in a way that looks like the user asking harder questions.
-- Refusal behaviour shifts on edge inputs. A category of request that used to be
-  handled starts being declined politely. Those users do not file bugs. They
-  leave.
-- Latency distribution widens at the tail. The p50 is unchanged, so the
-  dashboard looks fine. The p99 crosses a client timeout, which becomes a retry,
-  which becomes double billing and a duplicate side effect.
+**You remember the good ones.** Failures get retried by hand, muttered at, and forgotten. That is exactly how an acceptance
+rate falls for a month with nobody able to say when it started.
 
-Every one of those is a silent quality drop, and Principle 4.1 exists because a
-silent quality drop is worse than an error. An error gets investigated. This
-gets absorbed by users until they stop coming.
+**The vendor's own evaluation suite.** It is a real contribution and a marketing document
+at the same time, and no organisation has ever published the benchmark on which its product
+looks worst.
 
-**So the eval is not primarily a selection tool. It is a detector.** Selection is
-a one-time act performed under uncertainty. Detection is continuous and is the
-only thing standing between you and a degradation you will otherwise diagnose
-six weeks later from a churn report.
+Every one of these swaps a cheap signal for a measurement and then holds the answer with
+the confidence you would be entitled to only if you had measured. That is the untested part,
+in the strict sense that no experiment was run which could have come out the other way.
 
-## 6. The protocol
+## 5. The thing you are really buying is a moving target
 
-This is the discipline. It is deliberately small, because an eval programme that
-needs a quarter to build is an eval programme that does not exist.
+Here is the part that matters more than the choice and gets a fraction of the attention.
 
-**6.1. Write the eval before you choose.** Not after. If it is written after,
-its cases will be the ones the chosen model already handles, and you will have
-built a certificate rather than an instrument.
+The endpoint you are calling is not a file you vendored. It is somebody else's running
+service, and it changes underneath you, sometimes with an announcement and sometimes not.
+Your agent is not built against an interface, it is built against behaviour, and that is a
+much softer thing to be standing on. When an interface changes you get an exception and a
+stack trace. When behaviour changes you get nothing at all, and the system quietly gets
+worse while every dashboard stays green.
 
-**6.2. Take 30 to 50 cases from real traffic.** Not synthetic, not from a
-benchmark. Sample your actual logs. Stratify: the common path, the long tail,
-and the inputs that are malformed or hostile. If you have an incident log, every
-incident that reached production is a case, and those are the most valuable ones
-you own.
+**The tool call drifts.** A field that was always there becomes occasionally absent, your
+parser catches it, the retry succeeds, and nobody is paged because from the outside nothing
+failed. Cost and latency creep up by a few percent a week.
 
-**6.3. Grade against consequence, not quality.** "Is this a good answer" is not
-gradeable and will not survive two reviewers. "Did it call the right tool with
-the right arguments", "did it decline when it should have declined", "would this
-have to be corrected before a customer saw it" are gradeable. Write the rubric
-before you see any outputs.
+**The answers get longer.** Context fills faster, long conversations start truncating their
+own history, and the quality falls off in a way that looks exactly like users asking harder
+questions this month.
 
-**6.4. Measure five things, not one.** Pass rate against the rubric. Cost per
-accepted output, computed with all four terms from section 2. Schema violation
-rate. Refusal rate. Latency at p95 and p99, separately, because the tail is
-where the timeouts are.
+**It starts declining things it used to do.** Some category of request now gets a polite
+refusal. Those users do not open tickets. They go away, and you find out from a churn
+report in the following quarter.
 
-**6.5. Run it against the incumbent first.** This is the step that gets skipped
-and it is the one that validates the instrument. If your eval cannot distinguish
-your current model from a deliberately worse configuration, it cannot detect a
-regression either. Break something on purpose. Truncate the system prompt, drop
-the temperature to zero, swap in the previous version. If the score does not
-move, the eval is decorative.
+**The tail moves and the middle does not.** The p50 is untouched, so the dashboard stays
+serene. Meanwhile p99 crosses a client timeout and turns into a retry. That is double
+billing, and if you were careless about idempotency it is also a duplicate side effect in
+somebody else's system.
 
-**6.6. Only then run candidates.** By this point the decision is usually obvious
-and takes ten minutes, which is a good sign rather than a sign the work was
-wasted.
+Every one of those is a quality drop with no alarm attached, which is the exact thing
+Principle 4.1 exists to forbid. An error gets a ticket and a person. This gets absorbed by
+your users until they stop being your users.
 
-**6.7. Re-run on every version change, including the silent ones.** Pin the
-model version in configuration so that changes are yours to make. Then run the
-eval on a schedule anyway, because pinning protects you from the vendor moving
-and not from your own prompt, tool schema or retrieval corpus moving underneath
-the same model.
+Which means the evaluation is not really a tool for choosing. Choosing happens once. The
+ground moves continuously, and a suite you can re-run in five minutes is the only thing
+standing between a silent regression and a very confusing week six weeks later.
 
-**6.8. Store the results with dates.** A single eval run is a number. A series is
-a control chart, and a control chart tells you the thing you actually want to
-know, which is whether today is different from last month.
+## 6. Forty examples and a rubric
 
-## 7. What this costs
+This is the discipline, and it is deliberately small, because an evaluation programme that
+needs a quarter to stand up is an evaluation programme that will not exist.
 
-Forty cases. A rubric with four or five binary questions. A script that runs the
-cases, records the five measurements, and writes a row to a file.
+<table class="rt">
+<thead><tr><th style="width:44px">§</th><th>Do this</th></tr></thead>
+<tbody>
+<tr><td class="n" data-l="Step">6.1</td><td data-l="Do">Write it before you choose, not after. Written afterwards, it fills up with the cases your chosen model already handles, and you have produced a certificate rather than an instrument.</td></tr>
+<tr><td class="n" data-l="Step">6.2</td><td data-l="Do">Take thirty to fifty cases out of real traffic. Not synthetic, not a public benchmark. Sample your logs, and cover the common path, the strange tail and the inputs that are malformed or hostile. If you keep an incident log, every incident in it is a case you already paid for, and those are the most valuable examples you own.</td></tr>
+<tr><td class="n" data-l="Step">6.3</td><td data-l="Do">Grade on consequences. "Is this good" will not survive two reviewers disagreeing. "Did it call the right tool with the right arguments", "did it refuse when it should have", "would somebody have to fix this before a customer saw it" are answerable by two people who reach the same answer. Write the rubric before you look at any output.</td></tr>
+<tr><td class="n" data-l="Step">6.4</td><td data-l="Do">Record five things, not one. Pass rate, cost per accepted output with all four terms from Section 2, malformed-output rate, refusal rate, and latency at p95 and p99 kept apart, because the tail is where the timeouts live.</td></tr>
+<tr><td class="n" data-l="Step">6.5</td><td data-l="Do">Run it against what you are already using, first. This step gets skipped and it is the one that proves the instrument works. Break something deliberately: truncate the system prompt, swap in last quarter's version, take away a tool. If the score does not move, you have built a decoration and it will not notice a regression either.</td></tr>
+<tr><td class="n" data-l="Step">6.6</td><td data-l="Do">Only now run the candidates. The decision usually takes about ten minutes at this point, which feels like the work was wasted and is in fact the work paying out.</td></tr>
+<tr><td class="n" data-l="Step">6.7</td><td data-l="Do">Pin the version, then re-run on a schedule anyway. Pinning stops the vendor moving under you. It does nothing about your own prompt, tool schema or retrieval corpus moving under the same model, and one of those changes most weeks.</td></tr>
+<tr><td class="n" data-l="Step">6.8</td><td data-l="Do">Keep the results with dates on them. One run is a number and tells you very little. A year of runs is a control chart, and a control chart answers the only question you ever actually ask, which is whether this month is different from last.</td></tr>
+</tbody>
+</table>
 
-That is an afternoon for the harness, and the harness is written once. Each run
-is minutes and the token cost of forty cases is negligible against the cost of
-one afternoon of the engineer who would otherwise be arguing about which model
-feels better.
+## 7. What it costs
 
-The expensive part is the cases, and the cases are not built. They are
-harvested, from traffic you already have and incidents you already survived.
+Forty examples, a rubric with four or five yes-or-no questions, and a script that runs the
+examples and writes one row per run into a file.
 
-Set against that: one silent degradation, discovered late, costs a debugging
-week, an unknown number of users who left without telling you, and a decision
-made in the meantime on the assumption that the system was working. The
-asymmetry is not close.
+The harness is an afternoon and you write it once. Each run costs minutes and a rounding
+error in tokens, against the cost of the engineer who would otherwise spend that afternoon
+in a meeting about which model feels better.
 
-## 8. The strongest objection, unanswered
+The genuinely expensive part is the examples, except that you do not write examples. You
+harvest them, out of traffic you already serve and incidents you already survived and
+mostly wrote up. The work is already done. It is sitting in your logs being useless.
 
-**A bad eval is worse than no eval, and most first evals are bad.**
+## 8. The named failure mode
 
-An eval with 40 cases and a loose rubric gives a number. A number invites
-confidence. If the cases are unrepresentative or the rubric measures something
-adjacent to what you care about, you have replaced an admitted uncertainty with
-a false certainty, and false certainty is more expensive because it stops the
-inquiry.
+**The upgrade nobody ran anything against.** A new version ships, it is better on every
+published measure, somebody bumps the string in the config on a Thursday afternoon, and the
+diff is one line so it gets approved in about ninety seconds. For three weeks everything is
+fine, because it mostly is fine. The malformed tool calls go from one in seventy to one in
+twelve, which your retry logic absorbs. The answers get about forty percent longer, which
+nobody notices because nobody watches token counts on a Tuesday. Then a long conversation
+starts truncating its own context, and the agent begins confidently answering questions
+using the half of the thread it can still see.
 
-Goodhart's law arrives immediately after. The moment the eval score becomes a
-target, prompts get tuned until the score moves, and the score stops measuring
-the thing it was proxying for. The eval decays into exactly the kind of proxy
-this paper opens by attacking, and the decay is invisible from the inside.
+The support tickets never say "the model regressed". They say the assistant has been odd
+this week. Somebody opens the prompt and starts adjusting it, because the prompt is
+the thing we know how to change, and now you are tuning a prompt against a moving baseline
+with no measurement on either side of it. That is where the week goes, and the week after.
 
-There is a narrower objection with more force. For a large class of tasks the
-frontier model genuinely is better on every axis, the ranking is stable, and a
-practitioner's guess would have selected correctly in thirty seconds. In those
-cases the eval confirms what was already known and its cost was pure overhead.
-The argument survives only because the same harness later catches the silent
-upgrade, and that is a claim about the future which the eval-sceptic is entitled
-to discount.
+A five-minute evaluation run before the config change would have shown a malformed-output
+rate going from 1.4% to 8.3% and stopped the whole thing on the Thursday. The reason it did
+not run is not that anybody decided against it. It is that nobody had built it, and it was
+only ever an afternoon.
 
-I do not have a clean answer to the Goodhart problem. The partial one is to hold
-out cases that are never used for tuning and never looked at, and to rotate
-fresh traffic in on a schedule. That reduces the decay rate rather than stopping
-it. Until I can state something stronger, confidence sits at 0.80 rather than
-higher, and section 6 should be read as a floor on rigour rather than a
-sufficient practice.
+## 9. The strongest objection, unanswered
+
+**A bad evaluation is worse than none, and most first attempts are bad.**
+
+Forty cases and a loose rubric still produce a number, and a number invites exactly the
+confidence this paper spends eight sections arguing you should not have. Suppose the cases are unrepresentative, or the rubric measures something next door to what
+you care about. You have swapped an uncertainty you knew about for a certainty you have not
+earned. That trade is the more expensive one, because it stops you looking.
+
+Then Goodhart arrives, on schedule. The moment the score is a target, prompts get tuned
+until the score moves, and the score stops standing in for the thing you wanted. Your
+instrument decays into precisely the sort of proxy this paper opens by complaining about,
+and it decays invisibly, from the inside, while the chart continues going up.
+
+There is a narrower objection with more force behind it. For a large class of ordinary
+tasks the frontier model is simply better on every axis, the ranking is stable for months,
+and an experienced person would have picked correctly in thirty seconds without any of
+this. In those cases the evaluation confirms what was already known and the afternoon was
+pure overhead. The argument survives only because the same harness is what catches the
+silent upgrade in Section 8, and that is a claim about something that has not happened yet,
+which anybody is entitled to discount.
+
+I do not have a clean answer to the decay problem. The partial one is to hold back a set of
+cases that are never used for tuning and never even looked at, and to rotate fresh traffic
+in on a schedule, which slows the rot without stopping it. Until I can say something better
+than that, this sits at 0.80 rather than higher, and Section 6 should be read as the least
+you can get away with rather than as sufficient practice.
