@@ -1691,9 +1691,32 @@ Expiry: 16 documents, 0 expired, 0 within 30 days.
 Placeholder ledger: 16 open of 22, down from 17. P16 closed, P15 closed earlier today,
 P17 and P21 annotated with what changed and what did not.
 
-**What is deployed.** Pushed and deployed at the end of this entry; the deploy line is
-confirmed below rather than predicted.
+**What is deployed.** All of it, and **the workflow run is red.**
 
-**What is next.** T33's remaining half, the role string, and it is still owner-blocked.
-Then T34, the Mevrik figures. The index byte budget is now the standing constraint on
-both.
+PR #40, checks green in 31 seconds, squash merged. On main the `deploy to cloudflare
+pages` step succeeded and the content is serving. The step after it, `verify the live site
+against the budgets`, failed on all four routes with `static.cloudflareinsights.com` and
+one executable script tag.
+
+That is erratum 7.6, unchanged and still unfixed. Cloudflare Web Analytics is enabled on
+the `mosthofaimran.com` zone and injects a beacon into every browser-shaped response. It
+is not in the build, it is not caused by anything in this task, and the check is behaving
+exactly as T20 designed it to: it fails after every deploy until the setting is turned off
+in the dashboard, which needs access the Pages token does not have. The run stays red
+rather than the check being softened to make it green. A green tick that stops measuring
+the thing it was written for is worth less than a red one that keeps measuring it.
+
+Verified against the live origin by hand afterwards: `/papers/soc2-120-days/`,
+`/papers/soc2-scope-hack/` and `/impl/compliance-evidence/` all 200, `/errata/` carries
+`#e7-7`, the complete index reports 16 papers and 1 retracted, the masthead reads
+`draft-imran-systems-and-arguments-05`, and the abstract reads "Over fifteen years of
+production engineering".
+
+pa11y then run against the four new live pages in both colour schemes, which the earlier
+entry said it could not do: **0 WCAG2AA errors across all eight combinations.** The gap
+recorded before the deploy is now closed rather than left standing.
+
+**What is next.** Turning off Web Analytics on the zone is now blocking the green tick on
+every future deploy, so it outranks the content work. After it: T33's remaining half, the
+role string, still owner-blocked, then T34's Mevrik figures. The index byte budget is the
+standing constraint on both.
