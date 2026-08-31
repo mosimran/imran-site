@@ -81,7 +81,9 @@ The suffix is `history.length - 1`, zero-padded to two digits. First publication
 build time in `src/lib/draft.ts`.
 
 **Off-by-one, stated rather than hidden.** The prototype's footer says "rev 4" for
-Competence Porn, which has 4 history entries. Internet-Drafts count from zero, so the
+Competence Porn, which had 4 history entries at handoff. (That paper was retitled
+Competence Theatre on 2026-08-31, erratum 7.8. The slug and this worked example both
+stay as they were, because the slug is not the title.) Internet-Drafts count from zero, so the
 same document is `-03`. The two numbers disagree by one for the reason they always
 disagree: one counts publications, the other counts revisions after the first. Use
 `-03`, drop "rev 4" from the footer, and state the rule in the colophon so nobody has
@@ -145,7 +147,7 @@ Claiming its provenance is a lie, and on this site of all sites.
 | Section numbers | Kept. Section 5.1 says where a paper sits in the index; the draft name says which document and which revision. Different questions, both worth answering. |
 | `<title>` | Stays human-first: "Mosthofa Imran: Systems, Arguments, and Known Failure Modes". A slug leading the SERP row helps nobody. The identifier goes in the masthead and in JSON-LD `alternateName`. |
 | Running head | Full identifier on desktop, `Internet-Draft` on narrow screens. The bar is 46 px and the name is 36 characters. |
-| Feed entry titles | `draft-imran-competence-porn-03: Competence Porn` |
+| Feed entry titles | `draft-imran-competence-porn-05: Competence Theatre`. The slug in the identifier and the human title move independently; see erratum 7.8. |
 | Feed entry IDs | **Must not include the version.** `tag:mosthofaimran.com,2025:papers/competence-porn` stays keyed to the slug. Put the suffix in and every revision spawns a duplicate entry in every reader. |
 | Signatures | `/papers/competence-porn-03.md.asc`. Versioned, because a signature is over exact bytes and the bytes change. |
 
@@ -421,7 +423,7 @@ a malformed one, or it becomes the enumeration oracle section 4.3 promises it is
 | Element | Implementation |
 | --- | --- |
 | Canonical | Absolute, always the primary host, baked at build. One URL form: lowercase, trailing slash, apex. This is what makes the aliases in section 2 safe. |
-| Titles | Human-first, section number as prefix: "5.1 Competence Porn". Never the draft slug, see 1.6. |
+| Titles | Human-first, section number as prefix: "5.1 Competence Theatre". Never the draft slug, see 1.6. |
 | Open Graph | Full set, with `article:published_time` and `article:modified_time` on papers. |
 | Social images | Built with satori and resvg into static PNGs carrying section number, title, confidence, state and expiry. Font embedded at build only, so the zero-webfont rule holds for the page. |
 | JSON-LD | `WebSite` and `Person` on the index; `TechArticle` per paper with `alternateName` (the draft identifier), `datePublished`, `dateModified`, `expires`, `license`, `citation` from `seeAlso`, and `additionalProperty` for `confidence` and `state`. |

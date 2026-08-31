@@ -4,7 +4,7 @@ title: "Vibe Coding and the IKEA Effect"
 summary: "Assembly feels like understanding. It is not the same feeling twice."
 slug: "vibe-coding"
 published: 2026-05-02
-revised: 2026-08-14
+revised: 2026-08-31
 state: holding
 confidence: 0.75
 retires:
@@ -12,6 +12,7 @@ retires:
   - "Evidence that the confidence gap in Section 3 closes with tooling rather than with reading, for example a generation workflow whose users predict failure modes as accurately as authors do."
   - "A demonstration that the effect is about ownership rather than comprehension, appearing at equal strength for code the engineer merely selected rather than assembled, which would make this a paper about a different mechanism."
 history:
+  - { date: 2026-08-31, note: "A pointer added under the abstract naming 5.1 as the general argument, after 5.1 absorbed this mechanism as its Section 8. Nothing in the argument changed and the confidence did not move. The link is stated in the text because seeAlso is only carried in the machine-readable surfaces, so a reader on this page could not see it.", confidenceAfter: 0.75 }
   - { date: 2026-08-14, note: "Text written: the three kinds of knowledge, why the confidence signal misfires, the four practices, and the library objection. Retirement conditions added. Confidence unchanged.", confidenceAfter: 0.75 }
   - { date: 2026-05-02, note: "Listed in Section 5 with a title, a summary and a confidence value. No text.", confidenceAfter: 0.75 }
 seeAlso: ["5.1", "5.4", "5.8"]
@@ -25,6 +26,8 @@ becomes the whole problem the first time it fails in a way the assembly did not 
 This is not an argument about who or what wrote the code. It is an argument about what
 reading buys and what assembling does not. <b>Confidence 0.75.</b> Section 5 has the
 objection I cannot answer: nobody reads their TLS library either.</div>
+
+<p class="note">This paper is the long form of one mechanism. Paper 5.1, <a href="/papers/competence-porn/">Competence Theatre</a>, sets it beside the other one, watching, and argues that the two are the same substitution reached from opposite postures. Its Section 8 compresses what is below; this page remains the full treatment.</p>
 
 ## 1. The claim
 

@@ -1,9 +1,9 @@
 ---
 section: "5.1"
-title: "Competence Porn"
-summary: "Watching a skilled person work occupies the same reward slot as being one, and the industry has industrialised the confusion."
+title: "Competence Theatre"
+summary: "Watching a skilled person work and assembling a system you never read produce the same feeling as competence. Neither supplies the part that matters during an incident."
 slug: "competence-porn"
-revised: 2026-08-14
+revised: 2026-08-31
 state: holding
 confidence: 0.8
 published: 2025-09-03
@@ -11,7 +11,9 @@ retires:
   - "A longitudinal study showing heavy consumers of technical content outperform matched peers on blind, time-boxed debugging tasks."
   - "Evidence the effect is generational rather than structural, appearing at equal rate in cohorts who entered the field before ranked feeds existed."
   - "A large publisher of technical content disclosing what fraction of the architectures it demonstrated reached production and survived twelve months, where that fraction is high."
+  - "A demonstration that the two mechanisms dissociate: a population that consumes heavily but assembles little, or the reverse, showing the production-survival gap in one and not the other. That would make this two unrelated papers sharing a title rather than one argument with two doors into it."
 history:
+  - { date: 2026-08-31, note: "Retitled from \"Competence Porn\" at the author's request, and expanded. Section 8 added: assembly as a second mechanism producing the same false signal, compressed from paper 5.2, which remains the long form. Section 1 gained a paragraph naming both doors. Nothing was renumbered, because the headings carry the published anchors. A retirement condition was added for the unified claim. Confidence unchanged: the section develops the claim rather than strengthening its evidence, which is the same reason given on 2026-08-14. See erratum 7.8.", confidenceAfter: 0.80 }
   - { date: 2026-08-14, note: "Sections 3, 4 and 5 written. They had been outlined and left unwritten since first publication, which is a longer gap than the argument deserved. Confidence unchanged: the new sections develop the claim rather than strengthen its evidence.", confidenceAfter: 0.80 }
   - { date: 2026-06-11, note: "Section 6 rewritten after a correction from a reader in bank operations. The effect is strongest where tooling is locked down rather than where it is abundant, which narrows the mechanism.", confidenceAfter: 0.80 }
   - { date: 2026-02-08, note: "Retirement conditions added. They should have shipped with the first version, and their absence is itself an instance of the thing this paper is about." }
@@ -22,9 +24,13 @@ seeAlso: ["5.2", "5.4", "5.3"]
 
 <div class="memo"><b>Abstract.</b> The feedback loop that once rewarded building has been
 rerouted to reward the performance of building. The performance is cheaper to produce,
-faster to distribute, and structurally unfalsifiable. This paper states the mechanism,
-gives its strongest counter-argument the floor, and lists the evidence that would retire
-it. <b>Confidence 0.80.</b> The gap from 0.95 is Section 6.</div>
+faster to distribute, and structurally unfalsifiable. There are two doors into it, and
+they lead to the same room: <b>watching</b> a competent person work, and <b>assembling</b>
+a working system from parts nobody read. Both deliver the sensation of competence. Both
+supply what a thing does and neither supplies how it fails, which is the only question an
+incident asks. This paper states the mechanism, gives its strongest counter-argument the
+floor, and lists the evidence that would retire it. <b>Confidence 0.80.</b> The gap from
+0.95 is Section 6.</div>
 
 ## 1. The claim
 
@@ -43,6 +49,12 @@ There is no compliance officer, no partial failure, no clock skew, no forty page
 procurement questionnaire asking whether the vector store is FIPS validated. A demo is a
 jet engine bench tested at sea level and sold as a mountain crossing. Everyone involved
 knows this. Nobody is lying. The removal is what makes it watchable.
+
+For its first year this paper was about watching, because watching was the door I had
+walked through. There is a second one, and it works from the opposite posture: you are not
+sitting still consuming anything, you are working hard, assembling. It produces the same
+signal. That is Section 8, added later, because it took me a year to notice the two were
+one argument.
 
 ## 2. Why the numbers look fine
 
@@ -151,3 +163,83 @@ knows they are there.
 Section 4 is an argument, not a measurement, and it should be read as one. The retirement
 conditions state the evidence that would end this paper, and the first of them is the
 study I would most like somebody else to run.
+
+## 8. The second mechanism: assembly
+
+Added 2026-08-31. Sections 1 through 7 are about consumption. This one is about
+production, and it arrives at the same place.
+
+The IKEA effect is the finding that people place higher value on things they assembled
+themselves. The part that matters to engineering is not the valuation. It is that the
+sensation of competence produced by assembly is nearly indistinguishable, from the inside,
+from the sensation produced by comprehension. You did real work. The system runs. The
+feeling that arrives is the correct feeling for having understood it, and you did not.
+
+This is the uncomfortable half of the paper. Section 5's remedy was to build instead of
+watch, and building is exactly what this describes. Follow that advice literally, wire
+together six services you never opened, and you arrive at the same deficit by a route that
+feels like effort the whole way. Effort is what makes it hard to see. Having recommended
+the route is what makes it hard to admit.
+
+### 8.1. The shared signature
+
+Both mechanisms deliver knowledge, and both deliver the same two thirds of it.
+
+<table class="rt">
+<thead><tr><th style="width:150px">Knowledge</th><th>Watching supplies it?</th><th>Assembly supplies it?</th></tr></thead>
+<tbody>
+<tr><td class="hd" data-l="Knowledge">What it does</td><td data-l="Watching">Yes, reliably. This is what a demo is for.</td><td data-l="Assembly">Yes. The system runs, so it does something.</td></tr>
+<tr><td class="hd" data-l="Knowledge">How it does it</td><td data-l="Watching">Sometimes, if the presenter chose to show it.</td><td data-l="Assembly">Sometimes, by accident, where a seam had to be forced.</td></tr>
+<tr><td class="hd" data-l="Knowledge">How it fails</td><td data-l="Watching">No. The removal of failure is what makes it watchable.</td><td data-l="Assembly">No. Error paths are not exercised by getting it working.</td></tr>
+</tbody>
+</table>
+
+The third row is the whole argument and it is the same row in both columns. Error paths
+are the least-read code in any system: rarely exercised in development, rarely covered by
+the happy-path tests that assembly produces, rarely present in the example the code was
+modelled on. A demo removes them because they are boring. Assembly skips them because the
+thing already works.
+
+<figure>
+<pre>
+   two doors, one room
+
+   watching  --------+
+                     |
+                     v
+             what it does      [supplied]
+             how it does it    [sometimes]
+             how it fails      [never]
+                     ^
+                     |
+   assembling -------+
+
+   the gap is invisible while the system works,
+   and becomes the entire problem when it stops
+</pre>
+<figcaption>Figure 3. The two mechanisms are opposite in posture and identical in what
+they leave out. That is the reason they are one paper rather than two.</figcaption>
+</figure>
+
+### 8.2. Why they are one argument
+
+These are the same substitution sold at two prices, and the industry shipped both. Watch
+one engineer's week: they consume an architecture on Tuesday, assemble one on Thursday, and
+by Friday hold a confident, sincere and unearned model of a system that has never failed in
+front of them. Both days felt productive. One of them involved a keyboard.
+
+Split them into two problems and you get two wrong remedies. Treat it as a watching
+problem and the prescription is "build more", which is Thursday. Treat it as an assembly
+problem and the prescription is "read what you assembled", which sends people to read
+happy-path code they already understand. One substitution, one narrower remedy: **read the
+error paths**, in what you watched and in what you built. That is the row neither route
+ever fills in, and it is the only row an incident asks about.
+
+### 8.3. What this section borrows
+
+The assembly mechanism is compressed here. It is developed at length in paper 5.2, which
+has the three-kinds-of-knowledge table this section abbreviates, the account of why the
+confidence signal misfires, four practices that address it, and the objection it cannot
+answer, which is that nobody reads their TLS library either. **5.2 remains the authority
+on assembly.** This section states only the part that makes it the same argument as
+Sections 1 through 7, and it does not supersede the paper it draws on.
