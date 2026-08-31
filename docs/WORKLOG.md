@@ -1795,3 +1795,83 @@ row being P23, opened and closed the same day.
 
 **What is next.** Unchanged, and the ordering is unchanged: Web Analytics on the zone still
 fails every post-deploy check, then P17's role string, then T34's Mevrik figures.
+
+---
+
+## Drawn figures, 2026-08-31
+
+**What changed.** The owner asked for the timeline from the plan page on the site itself,
+in place of the ASCII figure. Section 3 of paper 5.15 now carries it as inline SVG, and
+the paper is at `-01` because it was revised in place and says so in its own history.
+
+**Inline SVG is inside every constraint, checked rather than assumed.** It is markup, not
+a fetch, so the CSP's `default-src 'none'` never applies to it. No script, so the
+zero-JavaScript budget is untouched. No `@font-face` and no image request, so the colophon
+stays true. The off-origin count is still zero because the drawing references only
+fragment ids. All four confirmed against the built output rather than reasoned about.
+
+`rfc.css` gains a `.dia` convention, and the frame is shared with `pre` rather than
+duplicated: one border, background and padding definition, two users. That mattered
+because the stylesheet is inlined into every page, so 450 bytes of new CSS is 450 bytes off
+the index budget. Sharing the frame gave 134 of them back.
+
+The drawing scrolls inside its frame on a narrow screen exactly as `pre` does, instead of
+scaling the labels down until they cannot be read. That is the one thing the ASCII figure
+was better at, so it was kept.
+
+The proportional bar chart that sat beside the ASCII figure is dropped. The drawing carries
+the proportions itself and the axis carries the day counts, so keeping both would have said
+the same thing twice.
+
+**The accessibility result is the part worth reading.**
+
+pa11y reported **14 errors per colour scheme**, all `color-contrast`, all on the new SVG
+text. Running axe directly gave the real picture: **0 violations and 14 incomplete**, every
+one with `contrastRatio: 0` and a message key of `imgNode` or `bgOverlap`. axe cannot
+resolve the backdrop of a text node inside an `<svg>`, so it declines to judge. pa11y maps
+`incomplete` onto `error`.
+
+So the tool was being honest and the report was misleading, and there were two wrong
+answers available. Counting them as defects would have meant redesigning around a
+measurement that was never taken. Silencing them would have left the property unchecked
+behind a green tick, which is the failure mode paper 5.15 section 7 is about.
+
+**The contrast was computed instead.** `scripts/check-contrast.mjs` parses the colour
+tokens out of `rfc.css`, rather than restating them, and asserts every text-and-ground pair
+the drawn figures use, in both schemes, against 4.5:1. All fourteen pairs pass. The
+tightest was `dim` on the window fill at **4.58:1**, which passes with almost no margin, so
+the fill opacity moved from .13 to .09 and it is now **4.85:1** light and **5.06:1** dark.
+That change was made because the number was thin, not because anything failed.
+
+`check-a11y.mjs` now separates those undecided results, prints them with a count on every
+line, and names the check that covers them. It does not hide them and it does not fail on
+them.
+
+**What was validated and how.**
+
+The figure was rendered and looked at, in both colour schemes, at 2x, rather than assumed
+to work from the source. Both screenshots read correctly.
+
+pa11y rerun with the new classification: **0 real errors in both schemes, 28 undecided**,
+all inside the SVG and all covered numerically.
+
+**Both new checks were proven to fail before they were trusted.** `check-contrast.mjs` with
+`--dim` set to a washed-out grey gives exit 1 naming the two pairs and their ratios;
+restored, exit 0. This follows the same rule applied to `check-social.mjs` earlier today: a
+check that has only ever passed has not been tested.
+
+`astro check` 0 errors. Index 59,046 of 60,000, up 318 bytes for the shared-frame CSS, 954
+free. CSS 10,495 of 12,000. Links 27 pages, 0 broken. Errata 0 claims changed: the paper's
+confidence and state did not move, only its figure. Card and document agree. Placeholders
+16 open of 24.
+
+**The index budget is now under a kilobyte of headroom.** It has been called out twice
+already today and it is now the tightest constraint in the repository. The next thing added
+to that page needs a plan for it first, and the plan is probably to move something out of
+the index rather than to raise the limit.
+
+**What is deployed.** Pushed after this entry; the result is recorded below rather than
+assumed.
+
+**What is next.** Unchanged. Web Analytics on the zone still fails every post-deploy check
+and still needs the dashboard.
