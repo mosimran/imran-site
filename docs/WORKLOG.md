@@ -1993,3 +1993,84 @@ It was left because the request named 5.16 and it is published prose from a year
 
 **Web Analytics on the zone** still fails every post-deploy check and still needs the
 dashboard.
+
+---
+
+## Six papers from the Dispatch archive, 2026-09-01
+
+**What changed.** Section 5 goes from 17 papers to 23. All six were drawn from recurring
+arguments in the 121 Personal-brand rows of the Dispatch Content database, and every figure
+in them was checked against the underlying source by web search before it was written down.
+
+
+
+- **5.18 The Harness Is Half the Solver.** Same weights, 28 percent to 49 on a harness
+  change. Sydney Lewis, arXiv 2608.26218.
+- **5.19 The Judge Is Grading Prose.** Rewriting only an agent's narration inflated judge
+  false positives by up to 90 percent across 800 trajectories.
+- **5.20 How to Read a Benchmark Number.** OpenAI's own audit found flawed tests in 59.4
+  percent of the SWE-bench Verified problems it sampled, and stopped reporting against it.
+- **5.21 An Agent Transcript Is Not a Log.** METR and Redwood, roughly 7 percent of about
+  1,300 transcripts spoofed and at least 20 percent of agents wanting to.
+- **5.22 You Pinned the Version, Not the Terms.** Three vendor changes from one fortnight,
+  none of which produces a diff.
+- **5.23 Measured at Concurrency One.** A 54 percent gain at one request becomes 14.9 percent
+  at eight, and speculative decoding can invert entirely under load.
+
+**Sourcing was the actual work, and it changed the content.** The Dispatch rows carry no
+source links, so each load-bearing figure had to be found again. Three claims did not
+survive that and were dropped rather than softened: a study on verifier banners that does not
+surface anywhere, a cache-sharing measurement between model resellers, and an agent status
+file that grew to 49 million bytes. Each would have been a good illustration. None of them
+could be shown to exist.
+
+One claim survived in a different form. The Dispatch row for the manager-scaffold study gave
+figures that do not appear in the published paper, so 5.18 quotes the paper's own table
+instead: 63.0 to 86.4 for one model, minus one to minus nine for another. The argument is
+unchanged and the numbers are now the ones somebody published.
+
+Two findings turned out stronger than the posts that pointed at them. OpenAI did not merely
+have a benchmark criticised, it audited the benchmark and withdrew from it, which is a better
+source than any critic. And METR's report contains the agents' own reasoning about what they
+could and could not falsify, which turned 5.21 from a warning into an architecture argument:
+the record held because it was collected where the agents had no write path.
+
+**Diagrams.** Every paper carries at least one, six inline SVGs total, using the `.dia`
+convention added in T32b. No script, no image request, no webfont.
+
+**What was validated and how.**
+
+Every figure traced to a primary or near-primary source before use: arXiv abstracts fetched
+directly for 2608.26218 and 2601.14691, the METR investigation post read in full, OpenAI's
+own SWE-bench withdrawal, the Assistants API shutdown terms, the Cursor supply notice, and
+the GitHub retention changelog.
+
+**The house style was checked mechanically, and it caught fifteen defects in my own drafts.**
+Zero em dashes across all six. A sweep for the two-beat construction the author flagged on
+2026-08-31, a claim immediately negated and reversed, found fifteen genuine instances and
+each was rewritten as a direct statement. The remaining matches are plain negations and the
+"what this paper does not claim" section convention that the existing papers already use.
+
+**A static check on the figures found two real bugs.** Two SVG classes, `.r` and `.bs`, were
+used and never defined, so those marks were silently falling back to plain ink. `.dia .r` is
+now defined against the flag token, `.bs` is removed, and `check-contrast.mjs` was extended
+to cover the flag colour: 6.68:1 on the sheet in dark, 8.35:1 in light. A verification that
+only ever confirms what you intended is not a verification, and this one disagreed with me
+twice.
+
+**The share card check earned its keep.** Adding the Appendix A row moved the index to `-06`
+and `check-social.mjs` failed the build, exactly as designed, because the committed card
+still said `-05`. Regenerated.
+
+`astro check` 0 errors. Index 59,588 of 60,000. CSS 10,520 of 12,000. Links 27 pages, 0
+broken, 0 prototype anchors lost. Errata 0 claims changed, correct because six new papers
+contradict nothing published. Complete index reports 23 papers, 1 retracted.
+
+**The index budget is at 412 bytes.** The Appendix A entry was cut back once already to get
+there. Section 7's eight errata rows remain the obvious place to recover kilobytes and that
+work still needs agreeing, because it edits published prose.
+
+**What is deployed.** Nothing yet. Local build is clean and this entry precedes the push.
+
+**What is next.** The role string in the masthead, P17, still owner-blocked. Web Analytics on
+the zone still fails every post-deploy check.

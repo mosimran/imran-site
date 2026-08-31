@@ -15,7 +15,7 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 // Appendix A, newest first. The identifier's version suffix is history.length - 1,
 // so this array is the single source for both. Add a row to Appendix A and the
 // masthead follows; there is no number to remember to bump.
-const history = ['2026-08-31', '2026-08-14', '2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
+const history = ['2026-09-01', '2026-08-31', '2026-08-14', '2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
 const revised = new Date(history[0])
 const ident = identifier('systems-and-arguments', history.length)
 const expires = expiresOn(revised)
@@ -673,6 +673,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
       <tbody>
+      <tr><td class="hd n" data-l="Date">2026-09-01</td><td data-l="Change">Section 5 gains six papers, 5.18 through 5.23. Every figure in them is sourced to published work.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-31</td><td data-l="Change">Paper 5.1 retitled and expanded with a second mechanism, erratum 7.8. Section 5 gains 5.15 and 5.16 on SOC 2, both drafts. Section 3 gains 3.6, unwritten because no figures were supplied. Tenure corrected from eleven years to over fifteen, erratum 7.7.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-14</td><td data-l="Change">Thirteen entries in Section 5 that carried a title and no text now carry a body, figures and retirement conditions. Paper 5.1 completed. The retracted 5.10 has its original text restored, struck through. Confidence values unchanged throughout. See erratum 7.5.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-13</td><td data-l="Change">Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.</td></tr>
