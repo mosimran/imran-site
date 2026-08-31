@@ -161,10 +161,25 @@ td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:
 
 /* ---------- ascii figures ---------- */
 figure{margin:18px 0;max-width:100%}
-pre{font-family:var(--mono);font-size:clamp(10.5px,2.9vw,12.5px);line-height:1.5;
-    background:var(--sheet);border:1px solid var(--rule);border-radius:2px;
+pre,.dia{background:var(--sheet);border:1px solid var(--rule);border-radius:2px;
     padding:14px 16px;overflow-x:auto;margin:0;-webkit-overflow-scrolling:touch}
+pre{font-family:var(--mono);font-size:clamp(10.5px,2.9vw,12.5px);line-height:1.5}
 figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em}
+
+/* ---------- drawn figures ----------
+   Inline SVG, on the same budget as the ASCII ones: no script, no image
+   request and no font. It is markup rather than a fetch, so the CSP's
+   default-src 'none' never comes into it. Every colour is a token, so the
+   drawing follows both schemes, and the frame scrolls on a narrow screen
+   exactly as <pre> does rather than shrinking the labels out of legibility. */
+.dia svg{display:block;min-width:600px;width:100%;height:auto;color:var(--ink)}
+.dia text{font-family:var(--mono);fill:currentColor}
+.dia .d{fill:var(--dim)}
+.dia .a{fill:var(--accent)}
+.dia .w{fill:var(--warn)}
+.dia .sa{stroke:var(--accent)}
+.dia .sd{stroke:var(--dim)}
+.dia .ab{fill:var(--accent);fill-opacity:.09}
 
 /* ---------- paper bodies ----------
    Markdown output lands inside .ind.prose, so it inherits the text face. The

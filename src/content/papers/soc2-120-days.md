@@ -13,6 +13,7 @@ retires:
   - "Evidence that the exceptions section of a Type II report is not read during enterprise procurement, which would make the failure mode in Section 7 cosmetic."
   - "My own first attempt at this schedule slipping for a reason not listed in Section 5. The plan is falsified by the thing it did not anticipate, not by the things it did."
 history:
+  - { date: 2026-08-31, note: "Section 3 redrawn. The timeline is now a drawn figure rather than an ASCII one, and the proportional bar chart beside it is dropped because the drawing carries the proportions itself. Section 1 gained the envelope table and section 8 was corrected on the author's own evidence. No claim and no confidence value moved.", confidenceAfter: 0.65 }
   - { date: 2026-08-31, note: "First publication. Written as a plan rather than a postmortem, and the abstract says so. Confidence set at 0.65 because the adjacent work is mine and the report is not yet.", confidenceAfter: 0.65 }
 seeAlso: ["5.16", "5.13", "5.4"]
 ---
@@ -94,39 +95,39 @@ It does not close an enterprise security review, because the reviewer's question
 ## 3. The arithmetic
 
 <figure>
-<pre>
-                     window opens. nothing after this is backfill.
-                     open it before the controls are perfect.
-                     |
- day 0               v 30                                    120        ~145
-  |-------------------|--------------------------------------|----------|
-  [ readiness         ][ observation window, 90 days          ][ report  ]
-  [ compressible      ][ elapsed time. no engineering         ][ the     ]
-  [ down to weeks     ][ shortens it. this is the schedule.   ][ firm's  ]
-  [                   ][                                      ][ calendar]
-  |                    |                        |             |
-  |                    Type I possible          fieldwork      window
-  |                    from here                starts here    closes
-  |                                             (inside it,
-  |                                              not after)
-  +-- long poles live here, and neither is technical:
-      audit firm capacity, and the risk assessment
-</pre>
-<figcaption>Figure 1. Three segments, one of which cannot move. Everything left of day 30
-is procurement and configuration. Everything right of day 120 belongs to the audit firm.
-The middle is elapsed time.</figcaption>
-</figure>
-
-<div class="mtr">
-<div class="r"><span class="k">Readiness</span><span class="b"><i style="width:21%"></i></span><span class="v">30 days</span></div>
-<div class="r"><span class="k">Observation window</span><span class="b"><i class="f" style="width:62%"></i></span><span class="v">90 days</span></div>
-<div class="r"><span class="k">Report issuance</span><span class="b"><i style="width:17%"></i></span><span class="v">~25 days</span></div>
+<div class="dia">
+<svg viewBox="0 0 640 208" role="img" aria-label="A 120 day SOC 2 timeline in three segments. Day 0 to day 30 is readiness work and is compressible. Day 30 to day 120 is the observation window, ninety days, which no amount of engineering shortens. The signed report follows around day 145 on the audit firm's calendar. Fieldwork runs inside the window rather than after it, and both long poles, audit firm capacity and the risk assessment, sit in the readiness segment.">
+<defs>
+<marker id="dfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker>
+<pattern id="dfh" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="1.4" opacity=".24"/></pattern>
+</defs>
+<text class="w" x="28" y="15" font-size="9" letter-spacing=".9">LONG POLES: AUDIT FIRM CAPACITY &#183; THE RISK ASSESSMENT</text>
+<text class="a" x="162" y="39" font-size="11.5" font-weight="600">Window opens. Nothing after this is backfill.</text>
+<text class="d" x="162" y="54" font-size="9.5">Open it before the controls are perfect.</text>
+<line class="sa" x1="151" y1="60" x2="151" y2="78" stroke-width="1.25"/>
+<circle class="a" cx="151" cy="60" r="2.75"/>
+<rect x="28" y="78" width="123" height="48" rx="2" fill="url(#dfh)" stroke="currentColor" stroke-width="1.25"/>
+<text x="89" y="100" font-size="11" text-anchor="middle">readiness</text>
+<text class="d" x="89" y="115" font-size="9.5" text-anchor="middle">compressible</text>
+<rect class="ab sa" x="151" y="78" width="370" height="48" rx="2" stroke-width="1.5"/>
+<text class="a" x="336" y="99" font-size="12" font-weight="600" text-anchor="middle">observation window &#183; 90 days</text>
+<text class="d" x="336" y="115" font-size="9.5" text-anchor="middle">elapsed time, not work. Nothing shortens it.</text>
+<rect x="521" y="78" width="103" height="48" rx="2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
+<text x="572" y="100" font-size="9.5" text-anchor="middle">report issued</text>
+<text class="d" x="572" y="115" font-size="9.5" text-anchor="middle">~25 days</text>
+<line class="sd" x1="28" y1="142" x2="624" y2="142" stroke-width="1"/>
+<g class="sd" stroke-width="1"><line x1="28" y1="137" x2="28" y2="147"/><line x1="151" y1="137" x2="151" y2="147"/><line x1="521" y1="137" x2="521" y2="147"/><line x1="624" y1="137" x2="624" y2="147"/></g>
+<g class="d" font-size="9.5"><text x="28" y="161">day 0</text><text x="151" y="161" text-anchor="middle">30</text><text x="521" y="161" text-anchor="middle">120</text><text x="624" y="161" text-anchor="end">~145</text></g>
+<line class="sd" x1="398" y1="147" x2="398" y2="177" stroke-width="1"/>
+<line class="sd" x1="398" y1="177" x2="512" y2="177" stroke-width="1.25" marker-end="url(#dfa)"/>
+<text class="d" x="624" y="197" font-size="9.5" text-anchor="end">fieldwork runs inside the window, not after it</text>
+</svg>
 </div>
-
-<p class="dim">Figure 2. The same 145 days by proportion. The barred segment is the one
-you cannot buy, negotiate or engineer your way out of, and it is the majority of the
-schedule. Every plan that treats the programme as a work item rather than a duration is
-budgeting for the two segments either side of it.</p>
+<figcaption>Figure 1. The only irreducible segment is the ninety days in the middle, and it
+is the majority of the schedule. Everything left of day 30 is procurement and
+configuration, both compressible. Everything right of day 120 belongs to the audit firm.
+Most plans that slip do so on the two long poles, and neither of them is engineering.</figcaption>
+</figure>
 
 The window is the schedule. Once that is understood, the plan writes itself backwards: the
 only question that matters in week one is what has to be true on day 30, because the day 30

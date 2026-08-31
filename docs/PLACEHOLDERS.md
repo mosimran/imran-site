@@ -161,6 +161,17 @@ does not.
   the stamp and the document disagree. The failure path was proven before the fix was
   trusted.
 
+- [x] **P24** axe cannot judge contrast for text inside inline SVG
+  <br>`scripts/check-a11y.mjs`, `scripts/check-contrast.mjs`. The drawn figure added to
+  paper 5.15 produced 14 pa11y errors per colour scheme. axe itself reported **0 violations
+  and 14 incomplete** with `contrastRatio: 0`: it cannot resolve the backdrop of an SVG
+  text node, so it declines to judge, and pa11y surfaces that as an error. Counting it as a
+  defect would be as wrong as silencing it. The a11y gate now separates and prints those
+  results instead of failing on them, and `check-contrast.mjs` asserts the real ratios by
+  parsing the tokens out of the stylesheet. Every pair passes AA in both schemes; the
+  window fill opacity moved from .13 to .09 to lift the tightest pair from 4.58:1 to
+  4.85:1. Both the check and its failure path were run before it was trusted.
+
 ## Low
 
 - [ ] **P12** Confidence values on all 14 papers
