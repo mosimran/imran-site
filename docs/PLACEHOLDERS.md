@@ -68,6 +68,8 @@ of the site, where nothing is deleted.
   figure and retirement conditions, written 2026-08-14 and recorded in erratum 7.5.
   Implementation notes 3.1, 3.3, 3.4 and 3.5 still carry front matter only; note 3.2 has
   a full body. Nothing is invented to fill the remaining four.
+  <br>**2026-08-31: now 5 of 22.** Papers 5.15 and 5.16 arrived with full bodies;
+  implementation note 3.6 arrived without one, for the reason recorded at P22.
 
 - [ ] **P20** Publication dates and revision histories on papers 5.2 through 5.14
   <br>`src/content/papers/*`. The `published` dates and the pre-2026-08-14 history rows
@@ -83,26 +85,72 @@ Found when the résumé PDF was checked before upload, 2026-08-13. The site carr
 prototype's illustrative biography; the CV carries the real one. Both are handed to the
 same reader, so they cannot disagree.
 
-- [ ] **P15** Location: site says "Dhaka, Bangladesh (UTC+6)", CV says Kuala Lumpur
+Rechecked 2026-08-31 against the current résumé and covering letter, which are not the
+documents this section was first written against. Three of the four rows changed. The
+old reading stays on each row: this file does not delete, for the same reason Section 7
+does not.
+
+- [x] **P15** Location: site says "Dhaka, Bangladesh (UTC+6)", CV says Kuala Lumpur
   <br>`index §14`, masthead, `llms.txt`, `security.txt` languages, the OG card.
   The timezone claim about overlapping with CET mornings and US Pacific evenings is
   computed from the wrong city.
+  <br>**Closed 2026-08-31, by the CV changing rather than the site.** The current résumé
+  and covering letter both say Dhaka, Bangladesh, and the letter says so twice. The site
+  was right. UTC+6 and the overlap claim stand as published.
 
-- [ ] **P16** Tenure: site says "Eleven years of production engineering", CV says 15+
+- [x] **P16** Tenure: site says "Eleven years of production engineering", CV says 15+
   <br>`index` abstract.
+  <br>**2026-08-31: the gap grew.** The current résumé opens with "seventeen years", so the
+  two documents are now six years apart rather than four. Only the owner knows which number
+  is the stale one. Moving it changes a published claim and needs erratum 7.7.
+  <br>**Closed 2026-08-31 by the author.** Eleven was wrong; the career spans fifteen years
+  and more. The abstract now reads "Over fifteen years of production engineering", which is
+  true and does not contradict the résumé's seventeen. Recorded as erratum 7.7.
 
 - [ ] **P17** Title: site says "Lead Solutions Architect", CV says "Senior AI Engineering
   and Delivery Leader"
   <br>masthead, `index §14`, `llms.txt`, the OG card, the email signature.
+  <br>**2026-08-31: the CV's title changed again.** It now reads "Chief Technology Officer"
+  in the header and "Head of Engineering and Delivery, 2022 to present" in the experience
+  section, which are a positioning statement and a job title respectively. The site carries
+  a third string. Six published places, one erratum, owner's call.
+  <br>**Still open after the 2026-08-31 pass.** The tenure figure beside it was corrected
+  that day and this one was not, because only the tenure correction was supplied. Erratum
+  7.7 says so on its own face rather than leaving the omission to be noticed.
 
 - [ ] **P18** Employer and scale: CV names Mevrik (UK) and ~3M conversations per month;
   site §3.1 claims 40M events/day and §3.2 claims 3.1M calls/day
   <br>Different units, so not necessarily a contradiction, but they read as one.
+  <br>**2026-08-31: unchanged and still unreconciled.** The current résumé keeps three
+  million conversations a month, adds 99.9 percent availability and mean time to recovery
+  under thirty minutes, neither of which appears on the site. Note 3.1 is the place to
+  reconcile all of it at once, and that is a P08 job.
+
+## Compliance thread, opened 2026-08-31
+
+- [ ] **P21** Confidence values on papers 5.15 and 5.16
+  <br>`src/content/papers/soc2-120-days.md`, `soc2-scope-hack.md`. Set to 0.65 and 0.60 by
+  the drafter, which is a category error: a confidence value is the author's credence and
+  nobody else can hold it for him. Both are low enough that the schema classes them as
+  drafts, so nothing is overclaimed while this row is open. Owner to confirm or move.
+  <br>**2026-08-31, later the same day:** section 8 of 5.15 was strengthened by the author,
+  who has worked on compliance alongside partner organisations holding signed Type II
+  reports. The evidence base under the paper is therefore wider than it was when 0.65 was
+  set, and 0.65 was deliberately left unmoved: a confidence value is the author's to raise,
+  not the drafter's. This row is now the reason the number may be too low rather than too
+  high.
+
+- [ ] **P22** Measurements and failure modes for implementation 3.6
+  <br>`src/content/impl/compliance-evidence.md`. The note is `unwritten` because the
+  résumé supplies the frameworks and none of the numbers. It stays unwritten until an audit
+  programme produces figures that would survive an interview. Nothing is invented to fill
+  the row.
 
 ## Low
 
 - [ ] **P12** Confidence values on all 14 papers
-  <br>Currently illustrative. They are the site's central claim about itself, so they
+  <br>Currently illustrative. Sixteen papers as of 2026-08-31; the two added that day are
+  tracked separately at P21 because they were never illustrative, only unconfirmed. They are the site's central claim about itself, so they
   want a deliberate pass.
 
 - [ ] **P13** Acknowledgement to the operations engineer in Chattogram

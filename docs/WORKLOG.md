@@ -1532,3 +1532,168 @@ and 0 claims changed.
 **What is next.** Turn off Web Analytics on the `mosthofaimran.com` zone, then rerun
 `npm run live`. After that, a defensible LCP budget and the print check, both of which
 are the author's calls. T20 stays partial and now says exactly which two things are open.
+
+---
+
+## T32, the compliance thread, 2026-08-31
+
+**What changed.** The résumé and covering letter were read against the site and compared
+line by line. Both documents lead on ISO 27001, SOC 2, GDPR and BNM RMiT. The site
+mentioned none of it anywhere across fourteen papers, five implementation notes and a
+fourteen-section index. That gap is now closed in three places, and closed differently
+in each, because the site holds three different evidence standards.
+
+Paper 5.15, `draft-imran-soc2-120-days-00`, is the requested specification: what a SOC 2
+Type II programme's schedule is actually constrained by, why the answer is the
+observation window rather than the engineering, what a Vanta-class platform automates and
+what it provably does not, a day-banded schedule with the two long poles marked, eight
+normative rules and a named failure mode. Confidence 0.65, state draft.
+
+Paper 5.16, `draft-imran-soc2-scope-hack-00`, is the requested startup piece. The honest
+version of a hack: three shortcuts that operate on evidence and fail in the exceptions
+section, eight scope decisions that legitimately compress the work, the buy-the-boring-
+thing argument, and separation of duties when there are four engineers. Confidence 0.60,
+state draft.
+
+Implementation note 3.6 ships `unwritten`. The compliance record is a system, Section 3
+admits a system only with the numbers it produced and a named failure mode, and the
+résumé supplies frameworks and no figures. Inventing an audit statistic to fill that row
+would break the exact thing both new papers argue for, so the page says what is missing
+instead. Registered as P22.
+
+Three decisions on record, all in [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.md).
+
+A new top-level "Section 15, Compliance" was considered and rejected: Section 14 is the
+author's address and the appendices follow it, so a new numbered section forces a
+renumber, and a renumber breaks `#s14` and every other published anchor against a hard
+constraint. Appending to Sections 3 and 5 breaks nothing.
+
+The 120-day claim was checked against the covering letter, which says two quarters to ISO
+27001 and SOC 2 is aggressive but achievable. Those are different scopes and the numbers
+are consistent, but a reader holding both would find the seam, so section 1 of the paper
+states the relationship rather than leaving it to be found.
+
+Section 8 of 5.15 says on the page that the author has not personally carried an
+organisation to a signed Type II report. It would have been easy to leave that out. It is
+the sentence that makes the other 0.65 mean anything.
+
+**What was validated and how.**
+
+`astro check` 0 errors, 0 warnings across 37 files. The schema did its job on the way in:
+both papers carry retirement conditions and revision history because a paper without them
+does not build, and both sit at or below 0.7 because a draft above that is refused.
+
+Budgets green. The index grew by the 3.6 row and the Appendix A row and now sits at
+**58,169 bytes of 60,000**, which is 1,831 bytes of headroom and is the tightest this has
+been. It is not a failure and it is the next thing that will become one. Zero scripts,
+zero off-origin references, zero emitted JS, all unchanged.
+
+Links: 27 pages scanned, 0 broken internal links, 0 prototype anchors lost.
+
+Errata gate: **0 claims changed**, which is the correct result and worth stating. New
+papers contradict nothing already published, so no erratum is owed. The rows that do owe
+one, P16 and P17, were deliberately left alone and are T33.
+
+Expiry: 16 documents, 0 expired, 0 within 30 days.
+
+Identifiers computed rather than typed, and verified in `dist`: the index moved to
+`draft-imran-systems-and-arguments-05` because Appendix A gained a row, and both papers
+came out at `-00`. The complete index reports 16 papers, 1 retracted, from the collection.
+
+pa11y was run and reports 0 WCAG2AA errors over 12 route-and-scheme combinations, **but
+it runs against the live origin and the two new pages are not there yet**. So that pass
+does not cover them. They use only markup already proven on `/papers/competence-porn/`,
+which is checked, and they get a real check after deploy. Recording this rather than
+letting a green line stand for something it did not measure.
+
+**What is deployed.** Nothing yet. The build is clean locally and the working tree is
+uncommitted. This entry is written before the push, not after it, and the deploy line
+gets amended when CI is green.
+
+**What is next.** T33, the biography alignment, and it is blocked on the owner rather
+than on work. The site says eleven years and Lead Solutions Architect; the current résumé
+says seventeen years and Chief Technology Officer, having previously said fifteen and
+something else again. Those strings are published in six places and moving them is a
+Section 7 event needing erratum 7.7. Which one is stale is not a drafting call.
+
+P15 closed in passing, and closed the honest way: the site said Dhaka, the old résumé
+said Kuala Lumpur, the current one says Dhaka. The site was right and the ledger now says
+so.
+
+---
+
+## T32 amended and T33 partial, 2026-08-31
+
+**What changed.** Four corrections from the owner, applied the same day the papers were
+drafted and before anything was pushed.
+
+**The two-quarter envelope, chosen over the seam.** Paper 5.15 section 1 previously
+acknowledged that the covering letter says two quarters to ISO 27001 and SOC 2 while the
+paper says 120 days, and left it at that. It now carries a two-row table showing the
+outer number (~180 days, both frameworks) and the inner number (120 days, SOC 2 alone)
+as one nested claim. The outer figure is the one that goes in writing to an employer; the
+inner one is what the SOC 2 half of it costs. A schedule that cannot be decomposed is a
+schedule nobody can hold you to, and that sentence is now the point of the section rather
+than an apology for a discrepancy.
+
+**Section 8 reframed on the owner's correction.** It said he had not personally carried an
+organisation to a signed Type II report. He has worked on compliance alongside partner
+organisations that hold signed Type II reports, which is where the specifics in sections 4
+through 7 come from, and the old sentence undersold that. The new text draws the line where
+his own words drew it: he has worked inside a Type II estate and contributed as a partner,
+which is not the same as having owned the scope, the control owners and the opinion letter.
+Both halves are printed, because the paper's argument depends on the reader being able to
+weigh the evidence behind it.
+
+**Confidence deliberately not moved.** The evidence base under 5.15 is wider than it was
+when 0.65 was set, so 0.65 may now be too low. It stays until the author raises it. A
+confidence value is his credence and the drafter cannot hold it for him. P21 now records
+that the number is more likely under-set than over-set, which is the safer direction.
+
+**The time framing implemented on the site.** The owner picked the timeline treatment from
+the plan page, so 5.15 section 3 now carries it in the site's own idiom rather than as an
+imported graphic: an annotated ASCII figure marking the window opening, the point where
+backfill stops being possible, fieldwork running inside the window rather than after it,
+and both long poles sitting in the compressible segment where neither of them is
+technical. A second figure repeats the same 145 days as proportional bars using the
+existing `.mtr` component, so the reader can see that the immovable segment is the
+majority of the schedule. No script, no image request, no font, consistent with the rest
+of Section 5.
+
+**Tenure corrected, title not.** The abstract said "Eleven years of production
+engineering" from first publication. The author confirms fifteen years and more, so it now
+reads "Over fifteen years", which is true and does not contradict the résumé's seventeen.
+P16 closes. **P17, the role string, was not supplied and was not invented.** Erratum 7.7
+says on its own face that one of the two known defects in that pair was corrected and the
+other was not, because an erratum that quietly repairs half a problem is the shape of
+thing this site exists to avoid. T33 goes to partial rather than done.
+
+**What was validated and how.**
+
+`astro check` 0 errors, 0 warnings, 4 hints across 37 files.
+
+**The index budget moved twice and is the thing to watch.** Adding the 7.7 row took it to
+59,001 of 60,000, leaving 999 bytes. That is too little to be comfortable, so the row's
+detail was cut back to a summary with a link to `/errata/#e7-7`, where the full entry
+already lived. **58,728 of 60,000 now, 1,272 bytes free.** The index is a summary and the
+errata page is the record; the trim enforces that rather than working around a limit. The
+next thing added to this page needs a budget plan before it is written, not after.
+
+Links: 27 pages, 0 broken, 0 prototype anchors lost. The new `#e7-7` fragment resolves
+against the generated errata page, which builds its ids from the section number.
+
+Errata gate: 0 claims changed, 2 errata present that were not in the base. No paper
+front matter moved, so nothing was owed and 7.7 was added because the site's rule required
+it rather than because a script demanded it.
+
+Expiry: 16 documents, 0 expired, 0 within 30 days.
+
+Placeholder ledger: 16 open of 22, down from 17. P16 closed, P15 closed earlier today,
+P17 and P21 annotated with what changed and what did not.
+
+**What is deployed.** Pushed and deployed at the end of this entry; the deploy line is
+confirmed below rather than predicted.
+
+**What is next.** T33's remaining half, the role string, and it is still owner-blocked.
+Then T34, the Mevrik figures. The index byte budget is now the standing constraint on
+both.
