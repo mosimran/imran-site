@@ -1720,3 +1720,78 @@ recorded before the deploy is now closed rather than left standing.
 every future deploy, so it outranks the content work. After it: T33's remaining half, the
 role string, still owner-blocked, then T34's Mevrik figures. The index byte budget is the
 standing constraint on both.
+
+---
+
+## Masthead validation, 2026-08-31
+
+**What changed.** The owner asked whether the masthead contradicted itself, pointing at
+`Expires: 4 March 2027` on the left and `August 2026` on the right.
+
+**It does not.** They are two different fields of the Internet-Draft masthead. The right
+column's last line is the document's date, the month of this revision. The left column's
+`Expires` is that date plus 185 days. Revised 2026-08-31, so August 2026 and 4 March 2027,
+and both were correct as displayed. Verified by recomputing the arithmetic rather than by
+reading the code and agreeing with it.
+
+**The question found two real defects anyway, and the second one was live.**
+
+**One. The document date was typed, not derived.** `August 2026` was a string literal in
+`index.astro` sitting next to an `Expires` line computed from `history[0]`. Same fact, two
+sources, one of them manual. It was right today and would have been silently wrong the
+first time the document was revised in September. `draft.ts` gains `fmtMonth` beside the
+existing `fmt`, and the masthead now derives both halves from the same date. The rendered
+output is byte-identical, so nothing published changed and no erratum is owed.
+
+**Two. The share card said `-03` while the document said `-05`.** The identifier was typed
+into `scripts/make-social.mjs`, which is hand-run rather than part of the build because it
+renders through macOS system fonts. Nobody reran it. The committed card has been telling
+every link preview, every WhatsApp share and every social embed that this document is at
+its third revision since it reached its fourth. It was verified by opening the committed
+JPEG and reading it, not by trusting the script.
+
+This is worse than the first defect because the card is the first thing most readers see
+and it is the one surface where nothing on the page can correct it.
+
+Both are now derived. The generator reads the identifier out of `dist/index.html`, which
+makes the card structurally unable to disagree with the page it advertises, and refuses to
+run if there is no build to read.
+
+**A hand-run step that nobody reruns is a claim that goes stale**, so deriving it was not
+enough on its own. `make-social.mjs` stamps the identifier it used into
+`scripts/og-cover.id`, and a new `scripts/check-social.mjs` compares that stamp against the
+built page and fails the build when they differ. Wired into `npm run check`, so it runs on
+every PR.
+
+**A third thing, which is a correction to this log.** The entry above claimed the role
+string was published in "six places". Counted mechanically it is **eight**: the masthead,
+the §14 Role row, the meta description, `og:image:alt`, `twitter:image:alt`, `jobTitle` in
+the JSON-LD, `llms.txt`, and the text baked into the share card. The number was written
+from memory. P17 now carries the enumerated list so the next person does not have to
+recount, and the card is the entry that needs a regeneration rather than an edit.
+
+**What was validated and how.**
+
+The masthead arithmetic recomputed independently: 2026-08-31 plus 185 days is 2027-03-04,
+which formats as 4 March 2027. Document month August 2026.
+
+The rendered masthead re-extracted from `dist/index.html` after the change: `August 2026`
+and `4 March 2027`, unchanged, confirming the derivation reproduces what was published
+rather than quietly altering it.
+
+The regenerated card opened and read: it now shows
+`draft-imran-systems-and-arguments-05`. It still shows "Lead Solutions Architect", which is
+P17 and was deliberately not touched.
+
+**The new check was proven to fail before it was trusted.** The stamp was set to `-03` by
+hand: exit code 1 with both identifiers named in the message. Restored: exit code 0. A
+check that has only ever passed has not been tested.
+
+`astro check` 0 errors. Budgets green, index unchanged at 58,728 of 60,000. Links 27 pages,
+0 broken. Errata 0 claims changed. Expiry 0 expired. Placeholders 16 open of 23, the new
+row being P23, opened and closed the same day.
+
+**What is deployed.** Pushed after this entry; result recorded below rather than assumed.
+
+**What is next.** Unchanged, and the ordering is unchanged: Web Analytics on the zone still
+fails every post-deploy check, then P17's role string, then T34's Mevrik figures.

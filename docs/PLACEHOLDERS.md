@@ -113,7 +113,12 @@ does not.
   <br>**2026-08-31: the CV's title changed again.** It now reads "Chief Technology Officer"
   in the header and "Head of Engineering and Delivery, 2022 to present" in the experience
   section, which are a positioning statement and a job title respectively. The site carries
-  a third string. Six published places, one erratum, owner's call.
+  a third string. One erratum, owner's call.
+  <br>**Corrected 2026-08-31: eight places, not six.** Counted mechanically rather than from
+  memory. `index.astro` masthead, `index.astro` §14 Role row, the meta description, the
+  `og:image:alt`, the `twitter:image:alt`, `lib/ld.ts` `jobTitle` in the JSON-LD,
+  `llms.txt.ts`, and the text baked into the share card by `scripts/make-social.mjs`. The
+  card is the one that needs a regeneration rather than an edit.
   <br>**Still open after the 2026-08-31 pass.** The tenure figure beside it was corrected
   that day and this one was not, because only the tenure correction was supplied. Erratum
   7.7 says so on its own face rather than leaving the omission to be noticed.
@@ -145,6 +150,16 @@ does not.
   résumé supplies the frameworks and none of the numbers. It stays unwritten until an audit
   programme produces figures that would survive an interview. Nothing is invented to fill
   the row.
+
+- [x] **P23** The share card's draft identifier drifted from the document's
+  <br>`public/og-cover.jpg`, `public/og-cover.webp`, `scripts/make-social.mjs`. The card
+  carried `draft-imran-systems-and-arguments-03` while the document had reached `-05`. The
+  identifier was typed into the card generator instead of derived, and the generator is
+  hand-run because it needs macOS system fonts. Found on 2026-08-31 while validating the
+  masthead. Closed the same day: the generator now reads the identifier out of
+  `dist/index.html`, stamps what it used, and `scripts/check-social.mjs` fails the build if
+  the stamp and the document disagree. The failure path was proven before the fix was
+  trusted.
 
 ## Low
 
