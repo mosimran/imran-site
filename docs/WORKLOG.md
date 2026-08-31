@@ -1870,8 +1870,21 @@ already today and it is now the tightest constraint in the repository. The next 
 to that page needs a plan for it first, and the plan is probably to move something out of
 the index rather than to raise the limit.
 
-**What is deployed.** Pushed after this entry; the result is recorded below rather than
-assumed.
+**What is deployed.** All of it, and **the workflow run is red for the third time today,
+for the same reason it was the first two.**
 
-**What is next.** Unchanged. Web Analytics on the zone still fails every post-deploy check
-and still needs the dashboard.
+PR #42, checks green in 34 seconds, squash merged. On main `deploy to cloudflare pages`
+succeeded and `verify the live site against the budgets` failed on all four sampled routes
+with `static.cloudflareinsights.com`. That is erratum 7.6 and nothing in this task.
+
+Verified against the live origin rather than inferred from a green upload step:
+`/papers/soc2-120-days/` returns 200 at `draft-imran-soc2-120-days-01`, the drawing is
+present with its `role="img"` and its label, the ASCII figure and the proportional bars are
+both gone, the `.dia` rules shipped in the inlined stylesheet, and the page makes zero
+off-origin references of its own. The figure was then rendered from the live origin in both
+colour schemes and looked at, not just counted in the HTML.
+
+**What is next.** Unchanged, and now three deploys deep. Web Analytics on the
+`mosthofaimran.com` zone fails every post-deploy check and needs the dashboard. Everything
+else on the list is behind it because a check that is always red teaches the team to stop
+reading it, which is the same defect as a check that is always green.
