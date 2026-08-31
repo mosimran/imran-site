@@ -208,6 +208,38 @@ something on every task after it rather than only at the end.
   <br>*Ships:* yes. *Validated by:* the section 9.3 curl-and-verify sequence, run
   verbatim from a clean machine, verifies.
 
+## Track 9: the compliance thread
+
+Opened 2026-08-31 on request, after the résumé and covering letter were read against the
+site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.md).
+
+- [x] **T32** Papers 5.15 and 5.16, implementation note 3.6, index wiring
+  <br>*Ships:* yes. *Validated by:* `astro check` clean, budgets green with the index
+  still under 60 KB, every internal link resolving, errata gate reporting zero changed
+  claims because new papers contradict nothing published.
+  <br>*Status:* done. `draft-imran-soc2-120-days-00` and `draft-imran-soc2-scope-hack-00`
+  live at their own URLs, 3.6 listed as `unwritten` because the résumé supplied frameworks
+  and no numbers, index draft now `-05`. See WORKLOG.
+
+- [~] **T33** Biography alignment, erratum 7.7
+  <br>*Ships:* yes. *Validated by:* the abstract carries one tenure figure, erratum 7.7
+  records what moved and why, and the index budget survives the addition.
+  <br>*Status:* **tenure done, title still open.** The author confirmed the career spans
+  fifteen years and more, so the abstract's "Eleven years" became "Over fifteen years" and
+  P16 closed. P17, the role string in the masthead and §14, was not supplied and is not
+  invented. Erratum 7.7 states the omission rather than hiding it.
+
+- [ ] **T34** Reconcile the Mevrik figures in note 3.1 against the résumé
+  <br>*Ships:* yes. *Validated by:* one set of numbers, in the same units, on both
+  documents. Folds P08 and P18 together.
+  <br>*Blocked on the owner.* Needs figures defensible in an interview, per BUILD.md
+  section 8.
+
+- [ ] **T35** Confidence pass on 5.15 and 5.16
+  <br>*Ships:* yes. *Validated by:* the owner states his own credence for each; if either
+  moves, erratum 7.8 records it and the state follows the schema.
+  <br>*Blocked on the owner.* P21.
+
 ---
 
 ## Ordering notes
