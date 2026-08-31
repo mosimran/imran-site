@@ -31,6 +31,14 @@ export function fmt(d: Date): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
 }
 
+// The masthead's document date, which is a month and a year rather than a day.
+// It exists because that line was typed by hand while `Expires` beside it was
+// computed, so the two could drift apart the first time the document was
+// revised in a different month. Same input, both derived.
+export function fmtMonth(d: Date): string {
+  return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+}
+
 export function iso(d: Date): string {
   return d.toISOString().slice(0, 10)
 }

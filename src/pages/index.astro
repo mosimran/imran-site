@@ -6,7 +6,7 @@
 // The masthead still reads "Request for Comments: 0001". It becomes an
 // Internet-Draft identifier at T10. See docs/PLAN.md section 1.
 import '../styles/rfc.css'
-import { identifier, expiresOn, isExpired, fmt } from '../lib/draft'
+import { identifier, expiresOn, isExpired, fmt, fmtMonth } from '../lib/draft'
 import { website } from '../lib/ld'
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href
@@ -94,7 +94,7 @@ Updates: your priors, if it earns it</div>
 Lead Solutions Architect
 Dhaka, Bangladesh (UTC+6)
 mosthofaimran.com
-August 2026</div>
+{fmtMonth(revised)}</div>
   </div>
 
   <div class="title">

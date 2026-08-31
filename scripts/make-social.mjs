@@ -12,7 +12,21 @@
 // The JPEG is kept under 300 KB because WhatsApp silently drops covers above it.
 
 import sharp from 'sharp'
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+
+// The card's identifier is read out of the built page rather than typed here.
+// It was typed here once, the document reached -05, and the card carried on
+// telling every share preview it was -03. A share card is the first thing most
+// readers see; it does not get to disagree with the document.
+if (!existsSync('dist/index.html')) {
+  console.error('\nmake-social: no dist/index.html. Run `npm run build` first.\n')
+  process.exit(1)
+}
+const IDENT = (readFileSync('dist/index.html', 'utf8').match(/draft-imran-systems-and-arguments-\d{2}/) || [])[0]
+if (!IDENT) {
+  console.error('\nmake-social: no draft identifier found in dist/index.html.\n')
+  process.exit(1)
+}
 
 const SRC = 'docs/john - avatar 2022.png'
 const W = 1200
@@ -76,7 +90,7 @@ const text = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" h
   <text x="72" y="506" font-family="${SERIF}" font-size="29" fill="${DIM}">A public retraction log.</text>
 
   <text x="72" y="578" font-family="${MONO}" font-size="19"
-        fill="${ACCENT}">draft-imran-systems-and-arguments-03</text>
+        fill="${ACCENT}">${IDENT}</text>
 </svg>`)
 
 const card = sharp({ create: { width: W, height: H, channels: 3, background: PAPER } })
@@ -88,4 +102,8 @@ const card = sharp({ create: { width: W, height: H, channels: 3, background: PAP
 await card.clone().jpeg({ quality: 88, chromaSubsampling: '4:4:4' }).toFile('public/og-cover.jpg')
 await card.clone().webp({ quality: 88 }).toFile('public/og-cover.webp')
 
-console.log('favicons and share card written to public/')
+// Stamped so `npm run check` can tell whether the committed card still matches
+// the document. Kept outside public/ because it is build metadata, not a route.
+writeFileSync('scripts/og-cover.id', IDENT + '\n')
+
+console.log(`favicons and share card written to public/, identifier ${IDENT}`)
