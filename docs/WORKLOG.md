@@ -1888,3 +1888,91 @@ colour schemes and looked at, not just counted in the HTML.
 `mosthofaimran.com` zone fails every post-deploy check and needs the dashboard. Everything
 else on the list is behind it because a check that is always red teaches the team to stop
 reading it, which is the same defect as a check that is always green.
+
+---
+
+## Paper 5.1 retitled and merged, plus a prose pass, 2026-08-31
+
+**What changed.** Two requests, one sitting.
+
+**5.1 is now Competence Theatre.** Published as "Competence Porn" on 2025-09-03 and cited
+under that title for a year. The slug stays `competence-porn`, because URLs here do not
+change and the slug was never the title. Erratum 7.8 records it.
+
+**It absorbed the IKEA effect as a second mechanism.** New Section 8: assembling a working
+system from parts nobody read produces the same false signal as watching someone else work.
+The shared signature is that both supply what a system does, sometimes how it does it, and
+never how it fails, which is the only question an incident asks.
+
+Two structural decisions, both taken deliberately.
+
+**Nothing was renumbered.** Paper headings generate the published anchors, confirmed by
+reading them out of `dist`: `#2-why-the-numbers-look-fine` and five others would have moved
+if the new mechanism had gone in at its natural position, early. It is appended as Section
+8 instead, with Section 1 pointing forward to it, and every existing anchor is intact after
+the change. A section that arrives late and says so costs less than six broken fragments.
+
+**5.2 was kept, not absorbed.** It stays a live paper with its full argument, and 5.1
+section 8.3 states that it is compressing 5.2 rather than replacing it. 5.2 gained a
+pointer back, because `seeAlso` is carried only in the machine-readable surfaces and a
+reader on that page could not otherwise see the relationship. Retracting 5.2 would have
+been the cheaper mechanical route and it would have been false: retraction here means the
+central claim failed, and it did not. A retirement condition was added for the unified
+claim, so if the two mechanisms dissociate this splits back into two papers.
+
+**The prose pass is the more useful half of this entry.** The author read 5.16 and
+identified a construction I had leaned on: a two-beat sentence where the second beat
+negates the first. "You have not bought a shortcut. You have bought a document that raises
+the question it was meant to close." It reads as rhythm doing the work that explanation
+should be doing, and once it is pointed out it is visible everywhere.
+
+It was in 5.16 about a dozen times, in the abstract, in all three of the failed hacks, in
+two table rows, and in every section from 4 to 8. Each one is replaced with the concrete
+thing that actually happens. The cheapest-auditor passage now says the reviewer opens the
+report, counts the tests, and asks the questions you paid the firm to answer, and that you
+are in the same meeting three months later and several thousand dollars down. The failure
+mode now says nobody says no, you get a remediation plan and a slot next quarter, and that
+for a company with nine months of runway next quarter is a no delivered politely.
+
+**The same tic was in Section 8 of 5.1, written an hour earlier in this same sitting.**
+Three instances, fixed before it shipped. Worth recording that the correction was needed on
+work produced immediately after the correction was requested.
+
+**One instance was left alone.** Section 1 of 5.1 has "That is not a defect in you. It is
+the business model of the medium", which is the author's published prose from 2025 rather
+than something written today. The request was to review 5.16. Rewriting more of a published
+paper than was asked for is not mine to do, so it is flagged rather than changed.
+
+No claim, figure, retirement condition or confidence value moved in either paper as a
+result of the prose pass.
+
+**What was validated and how.**
+
+Heading anchors read out of the built page before and after: all seven originals present,
+`#8-the-second-mechanism-assembly` added.
+
+The retitle traced through every generated surface rather than assumed: `<h1>`, the feed
+entry title, the index row, the JSON-LD. The old title survives in exactly one place, the
+paper's own revision history recording the change, which is the correct outcome for a site
+that deletes nothing.
+
+Identifiers recomputed: 5.1 at `-05` from six history entries, 5.2 at `-02` from three.
+
+The tic swept for mechanically after the rewrite: zero matches remaining in 5.16, and the
+single remaining match in 5.1 is the published 2025 sentence named above.
+
+`astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata 1 added.
+Expiry 0 expired. Card and document agree. Contrast pairs all above 4.5:1.
+
+**The index budget nearly stopped this.** Adding the 7.8 row took it to **59,843 of 60,000,
+157 bytes free**, which is the wall this log has now warned about three times. The new
+erratum row and the Appendix A entry were cut back to summaries pointing at
+`/errata/#e7-8`, recovering 461 bytes to **59,382, 618 free**. That is a reprieve, not a
+fix.
+
+**What is next.** The index budget, ahead of the remaining content work. Section 7 on the
+index carries eight errata rows whose `<span class="sub">` bodies duplicate text that
+already exists in full at `/errata/`. Trimming them to summaries is the structural fix and
+would recover several kilobytes, but it edits published prose across eight rows, so it is a
+task to be agreed rather than slipped into another one. Web Analytics on the zone is still
+failing every post-deploy check.
