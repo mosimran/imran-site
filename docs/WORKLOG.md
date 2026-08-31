@@ -1970,9 +1970,26 @@ erratum row and the Appendix A entry were cut back to summaries pointing at
 `/errata/#e7-8`, recovering 461 bytes to **59,382, 618 free**. That is a reprieve, not a
 fix.
 
-**What is next.** The index budget, ahead of the remaining content work. Section 7 on the
-index carries eight errata rows whose `<span class="sub">` bodies duplicate text that
-already exists in full at `/errata/`. Trimming them to summaries is the structural fix and
-would recover several kilobytes, but it edits published prose across eight rows, so it is a
-task to be agreed rather than slipped into another one. Web Analytics on the zone is still
-failing every post-deploy check.
+**What is deployed.** All of it, and the workflow run is red for the fourth time today on
+`static.cloudflareinsights.com`. Erratum 7.6, unchanged, nothing to do with this task.
+
+Verified against the live origin rather than inferred from a green upload step. 5.1 returns
+200 titled Competence Theatre at `draft-imran-competence-porn-05`, section 8 is present, and
+**all seven original heading anchors resolve**, which was the constraint the whole no-renumber
+decision was taken to protect. 5.2 returns 200 with its pointer back to 5.1. Erratum 7.8
+carries `#e7-8`. The index row and the Atom feed both read Competence Theatre.
+
+**What is next, and two of the three are the author's calls.**
+
+The **index budget** is the standing engineering constraint at 59,382 of 60,000. Section 7 on
+the index carries eight errata rows whose `<span class="sub">` bodies duplicate text held in
+full at `/errata/`. Trimming them to summaries is the structural fix and recovers kilobytes,
+but it edits published prose across eight rows, so it wants agreeing rather than slipping
+into another task.
+
+The **2025 sentence in 5.1 section 1**, "That is not a defect in you. It is the business
+model of the medium", is the same construction the author asked to have removed from 5.16.
+It was left because the request named 5.16 and it is published prose from a year ago.
+
+**Web Analytics on the zone** still fails every post-deploy check and still needs the
+dashboard.
