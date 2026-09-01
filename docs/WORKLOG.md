@@ -2162,3 +2162,55 @@ the correct place. All nine `#e7-N` anchors resolve on the live errata page. The
 only open item this session can neither fix nor route around. Everything else on the list is
 closed: P15, P16, P17, P21, P23 and P24 have all been resolved, and the index budget has
 gone from a standing constraint back to over a kilobyte of headroom.
+
+---
+
+## The Web Analytics claim, checked rather than repeated, 2026-09-01
+
+**What changed.** Documentation only. No site content moved.
+
+This log has said six times that Web Analytics on the zone cannot be turned off from here,
+and every one of those statements was inherited from the T20 entry rather than tested. Told
+to proceed, the first useful thing was to find out whether the thing I kept asserting was
+actually true.
+
+It is, and now there is evidence for it.
+
+**What was checked.**
+
+No Cloudflare token exists on this machine. `CLOUDFLARE_API_TOKEN` lives only as a GitHub
+Actions repository secret, and secrets are write-only through `gh`, so nothing local can
+read it.
+
+The `wrangler` OAuth session was interrogated directly. Its full scope list, printed on this
+date, carries `zone (read)` and `pages (write)` and **no RUM or analytics scope of any
+kind**. Web Analytics lives under `/accounts/{id}/rum/site_info` and needs Account Settings
+Write. The session cannot reach it.
+
+The stored `oauth_token` in the wrangler config is also stale on its face: an
+`expiration_time` of `2022-08-13`, and `POST /user/tokens/verify` returns code 1000, Invalid
+API Token. Wrangler itself still works, so it is refreshing in memory without rewriting that
+file, which means the credential on disk is not usable directly even if the scopes had been
+right.
+
+The Pages project was checked too, in case the beacon came from the project rather than the
+zone. That query failed on the same stale credential, and the earlier finding stands anyway:
+`imran.com.bd` serves clean while `mosthofaimran.com` does not, which places the injection on
+the zone.
+
+**What was produced.** PLAN section 13.3 gains the runbook, because a limitation that is
+re-derived every session is a limitation nobody ever fixes. It records both credentials and
+why each fails, the dashboard path, and the exact two API calls with the `auto_install` field
+named, against a token carrying Account Settings Write. The endpoint and field were confirmed
+against Cloudflare's API reference rather than written from memory.
+
+**What was deliberately not done.** The check was not softened. A dated, scoped exception
+that lets the build go green while the beacon is still served was considered and rejected:
+the site claims zero third-party requests in Sections 8, 10 and Appendix B, and a green build
+under a false claim is worth less than a red build under a true one. The red run is
+uncomfortable and it is currently correct.
+
+**What is deployed.** Nothing. This entry and the PLAN section are documentation.
+
+**What is next.** The same single item, now with a runbook attached to it. Everything else on
+the ledger that this session could close is closed.
