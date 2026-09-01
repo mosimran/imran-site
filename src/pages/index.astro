@@ -28,7 +28,7 @@ const expired = isExpired(revised)
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Mosthofa Imran: Systems, Arguments, and Known Failure Modes</title>
-<meta name="description" content="Mosthofa Imran. Lead solutions architect. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.">
+<meta name="description" content="Mosthofa Imran. Head of Engineering and Delivery. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.">
 <link rel="canonical" href={canonical}>
 <link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
 <link rel="alternate" type="application/atom+xml" title="Errata" href="/errata.xml">
@@ -50,13 +50,13 @@ const expired = isExpired(revised)
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mosthofa Imran, Lead Solutions Architect, Dhaka. Systems with numbers, arguments with confidence values, a public retraction log.">
+<meta property="og:image:alt" content="Mosthofa Imran, Head of Engineering and Delivery, Dhaka. Systems with numbers, arguments with confidence values, a public retraction log.">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mosthofa Imran">
 <meta name="twitter:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
 <meta name="twitter:image" content={cover}>
-<meta name="twitter:image:alt" content="Mosthofa Imran, Lead Solutions Architect, Dhaka.">
+<meta name="twitter:image:alt" content="Mosthofa Imran, Head of Engineering and Delivery, Dhaka.">
 <script type="application/ld+json" set:html={JSON.stringify(website(ident))}></script>
 </head>
 <body>
@@ -91,7 +91,7 @@ Expires: {fmt(expires)}
 Obsoletes: every CV I have written
 Updates: your priors, if it earns it</div>
     <div class="r"><b>M. Imran</b>
-Lead Solutions Architect
+Head of Engineering and Delivery
 Dhaka, Bangladesh (UTC+6)
 mosthofaimran.com
 {fmtMonth(revised)}</div>
@@ -443,59 +443,41 @@ mosthofaimran.com
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>Correction</th><th style="width:110px">Date</th></tr></thead>
       <tbody>
+      <tr><td class="n" data-l="Section">7.9</td>
+        <td class="hd" data-l="Correction">The role in the masthead was wrong in eight places.
+          <span class="sub">Published as "Lead Solutions Architect" since August 2025. It is Head of Engineering and Delivery, which the r&eacute;sum&eacute; has said throughout. <a href="/errata/#e7-9">Full entry</a>.</span></td>
+        <td class="num" data-l="Date">2026-09-01</td></tr>
       <tr><td class="n" data-l="Section">7.8</td>
         <td class="hd" data-l="Correction">Paper 5.1 was retitled and absorbed a second mechanism.
-          <span class="sub">"Competence Porn" since September 2025, now "Competence Theatre". Same URL. It
-          also gained a Section 8 on assembly. Full entry in <a href="/errata/#e7-8">Section 7
-          complete</a>.</span></td>
+          <span class="sub">"Competence Porn" since September 2025, now "Competence Theatre". Same URL, plus a new Section 8 on assembly. <a href="/errata/#e7-8">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-08-31</td></tr>
       <tr><td class="n" data-l="Section">7.7</td>
         <td class="hd" data-l="Correction">The abstract understated the author's tenure by four years.
-          <span class="sub">It said eleven years of production engineering from first publication until
-          today. The correct figure is over fifteen. Carried forward from the prototype and never checked
-          against the author. Full entry in <a href="/errata/#e7-7">Section 7 complete</a>.</span></td>
+          <span class="sub">Eleven years of production engineering, published since August 2025. The correct figure is over fifteen. <a href="/errata/#e7-7">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-08-31</td></tr>
       <tr><td class="n" data-l="Section">7.6</td>
         <td class="hd" data-l="Correction">The site claimed zero third-party requests while serving an analytics beacon.
-          <span class="sub">Cloudflare Web Analytics was enabled on the zone and injected a beacon script
-          into every response sent to a browser. Sections 8 and 10 and Appendix B all said that could not
-          happen. It was not in the build, which is why nothing caught it: the injection is conditional on
-          a browser-shaped request, so <code>dist/</code> was clean and so was every check that used
-          <code>curl</code>. Now asserted against the live origin with a browser User-Agent after every
-          deploy.</span></td>
+          <span class="sub">Cloudflare Web Analytics injected a beacon into every browser response while Sections 8, 10 and Appendix B said that could not happen. <a href="/errata/#e7-6">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-08-14</td></tr>
       <tr><td class="n" data-l="Section">7.5</td>
         <td class="hd" data-l="Correction">Thirteen entries in Section 5 changed state from listed to published.
-          <span class="sub">Thirteen of the fourteen papers carried a title, a summary and a confidence
-          value with no argument behind them. They now carry a body, a figure and the retirement
-          conditions the schema requires. No confidence value moved, and the states shown here are the
-          ones this document had already declared. The dates and revision histories on 5.2 through 5.14
-          remain the prototype's illustrative ones.</span></td>
+          <span class="sub">Thirteen papers carried a title and no argument. They now carry a body, a figure and retirement conditions. <a href="/errata/#e7-5">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-08-14</td></tr>
       <tr><td class="n" data-l="Section">7.1</td>
         <td class="hd" data-l="Correction">Paper 5.3 downgraded from 0.80 to 0.60.
-          <span class="sub">Two readers demonstrated the effect reproduces in private mailing lists with no
-          ranking algorithm present, which breaks the mechanism I proposed. Section 3 of that paper is being
-          rewritten and currently says so at the top. Reported by A. Rahman and K. Osei.</span></td>
+          <span class="sub">Two readers showed the effect reproduces in private mailing lists with no ranking algorithm, which breaks the mechanism. Reported by A. Rahman and K. Osei. <a href="/errata/#e7-1">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-08-02</td></tr>
       <tr><td class="n" data-l="Section">7.2</td>
         <td class="hd" data-l="Correction">Paper 5.10 retracted in full.
-          <span class="sub">The central claim failed. Retrieval quality at scale turned out to depend on
-          index properties I had dismissed, and the operational story matured faster than I predicted.
-          What I was actually right about was narrower and less quotable. Original text preserved, struck
-          through, with this note attached at the head.</span></td>
+          <span class="sub">The central claim failed. Original text preserved, struck through, with the reason attached. <a href="/errata/#e7-2">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2025-11-14</td></tr>
       <tr><td class="n" data-l="Section">7.3</td>
         <td class="hd" data-l="Correction">Principle 4.3 was violated in production, by me.
-          <span class="sub">The June 2025 ingest incident traced to a retry path with backoff and no budget,
-          in code I reviewed and approved. Ninety-four minutes of degraded intake. Postmortem published
-          unredacted, including the review comment where I did not ask the question.</span></td>
+          <span class="sub">The June 2025 ingest incident traced to a retry path with backoff and no budget, in code I reviewed and approved. <a href="/errata/#e7-3">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2025-06-30</td></tr>
       <tr><td class="n" data-l="Section">7.4</td>
         <td class="hd" data-l="Correction">Figure 3 of the ClickHouse note had the axis mislabelled.
-          <span class="sub">Milliseconds, not seconds. The conclusion was unaffected but the chart was
-          flattering by a factor of a thousand, which is exactly the kind of error that should be
-          published rather than quietly swapped. Reported by S. Datta.</span></td>
+          <span class="sub">Milliseconds, not seconds. Flattering by a factor of a thousand. Reported by S. Datta. <a href="/errata/#e7-4">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2025-02-11</td></tr>
       </tbody>
     </table>
@@ -656,7 +638,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
       <thead><tr><th style="width:150px">Channel</th><th>Address</th></tr></thead>
       <tbody>
       <tr><td class="hd" data-l="Channel">Name</td><td data-l="Address">Mosthofa Imran</td></tr>
-      <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Lead Solutions Architect</td></tr>
+      <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Head of Engineering and Delivery</td></tr>
       <tr><td class="hd" data-l="Channel">Location</td><td data-l="Address">Dhaka, Bangladesh (UTC+6). Comfortable overlapping with CET mornings and US Pacific evenings.</td></tr>
       <tr><td class="hd" data-l="Channel">Email</td><td data-l="Address"><a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a>. I read everything and answer most things inside two working days.</td></tr>
       <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/mosimran">github.com/mosimran</a></td></tr>
@@ -673,7 +655,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
       <tbody>
-      <tr><td class="hd n" data-l="Date">2026-09-01</td><td data-l="Change">Section 5 gains seven papers, 5.17 through 5.23. Every figure in 5.18 onward is sourced to published work.</td></tr>
+      <tr><td class="hd n" data-l="Date">2026-09-01</td><td data-l="Change">Section 5 gains seven papers, 5.17 through 5.23, every figure sourced to published work. The author's role is corrected in eight places, erratum 7.9. Section 7's summaries here are trimmed to point at the full entries.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-31</td><td data-l="Change">Paper 5.1 retitled and expanded with a second mechanism, erratum 7.8. Section 5 gains 5.15 and 5.16 on SOC 2, both drafts. Section 3 gains 3.6, unwritten because no figures were supplied. Tenure corrected from eleven years to over fifteen, erratum 7.7.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-14</td><td data-l="Change">Thirteen entries in Section 5 that carried a title and no text now carry a body, figures and retirement conditions. Paper 5.1 completed. The retracted 5.10 has its original text restored, struck through. Confidence values unchanged throughout. See erratum 7.5.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-08-13</td><td data-l="Change">Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.</td></tr>

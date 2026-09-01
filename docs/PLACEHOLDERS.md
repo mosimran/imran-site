@@ -107,7 +107,7 @@ does not.
   and more. The abstract now reads "Over fifteen years of production engineering", which is
   true and does not contradict the résumé's seventeen. Recorded as erratum 7.7.
 
-- [ ] **P17** Title: site says "Lead Solutions Architect", CV says "Senior AI Engineering
+- [x] **P17** Title: site says "Lead Solutions Architect", CV says "Senior AI Engineering
   and Delivery Leader"
   <br>masthead, `index §14`, `llms.txt`, the OG card, the email signature.
   <br>**2026-08-31: the CV's title changed again.** It now reads "Chief Technology Officer"
@@ -119,6 +119,11 @@ does not.
   `og:image:alt`, the `twitter:image:alt`, `lib/ld.ts` `jobTitle` in the JSON-LD,
   `llms.txt.ts`, and the text baked into the share card by `scripts/make-social.mjs`. The
   card is the one that needs a regeneration rather than an edit.
+  <br>**Closed 2026-09-01.** The site now reads "Head of Engineering and Delivery" in all
+  eight places, which is the résumé's own title and needs no interpretation to defend.
+  "Lead AI Solutions Engineer" was offered by the author and rejected in discussion: Solutions
+  Engineer conventionally denotes pre-sales, and Section 3 describes architecture, delivery and
+  reliability ownership. Recorded as erratum 7.9.
   <br>**Still open after the 2026-08-31 pass.** The tenure figure beside it was corrected
   that day and this one was not, because only the tenure correction was supplied. Erratum
   7.7 says so on its own face rather than leaving the omission to be noticed.
