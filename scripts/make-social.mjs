@@ -80,7 +80,7 @@ const text = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" h
   <text x="72" y="232" font-family="${SERIF}" font-size="78" font-weight="700"
         fill="${INK}">Mosthofa Imran</text>
 
-  <text x="72" y="288" font-family="${MONO}" font-size="25" fill="${DIM}">Lead Solutions Architect</text>
+  <text x="72" y="288" font-family="${MONO}" font-size="25" fill="${DIM}">Head of Engineering and Delivery</text>
   <text x="72" y="324" font-family="${MONO}" font-size="25" fill="${DIM}">Dhaka, Bangladesh (UTC+6)</text>
 
   <line x1="72" y1="372" x2="648" y2="372" stroke="${RULE}" stroke-width="1.5"/>

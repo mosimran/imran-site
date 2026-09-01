@@ -2098,3 +2098,56 @@ on the zone has now failed five consecutive deploys. A check that is always red 
 read, which is the same defect as one that is always green and is the argument in 5.15
 section 7. After that: the role string, P17, still owner-blocked, and the index budget at
 403 bytes with Section 7's errata rows as the recovery.
+
+---
+
+## P17 closed, Section 7 trimmed, 2026-09-01
+
+**What changed.** Three decisions came back from the owner and all three are now live work.
+
+**The role string is corrected in all eight places.** The site said Lead Solutions Architect
+from first publication in August 2025. It now says **Head of Engineering and Delivery**.
+Erratum 7.9 records it and P17 closes, nineteen days after it was registered.
+
+The owner offered "Lead AI Solutions Engineer" and asked for a better fit if there was one.
+There was, and the reasoning is worth keeping. Solutions Engineer conventionally denotes a
+pre-sales function, while Section 3 of this document describes architecture, delivery,
+reliability and security ownership for a platform in production. That title would have
+described a different job than the one the evidence on this site supports. The string now
+used is the one on the author's own résumé, which requires no interpretation to defend and
+adds no word the résumé does not already carry. A title with "AI" inserted into it would
+have been a small embellishment, and this site is a poor place for one.
+
+**Section 7 on the index is trimmed, with the owner's approval.** All eight rows carried a
+`<span class="sub">` that reproduced text held in full at `/errata/`. Each is now a summary
+ending in a link to its own anchor. The index is a summary and the errata page is the record,
+and the duplication had been noted twice in this log without being acted on.
+
+**The confidence values on 5.18 through 5.23 are confirmed** by the owner as set. They stand
+at 0.85 to 0.90.
+
+**What was validated and how.**
+
+The eight replacement sites were found by grep rather than from the earlier count, which is
+how the number went from six to eight in the first place. No occurrence of the old string
+survives in the built output except one, inside erratum 7.9, where it names what was wrong.
+That is the correct and only place for it.
+
+The trim was measured rather than assumed. The index went from **403 bytes of headroom to
+1,266**, then to **1,154** after the 7.9 row and the Appendix A sentence were added back.
+Net recovery of 751 bytes against a budget that had been within a few hundred of failing for
+three consecutive tasks.
+
+All nine `/errata/#eN-N` links from the index were checked against the ids actually generated
+on the errata page: nine references, nine resolve.
+
+The share card was regenerated and opened. It reads Head of Engineering and Delivery over
+`draft-imran-systems-and-arguments-06`. `check-social.mjs` agrees.
+
+`astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata gate 0
+claims changed and 1 erratum added. Contrast pairs all above 4.5:1.
+
+**What is deployed.** Pushed after this entry; the result is recorded below.
+
+**What is next.** Web Analytics on the zone, which has now failed six consecutive deploys and
+is the only item left that this session can neither fix nor route around.

@@ -10,7 +10,7 @@ export const person = () => ({
   name: 'Mosthofa Imran',
   url: SITE,
   email: 'hey@mosthofaimran.com',
-  jobTitle: 'Lead Solutions Architect',
+  jobTitle: 'Head of Engineering and Delivery',
   knowsAbout: ['Multi-tenant systems', 'Air-gapped deployment', 'LLM gateways', 'Data sovereignty'],
 })
 

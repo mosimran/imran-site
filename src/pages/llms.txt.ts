@@ -7,7 +7,7 @@ export const GET: APIRoute = async () => {
   const impl = await getCollection('impl')
   const body = `# Mosthofa Imran
 
-> Lead solutions architect (Dhaka, UTC+6). Builds multi-tenant agentic systems that ship from one
+> Head of Engineering and Delivery (Dhaka, UTC+6). Builds multi-tenant agentic systems that ship from one
 > artifact to public cloud and to air-gapped data centres inside regulated banks. Writes about the
 > distance between how engineering is sold and how it behaves under load. The site is structured as
 > a specification: systems carry numbers, arguments carry a confidence value, and Section 7 records
