@@ -2070,7 +2070,31 @@ contradict nothing published. Complete index reports 23 papers, 1 retracted.
 there. Section 7's eight errata rows remain the obvious place to recover kilobytes and that
 work still needs agreeing, because it edits published prose.
 
-**What is deployed.** Nothing yet. Local build is clean and this entry precedes the push.
+**What is deployed.** All seven papers, and the workflow run is red for the fifth
+consecutive time on `static.cloudflareinsights.com`. Erratum 7.6, unchanged, unrelated to
+this work. The Cloudflare Pages upload step succeeded and the post-deploy live check failed
+after it.
 
-**What is next.** The role string in the masthead, P17, still owner-blocked. Web Analytics on
-the zone still fails every post-deploy check.
+**A gap was found in someone else's work on the way out, and fixing it was the condition of
+publishing.** Paper 5.17 had been committed on another branch with no Appendix A entry and
+no mention anywhere in the index. Merging as-is would have put a paper on the live site with
+no row in the document history, which is the specific failure this site exists to avoid. The
+2026-09-01 entry was widened to cover 5.17 through 5.23 and committed separately, so the
+correction is attributable rather than folded into the papers commit.
+
+Verified against the live origin rather than the upload step. All seven papers return 200 at
+`-00`. The complete index reports 23 papers and 1 retracted. The masthead reads
+`draft-imran-systems-and-arguments-06`. The inline SVG figures are present on the live pages,
+checked on three of the six.
+
+**pa11y run against all seven live papers in both colour schemes: 0 real WCAG2AA errors
+across fourteen combinations.** The run also reported 180 undecided contrast results inside
+the SVG figures, which is the known axe limitation from P24 and is the reason
+`check-contrast.mjs` exists. Those pairs are asserted numerically instead, and the flag
+colour was added to that assertion in this change.
+
+**What is next.** Unchanged, and one item now outranks the rest by repetition. Web Analytics
+on the zone has now failed five consecutive deploys. A check that is always red stops being
+read, which is the same defect as one that is always green and is the argument in 5.15
+section 7. After that: the role string, P17, still owner-blocked, and the index budget at
+403 bytes with Section 7's errata rows as the recovery.
