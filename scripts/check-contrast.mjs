@@ -34,7 +34,7 @@ if (ALPHA === null) {
 }
 
 for (const [scheme, scope] of [['light', css.slice(0, css.indexOf('@media'))], ['dark', dark]]) {
-  const t = Object.fromEntries(['sheet', 'ink', 'dim', 'accent', 'warn'].map((n) => [n, token(scope, n)]))
+  const t = Object.fromEntries(['sheet', 'ink', 'dim', 'accent', 'warn', 'flag'].map((n) => [n, token(scope, n)]))
   const missing = Object.entries(t).filter(([, v]) => !v).map(([k]) => k)
   if (missing.length) { console.error(`  ${scheme}: tokens not found: ${missing.join(', ')}\n`); process.exit(1) }
   const tinted = over(t.accent, t.sheet, ALPHA)
@@ -45,9 +45,11 @@ for (const [scheme, scope] of [['light', css.slice(0, css.indexOf('@media'))], [
     ['dim on sheet', t.dim, t.sheet],
     ['warn on sheet', t.warn, t.sheet],
     ['accent on sheet', t.accent, t.sheet],
+    ['flag on sheet', t.flag, t.sheet],
     ['ink on window fill', t.ink, tinted],
     ['dim on window fill', t.dim, tinted],
     ['accent on window fill', t.accent, tinted],
+    ['flag on window fill', t.flag, tinted],
   ]) {
     const r = ratio(fg, bg)
     const ok = r >= AA

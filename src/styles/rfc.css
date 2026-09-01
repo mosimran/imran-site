@@ -177,6 +177,7 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
 .dia .d{fill:var(--dim)}
 .dia .a{fill:var(--accent)}
 .dia .w{fill:var(--warn)}
+.dia .r{fill:var(--flag)}
 .dia .sa{stroke:var(--accent)}
 .dia .sd{stroke:var(--dim)}
 .dia .ab{fill:var(--accent);fill-opacity:.09}
