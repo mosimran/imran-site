@@ -726,6 +726,43 @@ It has to be made in the dashboard. `wrangler` cannot mint it: the CLI holds an 
 session whose scopes stop at `pages:write`, and `POST /user/tokens` refuses it with
 code 9109. This was checked rather than assumed, on 2026-08-14.
 
+**Turning Web Analytics off, which is erratum 7.6 and six red deploys.** The beacon on
+`mosthofaimran.com` is injected by Cloudflare Web Analytics with `auto_install` set, and
+the post-deploy live check has failed on it since 2026-08-14. Neither credential on this
+machine can switch it off, rechecked on 2026-09-01 rather than taken from this file:
+
+| Credential | Why not |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | Exists only as a GitHub Actions secret, which is write-only. Nothing local can read it. |
+| The `wrangler` OAuth session | Full scope list printed on 2026-09-01: `zone (read)`, `pages (write)`, and no RUM or analytics scope of any kind. Its stored `oauth_token` is also stale, expiry `2022-08-13`, and `POST /user/tokens/verify` rejects it. |
+
+The dashboard route is Analytics and Logs, then Web Analytics, then the site for this
+zone, then turn off automatic setup.
+
+The API route needs a token carrying **Account Settings Write**, which has to be minted in
+the dashboard for the same reason the deploy token does. With one:
+
+```
+# 1. find the site id for this zone
+curl -s -H "Authorization: Bearer $CF_TOKEN" \
+  "https://api.cloudflare.com/client/v4/accounts/f697cce1cf00f8132c900d2c643ad935/rum/site_info/list"
+
+# 2. stop the injection, leaving the site and its history in place
+curl -s -X PUT -H "Authorization: Bearer $CF_TOKEN" -H "Content-Type: application/json" \
+  "https://api.cloudflare.com/client/v4/accounts/f697cce1cf00f8132c900d2c643ad935/rum/site_info/<site_id>" \
+  -d '{"zone_tag":"<zone_id>","auto_install":false}'
+
+# 3. confirm from outside, as a browser rather than as curl's default agent
+npm run live
+```
+
+`auto_install` is the field that injects the snippet on orange-clouded zones. Setting it
+false leaves the analytics site and its collected data alone and stops the script.
+
+Do not make the check pass instead. The site's claim in Sections 8, 10 and Appendix B is
+zero third-party requests, and a build that goes green while that claim is false is worth
+less than a build that stays red while it is true.
+
 Until that secret exists, pushes to `main` **fail** at the deploy job rather than
 skipping it, and the site serves whatever was last published by hand with:
 
