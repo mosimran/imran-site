@@ -2147,7 +2147,18 @@ The share card was regenerated and opened. It reads Head of Engineering and Deli
 `astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata gate 0
 claims changed and 1 erratum added. Contrast pairs all above 4.5:1.
 
-**What is deployed.** Pushed after this entry; the result is recorded below.
+**What is deployed.** All of it, and the run is red for the sixth consecutive time on the
+7.6 beacon. The Cloudflare Pages upload succeeded and the post-deploy live check failed
+after it, as it has since 2026-08-14.
 
-**What is next.** Web Analytics on the zone, which has now failed six consecutive deploys and
-is the only item left that this session can neither fix nor route around.
+Verified against the live origin. The JSON-LD `jobTitle` reads Head of Engineering and
+Delivery, so does `llms.txt`, so does the Open Graph alt text, and the masthead carries it
+four times across the page. **Exactly one occurrence of the old string survives in the live
+document, inside erratum 7.9, where it names what was wrong.** That is the correct number and
+the correct place. All nine `#e7-N` anchors resolve on the live errata page. The index is
+58,813 bytes on the wire.
+
+**What is next.** Web Analytics on the zone. Six consecutive red deploys, and it is now the
+only open item this session can neither fix nor route around. Everything else on the list is
+closed: P15, P16, P17, P21, P23 and P24 have all been resolved, and the index budget has
+gone from a standing constraint back to over a kilobyte of headroom.
