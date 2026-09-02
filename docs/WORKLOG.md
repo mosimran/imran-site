@@ -2469,3 +2469,74 @@ none was removed.
 than the workflow's exit code.
 
 **What is next.** Nothing outstanding on the index. Web Analytics on the zone is unchanged.
+
+---
+
+## Implementation 3.1 written, 2026-09-02
+
+**What changed.** The Mevrik note is written rather than listed, from source material the
+owner supplied and authorised. Its invented figures and invented stack are corrected, erratum
+7.11, and P08 loses its largest row.
+
+**The confidentiality question was raised before anything was written, and the owner settled
+it.** The source documents are internal: one is marked INTERNAL on its cover, the other is
+authored by the company's founder, locked and approved for execution. On first reading I
+declined to write from them and said why. The owner replied that he is the company's CTO, that
+he implemented the system, and that the task is his own engineering record rather than a
+disclosure of the company. That is his call and he made it explicitly after the concern was
+put to him, so the work proceeded with the narrower constraint he restated: engineering
+substance, not the company's business.
+
+**What was deliberately left out.** Commercial tiers and pricing, competitor naming and
+positioning, roadmap phases and dates, team structure and headcount, internal repository and
+edition identifiers, product marketing names, the billing schema, and the founder's name. A
+mechanical sweep for thirty-odd such terms runs clean over the finished note. What went in is
+architecture and the reasoning behind it, which is the part that is his.
+
+**What the note argues.** One constraint drove the design: the same product runs in shared
+cloud and in an air-gapped bank, and neither may be a port of the other. Everything else falls
+out of refusing to keep two builds.
+
+The decisions worth the space are the ones with enforcement attached. Tenancy is a schema
+property with four parts, and the part that makes it hold is that a table without a tenant
+column fails the build and every migration runs a row-level security smoke test against an
+ephemeral database. The tool gateway injects the tenant at dispatch, so no model output can
+construct a cross-tenant call. Every tool must declare whether it is reversible and a
+pre-commit hook rejects one that does not. Suggestion-only agents cannot hold a write tool,
+enforced at registration rather than by convention.
+
+Two of them connect back to papers written earlier this week, which was not planned. The audit
+lane is written by the harness rather than by the agent, which is exactly the boundary paper
+5.21 argues for, built before that argument was written down. And the note's own "what I would
+do differently" says the evaluation gate should have preceded the guardrails, because
+otherwise the guardrail pass rate becomes the quality metric by default, which is paper 5.19
+arriving from the inside.
+
+**The number discipline is the part I would defend hardest.** The note carries two kinds of
+figure and marks every one. Conversation volume, availability and recovery time are measured.
+First-token latency, kill-switch activation and throughput are design targets the build is held
+to. Erratum 7.11 says so as well, because a target published as a measurement is the same
+defect as an invented figure in better clothes, and this note replaced invented figures.
+
+**A drift caught on the way through.** Appendix A had twelve rows against nine history entries.
+The array drives the identifier, so the masthead had been under-counting revisions: five rows
+were added by hand today and earlier while the array kept four. Synced, and the identifier
+moves from `-08` to `-11`, which is the number of revisions actually recorded. The real fix is
+to generate the table from the array so they cannot separate, and that is left as a proposal
+rather than done inside this task.
+
+**What was validated and how.**
+
+The note builds, renders its diagram, and shows all seven metrics and all four named failure
+modes, read out of `dist/` rather than assumed. Zero em dashes and zero two-beat constructions.
+The confidential-term sweep returns one hit, "sovereignty", which is the concept paper 5.5 is
+named for rather than an edition name.
+
+`astro check` 0 errors. Index 59,050 of 60,000, 950 free. Links 27 pages, 0 broken, 0 prototype
+anchors lost. Errata 1 added. Card regenerated at `-11` and agreeing. Contrast above 4.5:1.
+Placeholders 15 open of 24.
+
+**What is deployed.** Pushed after this entry and verified with `npm run deployed`.
+
+**What is next.** P08's remaining rows, 3.2 through 3.5, still carry prototype figures. Web
+Analytics on the zone is unchanged.
