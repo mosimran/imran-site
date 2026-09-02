@@ -31,7 +31,10 @@ const ITEMS = [
     // every note failed regardless of how its figures were labelled.
     const block = (fm.match(/^metrics:\n([\s\S]*?)(?=^\w|\Z)/m) || [])[1] || ''
     const notes = [...block.matchAll(/note:\s*"([^"]*)"/g)].map((m) => m[1])
-    return notes.length > 0 && notes.every((n) => /\b(measured|measurement|target)\b/i.test(n))
+    // No metrics is a different problem from unlabelled metrics, and the owner
+    // needs to know which. Neither passes: the bar asks for numbers.
+    if (notes.length === 0) return { pass: false, why: 'no figures supplied' }
+    return notes.every((n) => /\b(measured|measurement|target)\b/i.test(n))
   }],
   ['failure modes', (fm) => /^failures:/m.test(fm)],
   // Who the system serves and what the design costs them. The vocabulary was
@@ -52,8 +55,16 @@ for (const f of readdirSync(DIR).filter((x) => x.endsWith('.md'))) {
   const section = (fm.match(/^section:\s*"([^"]+)"/m) || [])[1] ?? '?'
   const state = (fm.match(/^state:\s*(\w+)/m) || [])[1] ?? '?'
   const words = body.trim().split(/\s+/).filter(Boolean).length
-  const passed = ITEMS.filter(([, fn]) => fn(fm, body)).map(([n]) => n)
-  notes.push({ section, file: f.replace(/\.md$/, ''), state, words, passed })
+  // An item may return a bare boolean, or { pass, why } when the reason it failed
+  // is worth printing. 3.6 fails 'numbers labelled' because it carries no figures
+  // at all and says so, which is a different job from labelling the ones it has.
+  const why = {}
+  const passed = ITEMS.filter(([name, fn]) => {
+    const r = fn(fm, body)
+    if (r && typeof r === 'object') { if (r.why) why[name] = r.why; return r.pass }
+    return r
+  }).map(([n]) => n)
+  notes.push({ section, file: f.replace(/\.md$/, ''), state, words, passed, why })
 }
 notes.sort((a, b) => Number(a.section.split('.')[1]) - Number(b.section.split('.')[1]))
 
@@ -61,6 +72,7 @@ console.log('\nsection 3 notes, against the seven-item bar\n')
 console.log('  §     note                    state       words   score  missing')
 for (const n of notes) {
   const missing = ITEMS.map(([x]) => x).filter((x) => !n.passed.includes(x))
+    .map((x) => (n.why[x] ? `${x} (${n.why[x]})` : x))
   const score = `${n.passed.length}/7`
   console.log(
     `  ${n.section.padEnd(5)} ${n.file.padEnd(23)} ${n.state.padEnd(11)} ${String(n.words).padStart(5)}   ${score.padEnd(6)} ${missing.join(', ') || '-'}`,

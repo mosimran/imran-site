@@ -2844,3 +2844,34 @@ including the new /history/. Share card regenerated.
 **Deployed.** Pending merge.
 
 **Next.** 3.6 needs SOC 2 content and a better implementation article, per the owner.
+
+## 3.6 written, the audit evidence programme
+
+**Changed.** `src/content/impl/compliance-evidence.md` written, at the owner's request that it
+cover SOC 2 and read as a real implementation article. Six sections, one SVG diagram, four
+named failure modes. The argument is that evidence must be emitted by the pipeline that does
+the work, because an audit inspects a paper trail about a window that has already closed.
+
+Its `state` moved from `unwritten` to `production`. The field describes the system, and it was
+being used to say the page had not been written, which is the same conflation corrected on the
+implementations index earlier the same day. Erratum 7.16.
+
+Scope held to what the site already publishes: paper 5.15 section 8's boundary is repeated at
+the top of the note. Compliance work alongside partners holding signed Type II reports is not
+the same as owning such a programme, and the note opens by saying so rather than letting the
+SOC 2 material imply otherwise.
+
+**No figures, deliberately.** Section 5 names the three measurements that should exist and
+records that none were collected. `check-impl.mjs` now distinguishes "no figures supplied"
+from figures present but unlabelled, because those need different work and the report was
+calling both the same thing.
+
+**Validated.** `npm run check` exit 0. Index 58514 / 60000. `npm run a11y` against the local
+build: 0 WCAG2AA errors on the new page in both schemes. Every SVG class checked against the
+stylesheet after 3.3 shipped with one that did not exist. `npm run impl`: 3.6 at 6/7, section
+at 23 of 56, up from 10 this morning.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.2 is the weakest written note at 3/7 and closes P09. 3.4, 3.5, 3.7 and 3.8 remain
+stubs and need figures and a failure mode each from the owner.

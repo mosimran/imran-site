@@ -184,6 +184,13 @@ does not.
   résumé supplies the frameworks and none of the numbers. It stays unwritten until an audit
   programme produces figures that would survive an interview. Nothing is invented to fill
   the row.
+  <br>**2026-09-03: the note is written and the row stays open.** 3.6 now carries its constraint,
+  its enforced decisions, a diagram, four named failure modes and where SOC 2 fits, all inside the
+  boundary paper 5.15 section 8 already published. It still carries no figures, and section 5 of the
+  note names the three that should exist: time to answer a client security questionnaire, the
+  proportion of controls with pipeline-generated evidence rather than human attestation, and
+  exceptions raised per review cycle. None were collected, which is a gap in the programme rather
+  than in the write-up. `npm run impl` scores it 6 of 7, missing only the figures. Erratum 7.16.
 
 - [x] **P23** The share card's draft identifier drifted from the document's
   <br>`public/og-cover.jpg`, `public/og-cover.webp`, `scripts/make-social.mjs`. The card
