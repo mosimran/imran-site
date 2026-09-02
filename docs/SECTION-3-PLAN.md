@@ -1,6 +1,6 @@
 # Finishing Section 3
 
-Rev A, 2 September 2026.
+Rev B, 2 September 2026. Rev A's central finding was wrong and is withdrawn; see section 2.
 
 Eight implementation notes. One is written. Four carry the prototype's figures and three
 carry nothing. This is the plan to finish them, and it starts with a validation pass rather
@@ -17,62 +17,64 @@ than with writing, because the validation changed what the plan should be.
 
 ## 1. What the validation found
 
-Every note was checked against two sources the owner supplied: the current résumé, and the
-Mevrik engineering material used to write 3.1.
+Every note was checked against the résumé and the Mevrik engineering material, then checked
+again with the owner, which is the step that mattered.
 
-| § | Note | Corroborated? | Figures |
+| § | Note | Status | Figures |
 | --- | --- | --- | --- |
-| 3.1 | Mevrik platform | Yes, written 2026-09-02 | Measured, erratum 7.11 |
-| 3.2 | Sovereign LLM gateway | **Yes**, capability confirmed | Prototype, P09 |
-| 3.3 | Ingest path rewrite, PHP to Rust | **No** | Prototype |
-| 3.4 | Analytics migration to ClickHouse | **No** | Prototype |
-| 3.5 | Air-gapped delivery pipeline | **Yes** | Prototype |
-| 3.6 | Audit evidence programme | **Yes** | None |
-| 3.7 | Voice AI for customer service | **Yes** | None |
-| 3.8 | Custom LLM training and hosting | **Yes** | None |
+| 3.1 | Mevrik platform | Written 2026-09-02 | Measured, errata 7.11 and 7.12 |
+| 3.2 | Sovereign LLM gateway | Real, needs writing | Prototype, P09 |
+| 3.3 | Webhook and social ingestion service | Real, needs writing and retitling | Prototype |
+| 3.4 | Analytics migration to ClickHouse | Real, needs writing | Prototype |
+| 3.5 | Air-gapped delivery pipeline | Real, needs writing | Prototype |
+| 3.6 | Audit evidence programme | Real, needs writing | None |
+| 3.7 | Voice AI for customer service | Real, needs writing | None |
+| 3.8 | Custom LLM training and hosting | Real, needs writing | None |
 
-Six of the eight describe capability the résumé and the Mevrik material both support. Two do
-not, and section 2 is about those.
+All eight describe real systems. None of them is fiction.
 
-**Every technology named in Section 3 was checked against the résumé's technical range.**
-That range lists Node.js, Python, TypeScript, PHP, React, Next.js, PostgreSQL, MongoDB, Redis
-and Kafka. Eight technologies currently claimed in Section 3 appear nowhere in it: Rust,
-ClickHouse, RabbitMQ, OpenSearch, MinIO, Ollama, Airflow and cosign.
+## 2. Rev A was wrong, and how
 
-Absence from a résumé is not proof a system never existed, and a résumé compresses. It is a
-reason to ask rather than a reason to conclude.
+Rev A of this plan concluded that 3.3 and 3.4 could not be corroborated and might describe
+systems that do not exist. That conclusion is withdrawn. It rested on two inferences, both bad.
 
-## 2. The two notes that cannot be written
+**Absence from one engineering document was read as absence from the platform.** The document
+described a future greenfield rebuild. What a rebuild plans to use says nothing about what a
+running system has used for years. ClickHouse is in the platform. So is MinIO.
 
-Erratum 7.11, published on 2026-09-02, states that Rust, ClickHouse and RabbitMQ **were never
-part of the Mevrik platform.** That erratum was written from the owner's own source material.
+**A résumé was treated as an exhaustive inventory.** It is not, and it was never meant to be.
+A résumé states capability at a level a reader absorbs in four minutes, while a production
+platform runs on a great deal more technology than any résumé would list. Building a list of
+"unverified technologies" from what a two-page document omits was not validation. It was
+reasoning from silence and calling it evidence.
 
-Section 3.3 is titled *Ingest path rewrite, PHP to Rust*. Section 3.4 is *Analytics migration
-to ClickHouse*. Neither technology appears in the résumé, and the site has now published a
-correction saying neither was used.
+Erratum 7.12 records the same error where it did public damage, inside erratum 7.11.
 
-That leaves three possibilities and only the owner can say which:
+**The correction to draw from it.** Documents are evidence of what they assert and not evidence
+of what they omit. The only source that settles what a system uses is the person who built it,
+and that question should have been asked before a denial was published.
 
-1. **They describe real work at a different employer**, in which case they stand and need
-   their own figures. Erratum 7.11 scoped its denial to the Mevrik platform, so this is
-   entirely consistent.
-2. **They describe real work mis-described by the prototype**, in which case the titles and
-   stacks are wrong and the notes should be retitled to what actually happened.
-3. **They are prototype inventions in full**, in which case they are two systems that do not
-   exist, published for a year, and they need retiring rather than writing.
-
-**No note will be written for either until that is answered.** Writing them under the current
-titles would mean inventing a Rust rewrite and a ClickHouse migration, which is the single
-thing this site exists not to do, and it would be doing it immediately after publishing an
-erratum that says those technologies were not used.
+**What 3.3 actually is**, from the owner: a webhook ingestion microservice used by several
+platforms. It receives API and social media callbacks, including Facebook's, with full replay,
+retry and fault tolerance, and it is the reason a 100 percent delivery receipt rate against
+those webhooks is claimable. That is a more interesting system than the title suggests, and the
+title is the thing that needs fixing rather than the note's right to exist.
 
 ## 3. What each remaining note needs
 
 **3.2 Sovereign LLM gateway.** Capability confirmed: multi-model routing, redaction before
 routing, per-tenant quotas, self-hosted and hosted backends behind one control plane. The
-architecture can be written now from the Mevrik material. What is missing is the figures,
-P09, and a stack check: OpenSearch and Ollama are currently claimed and the Mevrik material
-describes pgvector for retrieval instead.
+architecture can be written now from the Mevrik material. What is missing is the figures, P09, and a
+stack confirmation from the owner rather than an inference from a document.
+
+**3.3 Webhook and social ingestion service.** A shared microservice behind several platforms,
+taking API and social media callbacks with replay, retry and fault tolerance. The engineering
+is delivery-guarantee work: idempotent receipt, ordered replay, backpressure, and a dead-letter
+path that a person can drain. The title needs to change from the current one, which describes a
+language migration rather than the service, and the owner needs to confirm the language.
+
+**3.4 Analytics migration to ClickHouse.** Real: ClickHouse is in the platform. Needs figures
+and a named failure mode.
 
 **3.5 Air-gapped delivery pipeline.** Capability confirmed by both sources. Signed
 reproducible bundles, same charts as the cloud deployment, installed by an operator with no
@@ -115,34 +117,32 @@ the owner supplied. Where neither covers a claim, the claim does not appear.
 
 ## 5. Order of work
 
-One note per task, in the order that front-loads the decisions.
+One note per task. Every one is blocked on the owner for figures and a named failure mode,
+because those cannot come from a document.
 
-| Task | Note | Blocked on |
+| Task | Note | Needs |
 | --- | --- | --- |
-| T36 | 3.3 and 3.4 decision, then act on it | **Owner** |
-| T37 | 3.5 air-gapped delivery | Figures |
-| T38 | 3.7 voice AI | Figures |
-| T39 | 3.8 custom LLM training and hosting | Figures |
-| T40 | 3.2 sovereign LLM gateway, stack corrected | Figures, P09 |
-| T41 | 3.6 audit evidence programme | Figures |
+| T36 | 3.3 retitled and written | A title, the language, figures, failure mode |
+| T37 | 3.5 air-gapped delivery | Figures, failure mode |
+| T38 | 3.7 voice AI | Values for the four metrics the résumé already names |
+| T39 | 3.8 custom LLM training and hosting | Figures, failure mode |
+| T40 | 3.2 sovereign LLM gateway | Stack confirmation, figures, P09 |
+| T41 | 3.4 analytics migration | Figures, failure mode |
+| T42 | 3.6 audit evidence programme | Figures, failure mode |
 
-3.5 goes first among the writable ones because paper 5.5 already argues its case, so the note
-has an argument to answer to.
-
-Each task that changes a published figure carries an erratum, as 7.11 did. Four notes carry
-prototype figures on five surfaces each: the index, the complete index, the note, `llms.txt`
-and `feed.xml`. A figure correction is not a one-file edit.
+Each task that changes a published figure carries an erratum. Four notes carry prototype
+figures on five surfaces each: the index, the complete index, the note, `llms.txt` and
+`feed.xml`. A figure correction is not a one-file edit.
 
 ## 6. Open decisions, owner only
 
-1. **3.3 and 3.4.** Real elsewhere, mis-described, or invented. Nothing proceeds on those two
-   until this is answered, and the answer decides whether the next step is writing, retitling
-   or retiring.
-2. **Figures for 3.5, 3.6, 3.7 and 3.8.** Two or three per note, and for each one whether it
-   is a measurement or a target. Without them the notes stay `unwritten` however much
-   architecture is written into them, because Section 3's rule is the rule.
-3. **A named failure mode per note.** These cannot be sourced from documents. They are what
-   the owner knows about where each system breaks.
-4. **The eight unverified technologies.** Whether Rust, ClickHouse, RabbitMQ, OpenSearch,
-   MinIO, Ollama, Airflow and cosign belong in any of these stacks. 3.1's stack was corrected
-   this way and the others have not been checked with him.
+1. **3.3's title and language.** The current title names a language migration rather than the
+   service. What it should be called, and what it is written in.
+2. **Figures, two or three per note**, and for each one whether it is a measurement or a
+   design target. Without them the notes stay `unwritten` however much architecture is written
+   into them.
+3. **A named failure mode per note.** These are what the owner knows about where each system
+   breaks, and no document holds them.
+4. **Stack confirmation per note**, asked rather than inferred. 3.1's list was incomplete and
+   the others have not been checked with him. The lesson of 7.12 is that this is a question,
+   not a research task.

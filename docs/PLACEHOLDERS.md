@@ -54,8 +54,12 @@ of the site, where nothing is deleted.
   to replace every one of these with a number defensible in an interview.
   <br>**2026-09-02: 3.1 is done, 3.2 through 3.5 remain.** The Mevrik note was written from
   source material supplied by the owner, and its two invented figures (40M events/day, 3
-  regulated tenants) plus an invented stack (Rust, ClickHouse, RabbitMQ, none of which were
-  ever part of it) are replaced with measured figures and the real stack. Erratum 7.11.
+  regulated tenants) are replaced with measured ones. Erratum 7.11.
+  <br>**The stack was incomplete, not invented, and this row said otherwise for part of a day.**
+  ClickHouse and MinIO are in the platform. The denial was inferred from one document about a
+  future rebuild and from a résumé read as an exhaustive inventory, and neither supports it.
+  Erratum 7.12. The lesson for the remaining rows is that a stack is confirmed by asking the
+  owner, not by grepping a document for absence.
   <br>The note also introduces a distinction this row should carry from here: it separates
   **measurements** from **design targets** and labels each. Latency and throughput numbers in
   it are targets the build is held to and are marked as such. A target published as a

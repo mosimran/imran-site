@@ -2580,3 +2580,65 @@ this entry precedes the merge rather than the deploy.
 
 **What is next.** The owner's review. P08's rows 3.2 through 3.5 still carry prototype
 figures. Web Analytics on the zone is unchanged.
+
+---
+
+## Erratum 7.11 was wrong, 2026-09-02
+
+**What changed.** A correction published this morning contained a false claim. It is corrected
+in erratum 7.12, and everything downstream of it is unwound.
+
+**What 7.11 said.** That Rust, ClickHouse and RabbitMQ "were never part of" the Mevrik
+platform, and that 3.1 carried an invented stack.
+
+**ClickHouse is in the platform. So is MinIO.** The stack is Go, ClickHouse, Python and MinIO
+with object storage, alongside PostgreSQL, Redis, NATS JetStream and Kubernetes. 3.1's list was
+incomplete, which is a different fault from invented, and the erratum asserted the stronger one.
+
+**The reasoning error, which is the part worth keeping.** Two inferences, both bad, pointing
+the same way.
+
+The stack was read out of one engineering document describing one greenfield rebuild, and
+absence from it was treated as absence from the platform. A document about a future build says
+nothing about what a running system has used for years. That was then reinforced by treating
+the owner's résumé as an exhaustive inventory of technology. It is not and was never meant to
+be: a résumé states capability at a level a reader absorbs in four minutes, and a production
+platform runs on far more than any résumé lists.
+
+Reasoning from silence, twice, produced a confident denial, and it was published in the one
+section whose authority depends entirely on everything in it having been checked.
+
+**The blast radius was larger than the erratum.** The Section 3 validation written this
+afternoon concluded that notes 3.3 and 3.4 might describe systems that do not exist, on exactly
+the same reasoning, and built a list of eight "unverified technologies" from what a two-page
+document omits. All of it is withdrawn.
+
+3.3 is a webhook and social media ingestion microservice used by several platforms, with
+replay, retry and fault tolerance, and it is the reason a 100 percent delivery receipt rate
+against Facebook's webhooks is claimable. That is a better system than the note's title
+suggests. 3.4 is real because ClickHouse is real. All eight notes describe real systems.
+
+**What was corrected, and where.**
+
+Erratum 7.11 keeps its original claim at the top, marked withdrawn and pointing at 7.12,
+because nothing here is deleted. Its title loses "and stack". Erratum 7.12 is new and records
+the reasoning rather than only the fact. The Section 7 row on the index is rewritten and a 7.12
+row added. 3.1's stack now lists ClickHouse and MinIO. P08 carries the correction with the old
+reading kept. The Section 3 plan goes to Rev B with a section explaining why Rev A was wrong,
+and Track 10 is rewritten from seven tasks to seven different ones.
+
+**What was validated and how.**
+
+All twelve `#e7-N` anchors resolve against the ids the errata page generates. `astro check` 0
+errors. Index 59,616 of 60,000. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata 1
+added. Card regenerated at `-12`.
+
+**The rule that comes out of this.** Documents are evidence of what they assert and not
+evidence of what they omit. The only source that settles what a system uses is the person who
+built it, and that is a question to ask rather than a research task to perform. Every remaining
+Section 3 stack will be confirmed that way.
+
+**What is deployed.** Pushed after this entry.
+
+**What is next.** T36 through T42, all blocked on the owner for figures, failure modes, a title
+and a language for 3.3.

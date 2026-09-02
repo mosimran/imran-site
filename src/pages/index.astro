@@ -12,16 +12,14 @@ import { website } from '../lib/ld'
 const canonical = new URL(Astro.url.pathname, Astro.site).href
 const cover = new URL('/og-cover.jpg', Astro.site).href
 
-// Appendix A, newest first. The identifier's version suffix is history.length - 1,
-// so this array is the single source for both. Add a row to Appendix A and the
-// masthead follows; there is no number to remember to bump.
 // Appendix A itself, newest first. The table below is rendered from this array
 // and the masthead identifier is history.length - 1, so the document history and
 // the version cannot disagree. They did on 2026-09-02: twelve hand-written rows
 // against nine entries, and the masthead under-counted revisions until it was
 // noticed. Add an entry here and both surfaces follow.
 const history = [
-  { date: '2026-09-02', change: 'Implementation 3.1 written, and its placeholder figures and stack corrected, erratum 7.11.' },
+  { date: '2026-09-02', change: 'Erratum 7.11 corrected: it denied technologies it could not check. Erratum 7.12.' },
+  { date: '2026-09-02', change: 'Implementation 3.1 written and its placeholder figures corrected, erratum 7.11.' },
   { date: '2026-09-02', change: 'Section 3 moves to its own complete index at /impl/, leaving a short table here. Same arrangement Section 5 has used since T09.' },
   { date: '2026-09-02', change: 'Section 3 gains 3.7 and 3.8, both unwritten because no figures were supplied.' },
   { date: '2026-09-02', change: 'Status of This Memo no longer claims to contain everything a résumé would.' },
@@ -418,9 +416,13 @@ mosthofaimran.com
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>Correction</th><th style="width:110px">Date</th></tr></thead>
       <tbody>
+      <tr><td class="n" data-l="Section">7.12</td>
+        <td class="hd" data-l="Correction">Erratum 7.11 asserted a technology denial it could not support.
+          <span class="sub">It said ClickHouse and two others were never part of the platform. ClickHouse is. The denial was inferred from one document about a future rebuild and from a r&eacute;sum&eacute; treated as an exhaustive inventory. Neither supports it. <a href="/errata/#e7-12">Full entry</a>.</span></td>
+        <td class="num" data-l="Date">2026-09-02</td></tr>
       <tr><td class="n" data-l="Section">7.11</td>
-        <td class="hd" data-l="Correction">Implementation 3.1 carried the prototype's invented figures and stack.
-          <span class="sub">It claimed 40M events/day, 3 regulated tenants and a stack including Rust, ClickHouse and RabbitMQ. None of that described the system. Replaced with measured figures and the real stack, and the note is now written. <a href="/errata/#e7-11">Full entry</a>.</span></td>
+        <td class="hd" data-l="Correction">Implementation 3.1 carried the prototype's invented figures.
+          <span class="sub">It claimed 40M events/day and 3 regulated tenants. Replaced with measured figures, and the note is now written. The stack was incomplete rather than invented. <a href="/errata/#e7-11">Full entry</a>.</span></td>
         <td class="num" data-l="Date">2026-09-02</td></tr>
       <tr><td class="n" data-l="Section">7.10</td>
         <td class="hd" data-l="Correction">Section 14 claimed absence from platforms where the author holds accounts.
