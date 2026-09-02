@@ -2657,7 +2657,21 @@ rate against webhooks that retry. A reader scanning the index should see what th
 Each of those came from asking rather than from reading a document and inferring, which is the
 rule 7.12 exists to enforce. It took one exchange.
 
-**What is deployed.** Pushed after this entry.
+**What is deployed.** All of it. `main` at `fd7601a`, verified serving with `npm run deployed`
+rather than from the workflow's exit code, and the run is red for the tenth time on the 7.6
+beacon.
+
+Live: the masthead reads `-12`, erratum 7.12 resolves, 7.11 carries its withdrawal notice, 3.1
+lists ClickHouse, and 3.2 shows Ollama, GPT-4o and Qwen.
+
+**Two pull requests closed, one of them without merging.** The Appendix A work in #53 had been
+branched from and carried through by #54, so merging #54 landed both. #53 was closed rather
+than merged, because merging it afterwards would replay a commit already on `main`. The
+generated table is on `main` and the identifier now follows the array it renders.
+
+**One pull request left open deliberately.** #44 carries 5.17 on another session's branch. Its
+content is byte-identical to what is already on `main`, so it adds nothing, but it belongs to
+whoever opened it and closing another session's pull request is not this session's call.
 
 **What is next.** T36 through T42, blocked on the owner for figures, failure modes and a title
 for 3.3. Stacks for 3.4, 3.5 and 3.6 still need the same question asked.
