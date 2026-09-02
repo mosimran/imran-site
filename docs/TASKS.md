@@ -240,6 +240,43 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
   moves, erratum 7.8 records it and the state follows the schema.
   <br>*Blocked on the owner.* P21.
 
+## Track 10: finishing Section 3
+
+Opened 2026-09-02. Plan and validation in [SECTION-3-PLAN.md](SECTION-3-PLAN.md). Six of the
+eight notes are corroborated by the résumé and the Mevrik material. Two are not, and T36 is
+the gate on those.
+
+- [ ] **T36** Decide 3.3 and 3.4, then act on the decision
+  <br>*Ships:* yes. *Validated by:* whichever path the owner picks, carried through the note,
+  the index, the complete index, `llms.txt` and `feed.xml`, with an erratum if a published
+  claim moves.
+  <br>*Blocked on the owner.* Erratum 7.11 says Rust and ClickHouse were never part of the
+  Mevrik platform. 3.3 is a Rust rewrite and 3.4 a ClickHouse migration, and neither
+  technology appears in the résumé. Real elsewhere, mis-described, or invented: only he knows.
+  Nothing is written for either until he says.
+
+- [ ] **T37** 3.5 air-gapped delivery pipeline, written
+  <br>*Ships:* yes. *Validated by:* figures marked as measurement or target, a named failure
+  mode, and the prototype figures corrected on all five surfaces with an erratum.
+  <br>*Blocked on the owner* for figures and the failure mode. First of the writable set
+  because paper 5.5 already argues its case.
+
+- [ ] **T38** 3.7 voice AI, written
+  <br>*Ships:* yes. *Blocked on the owner* for values. The résumé names the tracked metrics
+  without giving any: end to end latency, word error rate on Bangla audio, containment rate,
+  escalation rate.
+
+- [ ] **T39** 3.8 custom LLM training and hosting, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a named failure mode.
+
+- [ ] **T40** 3.2 sovereign LLM gateway, written and its stack corrected
+  <br>*Ships:* yes. *Blocked on the owner.* Closes P09. The stack currently claims OpenSearch
+  and Ollama; the Mevrik material describes pgvector for retrieval, so the stack needs
+  checking with him the way 3.1's was.
+
+- [ ] **T41** 3.6 audit evidence programme, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a named failure mode.
+
 ---
 
 ## Ordering notes
