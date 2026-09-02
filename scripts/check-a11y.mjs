@@ -1,8 +1,22 @@
 // axe-core and htmlcs against the live site, in both colour schemes. The palette
 // is defined twice, so checking one scheme checks half the site.
+import { execSync } from 'node:child_process'
 import pa11y from 'pa11y'
 const BASE = process.env.BASE || 'https://mosthofaimran.com'
-const PAGES = ['/', '/papers/', '/papers/competence-porn/', '/impl/llm-gateway/', '/errata/', '/cv/']
+// A fixed core, plus every page carrying a drawn figure. The list used to be
+// hand-maintained and named /impl/llm-gateway/ because it was the only written
+// implementation note at the time. Notes 3.1 and 3.3 were written afterwards,
+// both with diagrams, and neither was being checked. Drawn figures are the thing
+// most likely to fail contrast, so they are the thing least worth remembering to
+// add by hand.
+const CORE = ['/', '/papers/', '/papers/competence-porn/', '/impl/llm-gateway/', '/errata/', '/cv/']
+const withFigures = execSync("grep -rl '<svg' dist --include=index.html", { encoding: 'utf8' })
+  .trim().split('\n').filter(Boolean)
+  .map((f) => f.replace(/^dist/, '').replace(/index\.html$/, ''))
+const PAGES = [...new Set([...CORE, ...withFigures])].sort()
+const isLocal = /localhost|127\.0\.0\.1/.test(BASE)
+console.log(`\na11y\n  base    ${BASE}${isLocal ? '' : '   <- the deployed site, not your build'}`)
+console.log(`  pages   ${PAGES.length}, both colour schemes`)
 let total = 0
 let undecidedTotal = 0
 for (const scheme of ['light', 'dark']) {

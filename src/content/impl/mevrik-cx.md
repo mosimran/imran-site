@@ -9,13 +9,13 @@ stack: ["Go", "Python", "TypeScript / Next.js", "Flutter", "gRPC + protobuf", "P
 result: ["3M+ conversations/month", "99.9% against contracted SLAs"]
 fallsOverAt: "Tool surface breadth rather than request volume. Grounding quality degrades as the number of individually registered tools grows, which is why promotion to an agent's tool surface is a reviewed step rather than a decorator."
 metrics:
-  - { name: "Conversations per month", value: "3,000,000+", note: "across banking and telecom tenants" }
-  - { name: "Availability", value: "99.9%", note: "against contracted SLAs" }
+  - { name: "Conversations per month", value: "3,000,000+", note: "measured, across banking and telecom tenants" }
+  - { name: "Availability", value: "99.9%", note: "measured, against contracted SLAs" }
   - { name: "Mean time to recovery", value: "under 30 min", note: "measured, not targeted" }
   - { name: "First token, design target", value: "under 800 ms p95", note: "a target the build is held to, not a published measurement" }
   - { name: "Full resolution, design target", value: "under 3 s p95", note: "same: target, not measurement" }
   - { name: "Kill switch activation", value: "under 5 s", note: "target, from command to all in-flight conversations stopped" }
-  - { name: "Audit retention", value: "7 years", note: "append-only, hash-chained, object-locked in object storage" }
+  - { name: "Audit retention", value: "7 years", note: "configured retention, not a measurement: append-only, hash-chained, object-locked in object storage" }
 failures:
   - { id: "6.1", status: accepted, note: "Tool sprawl degrades grounding. Every endpoint added to an agent's reachable surface widens the space the model chooses from, and past some breadth the accuracy won earlier evaporates. Mitigated by governance rather than solved: endpoints are proposed, reviewed by a person and grouped into a handful of domains before an agent can see them. It remains the thing most likely to quietly get worse." }
   - { id: "6.2", status: fixed, note: "Writing to the database and publishing to the event bus in the same operation loses events when one of the two fails. Replaced with a transactional outbox: the publish is a row written inside the same transaction and drained by a relay. Designed against in advance rather than learned from an incident." }

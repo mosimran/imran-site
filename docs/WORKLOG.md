@@ -2773,3 +2773,35 @@ paraphrased, so the document cannot drift from the measurement.
 **What is deployed.** Nothing. Documentation and one script.
 
 **What is next.** T36. No further planning.
+
+## T36 — implementation note 3.3 written
+
+**Changed.** `src/content/impl/ingest-rs.md` written: a shared webhook receiver used by
+several platforms, covering the accept path, why it is one service rather than one per
+platform, what the delivery guarantee buys the product, and what I would do differently.
+One SVG diagram. Four named failure modes, two fixed, one accepted, one open.
+
+Retitled from "Ingest path rewrite, PHP to Rust" to "Webhook ingestion with delivery
+guarantees". The old title named a migration; the note is about the guarantee. Slug stays
+`ingest-rs` because URLs do not change.
+
+Removed the prototype's two figures (89% fewer nodes, p99 340 ms to 11 ms) and its invented
+verification sentence (ninety days of traffic replayed and diffed byte for byte, which never
+happened). Replaced by the one figure the owner supplied: a 100 percent webhook receipt rate.
+Erratum 7.13.
+
+Two checks were corrected along the way. `check-impl.mjs` matched `note:` across the whole
+front matter, so the failures block was swept into the numbers-labelled test and every note
+failed it regardless of how its figures were marked. Its product-reasoning vocabulary was
+taken from 3.1, a multi-tenant SaaS, and undercounted shared infrastructure. Fixing the first
+dropped 3.1 to 6/7 and exposed three genuinely unlabelled figures in it, now labelled.
+
+**Validated.** `npm run check` green. `npm run impl` reports 3.1 and 3.3 at 7/7, 17 of 56
+items across the section. `check-errata.mjs` extended to watch implementation notes: it had
+only ever diffed `src/content/papers`, so this retitle and figure removal would have passed
+silently. Both its paths were run: exit 1 with erratum 7.13 removed, exit 0 with it present.
+
+**Deployed.** Pending merge.
+
+**Next.** T37, implementation note 3.5, air-gapped delivery. Still owner-blocked on figures
+and a named failure mode for 3.4, 3.5 and 3.6.

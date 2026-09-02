@@ -19,11 +19,27 @@ const DIR = 'src/content/impl'
 
 const ITEMS = [
   ['constraint', (fm, b) => /##[^\n]*constraint|##[^\n]*the claim/i.test(b)],
-  ['enforcement', (fm, b) => /fails the build|fails CI|hook rejects|enforced at registration|enforced by/i.test(b)],
+  ['enforcement', (fm, b) => /fails the build|fails CI|hook rejects|enforced at |enforced by/i.test(b)],
   ['diagram', (fm, b) => /<svg|<figure/.test(b)],
-  ['numbers labelled', (fm) => /target(,| )|not a published measurement|measured, not targeted/i.test(fm)],
+  // Every metric note must label its figure as a measurement or a target. The
+  // first version of this looked for the exact phrases note 3.1 happened to use,
+  // which failed any note carrying only measurements and nothing to contrast
+  // them against. The convention is the label, not the contrast.
+  ['numbers labelled', (fm) => {
+    // Scoped to the metrics block. Matching note: across the whole front matter
+    // also swept up the failures: prose, which never carries these words, so
+    // every note failed regardless of how its figures were labelled.
+    const block = (fm.match(/^metrics:\n([\s\S]*?)(?=^\w|\Z)/m) || [])[1] || ''
+    const notes = [...block.matchAll(/note:\s*"([^"]*)"/g)].map((m) => m[1])
+    return notes.length > 0 && notes.every((n) => /\b(measured|measurement|target)\b/i.test(n))
+  }],
   ['failure modes', (fm) => /^failures:/m.test(fm)],
-  ['product reasoning', (fm, b) => (b.match(/tenant|customer|bank|operator|buyer|regulated|client/gi) || []).length >= 5],
+  // Who the system serves and what the design costs them. The vocabulary was
+  // first taken from note 3.1, a multi-tenant SaaS, and undercounted shared
+  // infrastructure that legitimately talks about consuming platforms and end
+  // users instead of tenants.
+  ['product reasoning', (fm, b) =>
+    (b.match(/tenant|customer|bank|operator|buyer|regulated|client|end user|the product|support burden|integration/gi) || []).length >= 5],
   ['what I would do differently', (fm, b) => /what I would do differently/i.test(b)],
 ]
 

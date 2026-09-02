@@ -52,7 +52,16 @@ of the site, where nothing is deleted.
   failed installs since 2024-09.
   <br>`index §3`, `llms.txt`, `feed.xml`. The handoff's own `BUILD.md` section 8 says
   to replace every one of these with a number defensible in an interview.
-  <br>**2026-09-02: 3.1 is done, 3.2 through 3.5 remain.** The Mevrik note was written from
+  <br>**2026-09-03: 3.3 is done.** Retitled from "Ingest path rewrite, PHP to Rust", which named
+  a migration rather than the delivery guarantee the service provides. Its two figures (89% fewer
+  nodes, p99 340 ms to 11 ms) and its invented verification methodology (a ninety-day replay diffed
+  byte for byte, which never happened) are removed. One measured figure replaces them: a 100 percent
+  webhook receipt rate. Erratum 7.13.
+  <br>**The gate that should have caught this did not exist.** `check-errata.mjs` only diffed
+  `src/content/papers`, so an implementation note could be retitled and have figures removed with no
+  errata entry and a green build. It now watches title, state, summary, result, stack and fallsOverAt
+  on `src/content/impl` as well. Both paths were run before it was trusted.
+  <br>**2026-09-02: 3.1 is done, 3.2, 3.4 and 3.5 remain.** The Mevrik note was written from
   source material supplied by the owner, and its two invented figures (40M events/day, 3
   regulated tenants) are replaced with measured ones. Erratum 7.11.
   <br>**The stack was incomplete, not invented, and this row said otherwise for part of a day.**
@@ -82,6 +91,10 @@ of the site, where nothing is deleted.
   a full body. Nothing is invented to fill the remaining four.
   <br>**2026-08-31: now 5 of 22.** Papers 5.15 and 5.16 arrived with full bodies;
   implementation note 3.6 arrived without one, for the reason recorded at P22.
+  <br>**2026-09-03: note 3.3 has a body.** Written from the owner's description of the service:
+  a shared webhook receiver used by several platforms, with replay, retry and fault tolerance.
+  It clears all seven items of the Section 3 bar, as does 3.1. The other six do not, and
+  `npm run impl` prints the score for each rather than this file asserting a status.
 
 - [ ] **P20** Publication dates and revision histories on papers 5.2 through 5.14
   <br>`src/content/papers/*`. The `published` dates and the pre-2026-08-14 history rows
