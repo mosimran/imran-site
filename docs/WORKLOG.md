@@ -2214,3 +2214,72 @@ uncomfortable and it is currently correct.
 
 **What is next.** The same single item, now with a runbook attached to it. Everything else on
 the ledger that this session could close is closed.
+
+---
+
+## Résumé replaced, and Section 14 was overclaiming, 2026-09-02
+
+**What changed.** The shareable CV behind Section 6 is replaced, and a published claim it
+contradicted is corrected.
+
+**The résumé.** `Mosthofa_Imran_Engineering_Technology_Leadership.pdf`, five pages, read in
+full before upload rather than after. It went into the `CV_FILE` KV namespace at the
+existing key, so the gate, the token flow and the function are untouched. 273,776 bytes,
+SHA-256 verified equal to the local file after the write, and the previous 430,118 byte
+object was pulled down and kept before anything was overwritten.
+
+**Section 14 was claiming more than was true.** The row read "Not present on: Any
+feed-ranked platform. Paper 5.3 explains the reasoning, and holds me to it", and had since
+August 2025. The new résumé links an X profile, which looked like a straight contradiction.
+It was not: the author's meaning was that he does not act as a creator there, while handles
+exist for contact. The sentence did not say that, and a reader takes the strong reading.
+
+So the sentence was wrong rather than the résumé, and it is now narrowed to what it was
+meant to say. Erratum 7.10 records it, and says the part that matters: the old claim was
+larger than the truth, in the author's favour, in the section where he lists how to reach
+him.
+
+Paper 5.3 was checked before assuming it needed the same treatment. It does not. Its
+argument is about what a ranked timeline does to a reader, and nothing in it rested on the
+author's own abstention, so it stands unedited.
+
+**Worth recording how this surfaced.** Two documents that go to the same reader disagreed,
+and the disagreement was only visible because they were put side by side. That is the case
+the site exists to catch, and it took a year, because until the résumé was swapped nobody
+had read them together.
+
+**A second finding, not yet acted on.** The memo's Status section says it is "the record
+from which a résumé would be an abridgement". The new résumé documents voice AI on Omazy CX
+and custom LLM training and hosting, and Section 3 documents neither. A grep for voice,
+speech, telephony and Omazy across the implementation notes and the index returns nothing;
+the only match on the site is inside the word "invoice". The résumé currently exceeds the
+record rather than abridging it, which makes that Status sentence false. Raised with the
+owner rather than fixed, because Section 3 admits a system only with its numbers and a named
+failure mode and neither has been supplied.
+
+**What was validated and how.**
+
+The PDF was read page by page before it was distributed, not sampled. Its content matches
+the document the owner supplied.
+
+The KV write was verified by reading the object back and comparing SHA-256 against the file
+on disk, rather than trusting the tool's success message. The serving function was checked
+for size assumptions and has none: it streams by key.
+
+`check-social.mjs` failed the build again when the Appendix A row moved the identifier to
+`-07` while the card still said `-06`. Regenerated. That check has now caught this on three
+separate occasions and has yet to produce a false positive.
+
+`astro check` 0 errors. Index 59,603 of 60,000. Links 0 broken, 0 prototype anchors lost.
+Errata 1 added, 0 claims changed by the gate's own measure, which is correct because it
+watches paper front matter and this was index prose. The `#e7-10` anchor resolves.
+
+**Deliberately not done.** The author's handles were not added to Section 14. He said the
+accounts exist for contact; publishing the list is a decision about his own contact surface
+and it was not asked for.
+
+**What is deployed.** The résumé is live in KV now, ahead of the site change, because the two
+are independent. The site change follows this entry.
+
+**What is next.** The Status sentence in the memo, which needs either the two missing
+implementation notes or a narrower claim. Web Analytics on the zone, still.
