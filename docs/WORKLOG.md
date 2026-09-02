@@ -2278,8 +2278,17 @@ watches paper front matter and this was index prose. The `#e7-10` anchor resolve
 accounts exist for contact; publishing the list is a decision about his own contact surface
 and it was not asked for.
 
-**What is deployed.** The résumé is live in KV now, ahead of the site change, because the two
-are independent. The site change follows this entry.
+**What is deployed.** Both. The résumé went into KV ahead of the site change, because the
+two are independent, and the site change followed. The run is red for the eighth consecutive
+time on the 7.6 beacon, upload succeeded, live check failed after it.
+
+Verified against the live origin. Section 14 now reads "Feed-ranked platforms: Handles exist
+so people can reach me. I do not post there, build an audience there, or publish anything
+there first." The masthead is at `draft-imran-systems-and-arguments-07`. Erratum 7.10
+resolves at `#e7-10`. **Exactly one occurrence of the old sentence survives on the live page,
+inside 7.10, where it quotes what was wrong.** That is the correct count and the correct
+place, and it is the third time this session that check has been the right one to run.
 
 **What is next.** The Status sentence in the memo, which needs either the two missing
-implementation notes or a narrower claim. Web Analytics on the zone, still.
+implementation notes or a narrower claim, and is the last known false statement on the site.
+Web Analytics on the zone, still, eight deploys in.
