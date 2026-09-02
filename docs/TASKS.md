@@ -240,6 +240,42 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
   moves, erratum 7.8 records it and the state follows the schema.
   <br>*Blocked on the owner.* P21.
 
+## Track 10: finishing Section 3
+
+Opened 2026-09-02. Plan in [SECTION-3-PLAN.md](SECTION-3-PLAN.md), now at Rev B. Rev A
+concluded that two notes might be fiction; that was wrong, it is withdrawn, and erratum 7.12
+records why. **All eight notes describe real systems.** Every task below is blocked on the
+owner for figures and a named failure mode, which no document holds.
+
+- [ ] **T36** 3.3 retitled and written
+  <br>*Ships:* yes. *Blocked on the owner* for a title, figures and a failure mode. The service
+  is a webhook and social media ingestion microservice used by several platforms, with replay,
+  retry and fault tolerance, behind a 100 percent delivery receipt claim. Rust is confirmed for
+  the reused parts, so the title is right about the language and wrong about the subject: it
+  names a migration where the delivery guarantee is the thing worth listing.
+
+- [ ] **T37** 3.5 air-gapped delivery pipeline, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode. First of the set
+  because paper 5.5 already argues its case.
+
+- [ ] **T38** 3.7 voice AI, written
+  <br>*Ships:* yes. *Blocked on the owner* for values. The résumé names the metrics without
+  giving any: end to end latency, word error rate on Bangla audio, containment, escalation.
+
+- [ ] **T39** 3.8 custom LLM training and hosting, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+
+- [ ] **T40** 3.2 sovereign LLM gateway, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures. Closes P09. Stack confirmed by asking:
+  the gateway fronts Ollama, GPT-4o and Qwen, which is self-hosted and commercial behind one
+  control plane and is the point of the note.
+
+- [ ] **T41** 3.4 analytics migration to ClickHouse, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+
+- [ ] **T42** 3.6 audit evidence programme, written
+  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+
 ---
 
 ## Ordering notes

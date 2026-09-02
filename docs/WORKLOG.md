@@ -2540,3 +2540,124 @@ Placeholders 15 open of 24.
 
 **What is next.** P08's remaining rows, 3.2 through 3.5, still carry prototype figures. Web
 Analytics on the zone is unchanged.
+
+---
+
+## Appendix A generated from the history array, 2026-09-02
+
+**What changed.** `history` becomes the document history rather than a list of dates beside
+it. Each entry is `{ date, change }`, the Appendix A table renders from the array, and the
+masthead identifier is still `history.length - 1`. The version and the history are now the
+same object and cannot disagree.
+
+**Why, in one sentence: they disagreed yesterday.** Twelve hand-written table rows against
+nine array entries meant the masthead under-counted revisions until it was noticed, and the
+correction moved the published draft from `-08` to `-11` in one step. Adding an entry is now
+one edit instead of two that a person has to remember to keep aligned.
+
+**The `&eacute;` entity became a literal `é`.** That was the only row carrying markup, and
+using the character means the table needs no `set:html`. A page whose CSP is
+`default-src 'none'` should not grow an HTML injection point to render a document history.
+
+**What was validated and how.**
+
+The rendered text was compared before and after by stripping every tag and entity and diffing
+the result: **identical**. Twelve rows before, twelve after. Identifier `-11` before and after,
+so the change is provably inert with respect to what the document says about itself.
+
+`astro check` 0 errors. Index 59,050 to 59,031 bytes, 969 free. Links 27 pages, 0 broken, 0
+prototype anchors lost. Errata 0 added, correct: rendering a table from an array is not a
+correction. Card and document agree.
+
+**What this does not fix, stated because it would be easy to imply otherwise.** Nothing forces
+an entry to be added when the document changes. This removes the two-places problem, not the
+remembering problem. A check comparing the newest history date against the last commit
+touching `src/` would close that, and it is not built here because it is more machinery than
+the owner has agreed to.
+
+**What is deployed.** Nothing. Opened as a pull request for review at the owner's request, and
+this entry precedes the merge rather than the deploy.
+
+**What is next.** The owner's review. P08's rows 3.2 through 3.5 still carry prototype
+figures. Web Analytics on the zone is unchanged.
+
+---
+
+## Erratum 7.11 was wrong, 2026-09-02
+
+**What changed.** A correction published this morning contained a false claim. It is corrected
+in erratum 7.12, and everything downstream of it is unwound.
+
+**What 7.11 said.** That Rust, ClickHouse and RabbitMQ "were never part of" the Mevrik
+platform, and that 3.1 carried an invented stack.
+
+**ClickHouse is in the platform. So is MinIO.** The stack is Go, ClickHouse, Python and MinIO
+with object storage, alongside PostgreSQL, Redis, NATS JetStream and Kubernetes. 3.1's list was
+incomplete, which is a different fault from invented, and the erratum asserted the stronger one.
+
+**The reasoning error, which is the part worth keeping.** Two inferences, both bad, pointing
+the same way.
+
+The stack was read out of one engineering document describing one greenfield rebuild, and
+absence from it was treated as absence from the platform. A document about a future build says
+nothing about what a running system has used for years. That was then reinforced by treating
+the owner's résumé as an exhaustive inventory of technology. It is not and was never meant to
+be: a résumé states capability at a level a reader absorbs in four minutes, and a production
+platform runs on far more than any résumé lists.
+
+Reasoning from silence, twice, produced a confident denial, and it was published in the one
+section whose authority depends entirely on everything in it having been checked.
+
+**The blast radius was larger than the erratum.** The Section 3 validation written this
+afternoon concluded that notes 3.3 and 3.4 might describe systems that do not exist, on exactly
+the same reasoning, and built a list of eight "unverified technologies" from what a two-page
+document omits. All of it is withdrawn.
+
+3.3 is a webhook and social media ingestion microservice used by several platforms, with
+replay, retry and fault tolerance, and it is the reason a 100 percent delivery receipt rate
+against Facebook's webhooks is claimable. That is a better system than the note's title
+suggests. 3.4 is real because ClickHouse is real. All eight notes describe real systems.
+
+**What was corrected, and where.**
+
+Erratum 7.11 keeps its original claim at the top, marked withdrawn and pointing at 7.12,
+because nothing here is deleted. Its title loses "and stack". Erratum 7.12 is new and records
+the reasoning rather than only the fact. The Section 7 row on the index is rewritten and a 7.12
+row added. 3.1's stack now lists ClickHouse and MinIO. P08 carries the correction with the old
+reading kept. The Section 3 plan goes to Rev B with a section explaining why Rev A was wrong,
+and Track 10 is rewritten from seven tasks to seven different ones.
+
+**What was validated and how.**
+
+All twelve `#e7-N` anchors resolve against the ids the errata page generates. `astro check` 0
+errors. Index 59,616 of 60,000. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata 1
+added. Card regenerated at `-12`.
+
+**The rule that comes out of this.** Documents are evidence of what they assert and not
+evidence of what they omit. The only source that settles what a system uses is the person who
+built it, and that is a question to ask rather than a research task to perform. Every remaining
+Section 3 stack will be confirmed that way.
+
+**Three stacks settled the right way, by asking.**
+
+3.1 is expanded from the blueprint's own technology table plus the owner's additions: Go,
+Python, TypeScript with Next.js, Flutter, gRPC and protobuf, PostgreSQL with pgvector,
+ClickHouse, Redis, NATS JetStream, MinIO and object storage, Docker, Kubernetes, Helm and
+OpenTelemetry.
+
+3.2 names its model backends rather than only the runtime that serves them: Ollama, GPT-4o and
+Qwen. That is the note's whole point in one field, self-hosted and commercial behind one
+control plane, and listing only Ollama hid it.
+
+3.3 is Rust, for the reused parts of the service. So the existing title is right about the
+language and wrong about the subject. "Ingest path rewrite, PHP to Rust" names a migration,
+while the thing that earns a Section 3 entry is the delivery guarantee: a 100 percent receipt
+rate against webhooks that retry. A reader scanning the index should see what the system does.
+
+Each of those came from asking rather than from reading a document and inferring, which is the
+rule 7.12 exists to enforce. It took one exchange.
+
+**What is deployed.** Pushed after this entry.
+
+**What is next.** T36 through T42, blocked on the owner for figures, failure modes and a title
+for 3.3. Stacks for 3.4, 3.5 and 3.6 still need the same question asked.
