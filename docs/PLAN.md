@@ -763,6 +763,18 @@ Do not make the check pass instead. The site's claim in Sections 8, 10 and Appen
 zero third-party requests, and a build that goes green while that claim is false is worth
 less than a build that stays red while it is true.
 
+**Until it is off, verify deploys with `npm run deployed`.** The post-deploy live check will
+keep failing, so the workflow's red cross carries no information about whether the deploy
+worked. That is dangerous rather than merely annoying: on 2026-09-02 the site looked stale,
+the run said failure, and the upload had in fact succeeded. It was CDN propagation, and the
+correct diagnosis came from reading the step list, where `deploy to cloudflare pages` had
+passed.
+
+`scripts/check-deployed.mjs` asks Cloudflare which commit is serving production and compares
+it to local `HEAD`. It needs wrangler's OAuth session, so it is a local tool and not a CI
+step. It replaces nothing: the live check still runs, still fails, and is still correct about
+the beacon.
+
 Until that secret exists, pushes to `main` **fail** at the deploy job rather than
 skipping it, and the site serves whatever was last published by hand with:
 
