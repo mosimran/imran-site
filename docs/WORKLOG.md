@@ -2420,3 +2420,52 @@ proposal for the owner rather than something to slip into this task.
 **What is next.** A decision on the index: an `/impl/` complete index so Section 3 can shorten
 the way Section 5 did, or fewer rows on the front page. Web Analytics on the zone is unchanged
 and now has a working local verification beside it.
+
+---
+
+## Section 3 moves to its own index, 2026-09-02
+
+**What changed.** `/impl/` now exists as a generated complete index, and Section 3 on the
+front page is a short table that links to it. This is the arrangement Section 5 has used
+since T09 and it should have been applied here three trims ago.
+
+**The rule was read wrong, by me.** The previous entry said the index budget had become a
+structural problem and implied the 60 KB cap was constraining the site. It is not. BUILD.md
+section 6 caps **the index page**, and `check-budget.mjs` measures exactly one file,
+`dist/index.html`. The other 35 pages have no size limit; the check prints the largest only
+as information.
+
+The cap exists for the rest of that same table: LCP under 1.2 seconds on 3G, zero JavaScript,
+one inlined stylesheet. One file, one round trip, on a bad connection. That is a constraint on
+the front door and not on the site, and the correct response to hitting it has always been to
+move content onto a real page, which is what a multipage site is for.
+
+So the cap was signalling the right action the whole time and three separate tasks answered it
+by shaving prose instead. Section 7 on 2026-09-01, Appendix A and Section 3's summaries on
+2026-09-02, each recovering a few hundred bytes that the next addition spent. The owner
+pointed this out and was right.
+
+**The result.** The eight Section 3 rows keep their section number, title, result and state,
+and lose the summary and stack lines to `/impl/`, where every row carries both in full. No
+information is lost from the site and the front page stops carrying the whole of it.
+
+**59,751 to 58,389 of 60,000. 1,611 bytes free**, against 249 before, and the recovery this
+time does not get spent by the next note added because new notes now land on a page with no
+cap.
+
+**What was validated and how.**
+
+All eight rows verified present in the built output with their results and states intact,
+read out of `dist/index.html` rather than assumed from the source. `/impl/` reports 8
+implementations, 3 unwritten, generated from the collection so it cannot disagree with the
+notes the way a hand-maintained table can.
+
+`astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost, which covers the
+new `/impl/` link. Errata 0 added: moving a table is not a correction. Card and document agree
+at `-08`, unchanged, because the identifier follows Appendix A rows and one was added while
+none was removed.
+
+**What is deployed.** Pushed after this entry, and verified with `npm run deployed` rather
+than the workflow's exit code.
+
+**What is next.** Nothing outstanding on the index. Web Analytics on the zone is unchanged.

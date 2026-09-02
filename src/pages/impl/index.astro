@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+
+// Section 3, complete. The index page carries a short version of this table and
+// links here, the same arrangement Section 5 has used since T09. The 60 KB cap
+// on the index is what forces the split, and the split is the point rather than
+// the cost: the front page stays one round trip on a bad connection.
+const all = await getCollection('impl')
+const sec = (s: string) => Number(s.split('.')[1] ?? 0)
+const sorted = all.sort((a, b) => sec(a.data.section) - sec(b.data.section))
+const unwritten = all.filter((n) => n.data.state === 'unwritten').length
+const chip = (s: string) => (s === 'production' ? 'ok' : s === 'unwritten' ? '' : s === 'retired' ? 'bad' : 'warn')
+---
+<Doc title="Implementations, complete index" description={`Every system, its stack, what it produced and whether the note behind it is written. ${all.length} implementations, ${unwritten} unwritten.`}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 3, complete index</b>
+Category: System
+Count: {all.length} implementations, {unwritten} unwritten</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+Papers: <a href="/papers/">Section 5</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Implementations</h1>
+    <div class="sub">Systems in production, with the numbers they produced and a named failure mode. Where those are missing the note says so instead of estimating.</div>
+  </div>
+
+  <div class="ind">
+    <div class="memo">A system appears here with what it produced. Several of these are marked
+      <b>unwritten</b>, which means the work is real and the figures have not been supplied for
+      publication. Principle 4.8 refuses an architecture without a named failure mode, so those
+      pages carry front matter and an explanation rather than an estimate.</div>
+  </div>
+
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:46px">§</th><th>System</th><th style="width:140px">Result</th><th style="width:1%">State</th></tr></thead>
+      <tbody>
+      {sorted.map((n) => (
+        <tr>
+          <td class="n" data-l="Section">{n.data.section}</td>
+          <td class="hd" data-l="System"><a href={`/impl/${n.slug}/`}>{n.data.title}</a>
+            <span class="sub">{n.data.summary}</span>
+            <span class="st">{n.data.stack.join(' · ')}</span></td>
+          <td class="num" data-l="Result">{n.data.result.length ? n.data.result.map((r) => (<>{r}<br /></>)) : 'no figures supplied'}</td>
+          <td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{n.data.state}</span></td>
+        </tr>
+      ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Section 3</span><span>[Page 3]</span></div>
+</Doc>
