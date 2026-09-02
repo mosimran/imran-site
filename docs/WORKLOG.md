@@ -2540,3 +2540,43 @@ Placeholders 15 open of 24.
 
 **What is next.** P08's remaining rows, 3.2 through 3.5, still carry prototype figures. Web
 Analytics on the zone is unchanged.
+
+---
+
+## Appendix A generated from the history array, 2026-09-02
+
+**What changed.** `history` becomes the document history rather than a list of dates beside
+it. Each entry is `{ date, change }`, the Appendix A table renders from the array, and the
+masthead identifier is still `history.length - 1`. The version and the history are now the
+same object and cannot disagree.
+
+**Why, in one sentence: they disagreed yesterday.** Twelve hand-written table rows against
+nine array entries meant the masthead under-counted revisions until it was noticed, and the
+correction moved the published draft from `-08` to `-11` in one step. Adding an entry is now
+one edit instead of two that a person has to remember to keep aligned.
+
+**The `&eacute;` entity became a literal `é`.** That was the only row carrying markup, and
+using the character means the table needs no `set:html`. A page whose CSP is
+`default-src 'none'` should not grow an HTML injection point to render a document history.
+
+**What was validated and how.**
+
+The rendered text was compared before and after by stripping every tag and entity and diffing
+the result: **identical**. Twelve rows before, twelve after. Identifier `-11` before and after,
+so the change is provably inert with respect to what the document says about itself.
+
+`astro check` 0 errors. Index 59,050 to 59,031 bytes, 969 free. Links 27 pages, 0 broken, 0
+prototype anchors lost. Errata 0 added, correct: rendering a table from an array is not a
+correction. Card and document agree.
+
+**What this does not fix, stated because it would be easy to imply otherwise.** Nothing forces
+an entry to be added when the document changes. This removes the two-places problem, not the
+remembering problem. A check comparing the newest history date against the last commit
+touching `src/` would close that, and it is not built here because it is more machinery than
+the owner has agreed to.
+
+**What is deployed.** Nothing. Opened as a pull request for review at the owner's request, and
+this entry precedes the merge rather than the deploy.
+
+**What is next.** The owner's review. P08's rows 3.2 through 3.5 still carry prototype
+figures. Web Analytics on the zone is unchanged.

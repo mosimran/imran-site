@@ -15,12 +15,26 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 // Appendix A, newest first. The identifier's version suffix is history.length - 1,
 // so this array is the single source for both. Add a row to Appendix A and the
 // masthead follows; there is no number to remember to bump.
-// One entry per Appendix A row, newest first. These drifted apart on 2026-09-02:
-// five rows were added by hand while the array kept four, so the masthead
-// under-counted revisions for a day. Kept in step by hand until the table is
-// generated from this array, which is the real fix.
-const history = ['2026-09-02', '2026-09-02', '2026-09-02', '2026-09-02', '2026-09-02', '2026-09-01', '2026-08-31', '2026-08-14', '2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
-const revised = new Date(history[0])
+// Appendix A itself, newest first. The table below is rendered from this array
+// and the masthead identifier is history.length - 1, so the document history and
+// the version cannot disagree. They did on 2026-09-02: twelve hand-written rows
+// against nine entries, and the masthead under-counted revisions until it was
+// noticed. Add an entry here and both surfaces follow.
+const history = [
+  { date: '2026-09-02', change: 'Implementation 3.1 written, and its placeholder figures and stack corrected, erratum 7.11.' },
+  { date: '2026-09-02', change: 'Section 3 moves to its own complete index at /impl/, leaving a short table here. Same arrangement Section 5 has used since T09.' },
+  { date: '2026-09-02', change: 'Section 3 gains 3.7 and 3.8, both unwritten because no figures were supplied.' },
+  { date: '2026-09-02', change: 'Status of This Memo no longer claims to contain everything a résumé would.' },
+  { date: '2026-09-02', change: "Section 14's claim about feed-ranked platforms narrowed to what it was meant to say. Erratum 7.10." },
+  { date: '2026-09-01', change: 'Section 5 gains seven papers, 5.17 through 5.23. The role corrected in eight places, erratum 7.9.' },
+  { date: '2026-08-31', change: 'Paper 5.1 retitled and expanded, erratum 7.8. Section 5 gains 5.15 and 5.16, Section 3 gains 3.6. Tenure corrected, erratum 7.7.' },
+  { date: '2026-08-14', change: 'Thirteen entries in Section 5 gained a body, figures and retirement conditions. The retracted 5.10 has its text restored, struck through. Erratum 7.5.' },
+  { date: '2026-08-13', change: 'Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.' },
+  { date: '2026-06-11', change: 'Paper 5.1 revised, fourth revision.' },
+  { date: '2026-01-04', change: 'Confidence values applied retroactively to all papers published before 2026. Six of them moved.' },
+  { date: '2025-08-20', change: 'First publication.' },
+]
+const revised = new Date(history[0].date)
 const ident = identifier('systems-and-arguments', history.length)
 const expires = expiresOn(revised)
 const expired = isExpired(revised)
@@ -624,18 +638,9 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
       <tbody>
-      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Implementation 3.1 written, and its placeholder figures and stack corrected, erratum 7.11.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Section 3 moves to its own complete index at /impl/, leaving a short table here. Same arrangement Section 5 has used since T09.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Section 3 gains 3.7 and 3.8, both unwritten because no figures were supplied.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Status of This Memo no longer claims to contain everything a r&eacute;sum&eacute; would.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Section 14's claim about feed-ranked platforms narrowed to what it was meant to say. Erratum 7.10.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-09-01</td><td data-l="Change">Section 5 gains seven papers, 5.17 through 5.23. The role corrected in eight places, erratum 7.9.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-08-31</td><td data-l="Change">Paper 5.1 retitled and expanded, erratum 7.8. Section 5 gains 5.15 and 5.16, Section 3 gains 3.6. Tenure corrected, erratum 7.7.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-08-14</td><td data-l="Change">Thirteen entries in Section 5 gained a body, figures and retirement conditions. The retracted 5.10 has its text restored, struck through. Erratum 7.5.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-08-13</td><td data-l="Change">Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-06-11</td><td data-l="Change">Paper 5.1 revised, fourth revision.</td></tr>
-      <tr><td class="hd n" data-l="Date">2026-01-04</td><td data-l="Change">Confidence values applied retroactively to all papers published before 2026. Six of them moved.</td></tr>
-      <tr><td class="hd n" data-l="Date">2025-08-20</td><td data-l="Change">First publication.</td></tr>
+      {history.map((h) => (
+        <tr><td class="hd n" data-l="Date">{h.date}</td><td data-l="Change">{h.change}</td></tr>
+      ))}
       </tbody>
     </table>
   </div>
