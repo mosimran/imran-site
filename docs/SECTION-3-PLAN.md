@@ -1,138 +1,153 @@
-# Finishing Section 3
+# Finishing and expanding Section 3
 
-Rev B, 2 September 2026. Rev A's central finding was wrong and is withdrawn; see section 2.
+Rev D, 2 September 2026. Rev A's central finding was wrong and is withdrawn, erratum 7.12.
+Rev B stopped at "finish the eight". Rev C added the bar and the expansion but left the bar as
+prose in this file and got two facts wrong about the notes it was describing. Rev D measures
+instead of asserting: `npm run impl` scores every note and this document quotes it.
 
-Eight implementation notes. One is written. Four carry the prototype's figures and three
-carry nothing. This is the plan to finish them, and it starts with a validation pass rather
-than with writing, because the validation changed what the plan should be.
-
-- [1. What the validation found](#1-what-the-validation-found)
-- [2. The two notes that cannot be written](#2-the-two-notes-that-cannot-be-written)
-- [3. What each remaining note needs](#3-what-each-remaining-note-needs)
-- [4. The source-of-truth rule](#4-the-source-of-truth-rule)
+- [1. The bar](#1-the-bar)
+- [2. Where the eight stand](#2-where-the-eight-stand)
+- [3. What the résumé says Section 3 is missing](#3-what-the-résumé-says-section-3-is-missing)
+- [4. What can be written without the owner, and what cannot](#4-what-can-be-written-without-the-owner-and-what-cannot)
 - [5. Order of work](#5-order-of-work)
 - [6. Open decisions, owner only](#6-open-decisions-owner-only)
 
 ---
 
-## 1. What the validation found
+## 1. The bar
 
-Every note was checked against the résumé and the Mevrik engineering material, then checked
-again with the owner, which is the step that mattered.
+Every note must show engineering capability, infrastructure reasoning and product reasoning in
+the same document. Note 3.1 is the reference implementation and it clears the bar with seven
+things, which is the checklist for the rest.
 
-| § | Note | Status | Figures |
-| --- | --- | --- | --- |
-| 3.1 | Mevrik platform | Written 2026-09-02 | Measured, errata 7.11 and 7.12 |
-| 3.2 | Sovereign LLM gateway | Real, needs writing | Prototype, P09 |
-| 3.3 | Webhook and social ingestion service | Real, needs writing and retitling | Prototype |
-| 3.4 | Analytics migration to ClickHouse | Real, needs writing | Prototype |
-| 3.5 | Air-gapped delivery pipeline | Real, needs writing | Prototype |
-| 3.6 | Audit evidence programme | Real, needs writing | None |
-| 3.7 | Voice AI for customer service | Real, needs writing | None |
-| 3.8 | Custom LLM training and hosting | Real, needs writing | None |
+**The bar is measured by `npm run impl`, not by good intentions.** Rev C stated it here as
+prose, which made it a policy. Note 3.1 spends a section arguing that the difference between a
+policy and a control is enforcement, so a bar living only in a markdown file was the exact
+failure that note is about. The script reports and never fails a build: most notes are
+legitimately unwritten, and a gate that is always red teaches you to stop reading it, which is
+erratum 7.6's lesson. Item 6 is a keyword count and is no substitute for reading the note.
 
-All eight describe real systems. None of them is fiction.
+| | What it means | Why it is the bar |
+| --- | --- | --- |
+| **One constraint** | A single sentence that explains why the rest of the design looks like it does | Without it a note is a technology list. With it every decision has a reason a reader can test |
+| **Decisions with enforcement** | Not "we scope by tenant" but "a table without a tenant column fails the build" | A policy is a wish. A control is a claim you can check |
+| **A mechanism drawn** | One diagram of how it actually works, not a box labelled with the system's name | The picture should show the thing prose cannot: where the boundary sits, what order things run in |
+| **Numbers split two ways** | Measurements and design targets, each labelled | A target published as a measurement is an invented figure in better clothes |
+| **A named failure mode** | Trigger, blast radius, status, and whether it was designed against or learned from | Principle 4.8. A system without one is a system not yet understood |
+| **Product reasoning** | Who the constraint serves and what it costs them, not only what it costs engineering | Infra choices that ignore the buyer are hobby projects |
+| **What I would do differently** | The order that was wrong, the thing found too late | This is the part a reader believes, and the part that cannot be faked |
 
-## 2. Rev A was wrong, and how
+A note that lists a stack and a throughput number is a directory entry. A note that clears the
+seven is an argument about how to build something.
 
-Rev A of this plan concluded that 3.3 and 3.4 could not be corroborated and might describe
-systems that do not exist. That conclusion is withdrawn. It rested on two inferences, both bad.
+## 2. Where the eight stand, measured
 
-**Absence from one engineering document was read as absence from the platform.** The document
-described a future greenfield rebuild. What a rebuild plans to use says nothing about what a
-running system has used for years. ClickHouse is in the platform. So is MinIO.
+All eight describe real systems. Rev A said otherwise about two of them and was wrong.
 
-**A résumé was treated as an exhaustive inventory.** It is not, and it was never meant to be.
-A résumé states capability at a level a reader absorbs in four minutes, while a production
-platform runs on a great deal more technology than any résumé would list. Building a list of
-"unverified technologies" from what a two-page document omits was not validation. It was
-reasoning from silence and calling it evidence.
+`npm run impl` scores each note against the seven items in section 1 and prints what is
+missing. Run on 2026-09-02:
 
-Erratum 7.12 records the same error where it did public damage, inside erratum 7.11.
+```
+  §     note                    state       words   score
+  3.1   mevrik-cx               production   1814   7/7
+  3.2   llm-gateway             production    248   3/7
+  3.3   ingest-rs               production     54   0/7
+  3.4   olap-migration          complete       54   0/7
+  3.5   airgap-delivery         production     54   0/7
+  3.6   compliance-evidence     unwritten     174   0/7
+  3.7   voice-ai                unwritten     203   0/7
+  3.8   llm-hosting             unwritten     251   0/7
 
-**The correction to draw from it.** Documents are evidence of what they assert and not evidence
-of what they omit. The only source that settles what a system uses is the person who built it,
-and that question should have been asked before a denial was published.
+  1 of 8 notes clear the bar. 10 of 56 items across the section.
+```
 
-**What 3.3 actually is**, from the owner: a webhook ingestion microservice used by several
-platforms. It receives API and social media callbacks, including Facebook's, with full replay,
-retry and fault tolerance, and it is the reason a 100 percent delivery receipt rate against
-those webhooks is claimable. That is a more interesting system than the title suggests, and the
-title is the thing that needs fixing rather than the note's right to exist.
+**Rev C got two things wrong here and the script is how they were caught.**
 
-## 3. What each remaining note needs
+It called 3.2 "front matter". It is not: 3.2 carries an opening constraint, three decisions
+with their reasoning, and a section on what its author would do differently. It scores 3/7 and
+is much closer to finished than the rest. What it lacks is a diagram, enforcement language, and
+figures labelled as measurement or target, and P09 says its current figures are the prototype's.
 
-**3.2 Sovereign LLM gateway.** Capability confirmed: multi-model routing, redaction before
-routing, per-tenant quotas, self-hosted and hosted backends behind one control plane. The
-architecture can be written now from the Mevrik material. What is missing is the figures, P09, and a
-stack confirmation from the owner rather than an inference from a document.
+It also said 3.7 and 3.8 "already carry real architecture". They carry a paragraph describing
+what the work covers, which is a scope summary rather than architecture, and both score 0/7.
+The distinction matters because it changes how much of each task is writing versus editing.
 
-**3.3 Webhook and social ingestion service.** A shared microservice behind several platforms,
-taking API and social media callbacks with replay, retry and fault tolerance. The engineering
-is delivery-guarantee work: idempotent receipt, ordered replay, backpressure, and a dead-letter
-path that a person can drain.
+**10 of 56 is the honest completion number for Section 3**, and one note supplies seven of
+those ten.
 
-**Rust is confirmed**, for the reused parts of the service. So the current title is not wrong
-about the language; it is wrong about the subject. "Ingest path rewrite, PHP to Rust" names a
-migration, and what earns a Section 3 entry is the delivery guarantee the service provides, not
-the language it was moved to. A reader scanning the index should see what the system does.
+## 3. What the résumé says Section 3 is missing
 
-**3.4 Analytics migration to ClickHouse.** Real: ClickHouse is in the platform. Needs figures
-and a named failure mode.
+All eight notes are one platform at one employer. The résumé describes work at three others,
+with figures already published in a document the owner hands to strangers, and Section 3 does
+not mention any of it. That is the expansion the brief asked for, and it is the difference
+between a platform page and a body of work.
 
-**3.5 Air-gapped delivery pipeline.** Capability confirmed by both sources. Signed
-reproducible bundles, same charts as the cloud deployment, installed by an operator with no
-network path back. Needs figures, a stack check on cosign, and a named failure mode. This is
-the note paper 5.5 is drawn from and it should be the strongest of the set.
+Three candidates, each demonstrating a capability the current eight do not.
 
-**3.6 Audit evidence programme.** Capability confirmed. ISO 27001 clauses 4 to 10, Annex A
-themes, GDPR, BNM RMiT, DevSecOps controls, evidence as a continuous practice. Needs figures
-and a named failure mode.
+**Document intelligence pipeline.** A multi-day manual process reduced to minutes at around
+99.7 percent data integrity. The engineering is extraction under an accuracy bar: OCR and
+layout, confidence thresholds, the human review path for anything below them, and the
+measurement that makes 99.7 a number rather than a feeling. **Capability the eight lack:**
+accuracy as a product constraint, and the economics of deciding what a machine may decide
+alone.
 
-**3.7 Voice AI.** Capability confirmed and detailed in the résumé. Streaming speech to text,
-intent and slot handling, retrieval grounding, text to speech, barge-in, Bangla and Banglish
-code-switched audio, live handoff under SLA routing, telephony at carrier concurrency, PII
-redaction on stored audio. The résumé names the tracked metrics without giving values: end to
-end latency, word error rate on Bangla audio, containment rate, escalation rate.
+**Field service and payments platform.** More than two hundred US business customers, payment
+integrations across three processors, PCI-aware card handling. The engineering is money
+correctness: idempotency on retry, reconciliation, the failure modes where a double charge
+costs more than an outage. **Capability the eight lack:** regulated payment scope, and
+integrating providers whose failure semantics differ.
 
-**3.8 Custom LLM training and hosting.** Capability confirmed. Self-managed GPU serving for
-data that cannot leave, LoRA and PEFT fine tuning measured against a prompted baseline,
-batching and quantisation, routing across self-hosted and commercial models, promotion gated
-on evaluation, model registry with versioning and rollback.
+**Skills and tooling platform with a registry.** Several hundred skills, a registry of more
+than nine thousand tool servers, a marketplace on a revenue share. The engineering is catalogue
+at scale: ingestion and validation of third-party definitions, trust and permission around
+code you did not write, and search that stays useful as the registry grows. **Capability the
+eight lack:** a two-sided product where the supply is untrusted, which is a different problem
+from serving your own tenants.
 
-## 4. The source-of-truth rule
+Whether any of the three becomes a note is the owner's call. The point of listing them is that
+Section 3 currently under-represents the range the résumé already claims, and the résumé is
+the more conservative document.
 
-3.1 established a discipline the rest of Section 3 should follow, and it is the reason that
-note is defensible.
+## 4. What can be written without the owner, and what cannot
 
-**Two kinds of number, marked separately.** Measurements are things observed in production.
-Design targets are things the build is held to. Both are legitimate on the page and they are
-not interchangeable, so every figure says which it is. A target published as a measurement is
-the same defect as an invented figure and is more tempting, because it is a real number that
-was simply never observed.
+Rev B over-blocked. It marked everything "blocked on the owner" and left nothing to do, which
+is wrong: 3.7 and 3.8 already carry real architecture in their bodies while marked `unwritten`,
+and that is the honest middle state.
 
-**A named failure mode is required by Principle 4.8.** Not a risk register entry: a failure
-with a trigger, a blast radius and a status. Where a control was designed in advance rather
-than learned from an incident, the note says so rather than implying scar tissue it does not
-have.
+**Writable now**, from the material already supplied: the constraint, the decisions and their
+enforcement, the diagram, the product reasoning, and the cross-references to the papers that
+argue about each system's weak spots. That is five of the seven bar items and it is most of the
+value.
 
-**Nothing is written from memory.** Each note cites back to the résumé or the Mevrik material
-the owner supplied. Where neither covers a claim, the claim does not appear.
+**Not writable without him**, and no amount of reading substitutes:
+
+- **Figures**, and the label on each saying measurement or design target
+- **Named failure modes**, which are what he knows about where each system breaks
+- **Stack confirmation** for 3.4, 3.5 and 3.6, which is a question and not a research task,
+  per erratum 7.12
+
+A note stays `unwritten` until the figures and the failure mode arrive, whatever its body says.
+Section 3's rule is the rule. But a note with a written body and an honest `unwritten` state is
+worth more than front matter, and it means the owner's input becomes a short answer rather than
+a blank page.
 
 ## 5. Order of work
 
-One note per task. Every one is blocked on the owner for figures and a named failure mode,
-because those cannot come from a document.
+Each task writes everything writable, then stops at the figures.
 
-| Task | Note | Needs |
-| --- | --- | --- |
-| T36 | 3.3 retitled and written | A title, figures, failure mode |
-| T37 | 3.5 air-gapped delivery | Figures, failure mode |
-| T38 | 3.7 voice AI | Values for the four metrics the résumé already names |
-| T39 | 3.8 custom LLM training and hosting | Figures, failure mode |
-| T40 | 3.2 sovereign LLM gateway | Stack confirmation, figures, P09 |
-| T41 | 3.4 analytics migration | Figures, failure mode |
-| T42 | 3.6 audit evidence programme | Figures, failure mode |
+| Task | Note | What lands | What it waits on |
+| --- | --- | --- | --- |
+| T36 | 3.3 webhook ingestion | Retitle, body, diagram | Title, figures, failure mode |
+| T37 | 3.5 air-gapped delivery | Body, diagram | Stack, figures, failure mode |
+| T38 | 3.7 voice AI | Body, diagram | Values for four named metrics |
+| T39 | 3.8 LLM training and hosting | Body, diagram | Figures, failure mode |
+| T40 | 3.2 sovereign LLM gateway | Body, diagram | Figures, P09 |
+| T41 | 3.4 analytics migration | Body, diagram | Stack, figures, failure mode |
+| T42 | 3.6 audit evidence programme | Body, diagram | Stack, figures, failure mode |
+| T43 | Section 3 expansion | Whichever of the three in section 3 he wants | His decision first |
+
+3.5 goes first among the unwritten because paper 5.5 already argues its case, so the note has
+an argument to answer to.
 
 Each task that changes a published figure carries an erratum. Four notes carry prototype
 figures on five surfaces each: the index, the complete index, the note, `llms.txt` and
@@ -140,16 +155,11 @@ figures on five surfaces each: the index, the complete index, the note, `llms.tx
 
 ## 6. Open decisions, owner only
 
-1. **3.3's title.** The language is settled: Rust, for the reused parts. What remains is what
-   to call it, because the current title names a migration rather than the delivery guarantee
-   that makes it worth a Section 3 entry.
-2. **Figures, two or three per note**, and for each one whether it is a measurement or a
-   design target. Without them the notes stay `unwritten` however much architecture is written
-   into them.
-3. **A named failure mode per note.** These are what the owner knows about where each system
-   breaks, and no document holds them.
-4. **Stack confirmation per note**, asked rather than inferred. Three are now settled by
-   asking: 3.1's list is expanded, 3.2 names its model backends (Ollama, GPT-4o and Qwen,
-   covering self-hosted and commercial behind one control plane), and 3.3 is Rust. 3.4, 3.5 and
-   3.6 have not been checked with him. The lesson of 7.12 is that this is a question, not a
-   research task.
+1. **A title for 3.3.** The language is settled; the subject is not.
+2. **Figures, two or three per note**, each labelled measurement or design target.
+3. **A named failure mode per note.** Trigger, blast radius, status, and whether it was designed
+   against or learned from. No document holds these.
+4. **Stacks for 3.4, 3.5 and 3.6**, asked rather than inferred.
+5. **The expansion.** Whether Section 3 gains notes for the document intelligence pipeline, the
+   payments platform, or the skills registry. Each already has figures in the résumé, and each
+   covers ground the current eight do not.

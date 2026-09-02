@@ -23,7 +23,8 @@
     "lighthouse": "node scripts/check-lighthouse.mjs",
     "social-check": "node scripts/check-social.mjs",
     "contrast": "node scripts/check-contrast.mjs",
-    "deployed": "node scripts/check-deployed.mjs"
+    "deployed": "node scripts/check-deployed.mjs",
+    "impl": "node scripts/check-impl.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"
