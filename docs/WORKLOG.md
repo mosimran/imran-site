@@ -2721,3 +2721,55 @@ another revision of this file.
 
 **What is next.** T36, 3.3 retitled and written. It needs a title from the owner but the body,
 the diagram and the reasoning do not wait on one.
+
+---
+
+## Rev C audited, and the gap was in my own work, 2026-09-02
+
+**What changed.** The last task was re-run against its own output. It had five gaps, three of
+them factual errors inside the plan and one of them an irony worth recording.
+
+**The instrument, first, because it found the rest.** `npm run impl` scores every Section 3
+note against the seven-item bar and prints what each is missing. It reports and never fails a
+build, because most notes are legitimately unwritten and a permanently red gate teaches you to
+stop reading it.
+
+**Rev C wrote the bar as prose in a markdown file.** Note 3.1 spends a section arguing that the
+difference between a policy and a control is enforcement, and the very next task defined a
+quality bar and left it as a paragraph. That is the failure the note is about, committed one
+document away from the note itself. The script is the correction.
+
+**Two factual errors in Rev C, both caught by measuring rather than by re-reading.**
+
+Rev C called 3.2 "front matter". It is not. 3.2 carries an opening constraint, three decisions
+with their reasoning and a "what I would do differently" section, and scores **3/7**. It is
+much closer to finished than the other six, and flattening it into the same bucket would have
+mis-scoped its task.
+
+Rev C also said 3.7 and 3.8 "already carry real architecture in their bodies". They carry a
+paragraph describing what the work covers, which is a scope summary. Both score **0/7**. That
+distinction changes how much of each task is writing rather than editing, which is exactly what
+a plan is for.
+
+**The measured completion number is 10 of 56 items**, and note 3.1 supplies seven of the ten.
+Rev C asserted "seven of the eight are directory entries" without measuring, which was
+directionally right and hid that one note is halfway.
+
+**A wrong number of my own, corrected on the way.** A quick shell heuristic run during the audit
+scored the notes at 5/7 and 1/7. The script, which separates front matter from body properly and
+applies real thresholds, gives 3/7 and 0/7. The shell version counted matches in front matter as
+if they were prose. The looser instrument flattered the work, which is the direction these
+things always fail in.
+
+**The largest gap is the plainest.** The task produced a plan revision and nothing else. Seven
+of eight notes are unchanged. A plan that revises itself twice without a note being written is
+a plan with a completion problem of its own, and the next task is T36 rather than Rev E.
+
+**What was validated and how.** Every note's body length measured with front matter stripped
+correctly, after an earlier survey in this session reported zero words for notes that have
+hundreds. `astro check` 0 errors. The script's output is quoted in the plan rather than
+paraphrased, so the document cannot drift from the measurement.
+
+**What is deployed.** Nothing. Documentation and one script.
+
+**What is next.** T36. No further planning.

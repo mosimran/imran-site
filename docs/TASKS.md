@@ -251,8 +251,9 @@ the product reasoning can all be written from material already supplied. A note 
 `unwritten` until figures and a named failure mode arrive, and a written body under an honest
 `unwritten` state is worth more than front matter.
 
-Every note must clear the seven-item bar in Rev C section 1. A note that lists a stack and a
-throughput number is a directory entry.
+Every note must clear the seven-item bar in the plan's section 1, and `npm run impl` scores
+them. **Measured on 2026-09-02: 10 of 56 items, one note of eight clearing the bar.** 3.2 is at
+3/7 and closer to done than the rest; the other six are at 0/7.
 
 - [ ] **T36** 3.3 webhook and social ingestion, retitled and written
   <br>*Ships:* yes. *Lands:* retitle, body, diagram. *Waits on:* a title, figures, failure mode.
