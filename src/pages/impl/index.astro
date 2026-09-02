@@ -9,15 +9,22 @@ import Doc from '../../layouts/Doc.astro'
 const all = await getCollection('impl')
 const sec = (s: string) => Number(s.split('.')[1] ?? 0)
 const sorted = all.sort((a, b) => sec(a.data.section) - sec(b.data.section))
-const unwritten = all.filter((n) => n.data.state === 'unwritten').length
+// Two different facts, and this page used to publish only one of them. `state`
+// describes the system. Whether the note behind it is written is a property of
+// the body, and 3.4 and 3.5 have real systems with stub pages, so a reader saw
+// "complete" and "production", clicked, and found a page saying the note was not
+// written. The count in the masthead said 3 unwritten because it was counting
+// the state field. It is 5.
+const isWritten = (n: { body: string }) => !/listed but not written/i.test(n.body)
+const written = all.filter(isWritten).length
 const chip = (s: string) => (s === 'production' ? 'ok' : s === 'unwritten' ? '' : s === 'retired' ? 'bad' : 'warn')
 ---
-<Doc title="Implementations, complete index" description={`Every system, its stack, what it produced and whether the note behind it is written. ${all.length} implementations, ${unwritten} unwritten.`}>
+<Doc title="Implementations, complete index" description={`Every system, its stack, what it produced and whether the note behind it is written. ${all.length} implementations, ${written} notes written.`}>
   <div class="mast">
     <div>Off the Bit
 <b>Section 3, complete index</b>
 Category: System
-Count: {all.length} implementations, {unwritten} unwritten</div>
+Count: {all.length} implementations, {written} of {all.length} notes written</div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
 Papers: <a href="/papers/">Section 5</a></div>
@@ -29,10 +36,13 @@ Papers: <a href="/papers/">Section 5</a></div>
   </div>
 
   <div class="ind">
-    <div class="memo">A system appears here with what it produced. Several of these are marked
-      <b>unwritten</b>, which means the work is real and the figures have not been supplied for
-      publication. Principle 4.8 refuses an architecture without a named failure mode, so those
-      pages carry front matter and an explanation rather than an estimate.</div>
+    <div class="memo">Two separate things are reported here and they are easy to confuse.
+      <b>State</b> is the system: whether it runs in production, is complete, or is retired.
+      <b>Note not written</b> is this site's problem rather than the system's, and it means the
+      figures and the named failure mode have not been supplied for publication. A system can be
+      in production for years with nothing written about it here, and several are.
+      Principle 4.8 refuses an architecture without a named failure mode, so those pages carry
+      front matter and an explanation rather than an estimate.</div>
   </div>
 
   <div class="ind">
@@ -46,7 +56,8 @@ Papers: <a href="/papers/">Section 5</a></div>
             <span class="sub">{n.data.summary}</span>
             <span class="st">{n.data.stack.join(' · ')}</span></td>
           <td class="num" data-l="Result">{n.data.result.length ? n.data.result.map((r) => (<>{r}<br /></>)) : 'no figures supplied'}</td>
-          <td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{n.data.state}</span></td>
+          <td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{n.data.state}</span>
+            {!isWritten(n) && <span class="st">note not written</span>}</td>
         </tr>
       ))}
       </tbody>

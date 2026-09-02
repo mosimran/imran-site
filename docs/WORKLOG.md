@@ -2805,3 +2805,42 @@ silently. Both its paths were run: exit 1 with erratum 7.13 removed, exit 0 with
 
 **Next.** T37, implementation note 3.5, air-gapped delivery. Still owner-blocked on figures
 and a named failure mode for 3.4, 3.5 and 3.6.
+
+## Section 3 review pass, owner-directed
+
+**Changed.** Four things the owner flagged while reading the live site.
+
+1. **3.2 now says where its models run.** The note claimed a regulator wants every token to
+stay inside the bank and never said the local backends are installed on two GPUs we own.
+Summary, stack and body corrected. Erratum 7.14.
+
+2. **The front page contradicted erratum 7.13.** The Section 3 table on the index was eight
+rows of hand-written HTML duplicating the impl collection, so correcting note 3.3 left the
+homepage still showing "Ingest path rewrite, PHP to Rust" and the two invented figures the
+erratum said had been removed. The table is generated now. Erratum 7.15. This is the third
+time the same defect has appeared here in a different place, after the paper count at T09 and
+Appendix A on 2026-09-02, and the shape is always a fact typed twice.
+
+3. **The /impl/ index conflated two different facts.** `state` describes the system;
+whether the note is written is a property of the body. Notes 3.4 and 3.5 are real systems
+with stub pages, so a reader saw "complete" and "production" and clicked into a page saying
+the note was not written. The masthead said "3 unwritten" because it counted the state field.
+It is 5. Both are now reported separately and derived, not typed.
+
+4. **Appendix A moved to /history/.** Adding errata 7.14 and 7.15 pushed the index to 60044
+bytes against a 60000 cap. Appendix A gains a row every time the site corrects itself, so an
+index rendering all of it has a size that grows with the site's own honesty. The index shows
+the four most recent and links to the full record. Same split as Sections 3 and 5.
+
+**Not changed.** 3.4 and 3.5 keep `complete` and `production`: the owner confirmed the systems
+are built and only the notes are unwritten, so there was no overclaim to correct. 3.3 keeps
+`production` for the same reason.
+
+**Validated.** `npm run check` exit 0. Index 58453 / 60000, down from 60044 and with room for
+about a dozen further corrections instead of none. Identifier -14 against 15 revisions.
+`npm run a11y` against the local build: 0 WCAG2AA errors over 16 pages in both schemes,
+including the new /history/. Share card regenerated.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.6 needs SOC 2 content and a better implementation article, per the owner.

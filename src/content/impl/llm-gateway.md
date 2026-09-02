@@ -1,10 +1,10 @@
 ---
 section: "3.2"
 title: "Sovereign LLM gateway"
-summary: "One control plane over four model backends. Redaction runs before routing, fallback is deterministic and stamped, quotas are per tenant and per model."
+summary: "One control plane over four model backends, the self-hosted ones running on two GPUs we own. Redaction runs before routing, fallback is deterministic and stamped, quotas are per tenant and per model."
 slug: "llm-gateway"
 state: production
-stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "GPT-4o", "Qwen"]
+stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "Qwen", "GPT-4o", "2 GPUs, self-hosted inference"]
 result: ["3.1M calls/day", "p99 overhead 180 ms"]
 since: 2024-02
 fallsOverAt: "~11k rps. The Redis quota path saturates first and degrades to fail-open with an alarm."
@@ -12,6 +12,7 @@ metrics:
   - { name: "Calls per day", value: "3,100,000", note: "across three tenants" }
   - { name: "Gateway overhead p50 / p99", value: "41 ms / 180 ms", note: "redaction included, measured at the edge" }
   - { name: "Redaction cost p99", value: "14 ms", note: "in process, before routing" }
+  - { name: "Self-hosted inference footprint", value: "2 GPUs", note: "deployed configuration, not a measurement" }
   - { name: "Egress, air-gapped tenants", value: "0 bytes", note: "verified quarterly by the tenant" }
   - { name: "Failover to understudy", value: "0.31% of calls", note: "every one of them stamped and counted" }
 failures:
@@ -23,6 +24,14 @@ failures:
 A bank wants agentic customer service. Its regulator wants every token to stay inside the
 bank. Those two sentences are the entire project, and everything difficult about it follows
 from declining to compromise on either.
+
+That is why the local backends run on two GPUs we own rather than on rented inference. A
+model you can install is a model whose weights, prompts and logs never leave a room you
+control, and it is the only version of this that a regulator can be shown rather than told
+about. The models chosen for those slots are the ones that self-host and still support tool
+calling, which is a smaller set than it sounds. A hosted frontier model sits alongside them
+for tenants whose data classification permits it, and the gateway is what makes that a
+per-tenant routing decision instead of an architecture.
 
 ## 3. Decisions worth defending
 

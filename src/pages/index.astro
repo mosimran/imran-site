@@ -5,34 +5,27 @@
 //
 // The masthead still reads "Request for Comments: 0001". It becomes an
 // Internet-Draft identifier at T10. See docs/PLAN.md section 1.
+import { getCollection } from 'astro:content'
 import '../styles/rfc.css'
 import { identifier, expiresOn, isExpired, fmt, fmtMonth } from '../lib/draft'
 import { website } from '../lib/ld'
+import { history } from '../lib/history'
+
+// Section 3's short table, generated. It was eight hand-written rows duplicating
+// the impl collection, and on 2026-09-03 that duplication published a claim the
+// site had already corrected: note 3.3 was retitled and its two invented figures
+// removed under erratum 7.13, and this table went on showing "Ingest path rewrite,
+// PHP to Rust" and "89% fewer nodes" on the front page. An erratum that the
+// homepage contradicts is worse than no erratum. Same fix as Appendix A: one
+// source, two surfaces.
+const impl = (await getCollection('impl'))
+  .sort((a, b) => Number(a.data.section.split('.')[1]) - Number(b.data.section.split('.')[1]))
+const chip = (s: string) => (s === 'production' ? 'ok' : s === 'retired' ? 'bad' : s === 'unwritten' ? '' : 'warn')
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href
 const cover = new URL('/og-cover.jpg', Astro.site).href
 
-// Appendix A itself, newest first. The table below is rendered from this array
-// and the masthead identifier is history.length - 1, so the document history and
-// the version cannot disagree. They did on 2026-09-02: twelve hand-written rows
-// against nine entries, and the masthead under-counted revisions until it was
-// noticed. Add an entry here and both surfaces follow.
-const history = [
-  { date: '2026-09-03', change: 'Implementation 3.3 written. Retitled for the guarantee rather than the migration, and its prototype figures corrected. Erratum 7.13.' },
-  { date: '2026-09-02', change: 'Erratum 7.11 corrected: it denied technologies it could not check. Erratum 7.12.' },
-  { date: '2026-09-02', change: 'Implementation 3.1 written and its placeholder figures corrected, erratum 7.11.' },
-  { date: '2026-09-02', change: 'Section 3 moves to its own complete index at /impl/, leaving a short table here. Same arrangement Section 5 has used since T09.' },
-  { date: '2026-09-02', change: 'Section 3 gains 3.7 and 3.8, both unwritten because no figures were supplied.' },
-  { date: '2026-09-02', change: 'Status of This Memo no longer claims to contain everything a résumé would.' },
-  { date: '2026-09-02', change: "Section 14's claim about feed-ranked platforms narrowed to what it was meant to say. Erratum 7.10." },
-  { date: '2026-09-01', change: 'Section 5 gains seven papers, 5.17 through 5.23. The role corrected in eight places, erratum 7.9.' },
-  { date: '2026-08-31', change: 'Paper 5.1 retitled and expanded, erratum 7.8. Section 5 gains 5.15 and 5.16, Section 3 gains 3.6. Tenure corrected, erratum 7.7.' },
-  { date: '2026-08-14', change: 'Thirteen entries in Section 5 gained a body, figures and retirement conditions. The retracted 5.10 has its text restored, struck through. Erratum 7.5.' },
-  { date: '2026-08-13', change: 'Section 6 completed. Sections 8 and 9 added: publishing model, feeds, machine readers, signatures. Renumbered; no gaps.' },
-  { date: '2026-06-11', change: 'Paper 5.1 revised, fourth revision.' },
-  { date: '2026-01-04', change: 'Confidence values applied retroactively to all papers published before 2026. Six of them moved.' },
-  { date: '2025-08-20', change: 'First publication.' },
-]
 const revised = new Date(history[0].date)
 const ident = identifier('systems-and-arguments', history.length)
 const expires = expiresOn(revised)
@@ -218,14 +211,9 @@ mosthofaimran.com
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>System</th><th style="width:150px">Result</th><th style="width:1%">State</th></tr></thead>
       <tbody>
-      <tr><td class="n" data-l="Section">3.1</td><td class="hd" data-l="System"><a href="/impl/mevrik-cx/">Mevrik: agentic customer experience platform</a></td><td class="num" data-l="Result">3M+ conversations/month / 99.9% on SLA</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
-      <tr><td class="n" data-l="Section">3.2</td><td class="hd" data-l="System"><a href="/impl/llm-gateway/">Sovereign LLM gateway</a></td><td class="num" data-l="Result">3.1M calls/day / p99 overhead 180 ms</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
-      <tr><td class="n" data-l="Section">3.3</td><td class="hd" data-l="System"><a href="/impl/ingest-rs/">Ingest path rewrite, PHP to Rust</a></td><td class="num" data-l="Result">89% fewer nodes / p99 340 ms → 11 ms</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
-      <tr><td class="n" data-l="Section">3.4</td><td class="hd" data-l="System"><a href="/impl/olap-migration/">Analytics migration to ClickHouse</a></td><td class="num" data-l="Result">14B rows / query p95 9.4 s → 380 ms</td><td data-l="State"><span class="chip">Complete</span></td></tr>
-      <tr><td class="n" data-l="Section">3.5</td><td class="hd" data-l="System"><a href="/impl/airgap-delivery/">Air-gapped delivery pipeline</a></td><td class="num" data-l="Result">6 sites / 0 failed installs since 2024-09</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
-      <tr><td class="n" data-l="Section">3.6</td><td class="hd" data-l="System"><a href="/impl/compliance-evidence/">Audit evidence programme</a></td><td class="num" data-l="Result">no figures supplied</td><td data-l="State"><span class="chip">Unwritten</span></td></tr>
-      <tr><td class="n" data-l="Section">3.7</td><td class="hd" data-l="System"><a href="/impl/voice-ai/">Voice AI for customer service</a></td><td class="num" data-l="Result">no figures supplied</td><td data-l="State"><span class="chip">Unwritten</span></td></tr>
-      <tr><td class="n" data-l="Section">3.8</td><td class="hd" data-l="System"><a href="/impl/llm-hosting/">Custom LLM training and hosting</a></td><td class="num" data-l="Result">no figures supplied</td><td data-l="State"><span class="chip">Unwritten</span></td></tr>
+      {impl.map((n) => (
+        <tr><td class="n" data-l="Section">{n.data.section}</td><td class="hd" data-l="System"><a href={`/impl/${n.slug}/`}>{n.data.title}</a></td><td class="num" data-l="Result">{n.data.result.length ? n.data.result.join(' / ') : 'no figures supplied'}</td><td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{cap(n.data.state)}</span></td></tr>
+      ))}
       </tbody>
     </table>
   </div>
@@ -638,10 +626,13 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
   <!-- ---------------- appendices ---------------- -->
   <h2 id="sa">Appendix A. Document History <a class="hash" href="#sa">#</a></h2>
   <div class="ind">
+    <p class="dim" style="max-width:80ch">The four most recent revisions. All {history.length} are
+    at <a href="/history/">Appendix A, complete</a>, which is the record this document is versioned
+    against: the identifier above is the number of entries, less one.</p>
     <table class="rt">
       <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
       <tbody>
-      {history.map((h) => (
+      {history.slice(0, 4).map((h) => (
         <tr><td class="hd n" data-l="Date">{h.date}</td><td data-l="Change">{h.change}</td></tr>
       ))}
       </tbody>
