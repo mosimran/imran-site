@@ -2638,7 +2638,26 @@ evidence of what they omit. The only source that settles what a system uses is t
 built it, and that is a question to ask rather than a research task to perform. Every remaining
 Section 3 stack will be confirmed that way.
 
+**Three stacks settled the right way, by asking.**
+
+3.1 is expanded from the blueprint's own technology table plus the owner's additions: Go,
+Python, TypeScript with Next.js, Flutter, gRPC and protobuf, PostgreSQL with pgvector,
+ClickHouse, Redis, NATS JetStream, MinIO and object storage, Docker, Kubernetes, Helm and
+OpenTelemetry.
+
+3.2 names its model backends rather than only the runtime that serves them: Ollama, GPT-4o and
+Qwen. That is the note's whole point in one field, self-hosted and commercial behind one
+control plane, and listing only Ollama hid it.
+
+3.3 is Rust, for the reused parts of the service. So the existing title is right about the
+language and wrong about the subject. "Ingest path rewrite, PHP to Rust" names a migration,
+while the thing that earns a Section 3 entry is the delivery guarantee: a 100 percent receipt
+rate against webhooks that retry. A reader scanning the index should see what the system does.
+
+Each of those came from asking rather than from reading a document and inferring, which is the
+rule 7.12 exists to enforce. It took one exchange.
+
 **What is deployed.** Pushed after this entry.
 
-**What is next.** T36 through T42, all blocked on the owner for figures, failure modes, a title
-and a language for 3.3.
+**What is next.** T36 through T42, blocked on the owner for figures, failure modes and a title
+for 3.3. Stacks for 3.4, 3.5 and 3.6 still need the same question asked.

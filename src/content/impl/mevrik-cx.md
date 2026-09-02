@@ -5,7 +5,7 @@ summary: "Multi-tenant conversational automation for banks and telecom operators
 slug: "mevrik-cx"
 state: production
 since: 2022-01
-stack: ["Go", "Python", "ClickHouse", "PostgreSQL + pgvector", "Redis", "NATS JetStream", "MinIO / S3", "Kubernetes"]
+stack: ["Go", "Python", "TypeScript / Next.js", "Flutter", "gRPC + protobuf", "PostgreSQL + pgvector", "ClickHouse", "Redis", "NATS JetStream", "MinIO / S3", "Docker", "Kubernetes", "Helm", "OpenTelemetry"]
 result: ["3M+ conversations/month", "99.9% against contracted SLAs"]
 fallsOverAt: "Tool surface breadth rather than request volume. Grounding quality degrades as the number of individually registered tools grows, which is why promotion to an agent's tool surface is a reviewed step rather than a decorator."
 metrics:

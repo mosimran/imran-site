@@ -248,10 +248,11 @@ records why. **All eight notes describe real systems.** Every task below is bloc
 owner for figures and a named failure mode, which no document holds.
 
 - [ ] **T36** 3.3 retitled and written
-  <br>*Ships:* yes. *Blocked on the owner* for a title, the implementation language, figures
-  and a failure mode. The service is a webhook and social media ingestion microservice used by
-  several platforms, with replay, retry and fault tolerance, behind a 100 percent delivery
-  receipt claim. The current title names a language migration instead of the service.
+  <br>*Ships:* yes. *Blocked on the owner* for a title, figures and a failure mode. The service
+  is a webhook and social media ingestion microservice used by several platforms, with replay,
+  retry and fault tolerance, behind a 100 percent delivery receipt claim. Rust is confirmed for
+  the reused parts, so the title is right about the language and wrong about the subject: it
+  names a migration where the delivery guarantee is the thing worth listing.
 
 - [ ] **T37** 3.5 air-gapped delivery pipeline, written
   <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode. First of the set
@@ -265,8 +266,9 @@ owner for figures and a named failure mode, which no document holds.
   <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
 
 - [ ] **T40** 3.2 sovereign LLM gateway, written
-  <br>*Ships:* yes. *Blocked on the owner.* Closes P09. Stack confirmed by asking rather than
-  inferred from a document, which is the lesson of 7.12.
+  <br>*Ships:* yes. *Blocked on the owner* for figures. Closes P09. Stack confirmed by asking:
+  the gateway fronts Ollama, GPT-4o and Qwen, which is self-hosted and commercial behind one
+  control plane and is the point of the note.
 
 - [ ] **T41** 3.4 analytics migration to ClickHouse, written
   <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.

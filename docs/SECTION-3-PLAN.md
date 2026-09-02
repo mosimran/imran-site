@@ -70,8 +70,12 @@ stack confirmation from the owner rather than an inference from a document.
 **3.3 Webhook and social ingestion service.** A shared microservice behind several platforms,
 taking API and social media callbacks with replay, retry and fault tolerance. The engineering
 is delivery-guarantee work: idempotent receipt, ordered replay, backpressure, and a dead-letter
-path that a person can drain. The title needs to change from the current one, which describes a
-language migration rather than the service, and the owner needs to confirm the language.
+path that a person can drain.
+
+**Rust is confirmed**, for the reused parts of the service. So the current title is not wrong
+about the language; it is wrong about the subject. "Ingest path rewrite, PHP to Rust" names a
+migration, and what earns a Section 3 entry is the delivery guarantee the service provides, not
+the language it was moved to. A reader scanning the index should see what the system does.
 
 **3.4 Analytics migration to ClickHouse.** Real: ClickHouse is in the platform. Needs figures
 and a named failure mode.
@@ -122,7 +126,7 @@ because those cannot come from a document.
 
 | Task | Note | Needs |
 | --- | --- | --- |
-| T36 | 3.3 retitled and written | A title, the language, figures, failure mode |
+| T36 | 3.3 retitled and written | A title, figures, failure mode |
 | T37 | 3.5 air-gapped delivery | Figures, failure mode |
 | T38 | 3.7 voice AI | Values for the four metrics the résumé already names |
 | T39 | 3.8 custom LLM training and hosting | Figures, failure mode |
@@ -136,13 +140,16 @@ figures on five surfaces each: the index, the complete index, the note, `llms.tx
 
 ## 6. Open decisions, owner only
 
-1. **3.3's title and language.** The current title names a language migration rather than the
-   service. What it should be called, and what it is written in.
+1. **3.3's title.** The language is settled: Rust, for the reused parts. What remains is what
+   to call it, because the current title names a migration rather than the delivery guarantee
+   that makes it worth a Section 3 entry.
 2. **Figures, two or three per note**, and for each one whether it is a measurement or a
    design target. Without them the notes stay `unwritten` however much architecture is written
    into them.
 3. **A named failure mode per note.** These are what the owner knows about where each system
    breaks, and no document holds them.
-4. **Stack confirmation per note**, asked rather than inferred. 3.1's list was incomplete and
-   the others have not been checked with him. The lesson of 7.12 is that this is a question,
-   not a research task.
+4. **Stack confirmation per note**, asked rather than inferred. Three are now settled by
+   asking: 3.1's list is expanded, 3.2 names its model backends (Ollama, GPT-4o and Qwen,
+   covering self-hosted and commercial behind one control plane), and 3.3 is Rust. 3.4, 3.5 and
+   3.6 have not been checked with him. The lesson of 7.12 is that this is a question, not a
+   research task.

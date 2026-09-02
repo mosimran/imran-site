@@ -4,7 +4,7 @@ title: "Sovereign LLM gateway"
 summary: "One control plane over four model backends. Redaction runs before routing, fallback is deterministic and stamped, quotas are per tenant and per model."
 slug: "llm-gateway"
 state: production
-stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama"]
+stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "GPT-4o", "Qwen"]
 result: ["3.1M calls/day", "p99 overhead 180 ms"]
 since: 2024-02
 fallsOverAt: "~11k rps. The Redis quota path saturates first and degrades to fail-open with an alarm."
