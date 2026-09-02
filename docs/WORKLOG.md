@@ -2292,3 +2292,48 @@ place, and it is the third time this session that check has been the right one t
 **What is next.** The Status sentence in the memo, which needs either the two missing
 implementation notes or a narrower claim, and is the last known false statement on the site.
 Web Analytics on the zone, still, eight deploys in.
+
+---
+
+## Status of This Memo softened, 2026-09-03
+
+**What changed.** One sentence, and a correction to how the previous entry described it.
+
+The Status section said the document was "the record from which a résumé would be an
+abridgement", which asserts that the site contains everything the résumé does. It now says
+the two overlap without either containing the other.
+
+**The previous entry called this "the last known false statement on the site" and that was
+too strong.** The author pushed back and was right. The sentence overstated the site's
+coverage; it did not state anything untrue about the world. Nothing in the résumé is
+invented, and the voice AI and LLM hosting work is not new information, it is work the site
+has never covered. Overstating coverage and asserting a falsehood are different failures and
+the earlier entry collapsed them.
+
+**No erratum, and the reason is a line worth keeping.** Section 7 has been recording cases
+where the site said something untrue about the author: tenure, role, platform presence. This
+is the document changing what it aspires to be, which is what Appendix A already records for
+structural work like "Section 6 completed. Sections 8 and 9 added". Editorial repositioning
+belongs in Document History. Drawing that line also stops Section 7 filling with entries that
+are not corrections, which would make it a worse instrument for the thing it is for.
+
+**Appendix A was trimmed on the way through.** Softening the sentence took the index to
+59,913 of 60,000, leaving 87 bytes, which is not a margin. Three Appendix A rows had grown
+into summaries of their own errata, so they were cut back to one line each pointing at the
+erratum number. **59,535 now, 465 free.** Same architecture as the Section 7 trim: the index
+summarises, the errata page records.
+
+**What was validated and how.**
+
+`astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost. **Errata gate: 0
+added**, which is the intended result rather than an oversight. Expiry 0 expired. Contrast
+pairs all above 4.5:1.
+
+`check-social.mjs` failed again on the identifier moving to `-08` and the card was
+regenerated. Fourth catch, still no false positives.
+
+**What is deployed.** Pushed after this entry.
+
+**What is next.** Whether Section 3 should gain notes for the voice AI and custom LLM hosting
+work is now an open editorial question rather than a defect, because the Status sentence no
+longer promises they are there. Web Analytics on the zone, still.
