@@ -2349,3 +2349,74 @@ abridgement" remain on the live page, and the masthead reads `-08`.
 **What is next.** Whether Section 3 should gain notes for the voice AI and custom LLM hosting
 work is now an open editorial question rather than a defect, because the Status sentence no
 longer promises they are there. Web Analytics on the zone, still.
+
+---
+
+## Section 3 gains 3.7 and 3.8, and deploys get a real check, 2026-09-02
+
+**A dating error of mine, first, because it was live.** The previous entry added an Appendix
+A row dated **2026-09-03** when the day was the 2nd. A future-dated revision on a document
+whose masthead computes its expiry from that date is not a typo with no consequences: the
+expiry read 7 March 2027 instead of 6 March. Corrected to 2026-09-02.
+
+The fix keeps nine history entries rather than merging the two same-day rows, because the
+identifier is `history.length - 1` and merging would have walked the published draft back
+from `-08` to `-07`. Two changes did happen on the 2nd, so two rows on the 2nd is also the
+truthful shape. No erratum: this is Document History repairing its own metadata within a day,
+not a claim about the author.
+
+**Section 3 gains two notes.** Voice AI on the Omazy CX platform as 3.7, and custom LLM
+training and hosting as 3.8. Both ship `unwritten`, which is the whole point of them.
+
+The résumé describes both in detail and the operational targets are known **by name**: end to
+end response latency, word error rate on Bangla audio, containment rate, escalation rate for
+the voice work; GPU utilisation, cost per model and the gain over a prompted baseline for the
+hosting work. Not one value has been supplied, so Section 3's rule holds and the pages say so
+rather than carrying an invented figure. This is the same handling as 3.6 and for the same
+reason.
+
+Both notes point forward at the papers that are about their weak spots. 3.7 notes that its
+automated quality scoring on voice interactions is an instance of paper 5.19, and that the
+written version will have to say how the scorer is validated against human review. 3.8 points
+at 5.17 for the routing and 5.19 and 5.20 for the evaluation gate, and says the honest
+version will have to state what the evaluation could not catch.
+
+**Deploy verification now exists, and the red run is why it had to.** `npm run deployed` asks
+Cloudflare which commit is serving production and compares it to local `HEAD`.
+
+The motivation is the incident in the previous entry rather than tidiness. The live check has
+failed on every deploy since 2026-08-14, so the workflow's red cross carries no information
+about whether a deploy worked. On 2026-09-02 that nearly produced a wrong diagnosis: the site
+looked stale, the run said failure, and the upload had succeeded. A permanently red signal
+trains you to read the summary instead of the steps, which is the argument in 5.15 section 7
+arriving at my own desk.
+
+The new check replaces nothing. The live check still runs, still fails, and is still correct
+about the beacon. Nothing was softened.
+
+**What was validated and how.**
+
+`npm run deployed` was run against a deliberately wrong commit before it was trusted. On
+`HEAD~1` it exits 1 and names both commits; back on `HEAD` it exits 0. Third check this
+session to be proven on its failure path before use.
+
+`astro check` 0 errors. Links 27 pages, 0 broken, 0 prototype anchors lost. Errata 0 added,
+correct: two unwritten notes contradict nothing. Contrast pairs above 4.5:1. Card and document
+agree at `-08`.
+
+**The index budget is now a structural problem and shaving has run out.** Adding two rows put
+it at 60,341 of 60,000, over the cap. Trimming all eight Section 3 summaries brought it to
+**59,751, 249 bytes free**. Section 7 was trimmed for this on 2026-09-01, Appendix A on
+2026-09-02, Section 3 today, and each time the recovery is spent by the next addition.
+
+The site has grown from 14 papers to 23 and 5 implementation notes to 8 while the index still
+tries to list all of it under a 60 KB cap. Raising the cap is forbidden by the project's own
+rule about not weakening a constraint. The structural fix is the one Section 5 already uses:
+list a subset, link to a generated complete index. Section 3 has no such page. That is a
+proposal for the owner rather than something to slip into this task.
+
+**What is deployed.** Pushed after this entry.
+
+**What is next.** A decision on the index: an `/impl/` complete index so Section 3 can shorten
+the way Section 5 did, or fewer rows on the front page. Web Analytics on the zone is unchanged
+and now has a working local verification beside it.
