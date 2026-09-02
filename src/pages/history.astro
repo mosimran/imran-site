@@ -1,0 +1,47 @@
+---
+import Doc from '../layouts/Doc.astro'
+import { history } from '../lib/history'
+import { identifier } from '../lib/draft'
+
+// Appendix A in full. The index shows the four most recent rows and links here.
+// The split exists because this table grows by a row every time the site
+// corrects itself, and the index has a 60 KB cap it reached on 2026-09-03.
+const ident = identifier('systems-and-arguments', history.length)
+---
+<Doc title="Appendix A, document history" description={`Every revision to the document, newest first. ${history.length} entries, which is why the identifier reads ${ident}.`}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Appendix A, complete</b>
+Category: Document history
+Count: {history.length} revisions</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+Errata: <a href="/errata/">Section 7</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Document History</h1>
+    <div class="sub">Every revision, newest first. The masthead identifier is the number of rows in this table, less one, so the version cannot drift from the record.</div>
+  </div>
+
+  <div class="ind">
+    <div class="memo">This table is the reason the identifier reads <b>{ident}</b>. It is not
+      decoration and it is not a changelog kept out of politeness. A claim that has been revised
+      four times is a different claim from one published once, and a reader who cannot see the
+      revisions cannot tell which they are reading. Entries are appended and never edited.</div>
+  </div>
+
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
+      <tbody>
+      {history.map((h) => (
+        <tr><td class="hd n" data-l="Date">{h.date}</td><td data-l="Change">{h.change}</td></tr>
+      ))}
+      </tbody>
+    </table>
+  </div>
+
+  <a class="back" href="/#sa">Back to Appendix A on the index</a>
+  <div class="foot"><span>Imran</span><span>Appendix A</span><span>[Page A]</span></div>
+</Doc>

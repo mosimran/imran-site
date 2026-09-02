@@ -78,6 +78,10 @@ of the site, where nothing is deleted.
   <br>41 ms / 180 ms gateway overhead, 14 ms redaction, 0.31% failover, falls over at
   ~11k rps.
   <br>`impl/llm-gateway §4`.
+  <br>**2026-09-03: the deployment footprint is now on record.** The self-hosted backends run on
+  two GPUs, supplied by the owner and added to the summary, the stack and the body. Erratum 7.14.
+  The figures in this row are untouched and still unlabelled: 3.2 does not yet separate
+  measurements from design targets the way 3.1 and 3.3 do, and `npm run impl` scores it 3 of 7.
 
 - [ ] **P10** Paper count inconsistency
   <br>The index claims "34 papers, 3 retracted"; the sources between them list 14 and
