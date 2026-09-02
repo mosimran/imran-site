@@ -2332,7 +2332,19 @@ pairs all above 4.5:1.
 `check-social.mjs` failed again on the identifier moving to `-08` and the card was
 regenerated. Fourth catch, still no false positives.
 
-**What is deployed.** Pushed after this entry.
+**What is deployed.** Live at `draft-imran-systems-and-arguments-08`, and the run is red for
+the ninth time on the 7.6 beacon. Upload succeeded, live check failed after it.
+
+One thing worth recording about the verification. The first check against the live origin
+after the merge still showed the old sentence and `-07`, and the temptation was to call that
+a failed deploy. The step list said otherwise: `deploy to cloudflare pages` had passed and
+only the live check had failed. It was CDN propagation, and polling with a cache-busting
+query confirmed the new bytes a short time later. Reading the step list rather than the
+overall red cross is the difference between a correct diagnosis and a wrong one, which is the
+same point erratum 7.6 makes about checks that measure the wrong thing.
+
+Verified: the Status section carries the new sentence, zero occurrences of "would be an
+abridgement" remain on the live page, and the masthead reads `-08`.
 
 **What is next.** Whether Section 3 should gain notes for the voice AI and custom LLM hosting
 work is now an open editorial question rather than a defect, because the Status sentence no
