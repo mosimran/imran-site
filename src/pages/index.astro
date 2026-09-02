@@ -15,7 +15,11 @@ const cover = new URL('/og-cover.jpg', Astro.site).href
 // Appendix A, newest first. The identifier's version suffix is history.length - 1,
 // so this array is the single source for both. Add a row to Appendix A and the
 // masthead follows; there is no number to remember to bump.
-const history = ['2026-09-02', '2026-09-02', '2026-09-01', '2026-08-31', '2026-08-14', '2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
+// One entry per Appendix A row, newest first. These drifted apart on 2026-09-02:
+// five rows were added by hand while the array kept four, so the masthead
+// under-counted revisions for a day. Kept in step by hand until the table is
+// generated from this array, which is the real fix.
+const history = ['2026-09-02', '2026-09-02', '2026-09-02', '2026-09-02', '2026-09-02', '2026-09-01', '2026-08-31', '2026-08-14', '2026-08-13', '2026-06-11', '2026-01-04', '2025-08-20']
 const revised = new Date(history[0])
 const ident = identifier('systems-and-arguments', history.length)
 const expires = expiresOn(revised)
@@ -201,7 +205,7 @@ mosthofaimran.com
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>System</th><th style="width:150px">Result</th><th style="width:1%">State</th></tr></thead>
       <tbody>
-      <tr><td class="n" data-l="Section">3.1</td><td class="hd" data-l="System"><a href="/impl/mevrik-cx/">Mevrik: agentic customer experience platform</a></td><td class="num" data-l="Result">40M events/day / 3 regulated tenants</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
+      <tr><td class="n" data-l="Section">3.1</td><td class="hd" data-l="System"><a href="/impl/mevrik-cx/">Mevrik: agentic customer experience platform</a></td><td class="num" data-l="Result">3M+ conversations/month / 99.9% on SLA</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
       <tr><td class="n" data-l="Section">3.2</td><td class="hd" data-l="System"><a href="/impl/llm-gateway/">Sovereign LLM gateway</a></td><td class="num" data-l="Result">3.1M calls/day / p99 overhead 180 ms</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
       <tr><td class="n" data-l="Section">3.3</td><td class="hd" data-l="System"><a href="/impl/ingest-rs/">Ingest path rewrite, PHP to Rust</a></td><td class="num" data-l="Result">89% fewer nodes / p99 340 ms → 11 ms</td><td data-l="State"><span class="chip ok">Production</span></td></tr>
       <tr><td class="n" data-l="Section">3.4</td><td class="hd" data-l="System"><a href="/impl/olap-migration/">Analytics migration to ClickHouse</a></td><td class="num" data-l="Result">14B rows / query p95 9.4 s → 380 ms</td><td data-l="State"><span class="chip">Complete</span></td></tr>
@@ -400,6 +404,10 @@ mosthofaimran.com
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>Correction</th><th style="width:110px">Date</th></tr></thead>
       <tbody>
+      <tr><td class="n" data-l="Section">7.11</td>
+        <td class="hd" data-l="Correction">Implementation 3.1 carried the prototype's invented figures and stack.
+          <span class="sub">It claimed 40M events/day, 3 regulated tenants and a stack including Rust, ClickHouse and RabbitMQ. None of that described the system. Replaced with measured figures and the real stack, and the note is now written. <a href="/errata/#e7-11">Full entry</a>.</span></td>
+        <td class="num" data-l="Date">2026-09-02</td></tr>
       <tr><td class="n" data-l="Section">7.10</td>
         <td class="hd" data-l="Correction">Section 14 claimed absence from platforms where the author holds accounts.
           <span class="sub">It said "Not present on: any feed-ranked platform", which reads as owning no account. The accounts exist and are used for contact. What does not happen is posting. <a href="/errata/#e7-10">Full entry</a>.</span></td>
@@ -616,6 +624,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:120px">Date</th><th>Change</th></tr></thead>
       <tbody>
+      <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Implementation 3.1 written, and its placeholder figures and stack corrected, erratum 7.11.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Section 3 moves to its own complete index at /impl/, leaving a short table here. Same arrangement Section 5 has used since T09.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Section 3 gains 3.7 and 3.8, both unwritten because no figures were supplied.</td></tr>
       <tr><td class="hd n" data-l="Date">2026-09-02</td><td data-l="Change">Status of This Memo no longer claims to contain everything a r&eacute;sum&eacute; would.</td></tr>
