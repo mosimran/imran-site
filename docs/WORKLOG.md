@@ -2675,3 +2675,49 @@ whoever opened it and closing another session's pull request is not this session
 
 **What is next.** T36 through T42, blocked on the owner for figures, failure modes and a title
 for 3.3. Stacks for 3.4, 3.5 and 3.6 still need the same question asked.
+
+---
+
+## Section 3 plan, Rev C, 2026-09-02
+
+**What changed.** Documentation. The plan is rewritten a second time, and this revision fixes
+two things Rev B got wrong about the brief rather than about the facts.
+
+**Rev B answered half the question.** The brief was to validate and write the implementations,
+read the résumé to validate *and expand* them, and make each one represent engineering
+capability with infrastructure and product reasoning. Rev B produced a validation and a task
+list. It did no expansion and set no bar, and those were two thirds of what was asked.
+
+**Rev C adds a bar, and it is derived rather than invented.** Seven items, taken from what note
+3.1 actually does: one constraint that explains the rest, decisions with enforcement attached
+rather than policies, a diagram of the mechanism, numbers split into measurement and target,
+a named failure mode, product reasoning about who the constraint serves, and an honest section
+on what was done in the wrong order. A note that lists a stack and a throughput number is a
+directory entry, and seven of the eight are currently directory entries.
+
+**Rev C adds the expansion, and the gap is larger than expected.** All eight notes are one
+platform at one employer. The résumé describes work at three others, each with figures already
+published in a document handed to strangers, and Section 3 mentions none of it:
+
+A document intelligence pipeline, a multi-day process reduced to minutes at around 99.7 percent
+data integrity, which is accuracy as a product constraint and the economics of what a machine
+may decide alone. A field service and payments platform with more than two hundred US business
+customers across three processors, which is money correctness and PCI scope. A skills and
+tooling registry of more than nine thousand servers on a revenue share, which is catalogue at
+scale where the supply is untrusted.
+
+None of those capabilities appears anywhere in the current eight. Section 3 under-represents
+the range the résumé already claims, and the résumé is the more conservative document.
+
+**Rev B also over-blocked, which was a smaller error with a real cost.** It marked every task
+blocked on the owner and left nothing to do. That is wrong: the constraint, the decisions, the
+diagram and the product reasoning are all writable from material already supplied, and notes
+3.7 and 3.8 already carry real architecture while marked `unwritten`. Rev C separates what
+lands from what a task waits on, so each one writes five of the seven bar items and stops at
+the figures. The owner's input becomes a short answer rather than a blank page.
+
+**What is deployed.** Nothing yet. Documentation only, and the next task is T36 rather than
+another revision of this file.
+
+**What is next.** T36, 3.3 retitled and written. It needs a title from the owner but the body,
+the diagram and the reasoning do not wait on one.

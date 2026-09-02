@@ -240,41 +240,51 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
   moves, erratum 7.8 records it and the state follows the schema.
   <br>*Blocked on the owner.* P21.
 
-## Track 10: finishing Section 3
+## Track 10: finishing and expanding Section 3
 
-Opened 2026-09-02. Plan in [SECTION-3-PLAN.md](SECTION-3-PLAN.md), now at Rev B. Rev A
-concluded that two notes might be fiction; that was wrong, it is withdrawn, and erratum 7.12
-records why. **All eight notes describe real systems.** Every task below is blocked on the
-owner for figures and a named failure mode, which no document holds.
+Opened 2026-09-02, replanned at [SECTION-3-PLAN.md](SECTION-3-PLAN.md) Rev C. All eight notes
+describe real systems; Rev A said otherwise about two and was wrong, erratum 7.12.
 
-- [ ] **T36** 3.3 retitled and written
-  <br>*Ships:* yes. *Blocked on the owner* for a title, figures and a failure mode. The service
-  is a webhook and social media ingestion microservice used by several platforms, with replay,
-  retry and fault tolerance, behind a 100 percent delivery receipt claim. Rust is confirmed for
-  the reused parts, so the title is right about the language and wrong about the subject: it
-  names a migration where the delivery guarantee is the thing worth listing.
+**Each task writes everything writable and then stops at the figures.** Rev B marked every task
+blocked and left nothing to do, which was wrong: the constraint, the decisions, the diagram and
+the product reasoning can all be written from material already supplied. A note stays
+`unwritten` until figures and a named failure mode arrive, and a written body under an honest
+`unwritten` state is worth more than front matter.
+
+Every note must clear the seven-item bar in Rev C section 1. A note that lists a stack and a
+throughput number is a directory entry.
+
+- [ ] **T36** 3.3 webhook and social ingestion, retitled and written
+  <br>*Ships:* yes. *Lands:* retitle, body, diagram. *Waits on:* a title, figures, failure mode.
+  <br>Rust is confirmed. The delivery guarantee is the subject: replay, retry, drainable
+  dead-letter, and a 100 percent receipt rate against webhooks that retry.
 
 - [ ] **T37** 3.5 air-gapped delivery pipeline, written
-  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode. First of the set
-  because paper 5.5 already argues its case.
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
+  <br>First of the unwritten, because paper 5.5 already argues its case.
 
 - [ ] **T38** 3.7 voice AI, written
-  <br>*Ships:* yes. *Blocked on the owner* for values. The résumé names the metrics without
-  giving any: end to end latency, word error rate on Bangla audio, containment, escalation.
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* values for the four metrics the résumé
+  already names by name.
 
 - [ ] **T39** 3.8 custom LLM training and hosting, written
-  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* figures, failure mode.
 
 - [ ] **T40** 3.2 sovereign LLM gateway, written
-  <br>*Ships:* yes. *Blocked on the owner* for figures. Closes P09. Stack confirmed by asking:
-  the gateway fronts Ollama, GPT-4o and Qwen, which is self-hosted and commercial behind one
-  control plane and is the point of the note.
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* figures. Closes P09.
 
-- [ ] **T41** 3.4 analytics migration to ClickHouse, written
-  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+- [ ] **T41** 3.4 analytics migration, written
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
 
 - [ ] **T42** 3.6 audit evidence programme, written
-  <br>*Ships:* yes. *Blocked on the owner* for figures and a failure mode.
+  <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
+
+- [ ] **T43** Section 3 expansion
+  <br>*Ships:* yes. *Blocked on the owner's decision.* The résumé describes three systems at
+  other employers with figures already published in it, and Section 3 mentions none of them: a
+  document intelligence pipeline, a field service and payments platform, and a skills and
+  tooling registry. Each covers capability the current eight do not. Rev C section 3 has the
+  case for each.
 
 ---
 
