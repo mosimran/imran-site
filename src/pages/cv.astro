@@ -57,13 +57,13 @@ X-Robots-Tag: noindex</div>
   <h2 id="s66">6.6. Who else processes this</h2>
   <div class="ind">
     <p class="dim" style="max-width:80ch">A privacy claim that lists what I keep, and not who else
-    holds it, covers half the problem. Slack joins this table the day it is switched on and not
-    before: the code shipped on 2026-09-03 and does nothing until a webhook is set.</p>
+    holds it, covers half the problem. Three companies see something.</p>
     <table class="rt">
       <thead><tr><th style="width:150px">Processor</th><th style="width:200px">What it sees</th><th>Why</th></tr></thead>
       <tbody>
       <tr><td class="hd" data-l="Processor">Cloudflare</td><td data-l="Sees">Every request, and a page-view beacon in your browser</td><td data-l="Why">Hosting, the token store, the file. Web Analytics is on, so a third-party script loads on every page. Section 10 has the cost</td></tr>
       <tr><td class="hd" data-l="Processor">Resend</td><td data-l="Sees">Your address and the link</td><td data-l="Why">Delivering the mail. There is no other way to send you one</td></tr>
+      <tr><td class="hd" data-l="Processor">Slack</td><td data-l="Sees">Your address when you request a link. When one is opened, a token number and a count, and no address</td><td data-l="Why">Telling me a request happened. Until 2026-09-03 nothing did, and a gate nobody is alerted about fails silently</td></tr>
       </tbody>
     </table>
   </div>

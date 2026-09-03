@@ -9,10 +9,9 @@
 //    every input, and an outbound call that can fail is an oracle by timing if
 //    the caller waits on it.
 // 2. It carries the address on request, because knowing who asked is the whole
-//    point of the alert. Section 6.2 currently says the address goes to the access
-//    log and nowhere else, and that stays true while SLACK_WEBHOOK_URL is unset
-//    and this file does nothing. Setting the secret makes the sentence false, so
-//    the secret and the disclosure in 6.6 have to land together.
+//    point of the alert. Sections 6.2 and 6.6 say so. They were corrected on the
+//    day the secret was set rather than the day this code shipped, which is
+//    erratum 7.26: the disclosure lands with the behaviour, never before it.
 // 3. It carries no address on redemption. Section 6.4's stated purpose there is
 //    detecting a forward, not identifying the reader, and a row id plus a view
 //    count answers that without naming anybody.
