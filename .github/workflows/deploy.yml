@@ -128,5 +128,12 @@ jobs:
       # not anything is behind it. The probe burns nothing: a token that cannot
       # exist still exercises both bindings, because the file is fetched before
       # the token is burned.
+      #
+      # Runs even when the step above fails. The live budget check has been red
+      # since erratum 7.6 and stays red until Web Analytics is turned off on the
+      # zone, and a job that stops at the first failure would have meant this
+      # check never executed once. A check wired into a step that cannot be
+      # reached is not a check.
       - name: verify the resume gate still answers
+        if: ${{ !cancelled() }}
         run: node scripts/check-gate.mjs https://mosthofaimran.com,https://imran.com.bd
