@@ -3016,3 +3016,35 @@ both schemes.
 **Deployed.** Pending merge.
 
 **Next.** 3.7 and 3.8 are the last two stubs, and the last rows in P08.
+
+## 3.7 written, voice AI
+
+**Changed.** Note 3.7 said `state: unwritten` while its own summary said Bangla and Banglish
+speech was in production. Two sentences on one page, disagreeing since 2026-09-02. This is the
+same conflation corrected on 3.6 under erratum 7.16: the field describes the system and was
+being used to describe the page. Now `production`, which the summary published all along.
+
+Written as a disclaimed reference design: the latency contract voice imposes, five enforced
+decisions, a diagram of the six-stage loop with barge-in and the handoff branch, product
+reasoning, and five failure modes. Erratum 7.21.
+
+Nothing from the stub's description was invented and nothing is withdrawn. The platform,
+code-switched speech in production, handoff under SLA routing, telephony concurrency and
+redaction on stored audio were the owner's and are unchanged.
+
+**One thing the note says that the stub did not.** Two of the four tracked metrics mislead if
+published alone. Containment rate without an outcome measure rewards making escalation harder,
+and aggregate word error rate hides the code-switching failure it most needs to expose. That is
+in section 4 and in failure modes 5.2 and 5.4, so it is on the page before the numbers are.
+
+The stub's closing observation, that the platform's automated quality scoring is an instance of
+what paper 5.19 argues about, is now failure mode 5.5 with the answer stated: a standing sample
+re-scored by people, agreement rate published beside the scores.
+
+**Validated.** `npm run check` exit 0. Index 58445 / 60000. `npm run impl`: 3.7 at 6/7, section
+at **45 of 56**, prototype text 0, undefined classes 0. `npm run a11y` local: 0 WCAG2AA errors
+both schemes, 22 SVG text nodes in the built page.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.8, custom LLM training and hosting. The last stub and the last row in P08.

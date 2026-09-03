@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-03', change: 'Implementation 3.7 written as a disclaimed reference design; its state said unwritten while its summary said production. Erratum 7.21.' },
   { date: '2026-09-03', change: 'Implementation 3.5 written as a disclaimed reference design. No note carries prototype text now. Erratum 7.20.' },
   { date: '2026-09-03', change: "Implementation 3.4 written as a disclaimed reference design; its summary and figures were the prototype's. Erratum 7.19." },
   { date: '2026-09-03', change: 'Implementation 3.2 rewritten as a disclaimed reference design, with five failure modes common to the category and still no figures. Erratum 7.18.' },
