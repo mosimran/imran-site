@@ -96,6 +96,27 @@ for (const path of PATHS) {
 
   console.log('')
 }
+
+// The address the site gives security researchers has to be reachable at the
+// address it gives them. check-links.mjs reads dist/, where the file has always
+// existed, so it reported zero broken links for three weeks while the live URL
+// returned 404. Same shape as erratum 7.6: a correct check measuring the wrong
+// artifact. Erratum 7.23.
+{
+  const url = `${BASE}/.well-known/security.txt`
+  let ok = false, detail = 'unreachable'
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA } })
+    const body = r.ok ? await r.text() : ''
+    ok = r.ok && /^Contact:/m.test(body)
+    detail = r.ok ? `${r.status}, ${body.split('\n').filter((l) => l.startsWith('Canonical:')).length} canonical lines` : String(r.status)
+  } catch (e) {
+    detail = e.message
+  }
+  console.log(`  /.well-known/security.txt`)
+  pass('served and has a Contact line', ok, detail)
+  console.log('')
+}
 }
 
 if (failures.length) {

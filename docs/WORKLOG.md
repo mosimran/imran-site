@@ -3173,3 +3173,40 @@ lander failing a budget check is noise rather than signal, and T44 tracks it ins
 against `imran.com.bd` alone, both run. `check-errata`: 0 claims changed.
 
 **Next.** T44 needs registrar access. The prose sweep of `src/content/papers` is still open.
+
+## security.txt has been returning 404 since it was written
+
+**Found while narrowing the domain scope to two hosts.** Section 14 tells anyone who finds a
+flaw in the résumé gate to go to `/.well-known/security.txt`. That URL returned 404 on every
+host from 2026-08-13 until today.
+
+**Cause.** The file was written, committed and built correctly, and `dist/.well-known/security.txt`
+exists in every build. It never reached the deployment. `actions/upload-artifact` excludes
+dot-paths unless told otherwise, and `dist` contains exactly one: this file. The artifact step
+reported 80 files from a 104-file build and nobody read the number, including me, until I
+counted them against each other today.
+
+**Every check that could have caught it measured the wrong artifact.** `check-links.mjs`
+resolves links against `dist/`, where the file has always been present, so it reported zero
+broken links for three weeks. `check-budget.mjs` reads `dist/` too. `check-live.mjs` reads the
+live origin and had a fixed list of four HTML pages that did not include it.
+
+That is erratum 7.6 again. 7.6 concluded that a check on the build cannot see what the edge
+does. The true generalisation is wider: a check on the build cannot see what the deployment
+never received, and it took a second instance to learn the wider version.
+
+**Fixed.** `include-hidden-files: true` on the artifact step. `check-live.mjs` now requests the
+file from every serving host and asserts 200 with a `Contact:` line. It fails today on both
+hosts, correctly, and should pass once this deploys. Erratum 7.23.
+
+**Domain scope, set by the owner.** `mosthofaimran.com` and `imran.com.bd` for now.
+`johnefemer.com` and `efemer.me` are out of scope, and PLAN section 2, its summary table,
+`astro.config.mjs` and `security.txt` all said otherwise in some form. The dead `efemer.me`
+canonical line is gone from `security.txt`. T44 closed by taking the second option it offered:
+stop claiming the domain rather than set it up. `efemer.me` is left attached to the Pages
+project, because detaching it is an infrastructure change nobody asked for.
+
+**Validated.** `npm run check` exit 0. Index 58433 / 60000. `check-live` fails on the beacon and
+on security.txt, both correctly, on both hosts.
+
+**Deployed.** Pending merge, and the fix is only proven once the live URL returns 200.

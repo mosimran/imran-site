@@ -8,6 +8,5 @@ Contact: https://mosthofaimran.com/#s14
 Preferred-Languages: en, bn
 Canonical: https://mosthofaimran.com/.well-known/security.txt
 Canonical: https://imran.com.bd/.well-known/security.txt
-Canonical: https://efemer.me/.well-known/security.txt
 Expires: 2027-08-13T00:00:00.000Z
 Acknowledgments: https://mosthofaimran.com/errata/
