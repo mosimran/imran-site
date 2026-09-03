@@ -111,18 +111,27 @@ of the site, where nothing is deleted.
   record, which is the defect erratum 7.13 removed from note 3.3. Removed rather than replaced,
   same decision and same reason. The note now reports no figures. Erratum 7.17.
 
-- [ ] **P10** Paper count inconsistency
+- [x] **P10** Paper count inconsistency
   <br>The index claims "34 papers, 3 retracted"; the sources between them list 14 and
   1. Closed by T09, which makes the count generated from the collection so it cannot
   disagree with itself again.
+  <br>**The box was never ticked, and this row read as open for three weeks.** Verified
+  2026-09-03: `/papers/` reports 23 papers and 1 retracted, generated from the collection, and
+  the collection holds 23 files of which 1 is retracted. The hardcoded count is gone from the
+  index. A ledger that says a closed thing is open costs the same attention as one that says an
+  open thing is closed.
 
-- [ ] **P11** Bodies missing for 4 of 19 documents
+- [x] **P11** Bodies missing for 4 of 19 documents
   <br>Was 17 of 19. All fourteen papers in Section 5 now carry a body, at least one
   figure and retirement conditions, written 2026-08-14 and recorded in erratum 7.5.
   Implementation notes 3.1, 3.3, 3.4 and 3.5 still carry front matter only; note 3.2 has
   a full body. Nothing is invented to fill the remaining four.
   <br>**2026-08-31: now 5 of 22.** Papers 5.15 and 5.16 arrived with full bodies;
   implementation note 3.6 arrived without one, for the reason recorded at P22.
+  <br>**Closed 2026-09-03.** Every document in both collections carries a body. The eight
+  implementation notes were written between 2026-09-02 and 2026-09-03, the last five under the
+  reference-design rule. Checked mechanically rather than by memory: no file in
+  `src/content/impl` or `src/content/papers` has a body under the stub threshold.
   <br>**2026-09-03: note 3.3 has a body.** Written from the owner's description of the service:
   a shared webhook receiver used by several platforms, with replay, retry and fault tolerance.
   It clears all seven items of the Section 3 bar, as does 3.1. The other six do not, and
@@ -207,11 +216,14 @@ does not.
   not the drafter's. This row is now the reason the number may be too low rather than too
   high.
 
-- [ ] **P22** Measurements and failure modes for implementation 3.6
+- [ ] **P22** Measurements for implementation 3.6 (was: measurements and failure modes)
   <br>`src/content/impl/compliance-evidence.md`. The note is `unwritten` because the
   résumé supplies the frameworks and none of the numbers. It stays unwritten until an audit
   programme produces figures that would survive an interview. Nothing is invented to fill
   the row.
+  <br>**The row title said "failure modes" for a day after they existed, and is retitled.**
+  The note carries four named ones, so Principle 4.8 is satisfied and the architecture can be
+  presented. What remains is measurement alone.
   <br>**2026-09-03: the note is written and the row stays open.** 3.6 now carries its constraint,
   its enforced decisions, a diagram, four named failure modes and where SOC 2 fits, all inside the
   boundary paper 5.15 section 8 already published. It still carries no figures, and section 5 of the

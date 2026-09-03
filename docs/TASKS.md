@@ -229,11 +229,14 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
   P16 closed. P17, the role string in the masthead and §14, was not supplied and is not
   invented. Erratum 7.7 states the omission rather than hiding it.
 
-- [ ] **T34** Reconcile the Mevrik figures in note 3.1 against the résumé
+- [x] **T34** Reconcile the Mevrik figures in note 3.1 against the résumé
   <br>*Ships:* yes. *Validated by:* one set of numbers, in the same units, on both
   documents. Folds P08 and P18 together.
   <br>*Blocked on the owner.* Needs figures defensible in an interview, per BUILD.md
   section 8.
+  <br>**Closed 2026-09-02.** 3.1 now carries the résumé's figures in the résumé's units: 3M+
+  conversations a month, 99.9 percent availability against contracted SLAs, recovery under
+  thirty minutes. The prototype's 40M events/day and 3 regulated tenants are gone. Erratum 7.11.
 
 - [ ] **T35** Confidence pass on 5.15 and 5.16
   <br>*Ships:* yes. *Validated by:* the owner states his own credence for each; if either
@@ -245,40 +248,68 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
 Opened 2026-09-02, replanned at [SECTION-3-PLAN.md](SECTION-3-PLAN.md) Rev C. All eight notes
 describe real systems; Rev A said otherwise about two and was wrong, erratum 7.12.
 
-**Each task writes everything writable and then stops at the figures.** Rev B marked every task
-blocked and left nothing to do, which was wrong: the constraint, the decisions, the diagram and
-the product reasoning can all be written from material already supplied. A note stays
-`unwritten` until figures and a named failure mode arrive, and a written body under an honest
-`unwritten` state is worth more than front matter.
+**Superseded on 2026-09-03 by a rule the owner set, and the tasks below are closed under it.**
+This preamble said a note stays `unwritten` until figures and a named failure mode arrive. That
+kept seven notes as stubs indefinitely, because the figures were never going to be publishable:
+they belong to clients, or to deployments whose internals are not ours to disclose.
 
-Every note must clear the seven-item bar in the plan's section 1, and `npm run impl` scores
-them. **Measured on 2026-09-02: 10 of 56 items, one note of eight clearing the bar.** 3.2 is at
-3/7 and closer to done than the rest; the other six are at 0/7.
+The rule that replaced it is recorded in [CLAUDE.md](../CLAUDE.md). A note describes the
+**reference design** for its class of system, with a disclaimer at the top of the page saying it
+is a solution path rather than a disclosure of internals, and naming what is specific and
+confirmed. No figure is invented under cover of that. Where the real measurements exist and
+cannot be published, the note names which ones would matter and says they are not published.
 
-- [ ] **T36** 3.3 webhook and social ingestion, retitled and written
+`unwritten` also turned out to be doing two jobs. It described the system on some notes and the
+page on others, which produced 3.7 saying `state: unwritten` beside a summary saying "in
+production". Errata 7.16, 7.21 and 7.22 correct the three cases. State now describes the system;
+whether the note is written is derived from the body and shown separately on `/impl/`.
+
+**Measured on 2026-09-03: 51 of 56 items, eight notes of eight written, three clearing the bar.**
+The five at 6/7 miss the figures item alone. That is the whole of what remains in Section 3, and
+it needs the owner.
+
+- [x] **T36** 3.3 webhook and social ingestion, retitled and written
   <br>*Ships:* yes. *Lands:* retitle, body, diagram. *Waits on:* a title, figures, failure mode.
   <br>Rust is confirmed. The delivery guarantee is the subject: replay, retry, drainable
   dead-letter, and a 100 percent receipt rate against webhooks that retry.
+  <br>**Closed 2026-09-03.** Retitled to "Webhook ingestion with delivery guarantees"; the old title
+  named a migration rather than the guarantee. Prototype figures and an invented verification
+  method removed, leaving the measured receipt rate. 7/7. Errata 7.13, 7.15.
 
-- [ ] **T37** 3.5 air-gapped delivery pipeline, written
+- [x] **T37** 3.5 air-gapped delivery pipeline, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
   <br>First of the unwritten, because paper 5.5 already argues its case.
+  <br>**Closed 2026-09-03.** Written as a disclaimed reference design. Its summary and both figures
+  were the prototype's and are removed. Reports no figures. 6/7. Erratum 7.20.
 
-- [ ] **T38** 3.7 voice AI, written
+- [x] **T38** 3.7 voice AI, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* values for the four metrics the résumé
   already names by name.
+  <br>**Closed 2026-09-03.** Written as a disclaimed reference design. Its state said `unwritten`
+  beside a summary saying "in production". Reports no figures, and records that two of the four
+  named metrics mislead if published alone. 6/7. Erratum 7.21.
 
-- [ ] **T39** 3.8 custom LLM training and hosting, written
+- [x] **T39** 3.8 custom LLM training and hosting, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* figures, failure mode.
+  <br>**Closed 2026-09-03.** Written as a disclaimed reference design, answering the test its own
+  stub set: a section on what the evaluation could not catch. 6/7. Erratum 7.22.
 
-- [ ] **T40** 3.2 sovereign LLM gateway, written
+- [x] **T40** 3.2 sovereign LLM gateway, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* figures. Closes P09.
+  <br>**Closed 2026-09-03.** Figures removed as the prototype's, then the note rewritten as a
+  disclaimed reference design with five failure modes the category has. First note to clear the
+  bar with no measurement published at all. 7/7. P09 and P25 closed. Errata 7.14, 7.17, 7.18.
 
-- [ ] **T41** 3.4 analytics migration, written
+- [x] **T41** 3.4 analytics migration, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
+  <br>**Closed 2026-09-03.** Written as a disclaimed reference design. Its entire summary, naming a
+  rollback at 02:40, was the prototype's. Reports no figures. 6/7. Erratum 7.19.
 
-- [ ] **T42** 3.6 audit evidence programme, written
+- [x] **T42** 3.6 audit evidence programme, written
   <br>*Ships:* yes. *Lands:* body, diagram. *Waits on:* stack, figures, failure mode.
+  <br>**Closed 2026-09-03.** Written as a disclaimed reference design covering SOC 2 against ISO
+  27001, inside the boundary paper 5.15 section 8 publishes. Reports no figures. 6/7.
+  Erratum 7.16.
 
 - [ ] **T43** Section 3 expansion
   <br>*Ships:* yes. *Blocked on the owner's decision.* The résumé describes three systems at

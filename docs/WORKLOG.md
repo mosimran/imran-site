@@ -3086,3 +3086,40 @@ eight notes with a body, prototype text 0, undefined classes 0. `npm run prose`:
 
 **Next.** The remaining gap in Section 3 is measurement. Five notes report no figures and each
 names the ones that would matter. That needs the owner rather than the drafter.
+
+## Tracking documents reconciled with what actually shipped
+
+**Found by audit rather than instruction.** Section 3 finished, and the three documents that
+are supposed to describe it did not. CLAUDE.md calls TASKS.md and PLAN.md the contract, so a
+stale one is the same defect as the homepage contradicting an erratum: a document asserting
+something the site has already superseded.
+
+**TASKS.md.** T34 and T36 through T42 were all shipped and all still showed `[ ]`, each with a
+blocker ("*Waits on:* figures, failure mode") describing an approach the owner replaced on
+2026-09-03. Anyone reading it, including me next session, would have redone finished work under
+the wrong rule. Eight tasks closed, each with a line saying what actually happened and which
+erratum records it. Open tasks are now T29, T35 and T43, all genuinely blocked on the owner.
+
+The Track 10 preamble said a note stays `unwritten` until figures arrive. That assumption would
+have kept seven notes as stubs permanently, because those figures were never going to be
+publishable. Rewritten to state the reference-design rule and the measured result.
+
+**PLACEHOLDERS.md.** P10's body said "Closed by T09" while its box sat unticked, so it read as
+open for three weeks. Verified before ticking: `/papers/` reports 23 papers and 1 retracted,
+generated from the collection, and the collection holds 23 files of which 1 is retracted. P11
+closed, checked mechanically: no file in either collection has a body under the stub threshold.
+P22 retitled, because it named failure modes that have existed since erratum 7.16 and what
+remains is measurement alone. 12 open of 25, down from 14.
+
+**SECTION-3-PLAN.md is Rev E.** It records that the plan's central assumption was replaced and
+quotes the final measurement. The quoted table was diffed line by line against live `npm run
+impl` output rather than typed from memory; all ten lines match.
+
+**A check for the P10 shape.** `npm run placeholders` now reports any row whose own text says
+"Closed" while its box is unticked. Proven both ways by unticking P10 and restoring it.
+
+**Validated.** `npm run check` exit 0. No content collection changed, so no erratum and no
+Appendix A row: this is repository documentation rather than a published claim.
+
+**Next.** The prose sweep of `src/content/papers`, where 36 of the 47 flagged negation flips
+live, all written before today.

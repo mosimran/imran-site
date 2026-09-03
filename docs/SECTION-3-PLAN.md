@@ -1,9 +1,41 @@
 # Finishing and expanding Section 3
 
-Rev D, 2 September 2026. Rev A's central finding was wrong and is withdrawn, erratum 7.12.
-Rev B stopped at "finish the eight". Rev C added the bar and the expansion but left the bar as
-prose in this file and got two facts wrong about the notes it was describing. Rev D measures
-instead of asserting: `npm run impl` scores every note and this document quotes it.
+Rev E, 3 September 2026. Rev A's central finding was wrong and is withdrawn, erratum 7.12.
+Rev B stopped at "finish the eight". Rev C added the bar and the expansion but got two facts
+wrong about the notes it was describing. Rev D measured instead of asserting.
+
+**Rev E records that the plan's central assumption was replaced, and that the work is done.**
+Rev D held that a note stays `unwritten` until figures and a named failure mode arrive from the
+owner. That assumption would have kept seven notes as stubs permanently, because those figures
+were never going to be publishable: they belong to clients, or to deployments whose internals
+are not ours to disclose. Waiting for them was waiting for something that could not come.
+
+The rule that replaced it, set by the owner on 2026-09-03 and recorded in
+[CLAUDE.md](../CLAUDE.md): a note describes the **reference design** for its class of system,
+disclaimed at the top of the page as a solution path rather than a disclosure of internals, and
+naming what is specific and confirmed. No figure is invented under cover of that. Where real
+measurements exist and cannot be published, the note names which would matter and says they are
+not published.
+
+Measured after the last note landed, on 2026-09-03:
+
+```
+  §     note                    state       words   score  missing
+  3.1   mevrik-cx               production   1814   7/7    -
+  3.2   llm-gateway             production   1633   7/7    -
+  3.3   ingest-rs               production   1536   7/7    -
+  3.4   olap-migration          complete     1534   6/7    numbers labelled (no figures supplied)
+  3.5   airgap-delivery         production   1461   6/7    numbers labelled (no figures supplied)
+  3.6   compliance-evidence     production   1540   6/7    numbers labelled (no figures supplied)
+  3.7   voice-ai                production   1669   6/7    numbers labelled (no figures supplied)
+  3.8   llm-hosting             production   1862   6/7    numbers labelled (no figures supplied)
+
+  3 of 8 notes clear the bar. 51 of 56 items across the section.
+```
+
+Section 2 below is Rev D's measurement, kept for the record. Section 4 describes the assumption
+Rev E replaced and is superseded; it is kept because the reasoning in it explains why five notes
+still report no figures. Section 3, the expansion case, is untouched and still open as T43.
 
 - [1. The bar](#1-the-bar)
 - [2. Where the eight stand](#2-where-the-eight-stand)
@@ -41,6 +73,11 @@ A note that lists a stack and a throughput number is a directory entry. A note t
 seven is an argument about how to build something.
 
 ## 2. Where the eight stand, measured
+
+**Rev D's reading, kept for the record.** The current numbers are in the header above; every
+note has since been written, and the states in the table below were themselves part of the
+problem, since `unwritten` was describing the page rather than the system on three of them.
+Errata 7.16, 7.21 and 7.22 correct that.
 
 All eight describe real systems. Rev A said otherwise about two of them and was wrong.
 
@@ -109,6 +146,15 @@ Section 3 currently under-represents the range the résumé already claims, and 
 the more conservative document.
 
 ## 4. What can be written without the owner, and what cannot
+
+**Superseded by Rev E, and kept because it explains the shape of what is left.** The split below
+was right about which parts need the owner and wrong about what follows from that. Figures do
+need him. Named failure modes turned out not to, once the rule allowed a note to describe the
+failure modes the *category* has rather than a particular estate's incident history. Stack
+confirmation for 3.4, 3.5 and 3.6 was answered by the owner directly.
+
+What survives from this section is the first item: figures, and the label on each. That is the
+only thing still missing from Section 3, on five of the eight notes.
 
 Rev B over-blocked. It marked everything "blocked on the owner" and left nothing to do, which
 is wrong: 3.7 and 3.8 already carry real architecture in their bodies while marked `unwritten`,
