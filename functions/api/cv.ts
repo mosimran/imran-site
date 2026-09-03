@@ -104,9 +104,8 @@ export const onRequestPost: PagesFunction<Env> = async (ctx) => {
 
     // Slack, after the response, for the same reason the mail is. This one
     // carries the address on purpose: an alert that will not say who asked is
-    // not worth reading. Inert until SLACK_WEBHOOK_URL is set, which is why
-    // section 6.2 still says the address goes to the access log and nowhere
-    // else. Setting the secret and updating 6.2 and 6.6 are one change.
+    // not worth reading. Section 6.2 and the processor table in 6.6 both say the
+    // address comes here, corrected the day the secret was set. Erratum 7.26.
     ctx.waitUntil(Promise.resolve(notifyRequested(ctx.env, email)))
   } catch {
     // A database failure must not tell the caller anything either.

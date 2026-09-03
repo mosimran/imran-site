@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-03', change: 'Slack alerting switched on, so 6.2 and the 6.6 processor table now say the address goes there too. Erratum 7.26.' },
   { date: '2026-09-03', change: 'The analytics beacon is kept and disclosed rather than denied, and the CSP that had been silently blocking it since 2025 is opened to that one host. Erratum 7.25.' },
   { date: '2026-09-03', change: 'Section 6: the resume link is no longer single use, because mail scanners were consuming it before the recipient. Section 6.6 added, naming who else processes a request. Erratum 7.24.' },
   { date: '2026-09-03', change: 'The security.txt address published in section 14 had returned 404 since 2026-08-13. Fixed, and checked live from now on. Erratum 7.23.' },
