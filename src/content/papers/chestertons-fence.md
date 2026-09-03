@@ -142,9 +142,9 @@ wearing a rule's clothing, and I know it.</div>
 ## 6. What this paper does not claim
 
 Old code has no special claim on survival, and `git blame` is not sufficient: Section 2
-exists because it usually is not. The ordering in Figure 1 is not a measurement. It is
-what I have seen hold everywhere I have looked, which is a weaker thing.
+exists because it usually is not. The ordering in Figure 1 records what I have
+seen hold everywhere I have looked, which is weaker than a measurement.
 
-The procedure in Section 4 is not novel either. It is ordinary feature-flag practice
+The procedure in Section 4 is ordinary feature-flag practice rather than anything novel,
 pointed at a deletion instead of a release, which is the one place almost nobody points
 it.

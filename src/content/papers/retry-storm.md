@@ -21,9 +21,9 @@ seeAlso: ["5.4", "5.11", "5.13"]
 mechanism. Without jitter it is a synchronisation mechanism. A single shared fault starts
 every client's timer at the same instant, deterministic delays preserve that alignment
 through every subsequent round, and the recovery attempt arrives as a series of spikes
-that grow with the length of the outage. The failure is not that engineers do not know
-about jitter. It is that retries are budgeted as a count per call instead of as a
-fraction of forward traffic, and that nobody writes down which layer is allowed to retry.
+that grow with the length of the outage. The failure is that retries are budgeted as a count
+per call instead of as a fraction of forward traffic, rather than that engineers do not
+know about jitter, and that nobody writes down which layer is allowed to retry.
 <b>Confidence 0.95.</b> The missing 0.05 is Section 5: the sharper version of this
 paper is about budgets alone, and I have not rewritten it that way yet.</div>
 
@@ -73,7 +73,7 @@ Two amplifiers make this worse than the single-layer picture suggests.
 
 **Amplification through layers.** Retries compose multiplicatively. Three attempts in the
 SDK, inside three attempts at the gateway, inside three attempts in the calling service,
-is not nine requests and it is not three. It is twenty-seven, and no single layer's
+is twenty-seven rather than nine or three, and no single layer's
 configuration looks unreasonable on its own.
 
 <div class="mtr">

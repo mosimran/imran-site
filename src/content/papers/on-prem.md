@@ -21,8 +21,9 @@ seeAlso: ["5.4", "5.14", "5.12"]
 cloud deployment with things taken away. Treated as a constraint adopted at design time
 it is not a downgrade, and the discipline it forces (one artifact, explicit
 dependencies, an offline supply chain, configuration as data) improves the cloud build
-as well. The cost of sovereignty is not hardware. It is the number of assumptions you
-can no longer make, and that number is finite, enumerable and mostly known on day one.
+as well. The cost of sovereignty is the number of assumptions you can
+no longer make rather than hardware, and that number is finite, enumerable and mostly
+known on day one.
 <b>Confidence 0.90.</b> Section 5 holds it there: elastic workloads are a real
 exception and I have not sized how large that exception is.</div>
 
@@ -63,8 +64,8 @@ is a system that is correct and unoperable.
 
 ## 3. Why the constraint pays back
 
-The interesting result is not that these responses are achievable. It is that each of
-them is independently good practice, and a team that adopts them under sovereign
+The interesting result is that each of these responses is independently good practice
+rather than merely achievable, and a team that adopts them under sovereign
 pressure ends up with a cloud build that is measurably better than the one they would
 have shipped without it.
 
@@ -145,5 +146,5 @@ that have nothing to do with engineering. Nothing here says cloud teams are
 undisciplined, only that the sovereign constraint removes the option of skipping the
 discipline, which is a different and much weaker statement about them.
 
-The assumption ledger in Section 2 is not complete. It is the list I have needed so far,
-across six sites, and every new estate has added to it.
+The assumption ledger in Section 2 is the list I have needed so far rather than a
+complete one, across six sites, and every new estate has added to it.

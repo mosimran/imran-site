@@ -144,8 +144,8 @@ the failure mode the rest of the site is about.
 
 ## 7. What this paper does not claim
 
-Big-bang rewrites are not better. They are worse, and the pattern this paper criticises
-is the correct default. Incremental migrations do not fail; most of the ones I have seen
+Big-bang rewrites are worse, and the pattern this paper criticises is the correct
+default. Incremental migrations do not fail; most of the ones I have seen
 succeeded on their own terms.
 
 The claim is only about what they leave behind, and at 0.55 it is a claim I would not

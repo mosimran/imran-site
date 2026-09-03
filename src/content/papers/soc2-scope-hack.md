@@ -161,8 +161,8 @@ where you find out they had stopped being real in year two.
 
 If no buyer has asked for it, a SOC 2 is a cost with no revenue behind it and an operating
 burden that never ends. Start when a named buyer asks, or when the same request keeps
-arriving from one segment. Seeing a badge on a competitor's homepage is not a trigger. It
-is envy with a budget line attached.
+arriving from one segment. Seeing a badge on a competitor's homepage is envy
+with a budget line attached rather than a trigger.
 
 The bold move for a startup nobody has asked yet is to say so out loud, publish what it
 actually does about security, and spend the quarter on the product. You will have one

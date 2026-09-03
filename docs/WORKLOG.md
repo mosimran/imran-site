@@ -3210,3 +3210,39 @@ project, because detaching it is an infrastructure change nobody asked for.
 on security.txt, both correctly, on both hosts.
 
 **Deployed.** Pending merge, and the fix is only proven once the live URL returns 200.
+
+## Prose sweep of Section 5
+
+**Changed.** Twenty negation-flip sentences rewritten across fourteen papers. The construction
+is "X is not Y. It is Z.", which the owner's writing rules name directly and which he has
+flagged twice in this session. Each was collapsed into one sentence keeping the corrective
+force, usually with "rather than", so the argument survives and the two-beat rhythm does not.
+
+Examples. "An unlisted system is not out of scope. It is undiscovered." became "An unlisted
+system is undiscovered rather than out of scope." "The proxy is not stupid. It is measuring the
+wrong quantity." became "The proxy is measuring the wrong quantity rather than being stupid."
+
+**Nothing published changed except the wording.** `check-errata` reports 0 claims changed, and
+no front-matter line was touched in any of the fourteen files: no confidence, no state, no
+title, no summary. 60 insertions against 59 deletions, all in body prose. No erratum, because
+no claim moved.
+
+**Checked before editing:** none of this prose is the handoff prototype's. Four of the flagged
+sentences were tested against it directly and all four were absent, so these are the site's own
+words and safe to edit in place rather than mark.
+
+**The count fell from 47 to 18, and the 18 are false positives.** Read individually rather than
+counted: they are referential sentences where a "This is..." or "That is..." follows a sentence
+that happens to contain a negation, which is ordinary English. The check stays a reporter for
+exactly this reason, and the number it prints is not a target to drive to zero.
+
+Six of the eighteen are in `errata/`, and one of those is in erratum 7.23, written today.
+
+**Validated.** `npm run check` exit 0. `astro check` 0 errors. `npm run prose`: 0 em dashes, 0
+"not just X but Y", 0 hype adjectives.
+
+**Deployed.** Pending merge.
+
+**Next.** Open tasks are T29, T35 and T43, all blocked on the owner. The largest remaining gap
+in the site is measurement: five Section 3 notes report no figures, each naming which would
+matter.

@@ -39,8 +39,8 @@ floor, and lists the evidence that would retire it. <b>Confidence 0.80.</b> The 
 Somewhere in the last decade this industry discovered that watching a competent person
 work is more pleasurable than being one, and, more importantly, that from the inside the
 two feel nearly identical. A twelve minute video of someone untangling a difficult module
-ends in the same warm, settled feeling as having untangled it yourself. That is not a
-defect in you. It is the business model of the medium, and it works because it is pointed
+ends in the same warm, settled feeling as having untangled it yourself. That is the business
+model of the medium rather than a defect in you, and it works because it is pointed
 at something real: the pleasure of watching craft is one of the oldest pleasures there is.
 
 Notice what a demo is engineered to remove. There is no data migration. There is no
@@ -60,7 +60,7 @@ one argument.
 
 We have more available knowledge per practitioner than at any point in this industry's
 history, and a persistent, widely reported sense among practitioners that they are behind.
-Those two facts are not in tension. They are the same fact. The supply of things that
+Those two facts look like a tension and are the same fact. The supply of things that
 resemble learning has outgrown the hours in which learning can actually occur, and the
 surplus has to go somewhere. It goes into the feeling.
 
@@ -99,8 +99,8 @@ abundance causes substitution. Constraint causes it too, and by a different rout
 
 ## 4. What survives contact with production
 
-The useful test is not whether a technique is good. It is whether the demonstration
-carried the information you would need to operate it. Almost none do, and the gap is
+The useful test is whether the demonstration carried the information you would need to
+operate it, rather than whether the technique is good. Almost none do, and the gap is
 systematic rather than accidental.
 
 <table class="rt">
@@ -170,9 +170,9 @@ Added 2026-08-31. Sections 1 through 7 are about consumption. This one is about
 production, and it arrives at the same place.
 
 The IKEA effect is the finding that people place higher value on things they assembled
-themselves. The part that matters to engineering is not the valuation. It is that the
-sensation of competence produced by assembly is nearly indistinguishable, from the inside,
-from the sensation produced by comprehension. You did real work. The system runs. The
+themselves. The part that matters to engineering is the sensation rather than the valuation:
+competence produced by assembly feels, from the inside, nearly indistinguishable from
+competence produced by comprehension. You did real work. The system runs. The
 feeling that arrives is the correct feeling for having understood it, and you did not.
 
 This is the uncomfortable half of the paper. Section 5's remedy was to build instead of

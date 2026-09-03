@@ -20,10 +20,10 @@ seeAlso: ["5.4", "5.1", "5.8"]
 <div class="memo"><b>Abstract.</b> Almost everybody picks a model by looking at two numbers,
 the price per million tokens and a position on a leaderboard, and neither of those numbers
 is about your system. The price is the smallest term in what a model actually costs you,
-and the leaderboard is measuring a different workload than the one you run. The fix is not
-an evaluation platform or a quarter of work. It is about forty examples pulled out of your
-own logs, a rubric written on a Tuesday, and the discipline to run the thing again after
-somebody ships a new version. <b>Confidence 0.80.</b> The arithmetic in Section 2 is solid
+and the leaderboard is measuring a different workload than the one you run. The fix is about
+forty examples pulled out of your own logs, a rubric written on a Tuesday, and the
+discipline to run the thing again after somebody ships a new version, rather than an
+evaluation platform or a quarter of work. <b>Confidence 0.80.</b> The arithmetic in Section 2 is solid
 and the failure mode in Section 6 is one I have watched. The gap from 0.90 is Section 9,
 where I have no good answer to what happens when the evaluation itself goes stale.</div>
 
@@ -46,8 +46,8 @@ that a human being was willing to accept.
 
 ## 2. The number on the pricing page is the small one
 
-What governs your bill is not what a token costs. It is what a piece of finished, usable
-work costs, and that has four terms in it:
+What governs your bill is the cost of a piece of finished, usable work rather than the
+cost of a token, and that has four terms in it:
 
 ```
 cost per accepted output =  (tokens in x price in  +  tokens out x price out)
@@ -184,9 +184,9 @@ in the strict sense that no experiment was run which could have come out the oth
 
 Here is the part that matters more than the choice and gets a fraction of the attention.
 
-The endpoint you are calling is not a file you vendored. It is somebody else's running
-service, and it changes underneath you, sometimes with an announcement and sometimes not.
-Your agent is not built against an interface, it is built against behaviour, and that is a
+The endpoint you are calling is somebody else's running service rather than a file you
+vendored, and it changes underneath you, sometimes with an announcement and sometimes not.
+Your agent is built against behaviour rather than an interface, and that is a
 much softer thing to be standing on. When an interface changes you get an exception and a
 stack trace. When behaviour changes you get nothing at all, and the system quietly gets
 worse while every dashboard stays green.
@@ -266,7 +266,7 @@ with no measurement on either side of it. That is where the week goes, and the w
 
 A five-minute evaluation run before the config change would have shown a malformed-output
 rate going from 1.4% to 8.3% and stopped the whole thing on the Thursday. The reason it did
-not run is not that anybody decided against it. It is that nobody had built it, and it was
+not run is that nobody had built it rather than that anybody decided against it, and it was
 only ever an afternoon.
 
 ## 9. The strongest objection, unanswered
