@@ -119,17 +119,31 @@ for (const path of PATHS) {
 // artifact. Erratum 7.23.
 {
   const url = `${BASE}/.well-known/security.txt`
-  let ok = false, detail = 'unreachable'
+  let ok = false, detail = 'unreachable', expires = null
   try {
     const r = await fetch(url, { headers: { 'User-Agent': UA } })
     const body = r.ok ? await r.text() : ''
     ok = r.ok && /^Contact:/m.test(body)
     detail = r.ok ? `${r.status}, ${body.split('\n').filter((l) => l.startsWith('Canonical:')).length} canonical lines` : String(r.status)
+    expires = (body.match(/^Expires:\s*(\S+)/m) || [])[1] ?? null
   } catch (e) {
     detail = e.message
   }
   console.log(`  /.well-known/security.txt`)
   pass('served and has a Contact line', ok, detail)
+
+  // RFC 9116 says a researcher should treat an expired file as stale, so an
+  // expiry that passes turns this from a disclosure route into a dead one. The
+  // file sat at 404 for three weeks because nothing looked at it (erratum 7.23);
+  // letting the date lapse would be the same failure with a different mechanism.
+  // P14 has wanted a reminder that outlives the file since 2026-08-13.
+  if (expires) {
+    const days = Math.floor((Date.parse(expires) - Date.now()) / 86_400_000)
+    pass('security.txt is not expired', days > 0, `${days} days left, ${expires}`)
+    if (days > 0 && days < 45) console.log(`       -> rotate it: under 45 days remain`)
+  } else {
+    pass('security.txt names an Expires', false, 'no Expires field')
+  }
   console.log('')
 }
 }

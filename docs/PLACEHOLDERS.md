@@ -287,9 +287,13 @@ does not.
 - [ ] **P13** Acknowledgement to the operations engineer in Chattogram
   <br>`index §12`.
 
-- [ ] **P14** security.txt `Expires: 2027-08-13`
+- [x] **P14** security.txt `Expires: 2027-08-13`
   <br>`.well-known/security.txt`. Wants annual rotation, and a reminder that outlives
   this file.
+  <br>**Closed 2026-09-03.** The reminder now lives in the deploy rather than in this ledger.
+  `check-live.mjs` reads the served file, fails if `Expires` has passed, and prints a rotation
+  notice inside 45 days. Proven on both sides: 343 days reads ok, a past date fails, and a date
+  16 days out passes with the notice. Erratum 7.27.
 
 ---
 
