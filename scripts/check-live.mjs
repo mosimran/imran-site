@@ -22,9 +22,14 @@
 // imran-site.pages.dev, so the source is that one zone's Web Analytics and not the
 // Pages project. johnefemer.com is a parking lander and is deliberately not listed
 // here; PLAN section 2 records why.
+// An argument or AUDIT_BASE may name several hosts, comma separated. Taking only
+// the first was a real defect for one commit: the workflow passes an explicit
+// host, so CI kept checking the primary alone while this file and its worklog
+// entry both claimed the gap was closed. Verified in the CI log, not assumed.
 const DEFAULT_HOSTS = ['https://mosthofaimran.com', 'https://imran.com.bd']
-const BASES = (process.argv[2] || process.env.AUDIT_BASE)
-  ? [(process.argv[2] || process.env.AUDIT_BASE).replace(/\/$/, '')]
+const given = process.argv[2] || process.env.AUDIT_BASE
+const BASES = given
+  ? given.split(',').map((h) => h.trim().replace(/\/$/, '')).filter(Boolean)
   : DEFAULT_HOSTS
 const PATHS = ['/', '/papers/', '/papers/retry-storm/', '/errata/']
 

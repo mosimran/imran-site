@@ -3156,9 +3156,16 @@ called both "attached and live".
 domains, so nothing published was false. This is repository documentation and it is corrected
 in place, with every row now carrying the date it was verified by request.
 
-**Coverage gap closed.** `check-live.mjs` asserted the zero-JavaScript and zero-third-party
-budgets against the primary alone, while the claim is made about the site. It now checks every
-host that actually serves. Same shape as the provenance scan that read one field: a clean result
+**Coverage gap closed, on the second attempt.** `check-live.mjs` asserted the zero-JavaScript
+and zero-third-party budgets against the primary alone, while the claim is made about the site.
+It now checks every host that actually serves.
+
+The first version of that fix did not work in CI and I said it did. The workflow passes an
+explicit host, and the code took the given base as a single value, so the default list was
+never reached and CI went on checking the primary alone. The CI log said `hosts
+https://mosthofaimran.com` while the worklog claimed the gap was closed. Caught by reading that
+log rather than trusting the local run, which passed because it was invoked with no argument.
+The base now accepts a comma-separated list and the workflow passes both hosts. Same shape as the provenance scan that read one field: a clean result
 covering less than it appeared to. `johnefemer.com` is deliberately excluded, because a parking
 lander failing a budget check is noise rather than signal, and T44 tracks it instead.
 
