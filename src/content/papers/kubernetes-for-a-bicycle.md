@@ -21,8 +21,8 @@ seeAlso: ["5.4", "5.5", "5.12"]
 The fixed cost is paid whether or not the load arrives, it is mostly not the cluster, and
 it is routinely estimated at a fraction of its real size. I have made this mistake twice,
 in both cases having costed the infrastructure and not the practice that has to surround
-it. The claim is not that orchestration is wrong. It is that the sizing question is
-"how many operators do we have" rather than "how many nodes do we need".
+it. The claim is that the sizing question is "how many operators do we
+have" rather than "how many nodes do we need", not that orchestration is wrong.
 <b>Confidence 0.70.</b> Section 5 has two objections I cannot weigh against each other,
 and I have been burned by the second one as well.</div>
 
@@ -32,8 +32,8 @@ Choosing an operational model is choosing a fixed monthly cost in engineer-hours
 cost is incurred on the quiet weeks as well as the busy ones, and it is paid by the same
 people who are supposed to be building the product.
 
-The bicycle in the title is the load. The failure is not that the machinery is bad
-machinery. It is that the machinery has a minimum operating crew, and a team that cannot
+The bicycle in the title is the load. The failure is that the machinery has a minimum
+operating crew rather than that it is bad machinery, and a team that cannot
 staff that crew ends up operating it badly, which is worse than operating something
 smaller well.
 
@@ -91,8 +91,8 @@ two cases in hindsight, which is not a sample.</p>
 
 ## 4. The ladder, and the triggers for climbing it
 
-The useful discipline is not choosing correctly on day one. It is naming, in advance, the
-observation that will move you up a rung. Without a named trigger the decision is made by
+The useful discipline is naming, in advance, the observation that will move you up a
+rung, rather than choosing correctly on day one. Without a named trigger the decision is made by
 whoever is most enthusiastic in the room.
 
 <table class="rt">

@@ -43,8 +43,8 @@ lever.
 
 ## 2. What the convergence looks like
 
-The pattern is not that services get renamed. It is subtler and it shows up in four
-places before it shows up in the deployment topology.
+The pattern is subtler than services getting renamed, and it shows up in four places
+before it shows up in the deployment topology.
 
 <table class="rt">
 <thead><tr><th>Where it shows first</th><th>Symptom</th></tr></thead>

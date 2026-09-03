@@ -35,8 +35,8 @@ wired. And during the incident, the on-call engineer opens it, looks at it for f
 seconds, and goes to the logs.
 
 That four seconds is the measurement that matters and nobody records it. A dashboard's
-value is not the number of signals it displays. It is the number of triage questions it
-answers without a follow-up query.
+value is the number of triage questions it answers without a follow-up query, rather than
+the number of signals it displays.
 
 ## 2. Why bottom-up construction fails
 

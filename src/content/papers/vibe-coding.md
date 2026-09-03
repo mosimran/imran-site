@@ -23,8 +23,8 @@ produces a strong, sincere sense of understanding it. The labour is real, so the
 ownership is real, but the labour was integration and the understanding it purchased is
 of the seams rather than of the parts. The gap is invisible while the system works and
 becomes the whole problem the first time it fails in a way the assembly did not cover.
-This is not an argument about who or what wrote the code. It is an argument about what
-reading buys and what assembling does not. <b>Confidence 0.75.</b> Section 5 has the
+This argues about what reading buys and what assembling does not, rather than about who
+or what wrote the code. <b>Confidence 0.75.</b> Section 5 has the
 objection I cannot answer: nobody reads their TLS library either.</div>
 
 <p class="note">This paper is the long form of one mechanism. Paper 5.1, <a href="/papers/competence-porn/">Competence Theatre</a>, sets it beside the other one, watching, and argues that the two are the same substitution reached from opposite postures. Its Section 8 compresses what is below; this page remains the full treatment.</p>
@@ -32,9 +32,9 @@ objection I cannot answer: nobody reads their TLS library either.</div>
 ## 1. The claim
 
 The IKEA effect is the finding that people place higher value on things they assembled
-themselves. The interesting part for engineering is not the valuation. It is that the
-sensation of competence produced by assembly is nearly indistinguishable, from the
-inside, from the sensation produced by comprehension.
+themselves. The interesting part for engineering is the sensation rather than the valuation:
+competence produced by assembly feels, from the inside, nearly indistinguishable from
+competence produced by comprehension.
 
 Both feel like understanding. Both produce accurate answers to "what does this do". They
 diverge on one question, and it is the only question that matters during an incident:
@@ -77,7 +77,7 @@ them.</figcaption>
 Effort is the proxy the mind uses for depth of understanding, and integration work is
 genuinely effortful. Getting four components to agree on a data format, an auth scheme
 and a deployment target is hard, absorbing, and produces a legitimate sense of
-achievement. The proxy is not stupid. It is measuring the wrong quantity.
+achievement. The proxy is measuring the wrong quantity rather than being stupid.
 
 Two effects make it worse in current practice.
 

@@ -220,7 +220,7 @@ direction.
 
 **6.8.** Anything the platform cannot reach <span class="kw">MUST</span> be written down.
 The unmanaged laptop, the contractor's own machine, the legacy virtual machine nobody logs
-into. An unlisted system is not out of scope. It is undiscovered.
+into. An unlisted system is undiscovered rather than out of scope.
 
 ## 7. The named failure mode
 

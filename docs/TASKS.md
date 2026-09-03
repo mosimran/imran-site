@@ -335,12 +335,15 @@ it needs the owner.
   left attached to the Pages project rather than detached, because that is an infrastructure
   change nobody asked for.
 
-- [ ] **T45** `security.txt` reachable, and a check that keeps it that way
+- [x] **T45** `security.txt` reachable, and a check that keeps it that way
   <br>*Ships:* yes. *Validated by:* `scripts/check-live.mjs` asserting 200 and a `Contact:`
   line on every serving host. *Lands with this task, pending deploy.*
   <br>The file returned 404 on every host from 2026-08-13 because `actions/upload-artifact`
   drops dot-paths by default and `dist` has exactly one. Section 14 has been pointing security
   researchers at a dead address for three weeks. Erratum 7.23.
+  <br>**Closed 2026-09-03, proven live.** Both serving hosts return 200 with a `Contact:` line,
+  and both `Canonical:` URLs the file declares now resolve. `check-live.mjs` failed on both
+  hosts before the deploy and passes on both after it.
 
 ---
 

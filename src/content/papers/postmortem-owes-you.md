@@ -129,7 +129,7 @@ follows a quarter later.</div>
 
 ## 6. What this paper does not claim
 
-Timelines are not useless. They are the evidence the decision rests on, and a decision
+Timelines are the evidence a decision rests on rather than useless detail, and a decision
 without them is an assertion. Nothing here argues for shorter documents, or for writing
 one after every incident. The four obligations in Section 3 are not sufficient either. My
 claim about them is weaker than it may read: a document missing any of the four has, in

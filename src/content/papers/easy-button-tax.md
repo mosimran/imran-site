@@ -20,9 +20,9 @@ seeAlso: ["5.2", "5.14", "5.5"]
 <div class="memo"><b>Abstract.</b> Friction is information. An abstraction that removes a
 step also removes the moment where the constraint behind that step was learned. The
 constraint does not disappear; it reappears at incident time, in front of a person who
-did not choose the abstraction, priced in hours they do not have. This is not an argument
-against abstraction. It is an argument for reading the invoice before signing, and for
-insisting that every easy button ship with a tested escape hatch.
+did not choose the abstraction, priced in hours they do not have. This argues for reading the
+invoice before signing, and for insisting that every easy button ship with a tested
+escape hatch, rather than against abstraction itself.
 <b>Confidence 0.85.</b> The missing 0.15 is Section 5, where the argument still cannot
 tell a good abstraction from a costly one in advance.</div>
 
@@ -33,9 +33,9 @@ of small, predictable, design-time costs into a small number of large, unpredict
 incident-time costs. The trade is often correct. It is almost never priced, because the
 two sides of it are paid in different currencies by different people at different times.
 
-The word "tax" is chosen carefully. A tax is not a scam. It is a known charge on a
-transaction, and the failure here is not that the charge exists but that it is
-undisclosed at the point of sale.
+The word "tax" is chosen carefully. A tax is a known charge on a transaction rather than a
+scam, and the failure here is the charge being undisclosed at the point of sale rather
+than the charge existing at all.
 
 ## 2. The three transfers
 
