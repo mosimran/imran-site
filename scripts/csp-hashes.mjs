@@ -1,4 +1,4 @@
-// The strict CSP has no script-src, so default-src 'none' governs, and that
+// The CSP names the JSON-LD hashes and one third-party host, and that
 // blocks <script type="application/ld+json"> too. Those blocks are data rather
 // than code, but CSP does not make that distinction.
 //
@@ -12,7 +12,18 @@ import { join } from 'node:path'
 const walk = (d, o = []) => { for (const e of readdirSync(d, { withFileTypes: true })) {
   const p = join(d, e.name); e.isDirectory() ? walk(p, o) : o.push(p) } return o }
 
-const BASE = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+// Cloudflare Web Analytics, allowed by name on 2026-09-03. The beacon was being
+// injected into every response and refused by this policy, so the feature was on
+// and collecting nothing while the page still paid for the request. The owner
+// chose to make it work rather than turn it off. Erratum 7.25.
+//
+// script-src lets it execute; connect-src lets it report, which default-src
+// 'none' was also blocking. Both are pinned to the one host. Everything else
+// stays exactly as strict as it was: no 'unsafe-inline' for script, no wildcard,
+// and img-src, form-action, base-uri and frame-ancestors are untouched.
+const BEACON_HOST = 'https://static.cloudflareinsights.com'
+const BASE = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests" +
+  `; connect-src ${BEACON_HOST}`
 const rules = []
 let blocks = 0
 
@@ -27,9 +38,10 @@ for (const f of walk('dist').filter((x) => x.endsWith('.html'))) {
   // with no script-src at all, so default-src 'none' governs and nothing runs.
   let route = '/' + f.replace(/^dist\//, '').replace(/index\.html$/, '')
   route = route.replace(/\/{2,}/g, '/')
-  const policy = hashes.length
-    ? `${BASE}; script-src ${[...new Set(hashes)].join(' ')}`
-    : `${BASE}; script-src 'none'`
+  // The beacon lands on every HTML response, including pages with no JSON-LD, so
+  // it belongs in script-src on all of them rather than only where a hash exists.
+  const sources = [...new Set(hashes), BEACON_HOST]
+  const policy = `${BASE}; script-src ${sources.join(' ')}`
   rules.push(`${route}\n  Content-Security-Policy: ${policy}\n`)
 }
 

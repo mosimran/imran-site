@@ -11,6 +11,8 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-03', change: 'The analytics beacon is kept and disclosed rather than denied, and the CSP that had been silently blocking it since 2025 is opened to that one host. Erratum 7.25.' },
+  { date: '2026-09-03', change: 'Section 6: the resume link is no longer single use, because mail scanners were consuming it before the recipient. Section 6.6 added, naming who else processes a request. Erratum 7.24.' },
   { date: '2026-09-03', change: 'The security.txt address published in section 14 had returned 404 since 2026-08-13. Fixed, and checked live from now on. Erratum 7.23.' },
   { date: '2026-09-03', change: 'Implementation 3.8 written. All eight notes in Section 3 now have a body, none carries an invented figure. Erratum 7.22.' },
   { date: '2026-09-03', change: 'Implementation 3.7 written as a disclaimed reference design; its state said unwritten while its summary said production. Erratum 7.21.' },

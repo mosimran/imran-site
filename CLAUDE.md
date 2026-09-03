@@ -28,10 +28,18 @@ validations get an entry too.
 These come from `docs/intitial-handoff/BUILD.md` and are enforced in CI. Do not
 weaken one to make a task easier; raise it instead.
 
-- **Zero bytes of JavaScript in the reading path.** No framework, no hydration, no
-  analytics. The only permitted `<script>` is `type="application/ld+json"`.
-- **Zero third-party requests.** No CDN, no webfonts, no embeds. System font stacks
-  only.
+- **Zero bytes of JavaScript in the reading path.** No framework, no hydration. This
+  build emits no script; the only `<script>` it writes is `type="application/ld+json"`.
+  Still true and still enforced.
+- **Exactly one third-party request, and it is named.** Changed 2026-09-03, erratum
+  7.25. Cloudflare Web Analytics injects `static.cloudflareinsights.com/beacon.min.js`
+  into every response, the owner chose to keep it, and the CSP now allows that one host
+  in `script-src` and `connect-src`. `check-live.mjs` excepts that exact host and
+  filename over HTTPS and nothing else: a different script on the same host, a lookalike
+  host, another vendor and plain HTTP all still fail, and all five cases are asserted.
+  <br>Adding a second one is not a config change. It means correcting sections 8, 10 and
+  Appendix B, adding a row to the processor table, and writing the erratum first.
+- **No webfonts, no embeds.** System font stacks only.
 - **Index HTML under 60 KB, CSS under 12 KB**, one stylesheet, inlined at build.
 - **No client-side routing.** Every view is a real page at a real URL.
 - **URLs never change.** A paper revised from `-03` to `-04` keeps its path.

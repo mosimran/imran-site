@@ -332,10 +332,10 @@ mosthofaimran.com
         <button type="submit">Request link</button>
       </form>
       <p class="fine" id="cv-pending">Returns <code>202 Accepted</code> and mails a signed URL. Time to live 86400 seconds,
-      single use, <code>X-Robots-Tag: noindex</code>. Rate limited to three requests per address per day and
-      sixty per source network per hour. Your address is written to the access log described in 6.4 and to
-      nothing else. It is never added to a list, never sold, never used to start a sequence, and it is
-      deleted the same day you ask.</p>
+      openable more than once inside that window, <code>X-Robots-Tag: noindex</code>. Rate limited to three
+      requests per address per day and sixty per source network per hour. Your address is written to the
+      access log described in 6.4 and to nothing else. It is never added
+      to a list, never sold, never used to start a sequence, and it is deleted the same day you ask.</p>
     </div>
   </div>
 
@@ -377,11 +377,20 @@ mosthofaimran.com
       <thead><tr><th style="width:220px">Field</th><th style="width:170px">Retention</th><th>Purpose</th></tr></thead>
       <tbody>
       <tr><td class="hd" data-l="Field">Email address</td><td data-l="Retention">Until deletion requested</td><td data-l="Purpose">Issue the link, and revoke it if you ask</td></tr>
-      <tr><td class="hd" data-l="Field">Issued and redeemed timestamps</td><td data-l="Retention">12 months</td><td data-l="Purpose">Detect token sharing, which tells me a recruiter forwarded it</td></tr>
+      <tr><td class="hd" data-l="Field">Issued and first-opened timestamps</td><td data-l="Retention">12 months</td><td data-l="Purpose">How long a link sat before anyone opened it</td></tr>
+      <tr><td class="hd" data-l="Field">View count per token</td><td data-l="Retention">12 months</td><td data-l="Purpose">Detect token sharing. A link now opens more than once, so a count is what carries this rather than a single timestamp</td></tr>
       <tr><td class="hd" data-l="Field">Source network, truncated to /24</td><td data-l="Retention">30 days</td><td data-l="Purpose">Rate limiting only</td></tr>
       <tr><td class="hd" data-l="Field">User agent</td><td data-l="Retention">Not stored</td><td data-l="Purpose">There is no purpose, so it is not collected</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <h3 id="s66">6.6. Who else processes this</h3>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">Cloudflare and Resend both see something, and one of
+    them puts a script in your browser. The table is on the <a href="/cv/#s66">Section 6 page</a>,
+    beside the form, which is where it is any use. A privacy claim that lists what I keep and not
+    who else holds it covers half the problem.</p>
   </div>
 
   <h3 id="s65">6.5. Alternatives</h3>
@@ -461,8 +470,9 @@ mosthofaimran.com
   <h2 id="s8">8. Publishing Model <a class="hash" href="#s8">#</a></h2>
   <div class="ind prose">
     <p>Papers are written in Markdown, held in git, signed, and rendered to static HTML at build time. There
-    is no database in the reading path and no third-party script on the page. A paper is a file; its history
-    is the commit log; its authority is a detached signature.</p>
+    is no database in the reading path. One third-party script reaches the page, the CDN's own analytics,
+    named in 10 and 6.6. A paper is a file; its history is the commit log; its authority is a detached
+    signature.</p>
   </div>
   <div class="ind">
     <table class="rt">
@@ -547,10 +557,10 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
     <table class="rt">
       <thead><tr><th style="width:200px">Property</th><th>Statement</th></tr></thead>
       <tbody>
-      <tr><td class="hd" data-l="Property">Third-party requests</td><td data-l="Statement">None. No fonts, no analytics, no tag manager, no embedded video, no comment widget. The page you are reading came from one origin.</td></tr>
+      <tr><td class="hd" data-l="Property">Third-party requests</td><td data-l="Statement">One. Cloudflare Web Analytics, injected by the CDN into every HTML response: <code>static.cloudflareinsights.com/beacon.min.js</code>. Kept deliberately; 7.25 says why. No fonts, no tag manager, no embed, no widget, and nothing this build adds.</td></tr>
       <tr><td class="hd" data-l="Property">Cookies</td><td data-l="Statement">None are set. There is therefore no consent banner, which is the correct way to not need one.</td></tr>
       <tr><td class="hd" data-l="Property">Server logs</td><td data-l="Statement">Source network truncated to /24, path, status, timestamp. Retained 30 days. Read roughly monthly.</td></tr>
-      <tr><td class="hd" data-l="Property">Résumé tokens</td><td data-l="Statement">Single use, 86400 second lifetime, revocable, never guessable. See 6.3 and 6.4.</td></tr>
+      <tr><td class="hd" data-l="Property">Résumé tokens</td><td data-l="Statement">86400 second lifetime, revocable, never guessable, and every open is counted. See 6.3 and 6.4.</td></tr>
       <tr><td class="hd" data-l="Property">Transport</td><td data-l="Statement">HTTPS only, HSTS with preload, a content security policy that forbids inline and remote script in production, and no mixed content anywhere.</td></tr>
       <tr><td class="hd" data-l="Property">Data subject requests</td><td data-l="Statement">Mail me. Deletion happens the same day, and I will tell you what was held before it goes.</td></tr>
       <tr><td class="hd" data-l="Property">Disclosure</td><td data-l="Statement">Found something broken in the gate? <a href="/.well-known/security.txt">/.well-known/security.txt</a>. I will credit you in Section 7 unless you would rather I did not.</td></tr>
@@ -646,7 +656,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
       <tbody>
       <tr><td class="hd" data-l="Item">Typefaces</td><td data-l="Detail">Whatever your device already has. Charter or Georgia for prose, your system monospace for everything else. Nothing is downloaded, so nothing can be blocked, and nothing phones home.</td></tr>
       <tr><td class="hd" data-l="Item">Build</td><td data-l="Detail">Static HTML from Markdown. One stylesheet, no framework in the reading path.</td></tr>
-      <tr><td class="hd" data-l="Item">Weight</td><td data-l="Detail">One HTML file, one stylesheet, inlined at build. No script in the reading path and no third-party request of any kind. It renders on a slow connection and prints as a passable specification.</td></tr>
+      <tr><td class="hd" data-l="Item">Weight</td><td data-l="Detail">One HTML file, one stylesheet, inlined at build. This build ships no script; the CDN adds one analytics beacon, disclosed in 10. It renders on a slow connection and prints as a passable specification.</td></tr>
       <tr><td class="hd" data-l="Item">Hosting</td><td data-l="Detail">Static files on a CDN. One small function for Section 6, and nothing else that can page me.</td></tr>
       <tr><td class="hd" data-l="Item">Licence</td><td data-l="Detail">Prose under CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</td></tr>
       </tbody>

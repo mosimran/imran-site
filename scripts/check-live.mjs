@@ -40,6 +40,18 @@ const UA =
 // Same allowance as check-budget.mjs: these are referenced, never fetched to render.
 const ALLOWED_OFF_ORIGIN = [/creativecommons\.org/, /github\.com/, /mosthofaimran\.com/]
 
+// The one exception, and it is a disclosure rather than a silencing. Cloudflare
+// Web Analytics injects this beacon into every HTML response and there is no way
+// to keep it off without turning the feature off. The owner chose to keep the
+// feature on 2026-09-03, so sections 8, 10 and Appendix B were corrected to say
+// so and section 6.6 names Cloudflare as a processor. Erratum 7.25.
+//
+// It is pinned to the exact host and the exact filename. A second third-party
+// script, or this one moving, still fails. The check that has been red since
+// erratum 7.6 is not being switched off, it is being narrowed to what was
+// actually decided.
+const BEACON = /^https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js/
+
 const failures = []
 const pass = (label, ok, detail) => {
   console.log(`  ${ok ? 'ok ' : 'FAIL'} ${label.padEnd(44)} ${detail}`)
@@ -80,8 +92,10 @@ for (const path of PATHS) {
   // Every <script> must be application/ld+json. Anything else is executable
   // code in the reading path, whether this repository put it there or not.
   const scripts = [...html.matchAll(/<script\b([^>]*)>/gi)].map((m) => m[1])
-  const executable = scripts.filter((attrs) => !/type=["']application\/ld\+json["']/i.test(attrs))
-  pass('executable script tags', executable.length === 0, `${executable.length} of ${scripts.length} script tags`)
+  const executable = scripts
+    .filter((attrs) => !/type=["']application\/ld\+json["']/i.test(attrs))
+    .filter((attrs) => !BEACON.test((attrs.match(/src=["']([^"']+)["']/i) || [])[1] || ''))
+  pass('executable script tags, beacon excepted', executable.length === 0, `${executable.length} unexpected of ${scripts.length}`)
   for (const attrs of executable) {
     const src = (attrs.match(/src=["']([^"']+)["']/i) || [])[1] || '(inline)'
     console.log(`       -> ${src}`)
@@ -90,6 +104,7 @@ for (const path of PATHS) {
   // Third-party requests, same rule as the build-time budget.
   const offOrigin = new Set()
   for (const m of html.matchAll(/(?:src|href)=["'](https?:\/\/[^"']+)["']/gi)) {
+    if (BEACON.test(m[1])) continue
     if (!ALLOWED_OFF_ORIGIN.some((re) => re.test(m[1]))) offOrigin.add(new URL(m[1]).host)
   }
   pass('third-party hosts', offOrigin.size === 0, offOrigin.size ? [...offOrigin].join(', ') : '0')
@@ -121,14 +136,10 @@ for (const path of PATHS) {
 
 if (failures.length) {
   console.error(`live check FAILED: ${failures.join(', ')}\n`)
-  console.error('If this names static.cloudflareinsights.com: Web Analytics is enabled on the')
-  console.error('mosthofaimran.com zone and injects a beacon into browser-shaped requests.')
-  console.error('Narrowed 2026-09-03 to that one zone. imran.com.bd and imran-site.pages.dev')
-  console.error('are both clean, so it is not the Pages project and not a shared setting.')
-  console.error('The fix is one toggle: Cloudflare dashboard, the mosthofaimran.com zone,')
-  console.error('Analytics and Logs, Web Analytics, off. The CLI cannot do it, because the')
-  console.error('wrangler OAuth token holds zone (read) and no RUM scope. See PLAN.md 13.3')
-  console.error('and erratum 7.6.\n')
+  console.error('The Cloudflare Web Analytics beacon is expected and excepted by name. Any')
+  console.error('other script or host here is a new third party, and sections 8, 10 and')
+  console.error('Appendix B would need correcting before it could be allowed. See erratum')
+  console.error('7.25 for why the beacon was kept rather than removed.\n')
   process.exit(1)
 }
 console.log('every checked page serves zero executable script and zero third-party hosts\n')
