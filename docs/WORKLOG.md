@@ -3123,3 +3123,46 @@ Appendix A row: this is repository documentation rather than a published claim.
 
 **Next.** The prose sweep of `src/content/papers`, where 36 of the 47 flagged negation flips
 live, all written before today.
+
+## The domains were not what the documents said
+
+**Found by requesting the hosts instead of reading the plan.** Started as an attempt to fix the
+red deploy, which has been failing on `static.cloudflareinsights.com` since erratum 7.6.
+
+**The beacon is narrowed to one zone.** Requesting every host with the exact header shape
+`check-live.mjs` uses: `mosthofaimran.com` and its `www` serve the beacon, `imran.com.bd` and
+its `www` do not, and neither does `imran-site.pages.dev`. So the source is Web Analytics on the
+`mosthofaimran.com` zone alone, not the Pages project and not a shared account setting. The
+failure message now says that, and names the exact toggle. Still not fixable from here: the
+wrangler OAuth token holds `zone (read)` with no RUM scope, checked rather than assumed.
+
+The first attempt to reproduce it with `curl -A` showed zero beacons on every host, which was
+wrong. The injection also needs the browser `Accept` header. That is worth knowing, because it
+is the same trap erratum 7.6 describes and I walked into it again from the other direction.
+
+**`johnefemer.com` does not serve this site.** It returns a 4.7 KB parking lander on nginx with
+a third-party script from `lander.parity.domains`, no canonical tag, and none of this content.
+
+PLAN section 2 carried **two rows for that host in one table saying opposite things**: one
+"Serves identical bytes. Canonical in the HTML points at the primary", the next "Alias, not
+started. Registered at Namecheap, parked". The parked row was right. CLAUDE.md stated the
+serving version as fact with no qualifier, which is how the contract came to assert something
+that had never been true.
+
+`efemer.me` and `www.efemer.me` are attached to the Pages project and do not resolve. The table
+called both "attached and live".
+
+**No erratum.** Checked before concluding: the site itself publishes no claim about the alias
+domains, so nothing published was false. This is repository documentation and it is corrected
+in place, with every row now carrying the date it was verified by request.
+
+**Coverage gap closed.** `check-live.mjs` asserted the zero-JavaScript and zero-third-party
+budgets against the primary alone, while the claim is made about the site. It now checks every
+host that actually serves. Same shape as the provenance scan that read one field: a clean result
+covering less than it appeared to. `johnefemer.com` is deliberately excluded, because a parking
+lander failing a budget check is noise rather than signal, and T44 tracks it instead.
+
+**Validated.** `npm run check` exit 0. `check-live` exit 1 naming the primary only, and exit 0
+against `imran.com.bd` alone, both run. `check-errata`: 0 claims changed.
+
+**Next.** T44 needs registrar access. The prose sweep of `src/content/papers` is still open.
