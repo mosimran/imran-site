@@ -70,8 +70,13 @@ of the site, where nothing is deleted.
   Written as a disclaimed reference design reporting no figures. The four tracked per call keep
   the names the stub gave them, and section 4 records that two of the four (containment rate,
   aggregate word error rate) mislead if published alone. Erratum 7.21.
-  <br>**What remains in this row is 3.8**, still unwritten, and the figures the index carries
-  for it.
+  <br>**2026-09-03: 3.8 is written, and every note in Section 3 now has a body.** Its state said
+  `unwritten` while its summary described production work, the same conflation as 3.6 and 3.7.
+  Written as a disclaimed reference design reporting no figures. Erratum 7.22.
+  <br>**This row is now about figures alone.** No implementation note carries an invented one, and
+  none carries prototype text. What is still missing is real measurement: five of the eight notes
+  report no figures, each naming the ones that would matter. That is the remaining work here and
+  it needs the owner, not the drafter.
   <br>**2026-09-03: 3.4 is done, 3.5 remains.** Its figures (14B rows, query p95 9.4 s to 380 ms)
   and its entire summary, which named a rollback at 02:40, were the prototype's. Removed, not
   replaced. Written as a disclaimed reference design and reporting no figures. Erratum 7.19.

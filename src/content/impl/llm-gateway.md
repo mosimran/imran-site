@@ -131,8 +131,8 @@ quality drop is worse than an error, because nobody investigates it and the dama
 churn report six weeks later.
 
 **2.4. Quotas as a first class object.** Per tenant, per model, per minute, sliding window.
-This is not primarily a cost control. It exists because one tenant's retry storm is otherwise
-everybody's outage, which is Principle 4.3 stated as infrastructure.
+Cost control is the secondary benefit here. Quotas exist because one tenant's retry storm is
+otherwise everybody's outage, which is Principle 4.3 stated as infrastructure.
 
 **2.5. One audit record, uniform across backends.** Same schema whether the answer came from a
 local model or a hosted one. This is the artifact a compliance team actually reads, and it is

@@ -89,7 +89,7 @@ the first time.
 
 <line class="sd" x1="10" y1="240" x2="410" y2="240" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="258" font-size="9.5">Anything resolved at install time is a network call, and</text>
-<text class="d" x="10" y="272" font-size="9.5">there is no network. That is the whole design.</text>
+<text class="d" x="10" y="272" font-size="9.5">there is no network. Everything else follows.</text>
 </svg>
 </div>
 <figcaption>Figure 1. The arrow crossing the gap goes one way. Everything on the left has to be
@@ -125,12 +125,12 @@ story, so it is a feature with a spec rather than a log directory somebody tars 
 
 ## 3. Why this decides which customers exist
 
-An air-gapped delivery path is not a hardening exercise. It is the difference between being able
-to sell to a category of customer and not.
+An air-gapped delivery path decides which customers can buy at all, which is a larger claim than
+hardening usually gets to make.
 
 Central banks, defence and government estates, and telecom operators under sovereignty rules do
-not have a procurement route for software that requires a connection home. It is not a
-negotiation. The requirement arrives as a precondition, and a vendor without an answer is
+not have a procurement route for software that requires a connection home. The requirement
+arrives as a precondition, and a vendor without an answer is
 filtered out before the technical evaluation starts.
 
 The second effect is on everyone else. A product that installs with no network dependency
