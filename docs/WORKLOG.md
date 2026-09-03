@@ -2981,3 +2981,38 @@ a11y` against the local build: 0 WCAG2AA errors both schemes.
 **Deployed.** Pending merge.
 
 **Next.** 3.5, the last note carrying prototype text, under the same rule.
+
+## 3.5 written, and no note carries prototype text
+
+**Changed.** Note 3.5's summary and both figures (six sites, zero failed installs since 2024-09)
+were the handoff prototype's. Removed rather than replaced. Written as a disclaimed reference
+design for delivering software into estates with no network path back: the constraint, five
+enforced decisions, a diagram of the one-way crossing, product reasoning, and five failure modes
+this kind of delivery has. Erratum 7.20.
+
+Two of the five are open and stay open on the page. Trust distribution has no clean answer,
+because a signature is worth only the out-of-band process by which the key reached the site.
+And there is no telemetry, so the feedback loop runs through a person and takes weeks regardless
+of how good the local diagnostics are.
+
+**The provenance count is zero for the first time.** It was three this morning, and it was also
+zero this morning, because the scan was reading one field. The number is worth what the check
+behind it inspects, which is recorded in erratum 7.19 and repeated in 7.20.
+
+**The class check earned itself on its third catch.** It flagged `.bs` in this note's diagram
+immediately, the same undefined class invented on 3.3 and 3.4. Three occurrences of one slip in
+one day, caught mechanically the third time rather than by reading.
+
+**Checked and dismissed.** axe reported no contrast results for this page while reporting ten for
+3.4, which looked like the diagram failing to render. It renders: 20 text nodes, one figure, one
+aria-label in the built HTML. The difference is in axe's own heuristics for resolving an SVG
+backdrop, and the token pairs used here are asserted numerically by `check-contrast.mjs` either
+way. Not a defect, and not fully explained.
+
+**Validated.** `npm run check` exit 0. Index 58453 / 60000. `npm run impl`: 3.5 at 6/7, section
+at **39 of 56**, prototype text 0, undefined classes 0. `npm run a11y` local: 0 WCAG2AA errors
+both schemes.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.7 and 3.8 are the last two stubs, and the last rows in P08.
