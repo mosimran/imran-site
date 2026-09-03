@@ -3339,3 +3339,57 @@ substantial ones are all the same thing: figures nobody has supplied.
 
 **Validated.** `npm run check` exit 0. `check-errata` 0 claims changed, which is the point:
 closing these three moved no published claim.
+
+## The gate stops burning on first read, and the beacon is kept and disclosed
+
+**Answered first, because the owner asked before deciding.** There was no Slack integration
+anywhere in the repository. A request sent one email to the requester and nothing to the owner;
+a redemption wrote one log line. Neither event reached him. The `company` field on the form is
+a honeypot rather than a collected field, so an alert can carry the address and nothing else.
+
+**The link is no longer single use.** A token is valid for its whole 24 hours and every open is
+counted. The reason is delivery: Defender Safe Links, Proofpoint and Mimecast fetch URLs before
+the recipient sees them, and that fetch was a redemption, so a recruiter behind corporate mail
+would have been told the link was already used for a link no human had opened. Migration 0002
+adds a `views` column, applied to production D1 and verified before the code that needs it
+shipped. `redeemed_at` still records the first open. Erratum 7.24, and section 6.4 is reworded
+because "issued and redeemed timestamps" no longer describes a field that answers the question
+it claimed to.
+
+**Section 6.6 is new**, naming Cloudflare and Resend. The page had listed what is retained and
+never who else holds it.
+
+**Slack shipped inert, and the disclosure is held back.** The code posts on request with the
+address and on view with a token id and a count. `SLACK_WEBHOOK_URL` is not set, so it does
+nothing, and section 6.2 still says the address goes to the access log and nowhere else, which
+stays true until the secret exists. Publishing the disclosure first would have been the exact
+defect this site exists to avoid. The owner sets the secret; I did not ask for a credential in
+chat.
+
+**The beacon is kept, and it was never working.** The CSP allowed one script hash under
+`default-src 'none'`, so for thirteen months the browser refused to execute the beacon and
+refused its callback: the request was paid for on every page load, every visit logged a policy
+violation, and Cloudflare received nothing. The dashboard showing no traffic looks identical to
+a site with no traffic, which is why nobody noticed.
+
+The owner chose to make it work. `script-src` and `connect-src` now name
+`https://static.cloudflareinsights.com` and nothing else changed. Sections 8, 10 and Appendix B
+say one third-party script reaches the page and name it. Erratum 7.25.
+
+`check-live.mjs` excepts that exact host and filename over HTTPS. A different script on the
+same host, a lookalike host, another vendor and plain HTTP all still fail, and all five cases
+were asserted. The check that has been red since erratum 7.6 is narrowed rather than deleted,
+which matters because deleting it would remove the thing that found the problem.
+
+**The index budget forced a structural move rather than a fourth trim.** Adding 6.6 and the
+section 10 disclosure took the page to 60079 against a 60000 cap. The processor table now lives
+on `/cv/`, beside the form, which is where somebody about to hand over an address will actually
+read it, and the index carries a pointer. 59400 bytes, 600 to spare.
+
+**Validated.** `npm run check` exit 0. `check-live` exit 0 for the first time since 2026-08-14.
+`npm run a11y` 0 WCAG2AA errors. Migration verified against the live schema. CSP regenerated on
+all 38 HTML routes, including pages with no JSON-LD, which previously got `script-src 'none'`.
+
+**Deployed.** Pending merge.
+
+**Next.** The owner sets `SLACK_WEBHOOK_URL`, and 6.2 and 6.6 gain the Slack row the same day.

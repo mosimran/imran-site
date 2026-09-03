@@ -1,7 +1,7 @@
 ---
 import Doc from '../layouts/Doc.astro'
 ---
-<Doc title="Curriculum Vitae, access controlled" description="Section 6. The resume is issued on a single-use signed link rather than served as a page.">
+<Doc title="Curriculum Vitae, access controlled" description="Section 6. The resume is issued on a signed link with a 24 hour life rather than served as a page.">
   <div class="mast">
     <div>Off the Bit
 <b>Section 6: Curriculum Vitae</b>
@@ -9,7 +9,7 @@ Category: Informational
 Access: CONTROLLED</div>
     <div class="r"><b>M. Imran</b>
 Token lifetime: 86400 s
-Single use, revocable
+24 hour life, revocable
 X-Robots-Tag: noindex</div>
   </div>
   <div class="title">
@@ -37,7 +37,7 @@ X-Robots-Tag: noindex</div>
         <input id="cv-email" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
         <button type="submit">Request link</button>
       </form>
-      <p class="fine">Returns <code>202 Accepted</code> and mails a single-use link. Time to live
+      <p class="fine">Returns <code>202 Accepted</code> and mails a signed link, openable more than once inside 24 hours. Time to live
       86400 seconds. Rate limited to three per address per day and sixty per source network per
       hour. Your address goes to the access log in 6.4 and nowhere else, is never added to a list,
       and is deleted the same day you ask.</p>
@@ -49,8 +49,21 @@ X-Robots-Tag: noindex</div>
       <thead><tr><th style="width:110px">Preference</th><th>Path</th></tr></thead>
       <tbody>
       <tr><td class="hd" data-l="Preference">Preferred</td><td data-l="Path">Write to <a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a> and say what the role is.</td></tr>
-      <tr><td class="hd" data-l="Preference">Fine</td><td data-l="Path">Use the form in 6.2, once it exists.</td></tr>
+      <tr><td class="hd" data-l="Preference">Fine</td><td data-l="Path">Use the form in 6.2.</td></tr>
       <tr><td class="hd" data-l="Preference">Also fine</td><td data-l="Path">Do not request it at all. Sections 3 through 5 will tell you more about how I work.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 id="s66">6.6. Who else processes this</h2>
+  <div class="ind">
+    <p class="dim" style="max-width:80ch">A privacy claim that lists what I keep, and not who else
+    holds it, covers half the problem. Slack joins this table the day it is switched on and not
+    before: the code shipped on 2026-09-03 and does nothing until a webhook is set.</p>
+    <table class="rt">
+      <thead><tr><th style="width:150px">Processor</th><th style="width:200px">What it sees</th><th>Why</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Processor">Cloudflare</td><td data-l="Sees">Every request, and a page-view beacon in your browser</td><td data-l="Why">Hosting, the token store, the file. Web Analytics is on, so a third-party script loads on every page. Section 10 has the cost</td></tr>
+      <tr><td class="hd" data-l="Processor">Resend</td><td data-l="Sees">Your address and the link</td><td data-l="Why">Delivering the mail. There is no other way to send you one</td></tr>
       </tbody>
     </table>
   </div>
