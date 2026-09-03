@@ -318,7 +318,7 @@ it needs the owner.
   tooling registry. Each covers capability the current eight do not. Rev C section 3 has the
   case for each.
 
-- [ ] **T44** `johnefemer.com` nameservers to Cloudflare, or drop the claim
+- [x] **T44** `johnefemer.com` nameservers to Cloudflare, or drop the claim
   <br>*Ships:* yes. *Validated by:* `node scripts/check-live.mjs https://johnefemer.com`
   passing, which means identical bytes, zero executable script and a canonical naming the
   primary. *Blocked on the owner:* moving nameservers needs registrar access.
@@ -329,6 +329,18 @@ it needs the owner.
   PLAN 199 assumes a form posted from this host reaches `/api/cv`, which it cannot.
   <br>The alternative is to stop claiming it. An alias nobody has set up is not a defect;
   documenting it as live for months is.
+  <br>**Closed 2026-09-03 by the owner, taking the second option.** The site runs on
+  `mosthofaimran.com` and `imran.com.bd` for now. `johnefemer.com` and `efemer.me` are out of
+  scope and every document that described them as serving has been corrected. `efemer.me` is
+  left attached to the Pages project rather than detached, because that is an infrastructure
+  change nobody asked for.
+
+- [ ] **T45** `security.txt` reachable, and a check that keeps it that way
+  <br>*Ships:* yes. *Validated by:* `scripts/check-live.mjs` asserting 200 and a `Contact:`
+  line on every serving host. *Lands with this task, pending deploy.*
+  <br>The file returned 404 on every host from 2026-08-13 because `actions/upload-artifact`
+  drops dot-paths by default and `dist` has exactly one. Section 14 has been pointing security
+  researchers at a dead address for three weeks. Erratum 7.23.
 
 ---
 

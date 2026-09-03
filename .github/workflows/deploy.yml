@@ -52,6 +52,11 @@ jobs:
           name: dist
           path: dist
           retention-days: 7
+          # Without this the artifact silently drops every dot-path, and dist has
+          # exactly one: .well-known/security.txt. It was missing from every
+          # deployment since 2026-08-13, so the address the site gives security
+          # researchers returned 404 for three weeks. Erratum 7.23.
+          include-hidden-files: true
 
   deploy:
     name: deploy

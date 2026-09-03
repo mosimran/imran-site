@@ -24,8 +24,8 @@ function revisedDates() {
 }
 const LASTMOD = revisedDates()
 
-// The canonical origin. johnefemer.com and imran.com.bd serve the same bytes and
-// point their canonical here, so this value is what makes aliasing safe.
+// The canonical origin. imran.com.bd serves the same bytes and points its
+// canonical here, so this value is what makes aliasing safe.
 // See docs/PLAN.md section 2.1.
 export default defineConfig({
   site: 'https://mosthofaimran.com',
