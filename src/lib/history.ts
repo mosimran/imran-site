@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-03', change: "Implementation 3.2's figures removed as the prototype's, and its failure modes marked as prototype text rather than record. Erratum 7.17." },
   { date: '2026-09-03', change: 'Implementation 3.6 written: the audit evidence programme, with the SOC 2 boundary from 5.15 section 8 repeated on its face. Erratum 7.16.' },
   { date: '2026-09-03', change: 'Section 3 table generated from the collection: hand-written, it contradicted erratum 7.13. Errata 7.14, 7.15. Appendix A moves to /history/, leaving the four most recent rows here.' },
   { date: '2026-09-03', change: 'Implementation 3.3 written. Retitled for the guarantee rather than the migration, and its prototype figures corrected. Erratum 7.13.' },

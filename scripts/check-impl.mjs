@@ -13,7 +13,7 @@
 // Item 6 is the weakest heuristic here. Product reasoning is a judgement a
 // person makes; the script can only see whether the note talks about who the
 // system serves at all.
-import { readdirSync, readFileSync } from 'node:fs'
+import { readdirSync, readFileSync, existsSync } from 'node:fs'
 
 const DIR = 'src/content/impl'
 
@@ -84,3 +84,24 @@ const total = notes.length
 const points = notes.reduce((s, n) => s + n.passed.length, 0)
 console.log(`\n  ${done} of ${total} notes clear the bar. ${points} of ${total * 7} items across the section.`)
 console.log('  Reporter, not a gate. Item 6 is a keyword count and no substitute for reading.\n')
+
+// Provenance. The prototype's figures were catalogued in the placeholder ledger
+// and its failure modes were not, so note 3.2 published three invented failure
+// narratives as this person's engineering record for a year and nothing was
+// watching. This reads the handoff prototype and reports any front-matter note
+// whose opening words appear in it verbatim.
+const PROTOTYPE = 'docs/intitial-handoff/mosthofaimran.com/index.html'
+if (existsSync(PROTOTYPE)) {
+  const proto = readFileSync(PROTOTYPE, 'utf8').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').toLowerCase()
+  const carried = []
+  for (const f of readdirSync(DIR).filter((x) => x.endsWith('.md'))) {
+    const fm = readFileSync(`${DIR}/${f}`, 'utf8').split('---')[1] ?? ''
+    for (const [, note] of fm.matchAll(/note:\s*"([^"]{60,})"/g)) {
+      const frag = note.split(/\s+/).slice(0, 9).join(' ').toLowerCase().replace(/[.,]$/, '')
+      if (frag && proto.includes(frag)) carried.push(`${f.replace(/\.md$/, '')}: ${frag}...`)
+    }
+  }
+  console.log(`\n  prototype text still carried in front matter: ${carried.length}`)
+  for (const c of carried) console.log(`    ${c}`)
+  if (carried.length) console.log('    Marked on the page, or replaced. Never deleted quietly.')
+}
