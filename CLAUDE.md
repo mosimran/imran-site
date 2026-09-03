@@ -66,6 +66,28 @@ that way by decision. They are tracked in [docs/PLACEHOLDERS.md](docs/PLACEHOLDE
 or an acknowledgement that did not come from the owner. If a document needs content
 that does not exist yet, leave it marked as pending and say so.
 
+### Reference design is allowed. Invented measurement is not.
+
+Set by the owner on 2026-09-03, when note 3.2 was rewritten. Implementation notes may
+describe the **reference design** for the class of system: the constraints it operates
+under, the standard decisions, and the failure modes the category actually has, with the
+known answers to each. That is public engineering writing and it is how these should be
+written, because the deployed internals are not ours to publish.
+
+Two conditions, both mandatory:
+
+- **The disclaimer goes at the top of the note**, before the first section, saying it is a
+  solution path for a system like the one built rather than a disclosure of that system's
+  internals, and naming what *is* specific and confirmed.
+- **No figure is invented under cover of it.** Describing an architecture is legitimate.
+  Attaching a number nobody measured is not, whatever the surrounding prose claims. If the
+  measurements are real but unpublishable, say which ones would matter and that they are
+  not published. Note 3.2 does this in its section 4.
+
+`npm run impl` reports any front-matter note whose opening words appear verbatim in
+`docs/intitial-handoff/`, because the prototype's prose was published as record for a year
+and only its figures were ever catalogued. That count must stay at zero.
+
 ## Writing style
 
 No em dashes anywhere, in code comments, commit messages, PR bodies, docs or site
