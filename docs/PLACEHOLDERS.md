@@ -218,7 +218,7 @@ does not.
   window fill opacity moved from .13 to .09 to lift the tightest pair from 4.58:1 to
   4.85:1. Both the check and its failure path were run before it was trusted.
 
-- [ ] **P25** Implementation 3.2's failure modes and architecture are the prototype's
+- [x] **P25** Implementation 3.2's failure modes and architecture are the prototype's
   <br>`src/content/impl/llm-gateway.md`. Sections 5.1 through 5.3 (the buffered streaming
   response, over-redaction of account numbers in Bengali script, unreplicated quota state) are
   the handoff prototype's text word for word, as are the three decisions above them. **P08 and
@@ -229,9 +229,15 @@ does not.
   site published them, and replacing them would mean inventing. `npm run impl` now reports any
   front-matter note whose opening words appear in the prototype verbatim; it reads 3 and every
   other note reads 0. Erratum 7.17.
-  <br>Closing this needs three real failure modes from the owner, and confirmation of whether
-  redaction-before-routing, the stamped understudy and the sliding quota window describe this
-  gateway or only the prototype's.
+  <br>**Closed 2026-09-03 by the owner, with a change of approach rather than a disclosure.**
+  These notes describe the reference design for the class of system: the standard decisions and
+  the failure modes the category actually has, disclaimed at the top of the page as a solution
+  path rather than a copy of the deployed internals. The prototype's three failure modes are
+  replaced by five that are common to LLM gateways, three of them marked open because they are
+  open in the industry. No figures were added. Erratum 7.18.
+  <br>The rule this settles, for the remaining notes: describing an architecture at the level a
+  reader can learn from is legitimate and stays disclaimed; attaching a measurement nobody took
+  is not, whatever the prose around it claims.
 
 ## Low
 

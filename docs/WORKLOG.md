@@ -2910,3 +2910,38 @@ neutralising one entry and confirming the count fell to 2 before restoring it.
 **Next.** P25 needs three real failure modes for 3.2 from the owner, and confirmation of
 whether its three architectural decisions describe this gateway or only the prototype's.
 3.4, 3.5, 3.7 and 3.8 remain stubs needing figures and a failure mode each.
+
+## 3.2 rewritten as a disclaimed reference design
+
+**Changed.** Erratum 7.17 removed 3.2's prototype figures and marked its prototype failure
+modes. Marking was the right first move and a bad resting place: a page telling the reader most
+of it is untrustworthy has been labelled, not corrected.
+
+The note is now written to a rule the owner set. It describes the **reference design** for the
+class of system, disclaimed at the top as a solution path rather than a disclosure of the
+deployed internals, because those are not ours to publish. Constraint, five enforced decisions,
+a diagram of the request path, product reasoning and what I would do differently.
+
+The three prototype failure modes are replaced by five the category actually has: output
+filtering against streaming latency, redaction precision against recall and its locale weakness,
+quota consistency under region failover, hosted models changing beneath a stable name, and
+prompt injection reaching tool calls. Three are marked open because they are open in the
+industry. Erratum 7.18.
+
+**No figures were added.** Section 4 names the four measurements that would matter and says they
+are not published, for the same reason the tenant identities are not. 3.2 is the first note to
+clear the seven-item bar without publishing a single measurement, which is the point.
+
+**Recorded in the contract.** `CLAUDE.md` now carries the rule as its own subsection, because it
+resolves a tension that was previously unresolved there: reference design is allowed with a
+disclaimer at the top of the note, and an invented measurement is not allowed under cover of it.
+The prototype-provenance count must stay at zero.
+
+**Validated.** `npm run check` exit 0. Index 58575 / 60000. `npm run impl`: 3.2 at 7/7, section
+at 27 of 56, 3 of 8 notes clearing the bar, prototype text carried 0. `npm run a11y` against
+the local build: 0 WCAG2AA errors both schemes. SVG classes checked against the stylesheet.
+P09 and P25 closed, 14 open of 25.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.4 and 3.5 under the same rule: real systems, notes unwritten, no figures supplied.
