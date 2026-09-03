@@ -3,6 +3,7 @@ section: "3.9"
 title: "A constant tool surface over an unbounded API surface"
 summary: "An MCP server that lets an agent operate any API with an OpenAPI description, through a fixed handful of tools rather than one tool per endpoint, with multi-step recipes and credentials that never reach the model."
 slug: "openapi-studio"
+revised: 2026-09-04
 state: production
 stack: ["TypeScript", "Model Context Protocol", "Astro SSR", "Cloudflare D1", "Cloudflare KV / R2", "JSONPath", "Server-Sent Events"]
 result: []

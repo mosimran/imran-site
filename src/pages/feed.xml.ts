@@ -22,7 +22,12 @@ export const GET: APIRoute = async () => {
       id: `tag:mosthofaimran.com,2026:impl/${n.slug}`,
       url: `${SITE}/impl/${n.slug}/`,
       title: `${n.data.section} ${n.data.title} (implementation note)`,
-      updated: n.data.since ?? new Date('2026-01-01'),
+      // `revised`, not `since`. `since` is when the system started running and
+      // has nothing to do with when this document changed; using it dated every
+      // note written in September to January, and 3.1 to 2022, so a subscriber
+      // saw the whole of Section 3 arrive at the bottom of their reader or not
+      // at all. Erratum 7.35.
+      updated: n.data.revised,
       summary: n.data.summary,
       cats: [n.data.state],
     })),

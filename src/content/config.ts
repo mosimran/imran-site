@@ -83,6 +83,7 @@ const impl = defineCollection({
     title: z.string(),
     summary: z.string().max(240),
     since: z.coerce.date().optional(),
+    revised: z.coerce.date(),
     state: z.enum(['production', 'complete', 'retired', 'unwritten']),
     stack: z.array(z.string()).default([]),
     result: z.array(z.string()).default([]),

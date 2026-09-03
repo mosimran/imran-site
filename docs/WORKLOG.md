@@ -3645,3 +3645,46 @@ both sides of it.
 clean. 3.9 at 6/7, section at 57 of 63.
 
 **Deployed.** Pending merge.
+
+## The feed hid Section 3 from everyone subscribed to it
+
+**Found by auditing the machine-readable surfaces, which had never been checked.**
+
+`/feed.xml` filled each implementation note's Atom `updated` element from `since`, which is when
+the system started running, with a hardcoded `2026-01-01` fallback. An Atom `updated` means when
+the entry last changed.
+
+Nine notes written or rewritten between 2 and 4 September went out dated **1 January**, and 3.1
+dated **2022** because it has a real `since`. Readers sort on that element, so the whole of
+Section 3, which is most of what this site produced this week, arrived at the bottom of the list
+or was never surfaced as new. The feed's own `updated` is derived from its newest entry, so it
+sat at 1 September while the notes underneath changed daily.
+
+**Fixed at the schema rather than in the template.** Implementation notes now carry a required
+`revised` date. A note cannot be added without one and there is no constant left to be silently
+wrong: a missing date fails the build the way a paper without retirement conditions does. Values
+were taken from git rather than chosen. `since` stays, because it is a real fact about a system
+and a useless one about a document.
+
+**The fix introduces a new way to be wrong, and it is guarded.** A note can be edited without its
+date being bumped, which hides the change just as effectively. `check-revised.mjs` compares every
+declared date against git and fails when a file has moved and its date has not. It skips on
+shallow history rather than guessing, and both CI checkouts now fetch full history so it can
+actually run. Both paths proven, and the schema rejection proven separately by deleting a date
+and watching the build fail.
+
+**One reported finding was mine, not the site's.** I recorded that both feeds lacked a
+`rel="self"` link. Both have one and always did. My query treated an XML element with no children
+as absent, which is a Python falsiness trap. The feeds were right and the measurement was wrong.
+That is the fourth time this week a check has been confidently wrong about something correct, and
+it is in erratum 7.35 next to the real defect rather than left out of it.
+
+**Also audited, no action needed.** All 39 sitemap URLs present including today's new pages;
+`/contact.vcf` is correctly absent, being a download rather than a page. Heading hierarchy is
+sound on all seven built page types, including `/machine/` where h3s became h2s. Both feeds parse
+as valid Atom with id, title, updated and self link, and no entry is missing a required child.
+
+**Validated.** `npm run check` exit 0 with `check-revised` now in the chain. Feed `updated` moved
+to 2026-09-04 and 3.9 is its newest entry. No entry is dated 2026-01-01 or 2022 any more.
+
+**Deployed.** Pending merge.

@@ -22,7 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          # check-errata.mjs (T21) diffs against origin/main, so it needs history.
+          # check-errata.mjs (T21) diffs against origin/main, and
+          # check-revised.mjs asks git when each note last changed. Both need
+          # real history; a shallow clone reports one date for every path.
           fetch-depth: 0
 
       - uses: actions/setup-node@v5
@@ -105,7 +107,11 @@ jobs:
 
       # Checkout first: download-artifact writes into the workspace and a
       # checkout afterwards would clear it. Needed for scripts/check-live.mjs.
+      # Full history: scripts/check-revised.mjs compares each note's revised
+      # date against git, and a shallow clone reports one date for every path.
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - uses: actions/download-artifact@v5
         with:

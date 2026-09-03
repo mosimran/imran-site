@@ -3,6 +3,7 @@ section: "3.5"
 title: "Air-gapped delivery pipeline"
 summary: "Shipping software into estates with no network path back, as one complete signed artifact, installed by an operator who cannot ask you a question."
 slug: "airgap-delivery"
+revised: 2026-09-03
 state: production
 stack: ["OCI bundles", "cosign", "Helm", "offline registry"]
 result: []
