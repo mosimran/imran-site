@@ -29,7 +29,8 @@
     "gate": "node scripts/check-gate.mjs",
     "mobile": "node scripts/check-mobile.mjs",
     "vcard": "node scripts/check-vcard.mjs",
-    "print": "node scripts/check-print.mjs"
+    "print": "node scripts/check-print.mjs",
+    "visible": "node scripts/check-visible.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"

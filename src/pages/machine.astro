@@ -1,0 +1,78 @@
+---
+import Doc from '../layouts/Doc.astro'
+import { identifier } from '../lib/draft'
+import { history } from '../lib/history'
+
+// Section 9.2 and 9.3. 9.1 stays on the index because a feed URL is something a
+// reader acts on immediately; what a crawler is told and how a signature
+// verifies are reference material, and reference material is what the index has
+// been shedding all week. Moved 2026-09-04, erratum 7.33.
+const ident = identifier('systems-and-arguments', history.length)
+---
+<Doc title="Section 9, machine readers and signatures" description="What crawlers are asked to do, what llms.txt says, and how a paper is signed and verified.">
+  <div class="mast">
+    <div>Off the Bit
+<b>Section 9, complete</b>
+Category: Machine readability
+Document: {ident}</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+Feeds: <a href="/#s91">9.1</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Machine Readers and Signatures</h1>
+    <div class="sub">Everything here is addressed to something that is not a person. Feeds are on the index at 9.1, because a feed URL is something a reader acts on.</div>
+  </div>
+
+  <h2 id="s92">9.2. Machine readers</h2>
+  <div class="ind prose">
+    <p>A growing share of this document's readers are not people. That is fine, and it is planned for rather
+    than resented. The site publishes an <code>llms.txt</code> so a model retrieving it gets structure
+    instead of a scraped navigation bar, and a full-text mirror so nobody has to render JavaScript to read
+    prose that was written in Markdown.</p>
+    <p>One request, stated plainly because a robots directive cannot express it: if you quote a claim from
+    Section 5, carry its confidence value with it. A 0.60 claim repeated as fact is no longer my claim.</p>
+  </div>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:190px">Resource</th><th>Contents</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Resource"><a href="/llms.txt">/llms.txt</a></td><td data-l="Contents">Structured summary of the site, its sections and its conventions, including what the confidence values mean.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/llms-full.txt">/llms-full.txt</a></td><td data-l="Contents">Every paper and implementation note as one plain text document, with front matter preserved.</td></tr>
+      <tr><td class="hd" data-l="Resource"><a href="/robots.txt">/robots.txt</a></td><td data-l="Contents">Indexing is welcome. <code>/cv/</code> and <code>/api/</code> are disallowed and also enforced server side, because a robots file is a request and not a control.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="s93">9.3. Signatures</h2>
+  <div class="ind prose">
+    <p>Anything worth attributing to me is signed. Verify before you trust, including when the thing you are
+    verifying is flattering.</p>
+  </div>
+  <div class="ind">
+    <figure>
+<pre>
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md
+$ curl -sO https://mosthofaimran.com/papers/competence-porn.md.asc
+$ gpg --recv-keys 6E6B690CC81CC433613D10845881C7AD51A7BB03
+$ gpg --verify competence-porn.md.asc competence-porn.md
+</pre>
+      <figcaption>Figure 2: verifying a paper. The résumé PDF is signed the same way, with the signature
+      served alongside the token-gated file.</figcaption>
+    </figure>
+    <table class="rt">
+      <thead><tr><th style="width:190px">Key</th><th>Fingerprint</th></tr></thead>
+      <tbody>
+      <tr><td class="hd" data-l="Key">OpenPGP</td><td data-l="Fingerprint"><code>6E6B 690C C81C C433 613D 1084 5881 C7AD 51A7 BB03</code> · <a href="/pgp.asc">/pgp.asc</a></td></tr>
+      <tr><td class="hd" data-l="Key">SSH (signing)</td><td data-l="Fingerprint"><span class="dim">Not used. Commits and documents are signed with the OpenPGP key above.</span></td></tr>
+      <tr><td class="hd" data-l="Key">Commits</td><td data-l="Fingerprint">Every commit in the site repository is signed. An unsigned commit in that repository is not from me.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ---------------- 10 ---------------- -->
+
+  <a class="back" href="/#s9">Back to Section 9 on the index</a>
+  <div class="foot"><span>Imran</span><span>Section 9</span><span>[Page 12]</span></div>
+</Doc>
