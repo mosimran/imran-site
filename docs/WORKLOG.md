@@ -3246,3 +3246,50 @@ Six of the eighteen are in `errata/`, and one of those is in erratum 7.23, writt
 **Next.** Open tasks are T29, T35 and T43, all blocked on the owner. The largest remaining gap
 in the site is measurement: five Section 3 notes report no figures, each naming which would
 matter.
+
+## The résumé gate had no check
+
+**Found by audit.** The gate is the only functional capability on this site, the only thing
+with an attack surface, and the thing `security.txt` invites reports about. Nothing verified
+it worked. `check-a11y.mjs` loads `/cv/`, and that page is static HTML which passes identically
+whether the backend behind it works or is entirely absent.
+
+If the PDF vanished from KV or the D1 binding broke, the first person to notice would have been
+somebody who asked for a CV and got a 503. That is the same gap that hid a 404 on
+`security.txt` for three weeks, in the one place where it costs a reader something.
+
+**The probe burns nothing, by construction.** `functions/cv/[token].ts` fetches the file
+*before* burning the token, which the code explains as not wanting to destroy a capability when
+there is nothing to serve. That ordering makes a random token a complete health check: it
+exercises the D1 binding and the KV object, and an UPDATE matching no row changes nothing.
+
+| response | meaning |
+| --- | --- |
+| 404 or 5xx on `/cv/` | the page is gone |
+| 503 "not configured" | D1 binding missing |
+| 503 "not published yet" | D1 bound, PDF absent from KV |
+| 410 | both bindings healthy, nothing consumed |
+
+`npm run gate` runs after every deploy against both serving hosts.
+
+**Proven both ways.** Exit 0 against `mosthofaimran.com` and `imran.com.bd`. Exit 1 against a
+negative control, `johnefemer.com`, which is a parking lander and returns 404 on both probes.
+The first negative control tried was `imran-site.pages.dev`, which passed, because it is the
+same Pages project and has a real gate. That was a bad control rather than a bad check.
+
+**Audited alongside it and found sound.** Tokens are sha256-hashed before storage, so D1 holds
+no token. The burn is an atomic compare-and-set on `changes === 1`, correct under concurrent
+redemption. Expiry and revocation are checked in the same statement. Logs carry a row id and no
+PII. A malformed token and a token that never existed return byte-identical 410s, so the
+endpoint is not an enumeration oracle. The PDF is present in KV under the expected key.
+
+**Also verified in this audit, no action needed.** All 36 sitemap URLs return 200 live, so no
+other published address is dead. All 23 errata files appear in `errata.xml`. No document is in
+`unwritten` state. The three "unwritten" mentions in `llms.txt` are the schema explanation for
+machine readers rather than a stale claim.
+
+**Validated.** `npm run check` exit 0. Both gate paths run before trusting it.
+
+**Deployed.** Pending merge.
+
+**Next.** Open tasks are T29, T35 and T43, all blocked on the owner.

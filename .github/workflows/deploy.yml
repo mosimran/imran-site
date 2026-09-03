@@ -122,3 +122,11 @@ jobs:
         # about one hostname, and checking the primary alone reported a pass that
         # covered less than it looked like it did.
         run: node scripts/check-live.mjs https://mosthofaimran.com,https://imran.com.bd
+
+      # The gate is the only functional capability here and nothing verified it.
+      # check-a11y loads /cv/, but that page is static HTML and passes whether or
+      # not anything is behind it. The probe burns nothing: a token that cannot
+      # exist still exercises both bindings, because the file is fetched before
+      # the token is burned.
+      - name: verify the resume gate still answers
+        run: node scripts/check-gate.mjs https://mosthofaimran.com,https://imran.com.bd
