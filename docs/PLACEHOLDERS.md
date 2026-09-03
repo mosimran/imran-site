@@ -61,6 +61,12 @@ of the site, where nothing is deleted.
   `src/content/papers`, so an implementation note could be retitled and have figures removed with no
   errata entry and a green build. It now watches title, state, summary, result, stack and fallsOverAt
   on `src/content/impl` as well. Both paths were run before it was trusted.
+  <br>**2026-09-03: 3.5 is done, and no note carries prototype text.** Its summary and both
+  figures (six sites, zero failed installs since 2024-09) were the prototype's. Removed, not
+  replaced. Written as a disclaimed reference design reporting no figures, because site counts
+  and identities are the customer's information rather than the author's. Erratum 7.20.
+  <br>**What remains in this row is 3.7 and 3.8**, still unwritten, and the figures the index
+  carries for them.
   <br>**2026-09-03: 3.4 is done, 3.5 remains.** Its figures (14B rows, query p95 9.4 s to 380 ms)
   and its entire summary, which named a rollback at 02:40, were the prototype's. Removed, not
   replaced. Written as a disclaimed reference design and reporting no figures. Erratum 7.19.
