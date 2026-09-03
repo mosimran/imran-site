@@ -130,7 +130,13 @@ hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
 .toc .t{white-space:nowrap}
 .toc .fill{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px);min-width:12px}
 .toc .p{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
-@media (max-width:560px){ .toc .t{white-space:normal} .toc .fill{display:none} }
+@media (max-width:560px){
+  .toc a{display:block;padding-left:2.1em;text-indent:-2.1em}
+  .toc .n{display:inline;min-width:0;margin-right:.55em}
+  .toc .t{white-space:normal}
+  .toc .fill{display:none}
+  .toc .p{margin-left:.55em}
+}
 
 /* ---------- tables that survive a phone ---------- */
 table{border-collapse:collapse;width:100%;margin:8px 0 6px;font-size:clamp(13px,3.3vw,13.4px)}
@@ -142,12 +148,12 @@ td.n:not(.hd){color:var(--accent)}
 td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
 td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
 td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
-@media (max-width:680px){
+@media (max-width:760px){
   table.rt, table.rt tbody, table.rt tr, table.rt td{display:block;width:100%}
   table.rt thead{position:absolute;left:-9999px}
   table.rt tr{border-bottom:1px solid var(--rule);padding:12px 0}
   table.rt td{border:0;padding:1px 0}
-  table.rt td.num{text-align:left}
+  table.rt td.num{text-align:left;white-space:normal}
   table.rt td[data-l]::before{content:attr(data-l) ": ";color:var(--dim);
     font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
   table.rt td.hd{font-weight:700;padding-bottom:3px}
