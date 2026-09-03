@@ -3602,3 +3602,46 @@ it shipped rather than after.
 57 of 63 items, nine notes, three clearing the bar and six missing figures alone.
 
 **Deployed.** Pending merge.
+
+## 3.9 rewritten: it was about the wrong thing
+
+**The owner corrected the subject the same day it shipped.** The system runs as an MCP server
+and is a hands-free API manager with recipes and remote execution. The first version described
+the document model and treated the agent surface as one consumer among six.
+
+The mistake was scope rather than fact. The representation is real and is what makes the rest
+possible; it is not the achievement. Writing the foundation and calling it the feat is a
+specific kind of error, and the tell is that the foundation is always the more satisfying thing
+to describe.
+
+**Re-read the codebase before rewriting.** The MCP surface exposes a fixed set of capabilities
+split by permission: read-only tokens receive discovery and inspection, editor tokens
+additionally receive the ones that mutate, execute and manage credentials. Write tools are
+absent from the list a read-only token receives rather than present and guarded. Recipes are
+stored multi-step flows where each step extracts values from the previous response by path
+expression, executed server-side with run detail retained. Credentials are attached at the
+execution boundary and never returned.
+
+The note is now about the constraint that produces all of it: an agent cannot be given one tool
+per endpoint, because a real API has several hundred and each one costs context before the model
+has read the question. So the capability set is constant, the specification is read per request
+rather than at connection time, and the API is discovered rather than enumerated.
+
+**Five new failure modes, all specific to that shape.** The fixed one is worth recording:
+clients JSON-stringify structured arguments, which stores a string where a document subtree
+belongs and leaves the document unreachable by pointer navigation, silently and across a save.
+It is a property of the medium rather than a bug in any one client, and the coercion belongs in
+the first commit rather than after the first corrupted document.
+
+Two are open and honest. Discovery is only as good as the customer's own prose, which moves the
+failure somewhere more visible and less fixable. And the agent causes real effects it cannot
+evaluate, which is the category's problem rather than this design's.
+
+**Erratum 7.34**, quoting the withdrawn title and summary rather than deleting them. No figures
+in either version; section 4 names four, and says the one that matters needs a person to read
+both sides of it.
+
+**Validated.** `check`, `mobile`, `print`, `visible` all exit 0. 0 WCAG2AA errors. Prose scan
+clean. 3.9 at 6/7, section at 57 of 63.
+
+**Deployed.** Pending merge.
