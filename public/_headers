@@ -34,3 +34,11 @@
   Cache-Control: public, max-age=604800
 /favicon.svg
   Cache-Control: public, max-age=604800
+
+# The card is a download, not a page. Astro sets these on the endpoint response,
+# and a static build writes a file, so Pages serves it by extension unless told
+# otherwise. Said here so an address book gets a type it recognises.
+/contact.vcf
+  Content-Type: text/vcard; charset=utf-8
+  Content-Disposition: attachment; filename="imran-mosthofa.vcf"
+  Cache-Control: public, max-age=3600

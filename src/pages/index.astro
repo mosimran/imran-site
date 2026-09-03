@@ -86,6 +86,7 @@ const expired = isExpired(revised)
       <a href="#s3" data-opt>Systems</a>
       <a href="/cv/">CV</a>
       <a href="#s14">Contact</a>
+      <a href="/contact.vcf" data-opt download>vCard</a>
     </nav>
   </div>
 </header>
@@ -625,6 +626,7 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
       <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Head of Engineering and Delivery</td></tr>
       <tr><td class="hd" data-l="Channel">Location</td><td data-l="Address">Dhaka, Bangladesh (UTC+6). Comfortable overlapping with CET mornings and US Pacific evenings.</td></tr>
       <tr><td class="hd" data-l="Channel">Email</td><td data-l="Address"><a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a>. I read everything and answer most things inside two working days.</td></tr>
+      <tr><td class="hd" data-l="Channel">vCard</td><td data-l="Address"><a href="/contact.vcf" download>contact.vcf</a>, generated from the same source as this table so the two cannot disagree.</td></tr>
       <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/mosimran">github.com/mosimran</a></td></tr>
       <tr><td class="hd" data-l="Channel">Résumé</td><td data-l="Address"><a href="/cv/">Section 6</a></td></tr>
       <tr><td class="hd" data-l="Channel">Key</td><td data-l="Address"><code>/pgp.asc</code> <span class="dim">(not yet published: no key exists, see the ledger)</span>, fingerprint in 9.3</td></tr>
@@ -651,16 +653,10 @@ $ gpg --verify competence-porn.md.asc competence-porn.md
 
   <h2 id="sb">Appendix B. Colophon <a class="hash" href="#sb">#</a></h2>
   <div class="ind">
-    <table class="rt">
-      <thead><tr><th style="width:150px">Item</th><th>Detail</th></tr></thead>
-      <tbody>
-      <tr><td class="hd" data-l="Item">Typefaces</td><td data-l="Detail">Whatever your device already has. Charter or Georgia for prose, your system monospace for everything else. Nothing is downloaded, so nothing can be blocked, and nothing phones home.</td></tr>
-      <tr><td class="hd" data-l="Item">Build</td><td data-l="Detail">Static HTML from Markdown. One stylesheet, no framework in the reading path.</td></tr>
-      <tr><td class="hd" data-l="Item">Weight</td><td data-l="Detail">One HTML file, one stylesheet, inlined at build. This build ships no script; the CDN adds one analytics beacon, disclosed in 10. It renders on a slow connection and prints as a passable specification.</td></tr>
-      <tr><td class="hd" data-l="Item">Hosting</td><td data-l="Detail">Static files on a CDN. One small function for Section 6, and nothing else that can page me.</td></tr>
-      <tr><td class="hd" data-l="Item">Licence</td><td data-l="Detail">Prose under CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</td></tr>
-      </tbody>
-    </table>
+    <p class="dim" style="max-width:80ch">What this is built from, what it weighs and what it
+    licenses, at <a href="/colophon/">Appendix B, complete</a>. It moved off this page for the
+    same reason Appendix A did: the index has a byte budget and a colophon is the least urgent
+    thing competing for it.</p>
   </div>
 
   <h2 id="sig">Signature <a class="hash" href="#sig">#</a></h2>
