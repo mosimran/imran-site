@@ -16,7 +16,7 @@ export const contact = {
   role: 'Head of Engineering and Delivery',
   email: 'hey@mosthofaimran.com',
   site: 'https://mosthofaimran.com',
-  code: 'https://github.com/mosimran',
+  code: 'https://github.com/johnefemer',
   city: 'Dhaka',
   country: 'Bangladesh',
   tzOffset: '+06:00',

@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-04', change: "Code profile in Section 14 changed to github.com/johnefemer. Two-column tables stopped labelling themselves twice on phones. Erratum 7.31." },
   { date: '2026-09-03', change: 'Sticky section headings and a scroll-driven reading rule on phones, both pure CSS. Erratum 7.30.' },
   { date: '2026-09-03', change: 'Contact details reduced to one source, feeding Section 14, the JSON-LD and a new vCard at /contact.vcf. Appendix B moved to /colophon/. Erratum 7.29.' },
   { date: '2026-09-03', change: 'The index scrolled sideways on every phone, and on tablets between 681 and 760 pixels. Fixed, and checked on every build across fourteen widths. Erratum 7.28.' },
