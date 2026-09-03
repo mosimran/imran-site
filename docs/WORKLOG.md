@@ -3299,3 +3299,43 @@ machine readers rather than a stale claim.
 **Deployed.** Pending merge.
 
 **Next.** Open tasks are T29, T35 and T43, all blocked on the owner.
+
+## The last three tasks closed
+
+**T29, HSTS preload: closed by deciding against submission, keeping the protection.** Measured
+first rather than assumed. Every serving host already returns
+`Strict-Transport-Security: max-age=63072000; includeSubDomains`, two years, and
+`http://mosthofaimran.com` 301s to HTTPS. That is the entire benefit for anyone who has visited
+before or visited any host under the domain.
+
+Preloading adds protection on the very first request to a domain a browser has never seen, and
+costs a commitment that unwinds at the speed of browser releases. Two further facts decided it:
+the header is one token short of eligible, and `_headers` on Pages matches path rather than
+host, so adding `preload` would send it on `imran.com.bd` too and contradict the task's own
+"aliases stay unpreloaded" line. Reopening is one token plus a submission at hstspreload.org,
+which is a web form and belongs to the owner.
+
+I did not submit. Preload is outward-facing and hard to reverse, and "close the task" is not
+the same instruction as "enrol the domain for the next several months".
+
+**T35, confidence on 5.15 and 5.16: closed by the owner with both values unmoved.** 0.65 and
+0.60 stand and are his credence now rather than the drafter's. No erratum, because an erratum
+records a changed claim and nothing changed. Both stay under 0.7, so the schema still classes
+them as drafts and both pages still say so. P21 closed with it.
+
+P21 had noted the evidence base under 5.15 widened when its section 8 was strengthened, making
+0.65 possibly too low. It stays at 0.65, because moving another person's credence upward is the
+thing that row existed to prevent.
+
+**T43, Section 3 expansion: closed by the owner, no expansion.** Eight notes stand. The three
+systems from the résumé stay undescribed, and this row is the record of why rather than silence.
+The section is better for stopping: all eight are written, none carries an invented figure, and
+five say which measurements would matter and that they are not published. Three more from a
+résumé, with figures nobody has checked against the rule set today, would have traded that for
+coverage.
+
+**The board is empty.** 45 tasks closed, 0 open. 11 placeholder rows open of 25, and the
+substantial ones are all the same thing: figures nobody has supplied.
+
+**Validated.** `npm run check` exit 0. `check-errata` 0 claims changed, which is the point:
+closing these three moved no published claim.
