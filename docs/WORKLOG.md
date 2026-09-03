@@ -2945,3 +2945,39 @@ P09 and P25 closed, 14 open of 25.
 **Deployed.** Pending merge.
 
 **Next.** 3.4 and 3.5 under the same rule: real systems, notes unwritten, no figures supplied.
+
+## 3.4 written, and the provenance scan was inspecting one field
+
+**Changed.** Note 3.4's figures (14B rows, query p95 9.4 s to 380 ms) and its entire summary,
+which named a rollback executed at 02:40, were the handoff prototype's sentence for sentence.
+P08 tracked the two figures. Nothing tracked the summary, which is what a reader meets first.
+
+Written as a disclaimed reference design under the rule set today: the constraint, five enforced
+decisions, a diagram of the dual-write period, product reasoning, and five failure modes this
+migration has (dual-write divergence, the backfill and stream seam, query semantics drifting
+quietly between engines, the sort key aging against new queries, and the rollback path decaying
+once nobody exercises it). Erratum 7.19.
+
+**The scan built this morning read one field and looked clean.** Erratum 7.17 added a check that
+reports implementation notes carrying prototype text verbatim. It inspected failure-mode notes
+only, found 3.2's three, and reported zero everywhere else. Extending it to summaries found 3.4
+and 3.5 immediately. A check that inspects one field and returns zero is worse than no check,
+because the zero is persuasive. That sentence is in the erratum as well as here.
+
+**A metric row was written and removed before publication.** It read "Figures: not published" and
+existed to make the numbers-labelled item pass, taking 3.4 to 7/7. It is the behaviour paper 5.19
+argues against, and it should not survive its author noticing it. 3.4 reports 6 of 7, missing
+that item alone, which is the same honest outcome as 3.6.
+
+**A second check added.** Diagram classes are now verified against the stylesheet. An inline SVG
+with an undefined class still renders, in the wrong colour, and nothing complains. Written after
+making the identical slip twice in one day, inventing a `bs` class on notes 3.3 and 3.4. Proven
+both ways before being trusted.
+
+**Validated.** `npm run check` exit 0. Index 58502 / 60000. `npm run impl`: 3.4 at 6/7, section
+at 33 of 56, prototype text carried down to 1 (3.5's summary), undefined classes 0. `npm run
+a11y` against the local build: 0 WCAG2AA errors both schemes.
+
+**Deployed.** Pending merge.
+
+**Next.** 3.5, the last note carrying prototype text, under the same rule.

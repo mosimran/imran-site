@@ -61,6 +61,13 @@ of the site, where nothing is deleted.
   `src/content/papers`, so an implementation note could be retitled and have figures removed with no
   errata entry and a green build. It now watches title, state, summary, result, stack and fallsOverAt
   on `src/content/impl` as well. Both paths were run before it was trusted.
+  <br>**2026-09-03: 3.4 is done, 3.5 remains.** Its figures (14B rows, query p95 9.4 s to 380 ms)
+  and its entire summary, which named a rollback at 02:40, were the prototype's. Removed, not
+  replaced. Written as a disclaimed reference design and reporting no figures. Erratum 7.19.
+  <br>**The provenance scan added the same day read one field and looked clean.** It checked
+  failure-mode notes only, found 3.2's three, and reported zero elsewhere. Extended to summaries
+  it found 3.4 and 3.5 at once. A check that inspects one field and returns zero is more
+  dangerous than no check, because the zero gets believed.
   <br>**2026-09-02: 3.1 is done, 3.2, 3.4 and 3.5 remain.** The Mevrik note was written from
   source material supplied by the owner, and its two invented figures (40M events/day, 3
   regulated tenants) are replaced with measured ones. Erratum 7.11.

@@ -96,12 +96,42 @@ if (existsSync(PROTOTYPE)) {
   const carried = []
   for (const f of readdirSync(DIR).filter((x) => x.endsWith('.md'))) {
     const fm = readFileSync(`${DIR}/${f}`, 'utf8').split('---')[1] ?? ''
-    for (const [, note] of fm.matchAll(/note:\s*"([^"]{60,})"/g)) {
-      const frag = note.split(/\s+/).slice(0, 9).join(' ').toLowerCase().replace(/[.,]$/, '')
-      if (frag && proto.includes(frag)) carried.push(`${f.replace(/\.md$/, '')}: ${frag}...`)
+    // summary and fallsOverAt are published claims too. Checking only note: missed
+    // 3.4, whose entire summary ("Fourteen billion rows moved under a dual-write
+    // cutover... one rollback executed cleanly at 02:40") is the prototype's.
+    const fields = [
+      ...[...fm.matchAll(/note:\s*"([^"]{60,})"/g)].map((m) => ['failure', m[1]]),
+      ...[...fm.matchAll(/^(summary|fallsOverAt):\s*"([^"]{60,})"/gm)].map((m) => [m[1], m[2]]),
+    ]
+    for (const [kind, text] of fields) {
+      const frag = text.split(/\s+/).slice(0, 9).join(' ').toLowerCase().replace(/[.,]$/, '')
+      if (frag && proto.includes(frag)) carried.push(`${f.replace(/\.md$/, '')} (${kind}): ${frag}...`)
     }
   }
   console.log(`\n  prototype text still carried in front matter: ${carried.length}`)
   for (const c of carried) console.log(`    ${c}`)
   if (carried.length) console.log('    Marked on the page, or replaced. Never deleted quietly.')
+}
+
+// Diagram classes. The figures are inline SVG styled by the stylesheet, so a class
+// that does not exist fails silently: the shape still renders, in the wrong colour,
+// and nothing complains. Written after making the same slip twice in one day, on
+// notes 3.3 and 3.4, both times inventing a `bs` class for a dashed warning box.
+const CSS = 'src/styles/rfc.css'
+if (existsSync(CSS)) {
+  const css = readFileSync(CSS, 'utf8')
+  const defined = (c) =>
+    css.includes(`.dia .${c}{`) || css.includes(`.${c}{`) || css.includes(`,.${c}{`) || css.includes(`.${c} `)
+  const bad = []
+  for (const dir of ['src/content/impl', 'src/content/papers']) {
+    if (!existsSync(dir)) continue
+    for (const f of readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+      const txt = readFileSync(`${dir}/${f}`, 'utf8')
+      const used = new Set()
+      for (const m of txt.matchAll(/class="([a-z0-9 -]+)"/g)) m[1].split(/\s+/).forEach((c) => c && used.add(c))
+      for (const c of used) if (!defined(c)) bad.push(`${dir}/${f}: .${c}`)
+    }
+  }
+  console.log(`\n  undefined SVG/prose classes: ${bad.length}`)
+  for (const b of bad) console.log(`    ${b}`)
 }
