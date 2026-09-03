@@ -3272,6 +3272,12 @@ exercises the D1 binding and the KV object, and an UPDATE matching no row change
 
 `npm run gate` runs after every deploy against both serving hosts.
 
+**It did not run the first time, and I had to read the CI job to find out.** The step sat
+after the live budget check, which has been red since erratum 7.6 and stays red until Web
+Analytics is turned off on the zone. A job stops at its first failing step, so the gate check
+was wired into a step that could never be reached. It now carries `if: ${{ !cancelled() }}`.
+A check placed behind a permanent failure is not a check.
+
 **Proven both ways.** Exit 0 against `mosthofaimran.com` and `imran.com.bd`. Exit 1 against a
 negative control, `johnefemer.com`, which is a parking lander and returns 404 on both probes.
 The first negative control tried was `imran-site.pages.dev`, which passed, because it is the
