@@ -3470,3 +3470,46 @@ WCAG2AA errors. Index 59620 / 60000, CSS 10678 / 12000. Desktop layout is untouc
 rules live inside media queries and `display` is still `flex` at 1280 and 768.
 
 **Deployed.** Pending merge. The check runs on every build from now on.
+
+## The document did not print as a specification
+
+**Found by testing a published claim nobody had tested.** Appendix B says this document "renders
+on a slow connection and prints as a passable specification". The first half was checked
+yesterday and was false, which is erratum 7.28. The second half had never been checked and was
+also false.
+
+Printed to A4, every table came out as stacked phone cards: "RESULT: no figures supplied" over
+"STATE: PRODUCTION", no header row, no columns. Section headings drew a full-width rule across
+the paper, bleeding past the text block on both sides.
+
+**One missing word, five times.** Every width query was a bare `@media (max-width: N)`. A printed
+A4 page is about 673px of content inside its margins, narrower than every breakpoint in the
+stylesheet, so the whole phone layout applied to paper. The sticky headings shipped yesterday
+made it worse: they were written for a small screen and a sheet of paper counts as one.
+
+All five are `screen and` now. The print block also lets the result column wrap, keeps rows off
+page breaks and stops headings being orphaned at the foot of a page. Eighteen pages instead of
+twenty-four, and the tables have columns.
+
+**The check I wrote to catch it did not catch it, for the fourth time this week.** It emulated
+print media at a 1280px viewport, where `max-width:760px` never matches, so every assertion
+passed against a page that printed wrong. It now asserts the real invariant statically, that no
+bare width query exists in the stylesheet, and renders at 673px so the rendered assertions mean
+something. Proven both ways.
+
+The pattern has been identical every time: a check measured something true and adjacent to the
+thing it claimed to measure. `dist/` instead of the edge (7.6), one front-matter field instead
+of all (7.19), three phone widths instead of both sides of a breakpoint (7.28), and emulated
+media without the width that makes the media matter. Erratum 7.32 names all four together.
+
+**Validated.** `npm run print` exit 0, exit 1 with one query reverted. `npm run check`,
+`npm run mobile`, `npm run vcard` all exit 0. 0 WCAG2AA errors. PDF inspected page by page
+rather than judged by byte count.
+
+**Deployed.** Pending merge.
+
+**Flagged, not fixed.** The index is at 59984 of 60000 bytes, sixteen to spare, after a sixth
+round of trimming today. Errata are now nearly free because Appendix A renders only four rows,
+but any new section or table will not fit. Section 9 is 4157 bytes of machine-reference material
+and is the obvious next split, on the pattern already used for Sections 3 and 5 and both
+appendices. It carries sub-anchors and needs its own change rather than being bundled here.

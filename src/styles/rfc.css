@@ -71,11 +71,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 /* The identifier is 36 characters and the bar is 46px tall. Full name where
    there is room, the category where there is not. */
 .rh .doc-short{display:none}
-@media (max-width:720px){
+@media screen and (max-width:720px){
   .rh .doc-long{display:none}
   .rh .doc-short{display:inline}
 }
-@media (max-width:520px){
+@media screen and (max-width:520px){
   .rh a{font-size:11px;letter-spacing:.06em}
   .rh nav a[data-opt]{display:none}   /* keep the bar readable, Contents covers the rest */
 }
@@ -86,7 +86,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
 .mast div{font-size:clamp(12px,3vw,12.8px);line-height:1.9;color:var(--dim);white-space:pre-line}
 .mast .r{text-align:right}
 .mast b{color:var(--ink);font-weight:600}
-@media (max-width:600px){
+@media screen and (max-width:600px){
   .mast{grid-template-columns:1fr;gap:14px}
   .mast .r{text-align:left;padding-top:10px;border-top:1px dotted var(--rule)}
 }
@@ -130,7 +130,7 @@ hr{border:0;border-top:1px solid var(--rule);margin:34px 0}
 .toc .t{white-space:nowrap}
 .toc .fill{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px);min-width:12px}
 .toc .p{white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
-@media (max-width:560px){
+@media screen and (max-width:560px){
   .toc a{display:block;padding-left:2.1em;text-indent:-2.1em}
   .toc .n{display:inline;min-width:0;margin-right:.55em}
   .toc .t{white-space:normal}
@@ -149,7 +149,7 @@ td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric
 td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
 td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
 /* ---- mobile reading treatments ---- */
-@media (max-width:760px){
+@media screen and (max-width:760px){
   /* The section heading sticks under the masthead, so a reader ten screens into
      a long specification can still see which section they are in. It costs 43px
      on top of the 47px masthead, which is 13% of a 667px screen, and that is the
@@ -173,7 +173,7 @@ td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:
 @keyframes read-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (prefers-reduced-motion:reduce){.rh::after{display:none}}
 
-@media (max-width:760px){
+@media screen and (max-width:760px){
   table.rt, table.rt tbody, table.rt tr, table.rt td{display:block;width:100%}
   table.rt thead{position:absolute;left:-9999px}
   table.rt tr{border-bottom:1px solid var(--rule);padding:12px 0}
@@ -275,6 +275,14 @@ figcaption{font-size:11.5px;color:var(--dim);margin-top:7px;letter-spacing:.04em
   body{font-size:10.5pt}
   .prose{font-size:11.5pt;max-width:none}
   pre{border:1px solid #999}
+  td.num{white-space:normal;text-align:left}
+  /* Keep a row and its heading together, and never orphan a section title at
+     the foot of a page. A specification that splits its own tables across a
+     page break is the thing Appendix B claims this is not. */
+  table{page-break-inside:auto}
+  tr{page-break-inside:avoid}
+  h2,h3{page-break-after:avoid;break-after:avoid}
+  figure,.memo,.note{page-break-inside:avoid}
 }
 
 /* ---------- section 6.2 before the endpoint exists ---------- */
