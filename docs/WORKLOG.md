@@ -3048,3 +3048,41 @@ both schemes, 22 SVG text nodes in the built page.
 **Deployed.** Pending merge.
 
 **Next.** 3.8, custom LLM training and hosting. The last stub and the last row in P08.
+
+## 3.8 written, and Section 3 is fully written
+
+**Changed.** Note 3.8 said `state: unwritten` while its own summary described production work and
+its stub said GPU utilisation and cost per model were measured in production. Third correction of
+that conflation today, after 3.6 and 3.7, which is what one field carrying two meanings produces.
+
+Written as a disclaimed reference design: the two constraints that pull apart (data cannot leave,
+the work still has to be good), five enforced decisions, a diagram of the path from corpus to
+router, product reasoning, and five failure modes. Erratum 7.22.
+
+**The stub set a test for its own replacement** and it is answered in its own section rather than
+a caveat. The promotion gate is assembled entirely out of failures already seen: golden datasets
+from incidents, regression suites from fixed bugs, safety probes from categories somebody thought
+to enumerate. A failure with no precedent passes every check and becomes a test case afterwards,
+protecting the next client rather than the one who found it. What gating buys is a floor rather
+than a proof.
+
+**Prose pass, at the owner's instruction.** Six genuine negation flips ("X is not Y. It is Z.")
+were found in notes written today and rewritten: two in 3.5, two in 3.6, one in 3.2, one in 3.7.
+A repeated closer, "That is the whole design.", appeared in two different notes and one was
+varied. `scripts/check-prose.mjs` now reports em dashes, "not just X but Y", hype adjectives and
+the negation-flip pattern across impl, papers and errata. It is a reporter: the flip test has
+real false positives, since a referential "This is..." after a sentence containing an incidental
+negation is ordinary prose, so it prints the pair for a person to judge.
+
+The hype test flagged "comparable leverage" in paper 5.18, which is the noun meaning mechanical
+advantage and is correct English. The check was narrowed to the verb rather than the paper being
+changed.
+
+**Validated.** `npm run check` exit 0. Index 58423 / 60000. `npm run impl`: 51 of 56 items, all
+eight notes with a body, prototype text 0, undefined classes 0. `npm run prose`: 0 em dashes,
+0 "not just X but Y", 0 hype.
+
+**Deployed.** Pending merge.
+
+**Next.** The remaining gap in Section 3 is measurement. Five notes report no figures and each
+names the ones that would matter. That needs the owner rather than the drafter.

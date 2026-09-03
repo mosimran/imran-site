@@ -144,8 +144,8 @@ a regulated context is the least forgiving place for that.
 Voice is where automation either becomes real or stays a demonstration, because it is the channel
 customers use when something matters.
 
-The commercial argument is not deflection. It is that a caller reaching an answer in ninety
-seconds at three in the morning is a different product from a caller waiting for an office to
+The commercial argument rests on availability rather than deflection. A caller reaching an answer
+in ninety seconds at three in the morning is a different product from a caller waiting for an office to
 open, and the operators running the service get their queue back for the calls that genuinely
 need a person. That is also why containment as a standalone target is corrosive: the value is in
 handling the calls that should be handled and passing on the ones that should not, and a metric

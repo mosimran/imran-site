@@ -30,8 +30,9 @@ a window that has already closed.
 
 That sentence decides the architecture. By the time an auditor or a client's security team
 asks, the period they care about is in the past, and no amount of engineering effort in the
-present can produce evidence for a Tuesday in March that nobody recorded. Evidence is not a
-document you write. It is a by-product you either captured at the time or did not.
+present can produce evidence for a Tuesday in March that nobody recorded. Evidence is a
+by-product you either captured at the time or did not, and nothing written afterwards
+substitutes for it.
 
 The failure mode this produces is well known to anyone who has watched it: a team is told an
 audit is in eight weeks, and eight weeks of engineering goes into reconstructing a story about
@@ -117,8 +118,8 @@ record existed to replace.
 
 ## 3. Why this is delivery infrastructure, not a compliance function
 
-The reason to build it this way is not the audit. It is that the client's security team is the
-real gate, and they arrive during procurement, not after.
+The reason to build it this way is the client's security team, who are the real gate and who
+arrive during procurement rather than after.
 
 For banking and telecom buyers, a security review sits between a signed intent and a contract.
 It is run by people whose job is to find the reason to say no, on a schedule set by the buyer,
