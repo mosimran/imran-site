@@ -1,16 +1,28 @@
 // JSON-LD builders. Every node carries the licence and the attribution request,
 // so reuse terms travel with the data rather than living only in prose.
+import { contact } from './contact'
+
 const SITE = 'https://mosthofaimran.com'
 const LICENSE = 'https://creativecommons.org/licenses/by/4.0/'
 const ASK = 'If you quote a claim, carry its confidence value with it. A 0.60 claim repeated as fact is no longer the author’s claim.'
 
+// Fields come from lib/contact.ts, which /contact.vcf also reads. The name,
+// role, email and location were typed here and in Section 14 separately until
+// 2026-09-03; the role string had already drifted across eight places once,
+// which is erratum 7.9.
 export const person = () => ({
   '@type': 'Person',
   '@id': `${SITE}/#person`,
-  name: 'Mosthofa Imran',
+  name: contact.name,
   url: SITE,
-  email: 'hey@mosthofaimran.com',
-  jobTitle: 'Head of Engineering and Delivery',
+  email: contact.email,
+  jobTitle: contact.role,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: contact.city,
+    addressCountry: contact.country,
+  },
+  sameAs: [contact.code],
   knowsAbout: ['Multi-tenant systems', 'Air-gapped deployment', 'LLM gateways', 'Data sovereignty'],
 })
 

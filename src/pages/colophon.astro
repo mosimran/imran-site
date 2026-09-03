@@ -1,0 +1,43 @@
+---
+import Doc from '../layouts/Doc.astro'
+import { identifier } from '../lib/draft'
+import { history } from '../lib/history'
+
+// Appendix B in full. The index carries a pointer, which is the arrangement
+// Sections 3 and 5 and Appendix A already use. Moved on 2026-09-03 when the
+// index reached its cap again and the alternative was a fifth prose trim.
+const ident = identifier('systems-and-arguments', history.length)
+---
+<Doc title="Appendix B, colophon" description="What the site is built from, what it weighs, and how it is licensed.">
+  <div class="mast">
+    <div>Off the Bit
+<b>Appendix B, complete</b>
+Category: Colophon
+Document: {ident}</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+History: <a href="/history/">Appendix A</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Colophon</h1>
+    <div class="sub">What this is made of. Every line here is a constraint the build enforces rather than a preference stated after the fact.</div>
+  </div>
+
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:150px">Item</th><th>Detail</th></tr></thead>
+      <tbody>
+
+      <tr><td class="hd" data-l="Item">Typefaces</td><td data-l="Detail">Whatever your device already has. Charter or Georgia for prose, your system monospace for everything else. Nothing is downloaded, so nothing can be blocked, and nothing phones home.</td></tr>
+      <tr><td class="hd" data-l="Item">Build</td><td data-l="Detail">Static HTML from Markdown. One stylesheet, no framework in the reading path.</td></tr>
+      <tr><td class="hd" data-l="Item">Weight</td><td data-l="Detail">One HTML file, one stylesheet, inlined at build. This build ships no script; the CDN adds one analytics beacon, disclosed in 10. It renders on a slow connection and prints as a passable specification.</td></tr>
+      <tr><td class="hd" data-l="Item">Hosting</td><td data-l="Detail">Static files on a CDN. One small function for Section 6, and nothing else that can page me.</td></tr>
+      <tr><td class="hd" data-l="Item">Licence</td><td data-l="Detail">Prose under CC BY 4.0. Quote it, argue with it, carry the confidence value with it.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a class="back" href="/#sb">Back to Appendix B on the index</a>
+  <div class="foot"><span>Imran</span><span>Appendix B</span><span>[Page B]</span></div>
+</Doc>
