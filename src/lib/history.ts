@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-04', change: 'Implementation 3.9 rewritten: it described the document model when the system is an MCP server for operating any API. Erratum 7.34.' },
   { date: '2026-09-04', change: 'Section 3 gains 3.9, an API spec editor whose document is the specification and whose every view is a pure function of it.' },
   { date: '2026-09-04', change: 'Section headings settle in on scroll, moving content and never hiding it. Section 7 and 9.2-9.3 moved to /errata/ and /machine/, anchors kept. Erratum 7.33.' },
   { date: '2026-09-04', change: 'The document printed as stacked phone cards on paper. Every width query is scoped to screen now, and print fidelity is checked on every build. Erratum 7.32.' },
