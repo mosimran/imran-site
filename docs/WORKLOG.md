@@ -3513,3 +3513,50 @@ round of trimming today. Errata are now nearly free because Appendix A renders o
 but any new section or table will not fit. Section 9 is 4157 bytes of machine-reference material
 and is the obvious next split, on the pattern already used for Sections 3 and 5 and both
 appendices. It carries sub-anchors and needs its own change rather than being bundled here.
+
+## The home page animates, and the obvious way to do it hid twelve headings
+
+**Asked for: animation on the index without affecting SEO or content visibility.** The obvious
+implementation broke the second requirement immediately, and the test is what caught it rather
+than the review.
+
+Section headings now settle upward as they enter the viewport, driven by
+`animation-timeline: view()`. No JavaScript, for the same reason the reading rule carries none.
+
+**The first version faded from `opacity: 0`.** `animation-fill-mode: both` holds the opening
+frame until an element enters the view range, so anything a client never scrolls to stays in it.
+Loaded into a tall viewport with no scrolling, which is the shape of a visit by something that
+renders once and does not read, **twelve of twenty headings were fully transparent**: every
+section from 6 to 14, both appendices and the signature block.
+
+The animation now sets a transform and nothing else. Text is rendered, selectable, searchable
+and readable at every point; only its position changes. The keyframes declare only a `from`, so
+the animation ends at the element's own base state rather than one the stylesheet invented, and
+a browser without scroll-driven animation support gets the finished layout because that is the
+only layout it ever had.
+
+`scripts/check-visible.mjs` asserts across eight pages that nothing sits below full opacity for
+a client that does not scroll. Proven by restoring the opacity and watching it fail on twelve
+elements.
+
+**Two sections moved, at the owner's direction, and the byte wall is gone.** Section 7 was a
+full errata table on the index and a second copy of `/errata/`, which already carries all
+thirty-two entries with anchors. Sections 9.2 and 9.3 moved to `/machine/`; 9.1 stays because a
+feed URL is something a reader acts on.
+
+**The anchors did not move.** A fragment is never sent to a server, so no redirect can rescue
+`/#s92`. `#s7`, `#s9`, `#s91`, `#s92` and `#s93` all still resolve on the index and land on the
+pointer saying where the content went.
+
+**Index: 52680 of 60000.** From 59984. First real headroom in two days, after seven trims.
+
+**Remaining non-essentials, measured and not moved.** Asked to review the page for more: section
+6 is 6286 bytes and section 5 is 5459, both of which are the site's substance rather than
+overhead. The genuine candidates left are section 13, References, at 2132 bytes, and section 2,
+Conventions, at 2207. Both are reference material of the kind already split out. Section 11,
+IANA Considerations, is 438 bytes and is a joke that pays for itself. Nothing else is over 2 KB.
+
+**Validated.** `check`, `print`, `mobile`, `visible` all exit 0. 0 WCAG2AA errors. Reduced
+motion and print media both report `animation-name: none`.
+
+**Deployed.** Pending merge.
