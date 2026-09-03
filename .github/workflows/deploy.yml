@@ -113,4 +113,7 @@ jobs:
       # browser-shaped requests, so the curl this step used to run passed while
       # every real visitor was served a third-party module.
       - name: verify the live site against the budgets
-        run: node scripts/check-live.mjs https://mosthofaimran.com
+        # Every host that serves the site. The budget claim is about the site, not
+        # about one hostname, and checking the primary alone reported a pass that
+        # covered less than it looked like it did.
+        run: node scripts/check-live.mjs https://mosthofaimran.com,https://imran.com.bd
