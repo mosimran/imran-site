@@ -65,8 +65,13 @@ of the site, where nothing is deleted.
   figures (six sites, zero failed installs since 2024-09) were the prototype's. Removed, not
   replaced. Written as a disclaimed reference design reporting no figures, because site counts
   and identities are the customer's information rather than the author's. Erratum 7.20.
-  <br>**What remains in this row is 3.7 and 3.8**, still unwritten, and the figures the index
-  carries for them.
+  <br>**2026-09-03: 3.7 is written, 3.8 remains.** Its state said `unwritten` while its own
+  summary said Bangla and Banglish were in production, which is the 3.6 conflation again.
+  Written as a disclaimed reference design reporting no figures. The four tracked per call keep
+  the names the stub gave them, and section 4 records that two of the four (containment rate,
+  aggregate word error rate) mislead if published alone. Erratum 7.21.
+  <br>**What remains in this row is 3.8**, still unwritten, and the figures the index carries
+  for it.
   <br>**2026-09-03: 3.4 is done, 3.5 remains.** Its figures (14B rows, query p95 9.4 s to 380 ms)
   and its entire summary, which named a rollback at 02:40, were the prototype's. Removed, not
   replaced. Written as a disclaimed reference design and reporting no figures. Erratum 7.19.
