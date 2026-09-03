@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-03', change: 'The index scrolled sideways on every phone, and on tablets between 681 and 760 pixels. Fixed, and checked on every build across fourteen widths. Erratum 7.28.' },
   { date: '2026-09-03', change: 'Section 6.7 added: the deletion promised since the gate was built now has a form. security.txt expiry is checked after every deploy. Erratum 7.27.' },
   { date: '2026-09-03', change: 'Slack alerting switched on, so 6.2 and the 6.6 processor table now say the address goes there too. Erratum 7.26.' },
   { date: '2026-09-03', change: 'The analytics beacon is kept and disclosed rather than denied, and the CSP that had been silently blocking it since 2025 is opened to that one host. Erratum 7.25.' },

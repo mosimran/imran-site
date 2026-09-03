@@ -3428,3 +3428,45 @@ row to 0, and the test row removed.
 **Deployed.** Pending merge.
 
 **Next.** 10 placeholder rows open of 25.
+
+## The front page scrolled sideways on every phone
+
+**Reported by the owner, reproduced with Playwright, and I caused it this morning.**
+
+The index rendered 517 pixels wide inside a 375 pixel viewport. The Section 3 table became
+generated today so it could not contradict an erratum again, and the generated Result column
+joins each note's figures. 3.1's joined string is longer than the hand-written one it replaced:
+"3M+ conversations/month / 99.9% against contracted SLAs". `td.num` carries `white-space:nowrap`
+and the mobile rule changed its alignment without letting it wrap, so 489 pixels of unbreakable
+text pushed the document past the screen. One declaration fixes it.
+
+**A second break was already there.** The responsive table layout started at 680 pixels and that
+table needs about 702, so every width from 681 to roughly 750 also scrolled. Small tablets and
+landscape phones have shown this since the table existed. The breakpoint is 760 now.
+
+**The check I wrote to find the first one missed the second.** It sampled 360, 375 and 390,
+all below every breakpoint in the stylesheet, and reported the site clean at exactly the widths
+where the bug was hardest to see. A breakpoint creates a band on either side and a check that
+samples one side finds nothing. It now tests both sides of every breakpoint the stylesheet
+declares: fourteen widths across eight pages, 112 combinations.
+
+Third instance of this shape today, after the provenance scan that read one field (7.19) and the
+budget check that read `dist/` and could not see the edge (7.6). Each time the result was true
+and narrower than it looked. Erratum 7.28 says so.
+
+**Diagnosis needed two attempts and the first was wrong.** Measuring with `isMobile: true` made
+every element appear to fit, because Chrome's shrink-to-fit rescales `getBoundingClientRect`, so
+a 517px element measures 375. The overflow was only visible once emulation was off and the
+comparison used `documentElement.clientWidth`.
+
+**Table of contents, visible only once the overflow was gone.** A wrapped title pushed its page
+number to the right of the first line, leaving "Curriculum Vitae (access" beside an 8 with
+"controlled)" orphaned below. Entries now flow inline with a hanging indent, which is where a
+printed index puts the number, and it reclaims the 3.6em gutter the number column held open.
+
+**Validated.** `npm run mobile` exit 0 across 112 page-viewport combinations, and exit 1 with the
+`nowrap` restored, so the failure path is proven. `npm run check` exit 0. `npm run a11y` 0
+WCAG2AA errors. Index 59620 / 60000, CSS 10678 / 12000. Desktop layout is untouched: the changed
+rules live inside media queries and `display` is still `flex` at 1280 and 768.
+
+**Deployed.** Pending merge. The check runs on every build from now on.
