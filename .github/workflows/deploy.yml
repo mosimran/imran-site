@@ -50,12 +50,13 @@ jobs:
       # Horizontal overflow on a phone. The reading path ships no JavaScript, so
       # nothing corrects a broken layout at runtime and a page that scrolls
       # sideways stays that way until somebody notices. Erratum 7.28.
-      - name: no page scrolls sideways
+      - name: no page scrolls sideways, and the document still prints
         run: |
           npx playwright install --with-deps chromium
           npx http-server dist -p 8811 --silent &
           npx wait-on -t 30000 http://127.0.0.1:8811/
           node scripts/check-mobile.mjs '' http://127.0.0.1:8811
+          node scripts/check-print.mjs http://127.0.0.1:8811
 
       - uses: actions/upload-artifact@v5
         with:
