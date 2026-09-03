@@ -54,6 +54,25 @@ X-Robots-Tag: noindex</div>
       </tbody>
     </table>
   </div>
+  <h2 id="s67">6.7. Delete your address</h2>
+  <div class="ind">
+    <div class="gate">
+      <div class="ep">POST /api/cv/forget</div>
+      <form method="post" action="/api/cv/forget">
+        <label class="skip" for="cv-forget">Email address to delete</label>
+        <input id="cv-forget" type="email" name="email" placeholder="you@company.com" autocomplete="email" required>
+        <button type="submit">Delete it</button>
+      </form>
+      <p class="fine">Removes every row holding that address, including any link still live, which
+      stops working immediately. Answers <code>202</code> whether or not there was anything to
+      delete, for the same reason 6.2 does: an endpoint that says "no such address" is a way to
+      ask whether an address is on file.
+      <br><br>6.4 has promised same-day deletion since the gate was built, and the endpoint has
+      worked the whole time. Nothing on the site said where it was, so the promise existed and the
+      way to use it did not. Erratum 7.27.</p>
+    </div>
+  </div>
+
   <h2 id="s66">6.6. Who else processes this</h2>
   <div class="ind">
     <p class="dim" style="max-width:80ch">A privacy claim that lists what I keep, and not who else

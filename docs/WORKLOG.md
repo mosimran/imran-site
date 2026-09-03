@@ -3393,3 +3393,38 @@ all 38 HTML routes, including pages with no JSON-LD, which previously got `scrip
 **Deployed.** Pending merge.
 
 **Next.** The owner sets `SLACK_WEBHOOK_URL`, and 6.2 and 6.6 gain the Slack row the same day.
+
+## A promise with no mechanism, twice
+
+**Found by auditing published promises rather than code.** Two of them had no way to reach the
+thing they promised.
+
+**Same-day deletion had no button.** Section 6.4 has said the address is kept "until deletion
+requested" since the gate was built, and 6.2 says it "is deleted the same day you ask". Nothing
+on the site said where to ask. `POST /api/cv/forget` existed the whole time, answers 202 either
+way so it cannot be used to test whether an address is on file, and it works: verified by
+inserting a row, posting to it, and counting the row gone. It was reachable by anyone who read
+the repository and invisible to everyone who read the site.
+
+Section 6.7 is now a form beside the request form. A right granted and not explained is a right
+on paper. Erratum 7.27.
+
+**`security.txt` expiry was unchecked.** RFC 9116 says a researcher should treat an expired file
+as stale, so letting the date lapse turns the disclosure route back into a dead one by a
+different mechanism than the 404 that erratum 7.23 fixed this morning. `check-live.mjs` now
+fails if `Expires` has passed and prints a rotation notice inside 45 days. Proven three ways:
+343 days reads ok, a past date fails, a date 16 days out passes with the notice. P14 closed, and
+the reminder now lives in the deploy rather than in a ledger row nobody rereads.
+
+**Both are the same shape and it is worth naming.** The code was correct in both cases and the
+page was the problem. Today's other findings were mostly documents contradicting reality; these
+two are documents that were true and unreachable, which is harder to notice because nothing
+disagrees with anything.
+
+**Validated.** `npm run check` exit 0. Index 59487 / 60000. `npm run a11y` 0 WCAG2AA errors on
+`/cv/` in both schemes. `check-live` exit 0. Deletion verified end to end against production, 1
+row to 0, and the test row removed.
+
+**Deployed.** Pending merge.
+
+**Next.** 10 placeholder rows open of 25.
