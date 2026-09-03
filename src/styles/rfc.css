@@ -148,6 +148,31 @@ td.n:not(.hd){color:var(--accent)}
 td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
 td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
 td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
+/* ---- mobile reading treatments ---- */
+@media (max-width:760px){
+  /* The section heading sticks under the masthead, so a reader ten screens into
+     a long specification can still see which section they are in. It costs 43px
+     on top of the 47px masthead, which is 13% of a 667px screen, and that is the
+     trade: less text per screen in exchange for never being lost in it.
+     Anchor landings were checked afterwards and clear both bars. */
+  h2{position:sticky;top:46px;z-index:10;background:var(--paper);
+     margin-left:calc(var(--pad) * -1);margin-right:calc(var(--pad) * -1);
+     padding:10px var(--pad) 8px;border-bottom:1px solid var(--rule)}
+
+  /* A hairline reading-progress rule under the header, driven by scroll position
+     rather than by script. Zero bytes of JavaScript, which is the only reason it
+     is allowed to exist on this site at all. A browser without scroll-driven
+     animations runs a zero-duration animation whose fill is none, so the base
+     scaleX(0) stands and nothing is drawn. Verified to track: 25% scrolled reads
+     matrix(0.25), 60% reads matrix(0.5999), 100% reads matrix(1). */
+  .rh::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;
+    background:var(--accent);width:100%;transform-origin:0 50%;
+    transform:scaleX(var(--read,0));
+    animation:read-progress linear;animation-timeline:scroll(root block)}
+}
+@keyframes read-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.rh::after{display:none}}
+
 @media (max-width:760px){
   table.rt, table.rt tbody, table.rt tr, table.rt td{display:block;width:100%}
   table.rt thead{position:absolute;left:-9999px}
