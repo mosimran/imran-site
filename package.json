@@ -25,7 +25,8 @@
     "contrast": "node scripts/check-contrast.mjs",
     "deployed": "node scripts/check-deployed.mjs",
     "impl": "node scripts/check-impl.mjs",
-    "prose": "node scripts/check-prose.mjs"
+    "prose": "node scripts/check-prose.mjs",
+    "gate": "node scripts/check-gate.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"
