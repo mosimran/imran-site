@@ -52,8 +52,13 @@ claiming its provenance would be a lie.
 
 ## Domains
 
-`mosthofaimran.com` is canonical. `johnefemer.com` and `imran.com.bd` serve identical
-bytes with the canonical tag pointing at the primary. Never add `X-Robots-Tag:
+`mosthofaimran.com` is canonical. `imran.com.bd` serves identical bytes with the
+canonical tag pointing at the primary.
+
+`johnefemer.com` does **not** serve this site. It is registered and still parked on
+`lander.parity.domains`, returning a 4.7 KB lander with a third-party script and no
+canonical tag. Its nameservers have to move to Cloudflare before any of the aliasing
+below applies to it. Verified by request on 2026-09-03; PLAN section 2 has the table. Never add `X-Robots-Tag:
 noindex` to the aliases: combined with a cross-domain canonical it can deindex the
 primary. See [PLAN.md section 2.1](docs/PLAN.md#21-how-aliasing-works-here).
 

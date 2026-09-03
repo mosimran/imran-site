@@ -163,11 +163,10 @@ explanation before the joke lands.
 | Host | Role | Behaviour |
 | --- | --- | --- |
 | `mosthofaimran.com` | Canonical | Serves. Indexed. Every canonical, feed ID, mailbox and signature URL points here. All content was written against it. |
-| `johnefemer.com` | Alias | Serves identical bytes. Canonical in the HTML points at the primary. |
-| `imran.com.bd` | Alias | Serves identical bytes, canonical to the primary. Attached and live. |
-| `efemer.me` | Alias | Same. Attached and live. Found already configured rather than planned for. |
-| `johnefemer.com` | Alias, not started | Registered at Namecheap, parked on `ns1/ns2.lander.d.parity.domains`. Nameservers must move to Cloudflare first. |
-| `www.*` | Serves | `www.mosthofaimran.com`, `www.imran.com.bd` and `www.efemer.me` are attached and active. They **serve** rather than redirect: Pages matches `_redirects` on path only, so a host-based rule is silently ignored. The baked canonical still names the primary on every one, so consolidation works. A real 301 needs a zone-level Redirect Rule per zone. |
+| `imran.com.bd` | Alias, serving | Serves identical bytes, canonical to the primary. Verified 2026-09-03: 200, canonical `https://mosthofaimran.com/`, no beacon. |
+| `johnefemer.com` | **Alias, not started** | Registered at Namecheap, parked on `ns1/ns2.lander.d.parity.domains`. Nameservers must move to Cloudflare first. Verified 2026-09-03: it serves a 4.7 KB parking lander on nginx with a third-party script from `lander.parity.domains`, no canonical tag, and none of this site's content. |
+| `efemer.me` | Alias, attached but not resolving | Listed on the Pages project. Verified 2026-09-03: DNS does not resolve, so it serves nothing. |
+| `www.*` | Serves | `www.mosthofaimran.com` and `www.imran.com.bd` are attached and serving, both verified 2026-09-03 with the canonical naming the primary. `www.efemer.me` is attached and does not resolve. They **serve** rather than redirect: Pages matches `_redirects` on path only, so a host-based rule is silently ignored. The baked canonical still names the primary on every one, so consolidation works. A real 301 needs a zone-level Redirect Rule per zone. |
 
 ### 2.1 How aliasing works here
 
@@ -659,7 +658,7 @@ Section 7 of the site exists to argue against.
 | Decision | Choice | Consequence |
 | --- | --- | --- |
 | Domain | mosthofaimran.com, owned | Canonical origin hard-coded through `astro.config.mjs`. Feed IDs, llms.txt links, security.txt and JSON-LD all derive from it. |
-| Aliases | johnefemer.com, imran.com.bd | Serve identical bytes, canonical to the primary. No `noindex`, see 2.1. |
+| Aliases | imran.com.bd (serving), johnefemer.com (parked, not started) | The serving alias returns identical bytes with the canonical naming the primary. No `noindex`, see 2.1. |
 | Content | Prototype ships as-is | No build gate on placeholders. A ledger plus `npm run placeholders` keeps replacement cheap and visible rather than blocking launch. |
 | Section 6 | Gate built now | Pages Functions, D1, R2, Resend, plus one cron Worker. Two deployables. |
 | AI policy | Open, attribution asked | Named crawlers explicitly allowed, `ai-train=yes`, the confidence-carrying request in three places. |

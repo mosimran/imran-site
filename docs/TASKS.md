@@ -318,6 +318,18 @@ it needs the owner.
   tooling registry. Each covers capability the current eight do not. Rev C section 3 has the
   case for each.
 
+- [ ] **T44** `johnefemer.com` nameservers to Cloudflare, or drop the claim
+  <br>*Ships:* yes. *Validated by:* `node scripts/check-live.mjs https://johnefemer.com`
+  passing, which means identical bytes, zero executable script and a canonical naming the
+  primary. *Blocked on the owner:* moving nameservers needs registrar access.
+  <br>Found 2026-09-03 by requesting the host rather than reading the plan. PLAN section 2
+  carried two rows for this domain saying opposite things, one describing it as serving
+  identical bytes and one as parked and not started. The parked row was right. It returns a
+  4.7 KB lander on nginx with a third-party script and no canonical tag, and the CV gate at
+  PLAN 199 assumes a form posted from this host reaches `/api/cv`, which it cannot.
+  <br>The alternative is to stop claiming it. An alias nobody has set up is not a defect;
+  documenting it as live for months is.
+
 ---
 
 ## Ordering notes
