@@ -213,7 +213,7 @@ mosthofaimran.com
       <thead><tr><th style="width:46px">§</th><th>System</th><th style="width:150px">Result</th><th style="width:1%">State</th></tr></thead>
       <tbody>
       {impl.map((n) => (
-        <tr><td class="n" data-l="Section">{n.data.section}</td><td class="hd" data-l="System"><a href={`/impl/${n.slug}/`}>{n.data.title}</a></td><td class="num" data-l="Result">{n.data.result.length ? n.data.result.join(' / ') : 'no figures supplied'}</td><td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{cap(n.data.state)}</span></td></tr>
+        <tr><td class="n" data-l="Section">{n.data.section}</td><td class="hd" data-l="System"><a href={`/impl/${n.slug}/`}>{n.data.title}</a></td><td class="res" data-l="Result">{n.data.result.length ? n.data.result.join(' / ') : 'no figures supplied'}</td><td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{cap(n.data.state)}</span></td></tr>
       ))}
       </tbody>
     </table>

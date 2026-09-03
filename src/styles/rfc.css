@@ -146,6 +146,7 @@ th{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim)
 td.n{color:var(--dim);white-space:nowrap;width:1%;font-variant-numeric:tabular-nums}
 td.n:not(.hd){color:var(--accent)}
 td.num{text-align:right;white-space:nowrap;color:var(--dim);font-variant-numeric:tabular-nums}
+td.res{text-align:right;color:var(--dim)}
 td .sub{color:var(--dim);font-size:.94em;line-height:1.55;margin-top:3px;display:block;max-width:64ch;font-weight:400}
 td .st{color:var(--dim);font-size:.9em;margin-top:3px;display:block;font-weight:400}
 /* ---- mobile reading treatments ---- */

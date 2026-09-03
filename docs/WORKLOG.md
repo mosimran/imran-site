@@ -3560,3 +3560,45 @@ IANA Considerations, is 438 bytes and is a joke that pays for itself. Nothing el
 motion and print media both report `animation-name: none`.
 
 **Deployed.** Pending merge.
+
+## 3.9 written, from a scan of the OpenAPI Studio codebase
+
+**Read the project before choosing a subject.** Candidates were the visual flow builder, the
+multi-client package surface, and the server-side execution proxy. The one worth writing is the
+**Common Internal Representation**: a spec-compliant document object that every surface derives
+from by pure function, rather than each view keeping its own model.
+
+Verified rather than taken from the project's own documentation, which describes a migration in
+progress: the type module is 553 lines and imported by 63 files, there are five view adapters
+(flow, table, doc, tree and one for a second spec family), the segment-tree builder is extracted
+so the canvas and the sidebar cannot disagree, reference resolution is a separate utility as the
+stated rule requires, and there are 54 unit tests. Some packages in the monorepo are real and
+three are stubs, so the note describes the representation rather than claiming a shipped client
+surface.
+
+Written under the reference-design rule: the constraint, five enforced decisions, a diagram, five
+failure modes and what I would do differently. Two of the failure modes are open, and the
+uncomfortable one is 5.4: the model claims conformance to a standard with two live versions, and
+that claim rests on a type definition rather than on a corpus of real files that round-trip.
+
+**No figures**, consistent with the other six. Section 4 names the four that would matter and
+says which one would settle whether the architecture paid for itself.
+
+**Caught before shipping.** Adding a ninth row took the Section 3 table's intrinsic width to
+743px, and the index overflowed at 761 and 768 pixels. The cause was the Result column being
+marked as a numeric cell: `td.num` carries `white-space:nowrap`, which was right for confidence
+values and revision dates and wrong for a joined sentence. It had already forced this table
+past the viewport once, on 2026-09-03, and was fixed then for phones and for print without the
+band between them being considered.
+
+The column is no longer numeric. `td.res` right-aligns without nowrap, so the table wraps at
+every width instead of setting a floor that grows with the longest result string. Verified from
+360 to 1280 pixels.
+
+The check caught it, which is the first time this week one of these caught a regression before
+it shipped rather than after.
+
+**Validated.** `check`, `mobile`, `print`, `visible` all exit 0. 0 WCAG2AA errors. Section 3 is
+57 of 63 items, nine notes, three clearing the bar and six missing figures alone.
+
+**Deployed.** Pending merge.

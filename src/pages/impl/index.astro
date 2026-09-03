@@ -55,7 +55,7 @@ Papers: <a href="/papers/">Section 5</a></div>
           <td class="hd" data-l="System"><a href={`/impl/${n.slug}/`}>{n.data.title}</a>
             <span class="sub">{n.data.summary}</span>
             <span class="st">{n.data.stack.join(' · ')}</span></td>
-          <td class="num" data-l="Result">{n.data.result.length ? n.data.result.map((r) => (<>{r}<br /></>)) : 'no figures supplied'}</td>
+          <td class="res" data-l="Result">{n.data.result.length ? n.data.result.map((r) => (<>{r}<br /></>)) : 'no figures supplied'}</td>
           <td data-l="State"><span class={`chip ${chip(n.data.state)}`}>{n.data.state}</span>
             {!isWritten(n) && <span class="st">note not written</span>}</td>
         </tr>
