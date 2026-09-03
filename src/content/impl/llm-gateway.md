@@ -5,21 +5,24 @@ summary: "One control plane over four model backends, the self-hosted ones runni
 slug: "llm-gateway"
 state: production
 stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "Qwen", "GPT-4o", "2 GPUs, self-hosted inference"]
-result: ["3.1M calls/day", "p99 overhead 180 ms"]
-since: 2024-02
-fallsOverAt: "~11k rps. The Redis quota path saturates first and degrades to fail-open with an alarm."
+result: []
+fallsOverAt: "Not established by measurement. The architectural limit is the quota path: it is the one component every call passes through and the one that holds state, so it saturates before the adapters do. The specific rate at which that happens has not been published here."
 metrics:
-  - { name: "Calls per day", value: "3,100,000", note: "across three tenants" }
-  - { name: "Gateway overhead p50 / p99", value: "41 ms / 180 ms", note: "redaction included, measured at the edge" }
-  - { name: "Redaction cost p99", value: "14 ms", note: "in process, before routing" }
   - { name: "Self-hosted inference footprint", value: "2 GPUs", note: "deployed configuration, not a measurement" }
-  - { name: "Egress, air-gapped tenants", value: "0 bytes", note: "verified quarterly by the tenant" }
-  - { name: "Failover to understudy", value: "0.31% of calls", note: "every one of them stamped and counted" }
 failures:
   - { id: "5.1", status: fixed, note: "Version one buffered streaming responses so output redaction could run over a complete message. Time to first token collapsed and the product felt dead in the hand. Repaired with a two chunk token window, which is strictly worse in theory and invisible in practice." }
   - { id: "5.2", status: open, note: "Redaction is tuned for recall and over-redacts account numbers written in Bengali script. Known, unfixed, documented for tenants rather than hidden from them." }
   - { id: "5.3", status: accepted, note: "Quota state is not replicated across regions. A region failover resets windows and briefly permits double the intended rate. Cheaper than the consistency machinery, written down, with an alarm on it." }
 ---
+
+<div class="note"><b>Read the failure modes in section 5 as illustrative, not as record.</b>
+They came from the handoff prototype this site was built from, word for word, and they have not
+been replaced with the real ones. The same is true of this note's architecture: redaction before
+routing, the stamped understudy and the sliding quota window are the prototype's description of a
+gateway, not yet confirmed as the description of this one. What is confirmed is the shape of the
+problem, the self-hosted backends on two GPUs, and the model choices. The figures were removed on
+2026-09-03 under <a href="/errata/#e7-17">erratum 7.17</a>; this text stays until the owner replaces
+it, because marking it is honest and deleting it quietly would not be.</div>
 
 A bank wants agentic customer service. Its regulator wants every token to stay inside the
 bank. Those two sentences are the entire project, and everything difficult about it follows
@@ -36,8 +39,10 @@ per-tenant routing decision instead of an architecture.
 ## 3. Decisions worth defending
 
 **3.1. Redaction before routing.** Personal data detection runs in process before backend
-selection. It costs 14 ms at p99, and it means a misconfigured route cannot leak. A control
-that depends on the correctness of the next hop is not a control, it is a hope with a runbook.
+selection, which means a misconfigured route cannot leak. A control that depends on the
+correctness of the next hop is not a control, it is a hope with a runbook. The cost this adds
+per call was published here as a measurement and was the prototype's number, so it is gone
+rather than estimated.
 
 **3.2. Deterministic, stamped fallback.** When a backend degrades, the gateway fails over to
 a smaller local model and marks the response as having come from the understudy. Downstream

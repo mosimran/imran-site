@@ -2875,3 +2875,38 @@ at 23 of 56, up from 10 this morning.
 
 **Next.** 3.2 is the weakest written note at 3/7 and closes P09. 3.4, 3.5, 3.7 and 3.8 remain
 stubs and need figures and a failure mode each from the owner.
+
+## 3.2's figures removed, and its failure modes found to be the prototype's
+
+**Changed.** Note 3.2 carried six figures and a start date, all from the handoff prototype:
+3.1M calls/day, 41 ms / 180 ms overhead, 14 ms redaction, 0 bytes egress, 0.31% failover,
+~11k rps, and since 2024-02. Removed rather than replaced, the same decision taken for 3.3
+under erratum 7.13. Two of them asserted a verification method as well as a value, "measured
+at the edge" and "verified quarterly by the tenant", and neither exercise is on record. That
+is precisely the defect 7.13 removed from 3.3, and it was sitting in this note at the time.
+
+**The failure modes came from the prototype too, and nothing was tracking that.** Sections 5.1
+through 5.3 are its text word for word, as are the three decisions above them. P08 and P09
+catalogued the prototype's figures and never its prose, so a reader could not distinguish
+tracked placeholder from real record, and neither could I until the prototype was read directly
+rather than trusted to have been fully catalogued. This is the second time this week that
+trusting a catalogue over the source produced a wrong conclusion; the first was erratum 7.12.
+
+Marked on the page rather than deleted. Deleting removes the evidence that the site published
+them, replacing them means inventing, and the site's rule is that nothing is deleted.
+
+**Not done, deliberately.** 3.2 still fails constraint, enforcement and diagram on the bar. I
+did not write them. The architecture in this note is unverified, and writing a diagram of a
+design I cannot confirm in order to move a score from 4 to 7 is the exact behaviour paper 5.19
+argues against. The score is the honest one.
+
+**Validated.** `npm run check` exit 0. Index 58562 / 60000. `npm run impl` now scans the
+prototype and reports any front-matter note carried from it verbatim: 3 in llm-gateway, 0 in
+every other note, including the three written this week. Both paths of that check were run,
+neutralising one entry and confirming the count fell to 2 before restoring it.
+
+**Deployed.** Pending merge.
+
+**Next.** P25 needs three real failure modes for 3.2 from the owner, and confirmation of
+whether its three architectural decisions describe this gateway or only the prototype's.
+3.4, 3.5, 3.7 and 3.8 remain stubs needing figures and a failure mode each.

@@ -74,7 +74,7 @@ of the site, where nothing is deleted.
   it are targets the build is held to and are marked as such. A target published as a
   measurement is the same defect as an invented figure, wearing better clothes.
 
-- [ ] **P09** Implementation 3.2 measurements
+- [x] **P09** Implementation 3.2 measurements
   <br>41 ms / 180 ms gateway overhead, 14 ms redaction, 0.31% failover, falls over at
   ~11k rps.
   <br>`impl/llm-gateway §4`.
@@ -82,6 +82,11 @@ of the site, where nothing is deleted.
   two GPUs, supplied by the owner and added to the summary, the stack and the body. Erratum 7.14.
   The figures in this row are untouched and still unlabelled: 3.2 does not yet separate
   measurements from design targets the way 3.1 and 3.3 do, and `npm run impl` scores it 3 of 7.
+  <br>**Closed 2026-09-03.** All five figures removed, with 3.1M calls/day from P08 and the
+  2024-02 start date alongside them. Two of them asserted a verification method as well as a
+  value ("measured at the edge", "verified quarterly by the tenant") and neither exercise is on
+  record, which is the defect erratum 7.13 removed from note 3.3. Removed rather than replaced,
+  same decision and same reason. The note now reports no figures. Erratum 7.17.
 
 - [ ] **P10** Paper count inconsistency
   <br>The index claims "34 papers, 3 retracted"; the sources between them list 14 and
@@ -212,6 +217,21 @@ does not.
   parsing the tokens out of the stylesheet. Every pair passes AA in both schemes; the
   window fill opacity moved from .13 to .09 to lift the tightest pair from 4.58:1 to
   4.85:1. Both the check and its failure path were run before it was trusted.
+
+- [ ] **P25** Implementation 3.2's failure modes and architecture are the prototype's
+  <br>`src/content/impl/llm-gateway.md`. Sections 5.1 through 5.3 (the buffered streaming
+  response, over-redaction of account numbers in Bengali script, unreplicated quota state) are
+  the handoff prototype's text word for word, as are the three decisions above them. **P08 and
+  P09 catalogued that document's figures and never its prose**, so these were published as this
+  person's engineering record for a year with nothing tracking them, and were found on
+  2026-09-03 only by reading the prototype directly instead of trusting the catalogue.
+  <br>Marked on the page rather than deleted, because deleting removes the evidence that the
+  site published them, and replacing them would mean inventing. `npm run impl` now reports any
+  front-matter note whose opening words appear in the prototype verbatim; it reads 3 and every
+  other note reads 0. Erratum 7.17.
+  <br>Closing this needs three real failure modes from the owner, and confirmation of whether
+  redaction-before-routing, the stamped understudy and the sliding quota window describe this
+  gateway or only the prototype's.
 
 ## Low
 
