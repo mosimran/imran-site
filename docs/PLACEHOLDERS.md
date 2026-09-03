@@ -204,7 +204,7 @@ does not.
 
 ## Compliance thread, opened 2026-08-31
 
-- [ ] **P21** Confidence values on papers 5.15 and 5.16
+- [x] **P21** Confidence values on papers 5.15 and 5.16
   <br>`src/content/papers/soc2-120-days.md`, `soc2-scope-hack.md`. Set to 0.65 and 0.60 by
   the drafter, which is a category error: a confidence value is the author's credence and
   nobody else can hold it for him. Both are low enough that the schema classes them as
@@ -215,6 +215,9 @@ does not.
   set, and 0.65 was deliberately left unmoved: a confidence value is the author's to raise,
   not the drafter's. This row is now the reason the number may be too low rather than too
   high.
+  <br>**Closed 2026-09-03 by the owner, with both values unmoved.** 5.15 stays at 0.65 and 5.16
+  at 0.60, and they are his credence now rather than the drafter's. Nothing published changed,
+  so no erratum. Both stay below 0.7 and both pages still class themselves as drafts. T35.
 
 - [ ] **P22** Measurements for implementation 3.6 (was: measurements and failure modes)
   <br>`src/content/impl/compliance-evidence.md`. The note is `unwritten` because the

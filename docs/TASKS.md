@@ -194,9 +194,21 @@ something on every task after it rather than only at the end.
   2022-07-29, expires 2027-07-29, but parked on `ns1/ns2.lander.d.parity.domains`.
   Its nameservers must move to Cloudflare before it can be attached.
 
-- [ ] **T29** HSTS preload on the primary
+- [x] **T29** HSTS preload on the primary
   <br>*Ships:* live. *Validated by:* a week of clean serving first, then submit.
   Aliases stay unpreloaded.
+  <br>**Closed 2026-09-03 by deciding against submission, with the protection kept.**
+  Measured that day: every serving host already returns
+  `Strict-Transport-Security: max-age=63072000; includeSubDomains`, which is two years, and
+  `http://mosthofaimran.com` 301s to HTTPS. That is the whole benefit for every visitor who has
+  been here before, or who has visited any host under the domain.
+  <br>Preloading adds one thing: protection on the very first request to a domain the browser
+  has never seen. It costs a commitment that takes months to unwind, because removal propagates
+  at the speed of browser releases. The header is also one token short of eligible, and
+  `_headers` on Pages matches path rather than host, so adding `preload` would send it on
+  `imran.com.bd` too and contradict the "aliases stay unpreloaded" line above.
+  <br>Reopening it is one token in `public/_headers` plus a submission at hstspreload.org, which
+  is a web form and needs the owner rather than the drafter.
 
 ## Track 8: signatures
 
@@ -238,10 +250,17 @@ site. Not in the original 31. The plan is [COMPLIANCE-PLAN.md](COMPLIANCE-PLAN.m
   conversations a month, 99.9 percent availability against contracted SLAs, recovery under
   thirty minutes. The prototype's 40M events/day and 3 regulated tenants are gone. Erratum 7.11.
 
-- [ ] **T35** Confidence pass on 5.15 and 5.16
+- [x] **T35** Confidence pass on 5.15 and 5.16
   <br>*Ships:* yes. *Validated by:* the owner states his own credence for each; if either
   moves, erratum 7.8 records it and the state follows the schema.
-  <br>*Blocked on the owner.* P21.
+  <br>**Closed 2026-09-03 by the owner, leaving both values where they are.** 5.15 stays at
+  0.65 and 5.16 at 0.60. Nothing published moves, so there is no erratum: an erratum records a
+  changed claim, and this records an unchanged one becoming the author's rather than the
+  drafter's.
+  <br>Both remain below 0.7, so the schema still classes them as drafts and the pages still say
+  so. P21 noted the evidence base under 5.15 widened when section 8 was strengthened, which made
+  0.65 possibly too low rather than too high. It stays at 0.65 because moving another person's
+  credence is the thing that row existed to prevent.
 
 ## Track 10: finishing and expanding Section 3
 
@@ -311,12 +330,18 @@ it needs the owner.
   27001, inside the boundary paper 5.15 section 8 publishes. Reports no figures. 6/7.
   Erratum 7.16.
 
-- [ ] **T43** Section 3 expansion
+- [x] **T43** Section 3 expansion
   <br>*Ships:* yes. *Blocked on the owner's decision.* The résumé describes three systems at
   other employers with figures already published in it, and Section 3 mentions none of them: a
   document intelligence pipeline, a field service and payments platform, and a skills and
   tooling registry. Each covers capability the current eight do not. Rev C section 3 has the
   case for each.
+  <br>**Closed 2026-09-03 by the owner: no expansion.** Section 3 stays at eight notes. The
+  three systems remain undescribed here, and the record of why is this row rather than silence.
+  <br>The section is stronger for stopping. All eight notes are written, none carries an
+  invented figure, and five say plainly which measurements would matter and that they are not
+  published. Adding three more systems from a résumé, with figures nobody has checked against
+  the rule set on 2026-09-03, would have traded that for coverage.
 
 - [x] **T44** `johnefemer.com` nameservers to Cloudflare, or drop the claim
   <br>*Ships:* yes. *Validated by:* `node scripts/check-live.mjs https://johnefemer.com`
