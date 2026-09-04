@@ -3,7 +3,7 @@ section: "3.7"
 title: "Voice AI for customer service"
 summary: "Inbound and outbound voice agents on the Omazy CX platform, with Bangla and Banglish speech in production and live handoff to a human under SLA routing."
 slug: "voice-ai"
-revised: 2026-09-03
+revised: 2026-09-04
 state: production
 stack: ["streaming STT", "TTS", "telephony", "retrieval grounding", "Bangla / Banglish"]
 result: []

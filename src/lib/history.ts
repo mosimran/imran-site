@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-04', change: 'The analytics beacon reported to this origin, not to the CDN, so it still collected nothing and 7.25 said otherwise. Confidence on 5.24 and 5.25 adopted by the author. Errata 7.42, 7.43.' },
   { date: '2026-09-04', change: 'A proprietary model was listed in the sovereign gateway stack, contradicting the note three paragraphs below it. Open weight only now. Erratum 7.41.' },
   { date: '2026-09-04', change: 'Papers 5.24 and 5.25 revised after a reading pass: 5.24 retitled, both given the figure their argument needed. Erratum 7.40.' },
   { date: '2026-09-04', change: 'Every diagram on the site was broken by a blank line inside its SVG, and had been since each was written. Erratum 7.39.' },

@@ -17,13 +17,19 @@ const walk = (d, o = []) => { for (const e of readdirSync(d, { withFileTypes: tr
 // and collecting nothing while the page still paid for the request. The owner
 // chose to make it work rather than turn it off. Erratum 7.25.
 //
-// script-src lets it execute; connect-src lets it report, which default-src
-// 'none' was also blocking. Both are pinned to the one host. Everything else
-// stays exactly as strict as it was: no 'unsafe-inline' for script, no wildcard,
-// and img-src, form-action, base-uri and frame-ancestors are untouched.
+// script-src lets it execute. connect-src lets it report, and the host it
+// reports to is NOT the host it loads from: the script comes from the CDN and
+// posts to /cdn-cgi/rum on this origin. Pinning connect-src to the CDN, which is
+// what the first version of this did, left the script running and every report
+// refused, so the feature stayed broken and erratum 7.25 said it was fixed.
+// Verified in a browser rather than reasoned about. Erratum 7.42.
+//
+// Everything else stays exactly as strict as it was: no 'unsafe-inline' for
+// script, no wildcard, and img-src, form-action, base-uri and frame-ancestors
+// are untouched.
 const BEACON_HOST = 'https://static.cloudflareinsights.com'
 const BASE = "default-src 'none'; img-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests" +
-  `; connect-src ${BEACON_HOST}`
+  `; connect-src 'self'`
 const rules = []
 let blocks = 0
 

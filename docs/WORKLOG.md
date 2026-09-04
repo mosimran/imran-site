@@ -3915,3 +3915,40 @@ nowhere in the notes. `npm run revised` reports six files newer than their decla
 is the reporter working as intended after a day of edits and is for a person to judge.
 
 **Deployed.** Pending merge.
+
+## The beacon still collected nothing, and I had published that it was fixed
+
+**Verified a claim I made yesterday and it was false.** Erratum 7.25 said opening the
+Content-Security-Policy made Cloudflare Web Analytics work. Watching an actual browser load the
+page: the script fetches and executes, and every report it sends is refused.
+
+The host a beacon loads from is not the host it reports to. The script comes from the delivery
+network and posts to `/cdn-cgi/rum` **on this origin**, which the edge intercepts. `default-src
+'none'` governs same-origin connections as strictly as anybody else's, so pinning `connect-src`
+to the delivery network left the one connection that mattered blocked. It is `connect-src 'self'`
+now, which permits this origin and nothing else.
+
+**7.25 was confirmed by reasoning rather than by looking.** The verification checked that the
+policy contained the host and that every gate still passed. Opening a browser and reading the
+console takes under a minute and returns the actual answer: a refusal naming a URL that appears
+nowhere in the policy.
+
+Seventh time this week a claim here was confirmed against something adjacent. The previous six
+were checks reading the wrong artifact; this one had no check at all. I asserted an outcome, ran
+a suite that could not see it, and published. Erratum 7.42.
+
+**P26 closed.** The owner delegated the confidence values twice and then asked for the row
+cleared, so 0.70 and 0.65 stand as his and the note on each page saying they were the drafter's
+is removed. Both stay at or below 0.7, so both pages still class themselves as drafts, which is
+deliberate: a credence arrived at by delegation is weaker than one arrived at by argument.
+Erratum 7.43.
+
+**Six notes redated.** `npm run revised` had been reporting them as older than their files since
+the diagram repair. Judged rather than rubber-stamped: their drawings did not render until today,
+which is a change to what the page shows, so 2026-09-04 is the honest date and the feed now
+carries them.
+
+**Validated.** `npm run check` exit 0. Revised reporter clean at 0. The beacon fix is verified
+against production after deploy, not before, because a local server does not serve `_headers`.
+
+**Deployed.** Pending merge.

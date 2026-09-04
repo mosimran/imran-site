@@ -3,7 +3,7 @@ section: "3.4"
 title: "Analytics migration to ClickHouse"
 summary: "Moving analytical workload off a row store onto a columnar one without downtime, under dual writes, with the rollback built before the cutover rather than after it."
 slug: "olap-migration"
-revised: 2026-09-03
+revised: 2026-09-04
 state: complete
 stack: ["ClickHouse", "Kafka Connect", "Airflow"]
 result: []
