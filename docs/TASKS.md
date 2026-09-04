@@ -396,6 +396,17 @@ it needs the owner.
   balance argument folded into 3.10 section 2.5 as sourced attribution rather than becoming a
   third paper, because it is the same claim about derived numbers this site already makes.
 
+- [ ] **T47** A tools section
+  <br>*Ships:* yes. *Plan:* [TOOLS-PLAN.md](TOOLS-PLAN.md), Rev A.
+  <br>*Blocked on the owner:* logos or type, whether dropped tools are in scope, launch size,
+  whether a page-scoped style block is acceptable, and the depth vocabulary.
+  <br>A `tools` collection with three generated surfaces: an index, a page per category carrying
+  a small readable map, and a page per tool carrying its neighbourhood. Not one big graph: a
+  hundred nodes is a hairball and the site's figures already scroll sideways at 600px.
+  <br>The recommendation the plan argues hardest for is that the section records what was
+  dropped and why. Without it this is a CV appendix, and it would be the only section here that
+  only accumulates.
+
 ---
 
 ## Ordering notes
