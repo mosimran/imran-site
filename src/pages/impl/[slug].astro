@@ -12,14 +12,15 @@ const { Content } = await n.render()
 const d = n.data
 // Looked up rather than derived, for the reason papers/[slug].astro gives.
 const code = d.section.replace(/\./g, '-')
-const shortUrl = (ledger as Record<string, unknown>)[code] ? new URL(`/l/${code}`, Astro.site).href : null
+const shortPath = `/l/${code}`
+const shortUrl = (ledger as Record<string, unknown>)[code] ? new URL(shortPath, Astro.site).href : null
 ---
 <Doc title={`§${d.section} ${d.title}`} description={d.summary}>
   <div class="mast">
     <div>Off the Bit
 <b>Implementation {d.section}</b>
 Category: System
-State: {d.state}</div>
+State: {d.state}{shortUrl ? '\nShare: ' : ''}{shortUrl && <a class="sl" href={shortPath}>{shortUrl}</a>}</div>
     <div class="r"><b>{d.title}</b>
 {d.result.join('\n')}</div>
   </div>
@@ -27,7 +28,6 @@ State: {d.state}</div>
   <div class="title">
     <h1>{d.title}</h1>
     <div class="sub">{d.summary}</div>
-    {shortUrl && <p class="sl">Share <a href={`/l/${code}`}>{shortUrl}</a></p>}
   </div>
 
   <h2 id="stack">Stack</h2>

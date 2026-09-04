@@ -289,7 +289,23 @@ recorded here rather than left open.
 | The published map | `src/pages/l/index.astro` |
 | The share line | `papers/[slug].astro`, `impl/[slug].astro`, `.sl` in `rfc.css` |
 
-One thing changed shape during the build. Section 7 proposed the link go in the
-"Machine readable" block at the foot of the page. It sits under the title instead,
-because the requirement was sharing with minimal attention and the foot of a paper is
-not where an unhurried reader looks, let alone a hurried one.
+Section 7 proposed the link go in the "Machine readable" block at the foot of the page.
+It went under the title first, because the requirement was sharing with minimal
+attention and the foot of a paper is not where a hurried reader looks. On 2026-09-05 the
+owner moved it again, into the document masthead, where it reads as another line of the
+apparatus beside `Confidence:` and `State:` rather than as a widget bolted under the
+title. That is the better place: it is the first block on the page and it is where an
+RFC puts its identifiers.
+
+**A copy button was asked for and refused, by decision.** Click to copy, with the label
+changing to "Copied", cannot be done without JavaScript, and there is no CSS or HTML
+clipboard mechanism to fall back on. The site's oldest published claim is enforced in
+three places: `check-budget.mjs` caps executable scripts at zero, the CSP is
+`default-src 'none'` with `script-src` limited to the JSON-LD hashes, and the colophon
+publishes "ships no script" with errata 7.25, 7.30 and 7.33 leaning on it. Spending that
+for one saved keystroke was put to the owner with the full cost, including the erratum
+that would have to be written first, and the answer on 2026-09-05 was to keep it.
+
+Faking the confirmation in CSS was never on the table. An `:active` rule that swaps the
+text to "Copied" without copying anything is a control that presents as working, which
+is the failure paper 5.24 argues against on the very page it would have appeared.
