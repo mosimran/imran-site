@@ -4099,6 +4099,32 @@ row in the processor table, and the disclosure is the expensive part rather than
 No QR codes. Errata have no codes, because they are anchors on a shared page and a redirect
 to a fragment is a different mechanism that would need verifying rather than assuming.
 
-**Deployed.** Not committed. T47's work was staged in the index when this landed, so nothing
-here was committed or staged and the two sit side by side in the working tree awaiting
-sequencing by the owner.
+**Reviewed afterwards, and it found four things.** Worth recording because three of them were
+in the checks rather than in the feature, which is the failure mode this log keeps returning to.
+
+*`--emit` was not idempotent.* Run outside a build it appended the rules again, so the file
+doubled every time. `astro build` clears `dist`, which is exactly why the normal path hid it,
+and duplicate rules are invisible at the edge because the first match wins. Nothing would ever
+have reported it. It truncates at its own marker now, and `check-short.mjs` counts rules per
+code so a doubled file fails.
+
+*`check-links.mjs` only saw a rule that carried a status code.* The status is optional in a
+Pages rule and defaults to 302, so a rule written without one was skipped by the very scan
+added in this task to catch dead destinations. The gap was one commit old.
+
+*`check-live.mjs` reported a pass against a 404.* "Location is a path" was tested as the
+absence of a scheme, and a missing header has no scheme, so a response with no redirect in it
+at all came back green. It requires the header now. Same shape as erratum 7.6 and small enough
+to have shipped unnoticed.
+
+*The map page rendered `undefined`* for its first and last issued dates if the ledger were
+ever empty.
+
+**Each fix was proven by breaking it first**, which is the standard the deploy workflow states
+and the reason to trust the ones that pass. A duplicated rule, a deleted half of a pair, a
+status-less rule pointing at a missing page, and the live assertion run against a server that
+ignores `_redirects`: all four failed before they passed. One earlier attempt at that proof was
+itself a false negative, because `grep pattern file >> file` writes nothing, and the check was
+reported as not firing when the breakage had never been applied. Checked rather than believed.
+
+**Deployed.** Merged to `main` and shipped by Actions.
