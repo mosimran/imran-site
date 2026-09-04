@@ -163,7 +163,23 @@ function slugify (name, key) {
   return s || key.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
+/*
+ * `--pin` re-reads the commits already recorded in src/data/tools.json instead of
+ * whatever those repositories point at today. A parser fix should change the
+ * parse and nothing else, and re-ingesting from a moved HEAD would bury it in
+ * unrelated churn. Without the flag this follows each repository's HEAD.
+ */
+const PINNED = process.argv.includes('--pin')
+let pins = {}
+if (PINNED) {
+  const { readFileSync } = await import('node:fs')
+  for (const s of JSON.parse(readFileSync('src/data/tools.json', 'utf8')).sources) {
+    pins[s.repo] = { sha: s.commit, date: s.commitDate }
+  }
+}
+
 async function head (repo) {
+  if (PINNED && pins[repo]) return pins[repo]
   const r = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`, {
     headers: { 'user-agent': 'imran-site-ingest', accept: 'application/vnd.github+json' },
   })
@@ -212,10 +228,30 @@ for (const src of SOURCES) {
       unmapped.set(heading, (unmapped.get(heading) || 0) + 1)
     }
 
-    const desc = stripBadges(body.slice(body.indexOf(full) + full.length))
-      .replace(/^\s*[-–—:]\s*/, '')
-      .replace(/\s+/g, ' ')
-      .trim()
+    /*
+     * Two bullet forms appear across these lists:
+     *
+     *   - [Name](url) - description
+     *   - **[Name](url)** - description
+     *
+     * The second closes its bold marker AFTER the link, so slicing at the end of
+     * the link leaves `** - description`. The separator strip below only ever
+     * looked for a leading dash, so 248 of 591 descriptions shipped reading
+     * `** — AI-enhanced terminal...`. Emphasis is removed before the separator,
+     * and both are anchored so nothing inside the description itself is touched.
+     */
+    let desc = stripBadges(body.slice(body.indexOf(full) + full.length))
+    // One row carries a second link before its description, italicised:
+    // `[Name](url) *[Review](url)* - description`. Strip emphasis, a further
+    // link, and the separator, in a loop, until none of the three is leading.
+    for (let prev = null; prev !== desc;) {
+      prev = desc
+      desc = desc
+        .replace(/^[*_`]+/, '')
+        .replace(/^\s*\[[^\]]*\]\([^)]*\)/, '')
+        .replace(/^\s*[-–—:•]\s*/, '')
+    }
+    desc = desc.replace(/\s+/g, ' ').trim()
 
     rows.push({ source: src.id, heading, category, name: name.trim(), url, key, desc })
     count++

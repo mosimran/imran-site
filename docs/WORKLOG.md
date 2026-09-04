@@ -4023,3 +4023,73 @@ are still open. The tools plan argued that recording what was dropped and why is
 would stop this being a CV appendix, and that remains unbuilt.
 
 **Deployed.** Pending merge.
+
+---
+
+## T49, 2026-09-05: catalogue descriptions repaired, listing block removed, a star
+
+**What changed.** Four things, three of them asked for by the owner from a screenshot.
+
+*The descriptions were broken.* 248 of 591 began `** – `, because the source lists use two bullet
+forms and the parser only understood one. `- **[Name](url)** - description` closes its bold marker
+after the link, so cutting at the end of the link left the orphaned `**` in front of every
+description. Emphasis, a further link and the separator are now stripped in a loop. Residue is 0
+of 591. Erratum 7.45.
+
+*Re-ingest is now pinnable.* `node scripts/ingest-tools.mjs --pin` re-reads the commits already
+recorded in `tools.json` rather than following each repository's HEAD, so a parser fix changes the
+parse and nothing else. Entry counts identical at 95, 272 and 297 across the three sources.
+
+*The per-tool listing block is gone.* "Where it is listed" named all three source lists, their
+commits and their licences on every tool page, which read as advertising for the lists rather than
+as a document. The attribution the MIT and CC BY licences require is unaffected: it lives in the
+line naming the list each description is quoted from, and in the Sources section of the catalogue
+front page. The tool's own address moved into the masthead as `Site:`, by hostname so a long URL
+cannot overflow the column.
+
+*The layout was two-thirds width.* `.tsec` capped every section at 66 characters while the
+masthead rule, like every rule on this site, ran the full 880px measure. On a desktop that left
+rules reaching 793px above content stopping at 530 and a band of empty paper down the right. The
+cap is removed. Measure is now enforced where it belongs, on prose at 64ch and a row description
+at 74ch, and row borders line up with the masthead rule. The citation chip moved to the right edge
+above 760px, which uses the width rather than leaving it.
+
+**The star.** A star marks a tool that earned its place: used to build, check or serve this site,
+with a file in this repository named as the proof. It is deliberately not a quality rating.
+Handing a glowing star to a tool nobody here has opened, on impression, across six hundred
+products, would be the one claim on this site that no reader could check, and the rest of the
+document exists to argue against exactly that. `star.extra` in `tools-used.json` lets the owner
+star a catalogue tool that is not in the overlay, and a star without a written reason throws at
+build time. Thirteen stars today, all of them earned by the overlay.
+
+The glow animates `drop-shadow` and nothing else. Animating opacity would make the mark invisible
+to a renderer taking one snapshot without scrolling, which `scripts/check-visible.mjs` fails the
+build for. Verified in a browser: with `prefers-reduced-motion: reduce` the animation is `none`
+and the star sits lit; opacity is 1 in both states.
+
+**The star was a glyph first, and that cost 64 accessibility errors.** A `★` character produced an
+axe `incomplete` for colour contrast on every one of them, reason `nonBmp`, "element content
+contains only non-text characters". pa11y reports an incomplete as an error and
+`scripts/check-a11y.mjs` counts it, because its existing exception covers text inside `<svg>` and
+nothing else. Four things were tried before the cause was found rather than guessed at: removing
+the shadow, dimming it, setting the glyph to pure black at 24px, and marking it `aria-hidden`. All
+four still failed, which ruled out contrast as the actual problem and pointed at the glyph itself.
+
+Widening the exception would have been the wrong repair. axe declines to judge a symbol for a
+different reason than it declines to judge text on a drawn backdrop, and filing one under the
+other is the adjacent measurement these errata keep naming. The star is now an `<svg>` with no
+`<text>` in it, which carries no contrast result at all, so there is nothing to excuse. Non-svg
+contrast errors on the tools pages: 0.
+
+**Validated.** `npm run check` exit 0. Budgets unchanged: index 54,061 of 60,000, inlined CSS
+11,806 of 12,000, third-party requests 0. `_headers` 41 rules of 100. `mobile` clean across all 14
+viewports. `contrast` clean in both schemes. `visible` and `print` clean. `links` 0 broken.
+
+**One near-miss worth recording.** The first a11y run passed against a stale server still holding
+the previous build, and the pass meant nothing. It was caught because a Playwright locator for
+`.star` timed out on a page whose local copy contained four of them. Servers were killed and
+restarted against the built bytes, and every server-dependent check was re-run. This is the same
+failure the errata keep naming: a green result confirmed against something adjacent to the thing
+it claimed to measure.
+
+**Deployed.** Pending merge.
