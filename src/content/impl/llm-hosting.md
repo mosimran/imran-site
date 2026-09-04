@@ -52,55 +52,45 @@ evaluation you trust costs more, takes longer, and is what determines whether an
 ## 2. The decisions, and where each one is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 292" role="img" aria-label="A domain corpus feeds LoRA training, producing a candidate adapter. The candidate goes to an evaluation gate holding four checks: a prompted baseline comparison, a golden dataset and regression suite, hallucination and safety probes, and human review for regulated flows. A candidate that fails any check is rejected and never reaches the registry. A candidate that passes enters the versioned model registry, from which serving pulls. Serving applies batching and quantisation and autoscales against GPU load. A router in front chooses per task between self-hosted adapters, the base model, and a commercial API, on cost, latency and accuracy. A rollback arrow runs from the registry back to serving, showing any previous version can be restored.">
 <defs><marker id="ha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">TRAINING PRODUCES A CANDIDATE, NOT A RELEASE</text>
 <rect x="10" y="24" width="92" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="56" y="42" font-size="9.5" text-anchor="middle">domain corpus</text>
 <text class="d" x="56" y="56" font-size="8.5" text-anchor="middle">terminology, tone</text>
-
 <rect x="114" y="24" width="92" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="160" y="42" font-size="9.5" text-anchor="middle">LoRA / PEFT</text>
 <text class="d" x="160" y="56" font-size="8.5" text-anchor="middle">adapter, not a fork</text>
-
 <rect x="218" y="24" width="92" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="264" y="47" font-size="9.5" text-anchor="middle">candidate</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="102" y1="44" x2="110" y2="44" marker-end="url(#ha)"/>
 <line x1="206" y1="44" x2="214" y2="44" marker-end="url(#ha)"/>
 <line x1="310" y1="44" x2="330" y2="44" marker-end="url(#ha)"/>
 </g>
-
 <rect class="ab sa" x="334" y="18" width="296" height="86" rx="3" stroke-width="1.5"/>
 <text class="a" x="346" y="34" font-size="9.5">the gate, and nothing goes round it</text>
 <text class="d" x="346" y="52" font-size="8.5">beats a prompted baseline on the same set</text>
 <text class="d" x="346" y="66" font-size="8.5">golden dataset and regression suite</text>
 <text class="d" x="346" y="80" font-size="8.5">hallucination and safety probes</text>
 <text class="d" x="346" y="94" font-size="8.5">human review on regulated flows</text>
-
 <line class="sd" x1="482" y1="104" x2="482" y2="126" stroke-width="1.25" marker-end="url(#ha)"/>
 <text class="r" x="492" y="120" font-size="9">fail any one and it stops here</text>
-
 <text class="d" x="10" y="148" font-size="9" letter-spacing=".9">THE REGISTRY IS THE ONLY WAY IN, AND THE WAY BACK</text>
 <rect x="334" y="130" width="296" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="482" y="148" font-size="10" text-anchor="middle">model registry, versioned</text>
 <text class="d" x="482" y="163" font-size="8.5" text-anchor="middle">same change control as a code release</text>
-
 <rect x="334" y="188" width="296" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="482" y="206" font-size="10" text-anchor="middle">serving</text>
 <text class="d" x="482" y="221" font-size="8.5" text-anchor="middle">batching, quantisation, autoscale on GPU load</text>
 <line class="sd" x1="420" y1="172" x2="420" y2="184" stroke-width="1.25" marker-end="url(#ha)"/>
 <line class="sa" x1="560" y1="184" x2="560" y2="176" stroke-width="1.5" marker-end="url(#ha)"/>
 <text class="a" x="568" y="182" font-size="8.5">rollback</text>
-
 <rect class="ab sa" x="10" y="188" width="300" height="42" rx="3" stroke-width="1.5"/>
 <text class="a" x="160" y="206" font-size="10" text-anchor="middle">router, per task</text>
 <text class="d" x="160" y="221" font-size="8.5" text-anchor="middle">adapter, base model, or commercial API</text>
 <line class="sd" x1="330" y1="209" x2="314" y2="209" stroke-width="1.25" marker-end="url(#ha)"/>
-
 <line class="sd" x1="10" y1="252" x2="630" y2="252" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="270" font-size="9.5">Routing is a cost decision on every request. Work with no residency requirement can leave,</text>
 <text class="d" x="10" y="286" font-size="9.5">which is what keeps the reserved hardware busy with the work that cannot.</text>

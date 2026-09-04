@@ -3796,3 +3796,43 @@ new files.
 Section 3 at 63 of 70 items across ten notes. T46 closed, P26 opened, 8 open of 26.
 
 **Deployed.** Pending merge.
+
+## Every diagram on the site was broken, and four checks looked straight at them
+
+**The owner found it by opening two pages.** Fifteen carry a drawn figure and all fifteen were
+broken, each from the day it was written.
+
+A blank line ends a raw HTML block in Markdown. Every diagram was written with blank lines
+between logical groups, so the browser got the first group as a drawing and everything after the
+first blank line as body text: a small box in a large empty frame, followed by paragraphs of
+stage directions in monospace.
+
+**Four checks passed on those pages every time.** The page still had an `<svg>`, so anything
+counting them was satisfied. Accessibility passed because the leaked labels were real text with
+real contrast. Overflow passed because wrapped prose does not overflow. Print passed. The
+visibility check passed because nothing was hidden; it was all visible and in the wrong place.
+
+Sixth instance this week of a check reporting something true and adjacent to the claim, and the
+largest by reach. The other five were caught by reading a log or a diff. This one needed eyes.
+
+**Fixed in all fifteen, 111 blank lines removed, no drawing altered.** Coordinates, labels and
+shapes are unchanged; the only difference is that they reach the browser as one block.
+`npm run impl` reports any diagram containing a blank line, proven by reintroducing one.
+
+**Repairing it exposed a second defect the breakage had hidden.** At full width two diagrams are
+wider than the column, so their container scrolls sideways, and that container had no keyboard
+access. A keyboard user could see the left third and had no way to reach the rest. Accessibility
+had reported zero errors on those pages for weeks, correctly, because a diagram that never
+rendered never scrolled. Seventeen figures are focusable and labelled now, and the count went
+from 4 errors back to 0.
+
+**What I cannot fix with a check.** Every guard here reads the artifact and none looks at the
+result. A drawing is the one thing on this site whose correctness is not a property of its file,
+which is exactly why it went unexamined. The new guard detects this cause, not the class.
+
+Erratum 7.39.
+
+**Validated.** `check`, `mobile`, `print`, `visible` all exit 0. 0 WCAG2AA errors across 23
+pages in both schemes. Diagrams broken: 0. Undefined classes: 0.
+
+**Deployed.** Pending merge.

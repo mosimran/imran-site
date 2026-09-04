@@ -132,6 +132,24 @@ if (existsSync(CSS)) {
       for (const c of used) if (!defined(c)) bad.push(`${dir}/${f}: .${c}`)
     }
   }
+  // A blank line ends a raw HTML block in markdown. One inside an <svg> means
+  // everything after it is parsed as prose, so the drawing collapses to a box
+  // and its labels render as body text under the figure. Every diagram on this
+  // site was broken this way and no check saw it: the page still had an <svg>,
+  // still passed a11y, still had no overflow and still printed. Erratum 7.39.
+  const split = []
+  for (const dir of ['src/content/impl', 'src/content/papers']) {
+    if (!existsSync(dir)) continue
+    for (const f of readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+      const txt = readFileSync(`${dir}/${f}`, 'utf8')
+      for (const m of txt.matchAll(/<svg\b[\s\S]*?<\/svg>/g)) {
+        const n = (m[0].match(/\n[ \t]*\n/g) || []).length
+        if (n) split.push(`${dir}/${f}: ${n} blank line${n > 1 ? 's' : ''} inside <svg>`)
+      }
+    }
+  }
+  console.log(`  diagrams broken by a blank line: ${split.length}`)
+  for (const x of split) console.log(`    ${x}`)
   console.log(`\n  undefined SVG/prose classes: ${bad.length}`)
   for (const b of bad) console.log(`    ${b}`)
 }

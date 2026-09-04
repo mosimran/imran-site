@@ -41,15 +41,13 @@ it cannot affect the response.
 Accept and process are different jobs and they are separated by a durable write.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 244" role="img" aria-label="A webhook arrives from a provider. The receiver verifies the signature, checks an idempotency key, writes the raw payload durably, and only then returns 200. Processing happens later off a queue, and a failing handler sends the event to a dead letter path rather than back to the provider. A replay arrow shows stored events can be reprocessed from the archive at any time without the provider being involved.">
 <defs><marker id="wa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">THE ACCEPT PATH, WHICH IS THE ONLY PATH THE PROVIDER SEES</text>
-
 <rect x="10" y="26" width="80" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="50" y="46" font-size="10" text-anchor="middle">provider</text>
 <text class="d" x="50" y="60" font-size="8.5" text-anchor="middle">retries on you</text>
-
 <rect class="ab sa" x="102" y="26" width="292" height="46" rx="3" stroke-width="1.5"/>
 <text class="a" x="118" y="44" font-size="10">verify signature</text>
 <text class="a" x="228" y="44" font-size="10">idempotency key</text>
@@ -57,21 +55,17 @@ Accept and process are different jobs and they are separated by a durable write.
 <text class="d" x="118" y="62" font-size="8.5">reject unsigned</text>
 <text class="d" x="228" y="62" font-size="8.5">seen before? stop</text>
 <text class="d" x="330" y="62" font-size="8.5">before the 200</text>
-
 <rect x="406" y="26" width="76" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="444" y="46" font-size="11" text-anchor="middle">200</text>
 <text class="d" x="444" y="60" font-size="8.5" text-anchor="middle">only now</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="90" y1="49" x2="98" y2="49" marker-end="url(#wa)"/>
 <line x1="394" y1="49" x2="402" y2="49" marker-end="url(#wa)"/>
 </g>
 <line class="sd" x1="482" y1="49" x2="560" y2="49" stroke-width="1.25" marker-end="url(#wa)"/>
 <text class="d" x="496" y="42" font-size="8.5">provider done</text>
-
 <line class="sd" x1="356" y1="72" x2="356" y2="100" stroke-width="1.25" marker-end="url(#wa)"/>
 <text class="d" x="10" y="94" font-size="9" letter-spacing=".9">EVERYTHING ELSE, WHICH THE PROVIDER NEVER WAITS FOR</text>
-
 <rect x="102" y="104" width="150" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="177" y="122" font-size="10" text-anchor="middle">queue</text>
 <text class="d" x="177" y="136" font-size="8.5" text-anchor="middle">per source</text>
@@ -85,12 +79,10 @@ Accept and process are different jobs and they are separated by a durable write.
 <line x1="252" y1="125" x2="262" y2="125" marker-end="url(#wa)"/>
 <line x1="416" y1="125" x2="426" y2="125" marker-end="url(#wa)"/>
 </g>
-
 <rect x="102" y="166" width="314" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="259" y="187" font-size="10" text-anchor="middle">raw payload archive, kept</text>
 <line class="sa" x1="259" y1="166" x2="259" y2="150" stroke-width="1.75" marker-end="url(#wa)"/>
 <text class="a" x="268" y="162" font-size="9">replay, any time, without the provider</text>
-
 <line class="sd" x1="10" y1="216" x2="630" y2="216" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="234" font-size="9.5">A handler that fails never reaches the provider, so a bad deploy is our problem and not a lost event.</text>
 </svg>

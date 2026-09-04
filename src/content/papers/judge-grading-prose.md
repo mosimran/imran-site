@@ -47,7 +47,7 @@ mostly the second stream.
 measurable, not philosophical.**
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 246" role="img" aria-label="An agent produces two streams. Actions go into the environment and change observable state. Narration is text that changes nothing. The judge is fed the transcript, which is dominated by narration, and produces a score. A thick line from narration to judge shows the narration carries the score. A dashed thin line from environment state to judge shows the observable evidence is mostly not consulted. Rewriting narration alone moved judge false positives by up to ninety percent.">
 <defs>
 <marker id="jf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker>
@@ -56,31 +56,25 @@ measurable, not philosophical.**
 <rect x="12" y="76" width="104" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="64" y="99" font-size="11" text-anchor="middle">agent</text>
 <text class="d" x="64" y="115" font-size="9" text-anchor="middle">one run</text>
-
 <line class="sd" x1="116" y1="92" x2="196" y2="52" stroke-width="1.25" marker-end="url(#jf)"/>
 <text class="d" x="126" y="56" font-size="9">actions</text>
 <line class="sa" x1="116" y1="114" x2="196" y2="152" stroke-width="2.5" marker-end="url(#ja)"/>
 <text class="a" x="126" y="152" font-size="9">narration</text>
-
 <rect x="200" y="26" width="160" height="52" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="280" y="47" font-size="10.5" text-anchor="middle">environment state</text>
 <text class="d" x="280" y="63" font-size="9" text-anchor="middle">observable, checkable</text>
-
 <rect class="ab sa" x="200" y="128" width="160" height="52" rx="3" stroke-width="1.75"/>
 <text class="a" x="280" y="149" font-size="10.5" text-anchor="middle">text about the work</text>
 <text class="d" x="280" y="165" font-size="9" text-anchor="middle">changes nothing</text>
-
 <line class="sd" x1="360" y1="52" x2="452" y2="92" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#jf)"/>
 <text class="d" x="366" y="70" font-size="9">rarely consulted</text>
 <line class="sa" x1="360" y1="154" x2="452" y2="114" stroke-width="2.5" marker-end="url(#ja)"/>
 <text class="a" x="368" y="146" font-size="9">this is the transcript</text>
-
 <rect x="456" y="76" width="98" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="505" y="99" font-size="11" text-anchor="middle">judge</text>
 <text class="d" x="505" y="115" font-size="9" text-anchor="middle">a model</text>
 <line class="sd" x1="554" y1="103" x2="624" y2="103" stroke-width="1.25" marker-end="url(#jf)"/>
 <text class="d" x="566" y="96" font-size="9">score</text>
-
 <line class="sd" x1="12" y1="204" x2="624" y2="204" stroke-width="1" opacity=".4"/>
 <text class="d" x="12" y="222" font-size="9.5">Rewriting only the lower path, with every action and observation left byte for byte identical,</text>
 <text class="d" x="12" y="234" font-size="9.5">inflated judge false positives by up to 90 percent across 800 trajectories.</text>

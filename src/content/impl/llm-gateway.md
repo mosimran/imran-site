@@ -54,13 +54,11 @@ classification permits it.
 ## 2. The decisions, and where each one is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 268" role="img" aria-label="A request enters the gateway boundary. Inside it, four steps run in order: tenant policy lookup, quota check, redaction, then backend selection. Only after those does the request leave to a backend. Two backend groups are shown: self-hosted models on two owned GPUs, and a hosted frontier model reachable only for tenants whose data classification permits it. Every response passes back through a provenance stamp and an append-only audit record before reaching the caller. A dashed line marks the boundary, labelled as the place the data rules are enforced rather than trusted to the backend.">
 <defs><marker id="ga" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <rect x="10" y="40" width="66" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="43" y="64" font-size="10" text-anchor="middle">tenant</text>
-
 <rect class="ab sa" x="92" y="24" width="316" height="72" rx="3" stroke-width="1.5"/>
 <text class="a" x="104" y="42" font-size="9.5">policy</text>
 <text class="a" x="176" y="42" font-size="9.5">quota</text>
@@ -71,38 +69,30 @@ classification permits it.
 <text class="d" x="240" y="58" font-size="8.5">before routing</text>
 <text class="d" x="330" y="58" font-size="8.5">policy picks</text>
 <text class="d" x="104" y="86" font-size="8.5">in order, and the request does not leave until all four have run</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="76" y1="60" x2="88" y2="60" marker-end="url(#ga)"/>
 <line x1="408" y1="46" x2="452" y2="46" marker-end="url(#ga)"/>
 <line x1="408" y1="74" x2="452" y2="74" marker-end="url(#ga)"/>
 </g>
-
 <rect x="456" y="24" width="174" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="543" y="40" font-size="9.5" text-anchor="middle">self-hosted, 2 GPUs</text>
 <text class="d" x="543" y="55" font-size="8.5" text-anchor="middle">weights never leave the room</text>
-
 <rect x="456" y="70" width="174" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text x="543" y="86" font-size="9.5" text-anchor="middle">hosted frontier model</text>
 <text class="r" x="543" y="101" font-size="8.5" text-anchor="middle">only if classification permits</text>
-
 <line class="sd" x1="86" y1="14" x2="640" y2="14" stroke-width="1" stroke-dasharray="3 3"/>
 <text class="d" x="92" y="11" font-size="8.5">the boundary: rules enforced here, not delegated to the backend</text>
-
 <text class="d" x="10" y="140" font-size="9" letter-spacing=".9">EVERY RESPONSE, WITHOUT EXCEPTION</text>
 <line class="sa" x1="543" y1="110" x2="543" y2="152" stroke-width="1.5" marker-end="url(#ga)"/>
 <rect class="ab sa" x="386" y="156" width="244" height="40" rx="3" stroke-width="1.5"/>
 <text class="a" x="508" y="172" font-size="10" text-anchor="middle">provenance stamp</text>
 <text class="d" x="508" y="187" font-size="8.5" text-anchor="middle">which model answered, and why that one</text>
-
 <line class="sd" x1="386" y1="176" x2="330" y2="176" stroke-width="1.25" marker-end="url(#ga)"/>
 <rect x="152" y="156" width="174" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="239" y="172" font-size="10" text-anchor="middle">audit record</text>
 <text class="d" x="239" y="187" font-size="8.5" text-anchor="middle">append-only, uniform across backends</text>
-
 <line class="sd" x1="152" y1="176" x2="80" y2="176" stroke-width="1.25" marker-end="url(#ga)"/>
 <text x="43" y="180" font-size="10" text-anchor="middle">caller</text>
-
 <line class="sd" x1="10" y1="216" x2="630" y2="216" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="234" font-size="9.5">A tenant whose classification forbids the hosted model cannot reach it by misconfiguration,</text>
 <text class="d" x="10" y="250" font-size="9.5">because the policy lookup runs before the router and the router has no other input.</text>

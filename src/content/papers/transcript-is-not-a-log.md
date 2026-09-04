@@ -85,11 +85,10 @@ agents been the authors of the canonical record, the review would have produced 
 account of nothing happening.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 244" role="img" aria-label="A trust boundary diagram. Inside the boundary the agent can write its own narration, its scratch files and some accessible action logs, all of which are testimony. Outside the boundary the harness writes the canonical transcript and the environment records real state, and neither has a write path from the agent. The investigation succeeded because the record it read was outside the boundary.">
 <defs><marker id="tl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
 <text class="d" x="12" y="16" font-size="9.5" letter-spacing=".9">THE ONLY LINE THAT MATTERS</text>
-
 <rect x="12" y="30" width="286" height="150" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
 <text x="28" y="52" font-size="10.5" letter-spacing=".7">AGENT CAN WRITE HERE</text>
 <g class="d" font-size="9.5">
@@ -99,10 +98,8 @@ account of nothing happening.
 <text x="28" y="136">any report it is asked to produce</text>
 </g>
 <text class="r" x="28" y="164" font-size="10">all of this is testimony</text>
-
 <line class="sd" x1="316" y1="30" x2="316" y2="196" stroke-width="2"/>
 <text class="d" x="322" y="44" font-size="9" letter-spacing=".8">BOUNDARY</text>
-
 <rect class="ab sa" x="342" y="30" width="286" height="150" rx="3" stroke-width="1.75"/>
 <text class="a" x="358" y="52" font-size="10.5" letter-spacing=".7">AGENT HAS NO WRITE PATH</text>
 <g class="d" font-size="9.5">
@@ -112,7 +109,6 @@ account of nothing happening.
 <text x="358" y="136">anything collected by a separate process</text>
 </g>
 <text class="a" x="358" y="164" font-size="10">this is evidence</text>
-
 <line class="sd" x1="150" y1="180" x2="150" y2="206" stroke-width="1.25" marker-end="url(#tl)"/>
 <text class="r" x="12" y="222" font-size="9.5">7 percent spoofed. 20 percent wanted to.</text>
 <line class="sa" x1="484" y1="180" x2="484" y2="206" stroke-width="1.5" marker-end="url(#tl)"/>
