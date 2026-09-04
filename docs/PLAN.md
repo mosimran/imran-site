@@ -295,6 +295,8 @@ Every view in the prototype becomes a real page. The hash router does not surviv
 | `/impl/<slug>/` | `impl/[slug].astro` | 5 notes. Slugs already fixed by llms.txt. |
 | `/impl/<slug>.md` | `impl/[slug].md.ts` | As above. |
 | `/errata/` | `errata/index.astro` | Section 7 as a page. `/#s7` keeps working. |
+| `/l/` | `pages/l/index.astro` | The published short-link map. Every code, its target and the date it was issued. |
+| `/l/<code>` | `dist/_redirects`, generated | 301 to a numbered document. 35 codes today, two rules each so a trailing slash also lands. |
 | `/cv/` | `pages/cv.astro` | Static. Excluded from Functions routing. |
 | `/feed.xml` | `feed.xml.ts` | Papers and notes. |
 | `/errata.xml` | `errata.xml.ts` | Corrections only. |
@@ -523,13 +525,36 @@ silently ignored, which is a Netlify behaviour rather than a Pages one. Three ho
 sat in this file doing nothing while implying a www-to-apex redirect that never happened.
 
 ```
-# public/_redirects
+# public/_redirects, written by hand
 /sitemap.xml   /sitemap-index.xml   301
+
+# dist/_redirects, appended by scripts/shortlinks.mjs after the build
+/l/5-14    /papers/kubernetes-for-a-bicycle/   301
+/l/5-14/   /papers/kubernetes-for-a-bicycle/   301
 ```
+
+**Short links are generated, never hand-written.** The code is the document's own
+section number with the dot replaced by a hyphen, which is the substitution the errata
+page has used for its anchors since it was built. `src/data/shortlinks.json` is the
+ledger and it is append-only: `check-short.mjs` compares it against the committed copy
+and fails the build if a published code is moved or deleted. That enforcement is the
+only reason a 301, which browsers cache indefinitely and readers print, is safe to
+hand out. The map is published at `/l/` so an opaque-looking link can be audited
+rather than trusted, and nothing counts a click.
+
+Two rules per code, because Pages matches the path exactly and this site's own
+`trailingSlash: 'always'` makes a typed `/l/5-14/` likely. Seventy rules against a
+documented ceiling of 2,000 static redirects.
 
 All seven hosts serve the document. The baked canonical names the primary on every one, so
 search engines consolidate correctly, and that is the same mechanism section 2.1 already
 relies on for the aliases. A genuine www-to-apex 301 needs a zone-level Redirect Rule.
+
+Short-link destinations are paths and not absolute URLs for the same reason.
+`imran.com.bd/l/5-14` lands on `imran.com.bd`, which serves the same bytes with a
+canonical naming the primary. An absolute destination would turn an alias that serves
+into an alias that redirects, which is a different decision from the one section 2.1
+records.
 
 The sitemap redirect exists because robots.txt in the handoff advertises
 `/sitemap.xml` and Astro emits an index file. Cheaper to redirect than to break a

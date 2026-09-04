@@ -11,7 +11,7 @@
 import { chromium } from 'playwright'
 
 const BASE = process.argv[3] || process.env.BASE || 'http://127.0.0.1:8811'
-const PATHS = (process.argv[2] || '/,/papers/,/papers/retry-storm/,/impl/,/impl/mevrik-cx/,/errata/,/cv/,/history/,/tools/,/tools/in/ai-assistants/,/tools/in/editors/,/tools/github-copilot/').split(',')
+const PATHS = (process.argv[2] || '/,/papers/,/papers/retry-storm/,/impl/,/impl/mevrik-cx/,/errata/,/cv/,/history/,/l/,/tools/,/tools/in/ai-assistants/,/tools/in/editors/,/tools/github-copilot/').split(',')
 
 // iPhone SE is the narrowest screen still in wide use, so it is the one that
 // finds problems. 390 is a current iPhone, 360 the common Android width.

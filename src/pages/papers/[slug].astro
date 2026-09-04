@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 import Doc from '../../layouts/Doc.astro'
 import { identifier, expiresOn, isExpired, fmt, iso } from '../../lib/draft'
 import { paper as paperLd } from '../../lib/ld'
+import ledger from '../../data/shortlinks.json'
 
 export async function getStaticPaths() {
   const papers = await getCollection('papers')
@@ -12,6 +13,12 @@ const { p } = Astro.props
 const { Content } = await p.render()
 const d = p.data
 const ident = identifier(p.slug, d.history.length)
+// The short link is looked up, never derived here. The ledger is the record of
+// what has been handed out, and a page that computed its own code could disagree
+// with a link somebody already printed. check-short.mjs fails the build if this
+// page stops printing it.
+const short = (ledger as Record<string, { target: string }>)[d.section.replace(/\./g, '-')]
+const shortUrl = short ? new URL(`/l/${d.section.replace(/\./g, '-')}`, Astro.site).href : null
 const expires = expiresOn(d.revised)
 const expired = isExpired(d.revised)
 const ld = paperLd({
@@ -38,6 +45,7 @@ Expires: {fmt(expires)}</div>
   <div class="title">
     <h1>{d.state === 'retracted' ? <s>{d.title}</s> : d.title}</h1>
     <div class="sub">{d.summary}</div>
+    {shortUrl && <p class="sl">Share <a href={`/l/${d.section.replace(/\./g, '-')}`}>{shortUrl}</a></p>}
   </div>
 
   {expired && (

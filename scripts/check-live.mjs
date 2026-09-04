@@ -146,6 +146,35 @@ for (const path of PATHS) {
   }
   console.log('')
 }
+
+// Short links, on the host that is actually serving.
+//
+// A short link is the one URL on this site that is printed on paper and read
+// aloud, so it is the one that hurts most when it silently stops working. It
+// lives in dist/_redirects, which no local check can execute: only the edge
+// knows whether the rule was shipped and honoured. check-short.mjs proves the
+// file says the right thing, and this proves the file is being obeyed.
+//
+// The Location must be a path. An absolute one would send imran.com.bd traffic
+// to the primary and turn an alias that serves into an alias that redirects,
+// which is the arrangement PLAN section 2.1 deliberately does not use.
+{
+  const code = '5-14'
+  const want = '/papers/kubernetes-for-a-bicycle/'
+  let status = 0, location = null, detail = 'unreachable'
+  try {
+    const r = await fetch(`${BASE}/l/${code}`, { headers: { 'User-Agent': UA }, redirect: 'manual' })
+    status = r.status
+    location = r.headers.get('location')
+    detail = `${status} -> ${location ?? 'no Location'}`
+  } catch (e) {
+    detail = e.message
+  }
+  console.log(`  /l/${code}`)
+  pass('short link is a 301 to the paper', status === 301 && location === want, detail)
+  pass('Location is a path, so the host is kept', !/^https?:/i.test(location ?? ''), location ?? 'none')
+  console.log('')
+}
 }
 
 if (failures.length) {
