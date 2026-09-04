@@ -68,26 +68,21 @@ per byte moved climbs. Past some point the compute units are the constraint and 
 headroom, which is the mirror image of where you started.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 262" role="img" aria-label="A schematic chart of speedup against concurrency. The vertical axis is speedup with a parity line at one times. Two curves start high at concurrency one and fall as concurrency rises. One curve settles above parity, showing a reduced but real gain. The other crosses below parity at higher concurrency, showing the optimisation making things slower. A marker at concurrency one is labelled where the headline was measured, and a shaded band at higher concurrency is labelled where you serve traffic. The curve shapes are illustrative, not measured.">
 <defs><marker id="cc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <rect class="ab" x="380" y="30" width="200" height="150" rx="2" opacity=".5"/>
 <text class="a" x="480" y="24" font-size="9.5" text-anchor="middle">where you serve traffic</text>
-
 <line class="sd" x1="60" y1="180" x2="600" y2="180" stroke-width="1.25"/>
 <line class="sd" x1="60" y1="30" x2="60" y2="180" stroke-width="1.25"/>
 <line class="sd" x1="60" y1="140" x2="600" y2="140" stroke-width="1" stroke-dasharray="4 3"/>
 <text class="d" x="606" y="143" font-size="9">1.0x</text>
 <text class="d" x="26" y="46" font-size="9">3x</text>
 <text class="d" x="26" y="143" font-size="9">1x</text>
-
 <polyline class="sa" points="76,44 130,62 200,88 290,108 380,120 470,128 580,132" fill="none" stroke-width="2"/>
 <text class="a" x="470" y="120" font-size="9.5">smaller, still real</text>
-
 <polyline points="76,52 130,80 200,112 290,138 380,152 470,162 580,168" fill="none" stroke="currentColor" stroke-width="1.75" stroke-dasharray="5 3"/>
 <text class="r" x="470" y="182" font-size="9.5">below parity: now slower</text>
-
 <circle class="a" cx="76" cy="44" r="3.5"/>
 <line class="sd" x1="76" y1="44" x2="76" y2="200" stroke-width="1" stroke-dasharray="3 3"/>
 <text class="d" x="66" y="214" font-size="9.5">1</text>

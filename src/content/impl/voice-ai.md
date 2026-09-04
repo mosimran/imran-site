@@ -49,33 +49,26 @@ aggregate error rate stays respectable enough to look fine on a dashboard.
 ## 2. The decisions, and where each one is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 288" role="img" aria-label="Caller audio enters voice activity detection and endpointing, then streaming speech to text which emits partial hypotheses. Those partials start retrieval and intent handling early, before the caller has finished speaking. Response generation feeds text to speech and audio returns to the caller. A barge-in path runs from the caller's audio directly to the text to speech stage and stops playback immediately. A separate branch shows handoff to a human agent carrying the transcript and context, routed against an SLA, drawn as a first-class path rather than an error path. Stored audio passes through redaction before retention.">
 <defs><marker id="va" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">ONE BUDGET, SIX STAGES, SPENT IN ORDER</text>
 <rect x="10" y="24" width="70" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="45" y="42" font-size="10" text-anchor="middle">caller</text>
 <text class="d" x="45" y="57" font-size="8.5" text-anchor="middle">audio in</text>
-
 <rect class="ab sa" x="92" y="24" width="106" height="42" rx="3" stroke-width="1.5"/>
 <text class="a" x="145" y="42" font-size="9.5" text-anchor="middle">endpointing</text>
 <text class="d" x="145" y="57" font-size="8.5" text-anchor="middle">per locale</text>
-
 <rect x="210" y="24" width="106" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="263" y="42" font-size="9.5" text-anchor="middle">streaming STT</text>
 <text class="a" x="263" y="57" font-size="8.5" text-anchor="middle">partials, not waiting</text>
-
 <rect x="328" y="24" width="106" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="381" y="42" font-size="9.5" text-anchor="middle">intent + retrieval</text>
 <text class="d" x="381" y="57" font-size="8.5" text-anchor="middle">starts on partials</text>
-
 <rect x="446" y="24" width="90" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="491" y="47" font-size="9.5" text-anchor="middle">generate</text>
-
 <rect class="ab sa" x="548" y="24" width="82" height="42" rx="3" stroke-width="1.5"/>
 <text class="a" x="589" y="47" font-size="9.5" text-anchor="middle">TTS</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="80" y1="45" x2="88" y2="45" marker-end="url(#va)"/>
 <line x1="198" y1="45" x2="206" y2="45" marker-end="url(#va)"/>
@@ -83,13 +76,10 @@ aggregate error rate stays respectable enough to look fine on a dashboard.
 <line x1="434" y1="45" x2="442" y2="45" marker-end="url(#va)"/>
 <line x1="536" y1="45" x2="544" y2="45" marker-end="url(#va)"/>
 </g>
-
 <path class="sd" d="M589 66 L589 92 L45 92 L45 70" fill="none" stroke-width="1.25" marker-end="url(#va)"/>
 <text class="d" x="300" y="88" font-size="8.5">audio out, and the clock stops here</text>
-
 <path class="sa" d="M45 24 L45 12 L589 12 L589 20" fill="none" stroke-width="1.75" marker-end="url(#va)"/>
 <text class="a" x="250" y="9" font-size="9">barge-in: the caller speaking stops playback at once</text>
-
 <text class="d" x="10" y="126" font-size="9" letter-spacing=".9">TWO PATHS THAT ARE NOT ERROR PATHS</text>
 <rect x="10" y="136" width="290" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="155" y="154" font-size="10" text-anchor="middle">handoff to a person</text>
@@ -97,13 +87,11 @@ aggregate error rate stays respectable enough to look fine on a dashboard.
 <line class="sd" x1="381" y1="66" x2="381" y2="112" stroke-width="1.25"/>
 <line class="sd" x1="381" y1="112" x2="155" y2="112" stroke-width="1.25"/>
 <line class="sd" x1="155" y1="112" x2="155" y2="132" stroke-width="1.25" marker-end="url(#va)"/>
-
 <rect x="330" y="136" width="300" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="480" y="154" font-size="10" text-anchor="middle">redaction, then retention</text>
 <text class="d" x="480" y="170" font-size="8.5" text-anchor="middle">enforced on write, not on read</text>
 <line class="sd" x1="381" y1="112" x2="480" y2="112" stroke-width="1.25"/>
 <line class="sd" x1="480" y1="112" x2="480" y2="132" stroke-width="1.25" marker-end="url(#va)"/>
-
 <line class="sd" x1="10" y1="206" x2="630" y2="206" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="224" font-size="9.5">Handoff is built as a normal outcome. A system where reaching a person is the failure case</text>
 <text class="d" x="10" y="240" font-size="9.5">will be tuned to prevent it, and the metric that rewards that is failure mode 5.4.</text>

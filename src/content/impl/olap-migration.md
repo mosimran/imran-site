@@ -46,55 +46,45 @@ wrong for an afternoon while a cutover settles.
 ## 2. The decisions, and where each one is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 274" role="img" aria-label="Writes fan out from the application to both the existing row store and the new columnar store. A reconciliation job compares counts and column checksums per partition on a schedule and raises divergence. The read path is controlled by a per-query flag: queries move to the columnar store one at a time only after reconciliation has been clean, and the flag can send any query back to the row store. The row store remains the source of truth until cutover. A separate arrow shows the backfill running behind the live stream with a deliberate overlap, made safe by idempotent writes.">
 <defs><marker id="oa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <rect x="10" y="52" width="74" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="47" y="70" font-size="10" text-anchor="middle">writes</text>
 <text class="d" x="47" y="85" font-size="8.5" text-anchor="middle">one source</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="84" y1="62" x2="140" y2="40" marker-end="url(#oa)"/>
 <line x1="84" y1="84" x2="140" y2="106" marker-end="url(#oa)"/>
 </g>
-
 <rect x="144" y="18" width="168" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="228" y="36" font-size="10" text-anchor="middle">row store</text>
 <text class="a" x="228" y="51" font-size="8.5" text-anchor="middle">source of truth until cutover</text>
-
 <rect class="ab sa" x="144" y="86" width="168" height="44" rx="3" stroke-width="1.5"/>
 <text class="a" x="228" y="104" font-size="10" text-anchor="middle">columnar store</text>
 <text class="d" x="228" y="119" font-size="8.5" text-anchor="middle">written, not yet read</text>
-
 <line class="sd" x1="228" y1="62" x2="228" y2="84" stroke-width="1.25"/>
 <rect x="330" y="52" width="146" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="403" y="70" font-size="10" text-anchor="middle">reconciliation</text>
 <text class="d" x="403" y="85" font-size="8.5" text-anchor="middle">counts, checksums, per partition</text>
 <line class="sd" x1="312" y1="74" x2="326" y2="74" stroke-width="1.25" marker-end="url(#oa)"/>
-
 <rect x="494" y="52" width="136" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text class="r" x="562" y="70" font-size="10" text-anchor="middle">divergence</text>
 <text class="d" x="562" y="85" font-size="8.5" text-anchor="middle">blocks the read move</text>
 <line class="sd" x1="476" y1="74" x2="490" y2="74" stroke-width="1.25" marker-end="url(#oa)"/>
-
 <text class="d" x="10" y="158" font-size="9" letter-spacing=".9">READS MOVE ONE QUERY AT A TIME, AND MOVE BACK THE SAME WAY</text>
 <rect x="10" y="168" width="150" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="85" y="186" font-size="10" text-anchor="middle">query</text>
 <text class="d" x="85" y="201" font-size="8.5" text-anchor="middle">one dashboard</text>
-
 <rect class="ab sa" x="196" y="168" width="150" height="42" rx="3" stroke-width="1.5"/>
 <text class="a" x="271" y="186" font-size="10" text-anchor="middle">per-query flag</text>
 <text class="d" x="271" y="201" font-size="8.5" text-anchor="middle">default is the row store</text>
 <line class="sd" x1="160" y1="189" x2="192" y2="189" stroke-width="1.25" marker-end="url(#oa)"/>
-
 <g class="sd" stroke-width="1.25">
 <line x1="346" y1="180" x2="392" y2="180" marker-end="url(#oa)"/>
 <line x1="392" y1="200" x2="346" y2="200" marker-end="url(#oa)"/>
 </g>
 <text class="d" x="398" y="184" font-size="9">clean for longer than the reporting window, then move</text>
 <text class="r" x="398" y="204" font-size="9">one flag flip returns it, with no deploy</text>
-
 <line class="sd" x1="10" y1="228" x2="630" y2="228" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="246" font-size="9.5">Backfill runs behind the live stream and is allowed to overlap it, because the write is</text>
 <text class="d" x="10" y="262" font-size="9.5">idempotent on a natural key. A pipeline safe to run twice is a pipeline safe to resume.</text>

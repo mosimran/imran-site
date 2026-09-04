@@ -44,7 +44,7 @@ attached to it.**
 Worth drawing, because the gap is easy to state and hard to feel.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 236" role="img" aria-label="Two regions. The left region, labelled governed by your lockfile and code review, contains package versions, transitive dependencies, API function signatures and wire formats, each marked as producing a reviewable diff. The right region, labelled governed by nobody on your side, contains availability, pricing, data retention, region and residency, licence terms and right of continued supply, each marked as producing no diff and arriving by blog post.">
 <defs><marker id="pv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
 <rect class="ab sa" x="12" y="26" width="292" height="158" rx="3" stroke-width="1.5"/>
@@ -56,7 +56,6 @@ Worth drawing, because the gap is easy to state and hard to feel.
 <text x="28" y="140">wire formats</text>
 </g>
 <text class="a" x="28" y="168" font-size="9.5">every change makes a diff somebody reviews</text>
-
 <rect x="336" y="26" width="292" height="158" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3"/>
 <text class="r" x="352" y="48" font-size="10.5" letter-spacing=".7">NOTHING ON YOUR SIDE COVERS THIS</text>
 <g font-size="10">
@@ -66,7 +65,6 @@ Worth drawing, because the gap is easy to state and hard to feel.
 <text x="352" y="140">what your existing settings now mean</text>
 </g>
 <text class="r" x="352" y="168" font-size="9.5">arrives as a blog post, if you happen to read it</text>
-
 <line class="sd" x1="12" y1="204" x2="628" y2="204" stroke-width="1" opacity=".4"/>
 <text class="d" x="12" y="222" font-size="9.5">Both halves can stop your system. Only the left half has a bot that opens a pull request.</text>
 </svg>

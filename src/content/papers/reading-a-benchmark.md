@@ -99,30 +99,25 @@ pass at one are different quantities with the same units. If your production pat
 model one shot, a pooled number is not a forecast of anything you will experience.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 250" role="img" aria-label="A waterfall showing a headline benchmark score of 62 reduced by four separate effects before it describes anything you would experience. Pooled attempts, a flawed answer key, contamination and harness differences each remove part of the number, and the remainder is labelled as the part attributable to capability under your conditions. The size of each bar is illustrative, not measured.">
 <defs><marker id="rw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
 <text class="d" x="12" y="16" font-size="9.5" letter-spacing=".9">WHAT SITS BETWEEN A PUBLISHED NUMBER AND YOUR SYSTEM</text>
 <rect class="ab sa" x="12" y="30" width="228" height="30" rx="2" stroke-width="1.5"/>
 <text class="a" x="24" y="50" font-size="11">headline score</text>
 <text class="d" x="196" y="50" font-size="9.5" text-anchor="end">as published</text>
-
 <rect x="12" y="72" width="196" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text x="24" y="90" font-size="10">minus pooled attempts</text>
 <text class="d" x="252" y="90" font-size="9.5">pass at three is not pass at one</text>
-
 <rect x="12" y="110" width="168" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text x="24" y="128" font-size="10">minus a flawed key</text>
 <text class="d" x="252" y="128" font-size="9.5">59.4 percent of audited SWE-bench problems</text>
-
 <rect x="12" y="148" width="140" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text x="24" y="166" font-size="10">minus contamination</text>
 <text class="d" x="252" y="166" font-size="9.5">public tasks, public solutions, public training data</text>
-
 <rect x="12" y="186" width="112" height="26" rx="2" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text x="24" y="204" font-size="10">minus their harness</text>
 <text class="d" x="252" y="204" font-size="9.5">see paper 5.18</text>
-
 <line class="sa" x1="124" y1="220" x2="124" y2="238" stroke-width="1.5" marker-end="url(#rw)"/>
 <text class="a" x="136" y="240" font-size="10">what is left is the part about capability, under conditions that are not yours</text>
 </svg>

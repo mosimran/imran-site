@@ -69,7 +69,7 @@ never sees:
 None of that is intelligence. All of it changes the score.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 232" role="img" aria-label="Two boxes. The inner box contains only the model weights and is labelled as what a benchmark score gets attributed to. The outer box contains the model plus context policy, tool set, result formatting, stall handling and stop conditions, and is labelled as what was actually measured. An arrow shows that a task enters the outer boundary and a score leaves it, so the score describes the whole outer box.">
 <defs>
 <marker id="hh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker>

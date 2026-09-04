@@ -47,31 +47,26 @@ avoid.
 screenshotted, not assembled in a spreadsheet during audit season.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 262" role="img" aria-label="A control runs inside the delivery pipeline and emits an evidence record as a by-product, carrying a timestamp, a build identifier and the actor. Records land in an append-only store. Three different consumers read the same store: an internal review, a client security review during procurement, and an external auditor sampling a closed window. A separate box shows manual controls, which sit outside the pipeline and produce no evidence except an assertion, which is the coverage gap.">
 <defs><marker id="ea" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">CONTROLS THAT RUN INSIDE THE PIPELINE</text>
 <rect class="ab sa" x="10" y="24" width="250" height="72" rx="3" stroke-width="1.5"/>
 <text class="a" x="24" y="44" font-size="10">dependency and image scan</text>
 <text class="a" x="24" y="60" font-size="10">access grant and review</text>
 <text class="a" x="24" y="76" font-size="10">release gate, environment isolation</text>
 <text class="d" x="24" y="90" font-size="8.5">each one emits as it runs</text>
-
 <line class="sa" x1="260" y1="60" x2="300" y2="60" stroke-width="1.75" marker-end="url(#ea)"/>
-
 <rect x="304" y="24" width="150" height="72" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="379" y="44" font-size="10" text-anchor="middle">evidence record</text>
 <text class="d" x="379" y="60" font-size="8.5" text-anchor="middle">timestamp, build id,</text>
 <text class="d" x="379" y="74" font-size="8.5" text-anchor="middle">actor, outcome</text>
 <text class="d" x="379" y="90" font-size="8.5" text-anchor="middle">reproducible</text>
-
 <line class="sd" x1="454" y1="60" x2="494" y2="60" stroke-width="1.25" marker-end="url(#ea)"/>
 <rect x="498" y="24" width="132" height="72" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="564" y="48" font-size="10" text-anchor="middle">append-only</text>
 <text x="564" y="64" font-size="10" text-anchor="middle">store</text>
 <text class="d" x="564" y="82" font-size="8.5" text-anchor="middle">retained, not edited</text>
-
 <text class="d" x="10" y="126" font-size="9" letter-spacing=".9">THREE READERS, ONE STORE, DIFFERENT QUESTIONS</text>
 <line class="sd" x1="564" y1="96" x2="564" y2="136" stroke-width="1.25"/>
 <line class="sd" x1="106" y1="136" x2="564" y2="136" stroke-width="1.25"/>
@@ -89,7 +84,6 @@ screenshotted, not assembled in a spreadsheet during audit season.
 <rect x="468" y="156" width="162" height="44" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="549" y="174" font-size="10" text-anchor="middle">external auditor</text>
 <text class="d" x="549" y="190" font-size="8.5" text-anchor="middle">samples a closed window</text>
-
 <line class="sd" x1="10" y1="216" x2="630" y2="216" stroke-width="1" opacity=".4"/>
 <rect x="10" y="224" width="330" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text class="r" x="24" y="243" font-size="10">manual controls: no evidence but an assertion</text>

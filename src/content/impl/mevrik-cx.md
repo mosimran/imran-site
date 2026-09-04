@@ -100,47 +100,39 @@ suites written against them do not.
 Every conversational turn runs through the same ordered hooks, and the ordering is the design.
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 274" role="img" aria-label="A per-turn pipeline. An inbound message passes through pre-flight guardrails where PII is redacted before the model is called, then a prompt injection filter, permission check and budget guard. The agent runtime then reasons and calls tools through a gateway which injects the tenant identifier at dispatch. The response passes through post-flight guardrails for citation grounding, tone and output sanitising before reaching the customer. A separate audit lane below shows that the harness writes the trace at every stage, not the agent, and the trace is append only and hash chained.">
 <defs><marker id="mv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">EVERY TURN, IN THIS ORDER</text>
-
 <rect x="10" y="26" width="86" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="53" y="48" font-size="10" text-anchor="middle">inbound</text>
 <text class="d" x="53" y="63" font-size="9" text-anchor="middle">message</text>
-
 <rect class="ab sa" x="106" y="26" width="150" height="54" rx="3" stroke-width="1.5"/>
 <text class="a" x="181" y="45" font-size="10" text-anchor="middle">pre-flight</text>
 <text class="d" x="181" y="59" font-size="8.5" text-anchor="middle">PII redacted here, before</text>
 <text class="d" x="181" y="70" font-size="8.5" text-anchor="middle">the model is ever called</text>
-
 <rect x="266" y="26" width="130" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="331" y="45" font-size="10" text-anchor="middle">agent runtime</text>
 <text class="d" x="331" y="59" font-size="8.5" text-anchor="middle">reason, call tools,</text>
 <text class="d" x="331" y="70" font-size="8.5" text-anchor="middle">observe, decide</text>
-
 <rect class="ab sa" x="406" y="26" width="128" height="54" rx="3" stroke-width="1.5"/>
 <text class="a" x="470" y="45" font-size="10" text-anchor="middle">post-flight</text>
 <text class="d" x="470" y="59" font-size="8.5" text-anchor="middle">grounding, tone,</text>
 <text class="d" x="470" y="70" font-size="8.5" text-anchor="middle">sanitise, meter</text>
-
 <rect x="544" y="26" width="86" height="54" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="587" y="48" font-size="10" text-anchor="middle">customer</text>
-
 <g class="sd" stroke-width="1.25">
 <line x1="96" y1="53" x2="102" y2="53" marker-end="url(#mv)"/>
 <line x1="256" y1="53" x2="262" y2="53" marker-end="url(#mv)"/>
 <line x1="396" y1="53" x2="402" y2="53" marker-end="url(#mv)"/>
 <line x1="534" y1="53" x2="540" y2="53" marker-end="url(#mv)"/>
 </g>
-
 <line class="sd" x1="331" y1="80" x2="331" y2="106" stroke-width="1.25" marker-end="url(#mv)"/>
 <rect x="236" y="110" width="190" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="331" y="128" font-size="10" text-anchor="middle">tool gateway</text>
 <text class="r" x="331" y="142" font-size="8.5" text-anchor="middle">injects tenant id at dispatch</text>
 <text class="d" x="434" y="134" font-size="8.5">the model cannot construct</text>
 <text class="d" x="434" y="145" font-size="8.5">a cross-tenant call</text>
-
 <line class="sd" x1="10" y1="176" x2="630" y2="176" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="196" font-size="9" letter-spacing=".9">THE AUDIT LANE</text>
 <rect class="ab sa" x="106" y="204" width="428" height="34" rx="3" stroke-width="1.5"/>

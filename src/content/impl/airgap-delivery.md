@@ -47,47 +47,38 @@ the first time.
 ## 2. The decisions, and where each one is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 276" role="img" aria-label="On the connected side, a build produces one complete bundle containing every dependency and an offline registry, which is then signed. The bundle crosses the gap on physical media, shown as a one-way arrow with no return path. On the disconnected side the operator verifies the signature and hash against a key distributed out of band, runs preflight checks, and installs. The installer refuses to proceed if verification fails. A local support bundle is the only diagnostic output, and it travels back by hand, slowly.">
 <defs><marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <text class="d" x="10" y="14" font-size="9" letter-spacing=".9">CONNECTED SIDE, WHERE EVERYTHING MUST ALREADY BE DECIDED</text>
 <rect class="ab sa" x="10" y="24" width="250" height="60" rx="3" stroke-width="1.5"/>
 <text class="a" x="24" y="42" font-size="10">build with egress denied</text>
 <text class="d" x="24" y="58" font-size="8.5">every dependency, chart, migration,</text>
 <text class="d" x="24" y="72" font-size="8.5">and the registry itself, in one artifact</text>
-
 <rect x="272" y="24" width="112" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="328" y="48" font-size="10" text-anchor="middle">sign</text>
 <text class="d" x="328" y="66" font-size="8.5" text-anchor="middle">reproducible bytes</text>
 <line class="sd" x1="260" y1="54" x2="268" y2="54" stroke-width="1.25" marker-end="url(#aa)"/>
-
 <line class="sd" x1="424" y1="14" x2="424" y2="262" stroke-width="1.25" stroke-dasharray="5 4"/>
 <text class="r" x="430" y="12" font-size="9" letter-spacing=".9">THE GAP</text>
-
 <line class="sa" x1="384" y1="54" x2="470" y2="54" stroke-width="1.75" marker-end="url(#aa)"/>
 <text class="d" x="392" y="46" font-size="8.5">physical media</text>
-
 <text class="d" x="474" y="14" font-size="9" letter-spacing=".9">DISCONNECTED</text>
 <rect x="474" y="24" width="156" height="60" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="552" y="44" font-size="10" text-anchor="middle">verify, then preflight</text>
 <text class="d" x="552" y="60" font-size="8.5" text-anchor="middle">key arrived out of band</text>
 <text class="d" x="552" y="74" font-size="8.5" text-anchor="middle">install refuses if either fails</text>
-
 <line class="sd" x1="552" y1="84" x2="552" y2="108" stroke-width="1.25" marker-end="url(#aa)"/>
 <rect x="474" y="112" width="156" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="552" y="130" font-size="10" text-anchor="middle">install, idempotent</text>
 <text class="d" x="552" y="146" font-size="8.5" text-anchor="middle">safe to run twice</text>
-
 <rect x="474" y="176" width="156" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
 <text class="r" x="552" y="194" font-size="10" text-anchor="middle">support bundle</text>
 <text class="d" x="552" y="210" font-size="8.5" text-anchor="middle">the only diagnostic there is</text>
 <line class="sd" x1="552" y1="158" x2="552" y2="172" stroke-width="1.25" marker-end="url(#aa)"/>
-
 <line class="sd" x1="470" y1="199" x2="384" y2="199" stroke-width="1.25" stroke-dasharray="3 3" marker-end="url(#aa)"/>
 <text class="d" x="300" y="195" font-size="8.5">carried back by hand,</text>
 <text class="d" x="300" y="208" font-size="8.5">weeks later, paraphrased</text>
-
 <line class="sd" x1="10" y1="240" x2="410" y2="240" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="258" font-size="9.5">Anything resolved at install time is a network call, and</text>
 <text class="d" x="10" y="272" font-size="9.5">there is no network. Everything else follows.</text>

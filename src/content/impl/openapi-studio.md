@@ -46,14 +46,12 @@ contents do not go stale when the API moves.
 **A small fixed set of capabilities, and the API is discovered at run time.**
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 306" role="img" aria-label="An agent connects over MCP and receives a fixed set of capabilities: find an operation, read its schema, run it, and run a saved recipe. The API description is loaded from storage at request time, so a spec that changed a minute ago is the one the agent sees. Execution happens on the server against the real API, with workspace credentials attached there and never returned to the model. A recipe is a saved multi-step flow where each step extracts values from the previous response by path expression, so one tool call performs several requests. A dashed boundary marks what the model never receives: credentials, and the intermediate responses of a recipe.">
 <defs><marker id="ma" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <rect x="10" y="46" width="88" height="52" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="54" y="70" font-size="10" text-anchor="middle">agent</text>
 <text class="d" x="54" y="86" font-size="8.5" text-anchor="middle">any client</text>
-
 <text class="d" x="112" y="26" font-size="9" letter-spacing=".9">FIXED CAPABILITIES, THE SAME FOR EVERY API</text>
 <rect class="ab sa" x="112" y="34" width="196" height="76" rx="3" stroke-width="1.5"/>
 <text class="a" x="124" y="52" font-size="9.5">find an operation</text>
@@ -61,24 +59,20 @@ contents do not go stale when the API moves.
 <text class="a" x="124" y="84" font-size="9.5">run it</text>
 <text class="a" x="124" y="100" font-size="9.5">run a saved recipe</text>
 <line class="sd" x1="98" y1="72" x2="108" y2="72" stroke-width="1.25" marker-end="url(#ma)"/>
-
 <rect x="330" y="34" width="140" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="400" y="52" font-size="9.5" text-anchor="middle">the description</text>
 <text class="d" x="400" y="66" font-size="8.5" text-anchor="middle">loaded per request</text>
 <line class="sd" x1="308" y1="55" x2="326" y2="55" stroke-width="1.25" marker-end="url(#ma)"/>
 <text class="d" x="330" y="90" font-size="8.5">changed a minute ago is</text>
 <text class="d" x="330" y="102" font-size="8.5">what the agent sees</text>
-
 <line class="sa" x1="210" y1="110" x2="210" y2="140" stroke-width="1.75" marker-end="url(#ma)"/>
 <rect class="ab sa" x="112" y="144" width="358" height="46" rx="3" stroke-width="1.5"/>
 <text class="a" x="126" y="163" font-size="10">execution, on the server</text>
 <text class="d" x="126" y="179" font-size="8.5">credentials attached here, recorded here, never sent back to the model</text>
-
 <line class="sd" x1="470" y1="167" x2="530" y2="167" stroke-width="1.25" marker-end="url(#ma)"/>
 <rect x="534" y="144" width="96" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="582" y="163" font-size="9.5" text-anchor="middle">the real API</text>
 <text class="d" x="582" y="178" font-size="8.5" text-anchor="middle">real effects</text>
-
 <text class="d" x="10" y="220" font-size="9" letter-spacing=".9">A RECIPE IS SEVERAL REQUESTS BEHIND ONE CALL</text>
 <rect x="112" y="228" width="110" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="167" y="246" font-size="9.5" text-anchor="middle">step one</text>
@@ -94,7 +88,6 @@ contents do not go stale when the API moves.
 </g>
 <text class="r" x="10" y="252" font-size="8.5">the model sees</text>
 <text class="r" x="10" y="264" font-size="8.5">only the result</text>
-
 <line class="sd" x1="10" y1="284" x2="630" y2="284" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="300" font-size="9.5">Nothing above scales with the number of endpoints. That is the entire idea.</text>
 </svg>

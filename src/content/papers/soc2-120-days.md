@@ -95,7 +95,7 @@ It does not close an enterprise security review, because the reviewer's question
 ## 3. The arithmetic
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 208" role="img" aria-label="A 120 day SOC 2 timeline in three segments. Day 0 to day 30 is readiness work and is compressible. Day 30 to day 120 is the observation window, ninety days, which no amount of engineering shortens. The signed report follows around day 145 on the audit firm's calendar. Fieldwork runs inside the window rather than after it, and both long poles, audit firm capacity and the risk assessment, sit in the readiness segment.">
 <defs>
 <marker id="dfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker>

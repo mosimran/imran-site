@@ -53,19 +53,16 @@ honest when nobody knows.
 ## 2. The decisions, and where each is enforced
 
 <figure>
-<div class="dia">
+<div class="dia" tabindex="0" role="group" aria-label="Diagram, scrollable">
 <svg viewBox="0 0 640 300" role="img" aria-label="A mobile client writes events into a single append-only ledger: check-in, break, shift end, location. From that one ledger three separate projections are derived, and they are separate fields rather than one status: attendance as payroll truth, activity as a dispatch estimate, and liveness computed at read time from the last heartbeat. A locked day flows to payroll. Separately, a completed visit produces an invoice line, and attribution walks an ordered rule set to decide whose line it is, splitting credit fractionally when several people attended so the total sums to one job.">
 <defs><marker id="wa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="currentColor"/></marker></defs>
-
 <rect x="10" y="40" width="96" height="46" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="58" y="60" font-size="10" text-anchor="middle">the phone</text>
 <text class="d" x="58" y="76" font-size="8.5" text-anchor="middle">writes events</text>
-
 <rect class="ab sa" x="126" y="40" width="152" height="46" rx="3" stroke-width="1.75"/>
 <text class="a" x="202" y="60" font-size="10" text-anchor="middle">one ledger</text>
 <text class="d" x="202" y="76" font-size="8.5" text-anchor="middle">append only, never edited</text>
 <line class="sd" x1="106" y1="63" x2="122" y2="63" stroke-width="1.25" marker-end="url(#wa)"/>
-
 <text class="d" x="300" y="26" font-size="9" letter-spacing=".9">THREE PROJECTIONS, THREE QUESTIONS, NOT ONE ENUM</text>
 <rect x="300" y="34" width="164" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="382" y="53" font-size="9.5" text-anchor="middle">attendance: payroll truth</text>
@@ -79,28 +76,22 @@ honest when nobody knows.
 <line x1="278" y1="63" x2="296" y2="85" marker-end="url(#wa)"/>
 <line x1="278" y1="72" x2="296" y2="118" marker-end="url(#wa)"/>
 </g>
-
 <rect x="486" y="34" width="144" height="30" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="558" y="53" font-size="9.5" text-anchor="middle">locked day, payroll</text>
 <line class="sd" x1="464" y1="49" x2="482" y2="49" stroke-width="1.25" marker-end="url(#wa)"/>
-
 <line class="sd" x1="10" y1="158" x2="630" y2="158" stroke-width="1" opacity=".4"/>
 <text class="d" x="10" y="180" font-size="9" letter-spacing=".9">THE SAME VISIT, ON ITS WAY TO A BILL</text>
-
 <rect x="10" y="190" width="120" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.25"/>
 <text x="70" y="208" font-size="9.5" text-anchor="middle">visit completed</text>
 <text class="d" x="70" y="223" font-size="8.5" text-anchor="middle">by one or several</text>
-
 <rect class="ab sa" x="150" y="190" width="230" height="42" rx="3" stroke-width="1.5"/>
 <text class="a" x="162" y="207" font-size="9.5">whose line is it? first match wins</text>
 <text class="d" x="162" y="223" font-size="8.5">explicit, then who reported it done, then assigned</text>
 <line class="sd" x1="130" y1="211" x2="146" y2="211" stroke-width="1.25" marker-end="url(#wa)"/>
-
 <rect x="400" y="190" width="230" height="42" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
 <text x="515" y="207" font-size="9.5" text-anchor="middle">credit splits, and sums to one</text>
 <text class="d" x="515" y="223" font-size="8.5" text-anchor="middle">a two-person job is worth one job</text>
 <line class="sd" x1="380" y1="211" x2="396" y2="211" stroke-width="1.25" marker-end="url(#wa)"/>
-
 <text class="r" x="10" y="258" font-size="9">Unmatched lines stay visible as unclassified. A line that cannot be attributed is a</text>
 <text class="r" x="10" y="272" font-size="9">reporting gap somebody can close, and a line silently dropped is a number that lies.</text>
 <text class="d" x="10" y="292" font-size="9.5">The console does not ship before the thing that produces its data, or it is a demo with a refresh button.</text>
