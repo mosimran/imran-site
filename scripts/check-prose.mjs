@@ -7,7 +7,8 @@
 // ordinary prose. It prints the pair so a person can judge, which is the point.
 import { readdirSync, readFileSync, existsSync } from 'node:fs'
 
-const DIRS = ['src/content/impl', 'src/content/papers', 'src/content/errata']
+const DIRS = ['src/content/impl', 'src/content/papers', 'src/content/errata', 'docs']
+const SKIP = /intitial-handoff/
 const HYPE = /\b(seamless|robust|elevate|unlock|empower|delve|tapestry|testament|cutting-edge|game-chang\w*|realm)\b|\b(?:leverages|leveraging|leveraged)\b|\b(?:to|can|will|should|must)\s+leverage\b/gi
 
 let files = 0, em = 0, notjust = 0
@@ -18,6 +19,7 @@ const byDir = {}
 for (const dir of DIRS) {
   if (!existsSync(dir)) continue
   for (const f of readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+    if (SKIP.test(`${dir}/${f}`)) continue
     files++
     const raw = readFileSync(`${dir}/${f}`, 'utf8')
     const plain = raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')
