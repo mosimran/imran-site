@@ -283,7 +283,7 @@ does not.
   reader can learn from is legitimate and stays disclaimed; attaching a measurement nobody took
   is not, whatever the prose around it claims.
 
-- [ ] **P26** Confidence values on papers 5.24 and 5.25
+- [x] **P26** Confidence values on papers 5.24 and 5.25
   <br>`src/content/papers/three-halves.md`, `data-is-missing.md`. Set to 0.70 and 0.65 by the
   drafter on 2026-09-04 when the owner said to decide. A confidence value on this site is the
   author's own credence and nobody else can hold it for him, so both were placed at the draft
@@ -295,6 +295,13 @@ does not.
   <br>The retirement conditions were drafted too, and they are the more consequential half. They
   say what evidence would make him withdraw each claim, and a condition he would not honour is
   worse than none.
+  <br>**Closed 2026-09-04 by the owner, who delegated the judgement twice and then asked for the
+  row cleared.** 0.70 and 0.65 stand as his. The note on each page saying the value was the
+  drafter's is removed, because it is no longer true and a page carrying a caveat about its own
+  authorship after the author has adopted it is just noise.
+  <br>Both remain at or below 0.7, so the schema still classes them as drafts and both pages say
+  so. Delegated credence is weaker evidence than stated credence and the draft tier is the
+  honest place for it. Erratum 7.43.
 
 ## Low
 

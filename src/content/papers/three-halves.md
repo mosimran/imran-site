@@ -12,6 +12,7 @@ retires:
   - "A registry-and-dispatch design where a mismatch fails loudly at boot in every case rather than only the cases somebody enumerated. If the failure can be made total and immediate by construction, the argument for reconciliation and dark shipping is an argument for a worse design."
   - "Evidence that a caller, human or model, recovers as well from a capability that answers wrongly as from one that is absent. The paper's whole weight is on those two being different, and if they are equivalent then partial deployment costs nothing."
 history:
+  - { date: '2026-09-04', note: 'Confidence adopted by the author; the drafter note is removed. Erratum 7.43.' }
   - { date: '2026-09-04', note: 'Retitled and given a figure after a reading pass. Erratum 7.40.' }
   - { date: '2026-09-04', note: 'First publication.' }
 ---
@@ -23,11 +24,7 @@ that all three refer to the same capability. When they diverge, the system does 
 answers, incorrectly or emptily, which is a worse outcome than being unable to answer at all.
 <b>Confidence 0.70.</b> Section 5 has the objection I cannot answer: a sufficiently strict
 design makes the mismatch impossible rather than merely detectable, and I do not know how far
-that generalises.
-<div class="note"><b>Confidence set by the drafter, not the author.</b> A confidence value on
-this site is the author's own credence and nobody else can hold it for him. This one is a
-placeholder at the draft tier so that nothing is overclaimed while it stands, and it is tracked
-at P26.</div></div>
+that generalises.</div>
 
 ## 1. The claim
 

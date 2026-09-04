@@ -11,6 +11,7 @@ retires:
   - "A study of production incidents where reports opening with an absence claim turned out to be genuine data loss more often than they turned out to be a transport or presentation fault. The paper asserts the opposite distribution from a handful of cases and would not survive a real count going the other way."
   - "A system where the three questions in Section 3 cannot be asked cheaply, because the store is not directly queryable and the transport cannot be observed without a deploy. The procedure is only useful where each answer costs a minute, and if that is rare then this is advice for a lucky architecture."
 history:
+  - { date: '2026-09-04', note: 'Confidence adopted by the author; the drafter note is removed. Erratum 7.43.' }
   - { date: '2026-09-04', note: 'Retitled and given a figure after a reading pass. Erratum 7.40.' }
   - { date: '2026-09-04', note: 'First publication.' }
 ---
@@ -21,10 +22,7 @@ developer's machine, one was fetched and never rendered, and one was returned un
 right row was buried in nine hundred wrong ones. The phrase describes what the reporter saw and
 smuggles in a conclusion about where the fault is, and once it has been said the investigation
 starts in the wrong place. <b>Confidence 0.65.</b> Section 4 has the objection: this is three
-cases and a habit, not a study.
-<div class="note"><b>Confidence set by the drafter, not the author.</b> A confidence value on
-this site is the author's own credence. This one is a placeholder at the draft tier and is
-tracked at P26.</div></div>
+cases and a habit, not a study.</div>
 
 ## 1. The three
 
