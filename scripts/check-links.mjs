@@ -26,7 +26,9 @@ const isFile = (u) => ['dist' + u, 'dist' + u + 'index.html', 'dist' + u + '/ind
 const redirects = new Map()
 let ruleLines = 0
 try {
-  for (const m of readFileSync('dist/_redirects', 'utf8').matchAll(/^(\/\S+)\s+(\S+)\s+\d{3}\s*$/gm)) {
+  // The status is optional in a Pages rule and defaults to 302, so a rule
+  // written without one is still a rule and still needs a live destination.
+  for (const m of readFileSync('dist/_redirects', 'utf8').matchAll(/^(\/\S+)\s+(\S+)(?:\s+\d{3})?\s*$/gm)) {
     ruleLines++
     // Keyed without the trailing slash, because each short link is emitted in
     // both forms and they are one promise, not two.

@@ -74,7 +74,23 @@ wrong.length
   ? fail('emitted rules agree with the ledger', wrong.map((m) => m[0].trim()))
   : ok('emitted rules agree with the ledger', rules.length)
 
-// 6. The link is printed on the page it belongs to. A short link nobody can see
+// 6. Exactly two rules per code, the bare path and the trailing slash, and no
+//    more. A duplicated rule is invisible at the edge because the first match
+//    wins, so nothing would ever report it, and the file grows every time
+//    --emit is run outside a build. That is how it was found.
+const seen = new Map()
+for (const [line] of rules) {
+  const key = line.trim().split(/\s+/)[0]
+  seen.set(key, (seen.get(key) ?? 0) + 1)
+}
+const dupes = [...seen].filter(([, n]) => n > 1)
+const miscounted = Object.keys(ledger).filter((c) => !seen.has(`/l/${c}`) || !seen.has(`/l/${c}/`))
+dupes.length || miscounted.length
+  ? fail('two rules per code, neither missing nor doubled',
+      [...dupes.map(([k, n]) => `${k} appears ${n} times`), ...miscounted.map((c) => `${c} is missing one of its two forms`)])
+  : ok('two rules per code, neither missing nor doubled', seen.size)
+
+// 7. The link is printed on the page it belongs to. A short link nobody can see
 //    is a redirect, not a way to share anything.
 const unprinted = Object.entries(ledger).filter(([code, e]) => {
   const page = `dist${e.target}index.html`
@@ -84,7 +100,7 @@ unprinted.length
   ? fail('every page prints its own short link', unprinted.map(([c, e]) => `${c} missing from ${e.target}`))
   : ok('every page prints its own short link', Object.keys(ledger).length)
 
-// 7. The published map lists all of them. This is what makes an opaque-looking
+// 8. The published map lists all of them. This is what makes an opaque-looking
 //    link auditable, so an incomplete map is worse than none.
 const map = existsSync('dist/l/index.html') ? readFileSync('dist/l/index.html', 'utf8') : ''
 const unmapped = Object.keys(ledger).filter((c) => !map.includes(`/l/${c}`))

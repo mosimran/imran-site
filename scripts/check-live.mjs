@@ -172,7 +172,10 @@ for (const path of PATHS) {
   }
   console.log(`  /l/${code}`)
   pass('short link is a 301 to the paper', status === 301 && location === want, detail)
-  pass('Location is a path, so the host is kept', !/^https?:/i.test(location ?? ''), location ?? 'none')
+  // Requires a Location rather than merely not finding a scheme in one. Without
+  // the first half this line reported ok against a 404, which is a green result
+  // for a response that has no redirect in it at all.
+  pass('Location is a path, so the host is kept', !!location && !/^https?:/i.test(location), location ?? 'none')
   console.log('')
 }
 }

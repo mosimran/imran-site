@@ -21,6 +21,8 @@ for (const x of [...papers, ...notes]) titles.set(x.data.section, x.data.title)
 
 const rows = entries.map(([code, e]) => ({ code, ...e, title: titles.get(e.section) ?? '' }))
 const issued = rows.map((r) => r.since).sort()
+const first = issued[0] ?? 'none yet'
+const last = issued[issued.length - 1] ?? 'none yet'
 ---
 <Doc title="Short links" description="Every short link this site has issued, what it points at, and the date it was issued.">
   <div class="mast">
@@ -29,8 +31,8 @@ const issued = rows.map((r) => r.since).sort()
 Codes: {rows.length}
 Scheme: /l/ + section number</div>
     <div class="r"><b>M. Imran</b>
-First issued {issued[0]}
-Last issued {issued[issued.length - 1]}
+First issued {first}
+Last issued {last}
 Permanent</div>
   </div>
 
