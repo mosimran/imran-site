@@ -1,4 +1,6 @@
 import catalogue from '../../src/data/tools.json'
+import copy from '../../src/data/tools-copy.json'
+import live from '../../src/data/tools-live.json'
 
 /*
  * GET /tools/search?q=...
@@ -25,7 +27,19 @@ interface Tool {
   mentionedBy: string[]
 }
 
-const TOOLS = catalogue.tools as Tool[]
+/*
+ * The descriptions shown here are the ones written for this site, not the text
+ * the names were originally gathered with. Same source of truth as the pages,
+ * so a search result and a page cannot disagree.
+ */
+const WRITTEN = copy.entries as Record<string, { desc: string; punch: string; use: string }>
+const DEAD = new Set(live.results.filter((r) => !r.ok).map((r) => r.slug))
+const TOOLS = (catalogue.tools as Tool[]).map((t) => ({
+  ...t,
+  desc: WRITTEN[t.slug]?.desc ?? t.desc,
+  punch: WRITTEN[t.slug]?.punch ?? '',
+  dead: DEAD.has(t.slug),
+}))
 const TAXONOMY = catalogue.taxonomy as Record<string, { label: string; blurb: string }>
 
 const MAX_Q = 64
@@ -44,8 +58,8 @@ function esc (s: string): string {
     .replace(/'/g, '&#39;')
 }
 
-function hasPage (t: Tool): boolean {
-  return t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0
+function hasPage (t: { mentions: string[]; mentionedBy: string[]; dead: boolean }): boolean {
+  return t.mentions.length > 0 || t.mentionedBy.length > 0 || t.dead
 }
 
 /*
@@ -53,7 +67,7 @@ function hasPage (t: Tool): boolean {
  * the middle of a word. Nothing cleverer: a stemmer or a fuzzy distance would
  * make the ranking harder to explain than the result is worth.
  */
-function rank (t: Tool, q: string): number {
+function rank (t: { name: string; desc: string; punch: string; category: string }, q: string): number {
   const name = t.name.toLowerCase()
   const desc = t.desc.toLowerCase()
   if (name === q) return 100
@@ -61,6 +75,7 @@ function rank (t: Tool, q: string): number {
   if (name.includes(q)) return 60
   if (desc.includes(` ${q}`)) return 30
   if (desc.includes(q)) return 20
+  if (t.punch.toLowerCase().includes(q)) return 15
   if ((TAXONOMY[t.category]?.label ?? '').toLowerCase().includes(q)) return 10
   return 0
 }
@@ -99,6 +114,8 @@ li{padding:11px 0 12px;border-bottom:1px solid var(--rule)}
 .r{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
 border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent);
 padding:1px 6px;border-radius:2px}
+.r.dead{color:#b3261e;border-color:#b3261e66}
+.p{font-size:12px;color:var(--accent);margin-top:4px}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media(max-width:520px){button{flex:1 1 100%}}
 `
@@ -144,7 +161,7 @@ export const onRequestGet: PagesFunction = async (ctx) => {
 
   if (!q) {
     return page('', '<p>Type a name, a category or a word from a description. The catalogue holds '
-      + `${TOOLS.length} tools quoted from three public lists.</p>`
+      + `${TOOLS.length} tools, each described from its own homepage.</p>`
       + '<p class="d">This searches the catalogue only. The short list of tools that are actually '
       + 'used to build this site, each with the file that proves it, is on the '
       + '<a href="/tools/#used">catalogue front page</a>.</p>', 'Search the catalogue')
@@ -153,17 +170,16 @@ export const onRequestGet: PagesFunction = async (ctx) => {
   const hits = TOOLS
     .map((t) => ({ t, score: rank(t, q) }))
     .filter((h) => h.score > 0)
-    .sort((a, b) => b.score - a.score || b.t.refs.length - a.t.refs.length || a.t.name.localeCompare(b.t.name))
+    .sort((a, b) => b.score - a.score || a.t.name.localeCompare(b.t.name))
 
   const shown = hits.slice(0, MAX_HITS)
   const title = `${hits.length} result${hits.length === 1 ? '' : 's'} for "${raw}"`
 
   if (!hits.length) {
     return page(raw, `<p>Nothing in the catalogue matches <b>${esc(raw)}</b>.</p>`
-      + '<p class="d">The catalogue is three lists of developer products. It contains no '
-      + 'programming languages, no runtimes and no operating system tools, because none of the '
-      + 'three sources lists those. If that is what you were looking for, it is not missing by '
-      + 'accident and it is not here.</p>'
+      + '<p class="d">The catalogue is developer products. It contains no programming languages, '
+      + 'no runtimes and no operating system tools. If that is what you were looking for, it is '
+      + 'not missing by accident and it is not here.</p>'
       + '<p><a href="/tools/#categories">Browse by category</a> instead.</p>', 'No results')
   }
 
@@ -172,8 +188,9 @@ export const onRequestGet: PagesFunction = async (ctx) => {
     const href = hasPage(t) ? `/tools/${t.slug}/` : t.url
     const label = TAXONOMY[t.category]?.label ?? t.category
     return `<li><div class="h"><a href="${esc(href)}"${hasPage(t) ? '' : ' rel="noopener"'}>${esc(t.name)}</a>`
-      + (t.refs.length > 1 ? `<span class="r">${t.refs.length} of 3 lists</span>` : '')
+      + (t.dead ? '<span class="r dead">did not answer</span>' : '')
       + `</div><div class="s">${esc(t.desc)}</div>`
+      + (t.punch ? `<div class="p">${esc(t.punch)}</div>` : '')
       + `<div class="m"><a href="/tools/in/${esc(t.category)}/">${esc(label)}</a></div></li>`
   }).join('') + '</ul>'
 

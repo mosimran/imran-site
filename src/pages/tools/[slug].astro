@@ -3,40 +3,38 @@ import type { GetStaticPaths } from 'astro'
 import Doc from '../../layouts/Doc.astro'
 import Star from '../../components/Star.astro'
 import '../../styles/tools.css'
-import { tools, neighbours, categoryOf, sourceById, used, starOf, starMeaning, type Tool } from '../../lib/tools'
+import { tools, neighbours, categoryOf, used, starOf, checked, type Tool } from '../../lib/tools'
 
 /*
- * A page per tool, but not for all 591 of them. A page exists when there is
- * something on it beyond a one-line quote: the tool appears in more than one
- * source list, or it names another tool, or another names it. The remaining
- * rows are listed on their category page with a link straight to the vendor,
- * which is where a reader wants to go anyway.
+ * A page for every tool, all 591.
  *
- * These are URLs, so they never change once published. A tool that later gains
- * a second citation gains a page; one that loses it keeps the page it had.
+ * The first version generated pages only where there was more than a one-line
+ * quote to show, which at the time meant 126 of them. When the descriptions
+ * became written rather than quoted, the condition that selected those 126 was
+ * removed, and rebuilding silently dropped pages that were already published:
+ * /tools/warp/ had been live and returned 404.
+ *
+ * URLs on this site never change. A generation rule that can narrow is a rule
+ * that can break a published address, so there is no rule now. Every tool has a
+ * page, every page has a description written for it, and the set can only grow.
  */
 export const getStaticPaths = (() => {
-  const usedSlugs = new Set(used.map((u) => u.catalogue).filter(Boolean) as string[])
-  return tools
-    .filter((t) => t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0 || usedSlugs.has(t.slug))
-    .map((t) => ({ params: { slug: t.slug }, props: { t } }))
+  return tools.map((t) => ({ params: { slug: t.slug }, props: { t } }))
 }) satisfies GetStaticPaths
 
 const { t } = Astro.props as { t: Tool }
 const cat = categoryOf.get(t.category)
 const { named, namedBy, shelf } = neighbours(t)
 const mine = used.find((u) => u.catalogue === t.slug)
-const host = new URL(t.url).hostname.replace(/^www\./, '')
 const star = starOf(t.slug)
-const quotedFrom = sourceById.get(t.descFrom)
 const top = shelf.slice(0, 8)
 ---
-<Doc title={`${t.name}, tools catalogue`} description={`${t.desc} Catalogued under ${cat?.label ?? t.category}, cited by ${t.refs.length} of three source lists.`}>
+<Doc title={`${t.name}, tools`} description={`${t.desc} ${t.punch}`}>
   <div class="mast">
     <div>Off the Bit
 <b>Tools: {t.name}</b>
 Category: <a href={`/tools/in/${t.category}/`}>{cat?.label ?? t.category}</a>
-Site: <a href={t.url} rel="noopener">{host}</a></div>
+Site: {t.live.ok ? <a href={t.url} rel="noopener">{t.host}</a> : <span class="gone">{t.host}</span>}</div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
 All tools: <a href="/tools/">catalogue</a></div>
@@ -48,17 +46,29 @@ All tools: <a href="/tools/">catalogue</a></div>
   </div>
 
   <div class="ind tsec">
-    <div class="memo">That description is quoted from
-      {' '}<a href={quotedFrom?.url} rel="noopener">{quotedFrom?.title}</a>, not written here.
-      {mine
-        ? ' This tool is also used to build or serve this site, and the evidence is below.'
-        : ' Its presence in this catalogue records that a public list carries it. It does not record that anyone here uses it.'}</div>
+    <p class="punchline">{t.punch}</p>
+  </div>
+
+  {!t.live.ok && (
+    <div class="ind tsec">
+      <div class="memo warnbox"><b>This one did not answer.</b> Asked on {checked}, and
+        {' '}{t.live.reason}. The entry stays because nothing here is deleted, and because a tool
+        that has gone is worth knowing about. The link above is not live.</div>
+    </div>
+  )}
+
+  <div class="ind tsec">
+    <h2 id="use">What it is sold for</h2>
+    <p class="prose">{t.use}</p>
+    {t.live.movedTo && (
+      <p class="prose dim">The address redirects to <span class="kw">{t.live.movedTo}</span>,
+        which is worth knowing before you follow it.</p>
+    )}
   </div>
 
   {mine && (
     <div class="ind tsec">
-      <h2 id="used">Used here</h2>
-      <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
+      <h2 id="used">Used to build this site</h2>
       <ul class="tl"><li>
         <div class="h"><Star title={mine.evidence} /><a href={mine.url} rel="noopener">{mine.name}</a><span class="trole">{mine.role}</span></div>
         {mine.note && <div class="d">{mine.note}</div>}
@@ -70,13 +80,13 @@ All tools: <a href="/tools/">catalogue</a></div>
   {(named.length > 0 || namedBy.length > 0) && (
     <div class="ind tsec">
       <h2 id="near">Named alongside</h2>
-      <p class="prose">An edge means one description mentions the other tool by name. It is the only
-        relationship these lists actually encode, and it is a weak one.</p>
+      <p class="prose">These entries mention each other by name. It is a weak relationship and it is
+        the only one the catalogue can show without inventing something.</p>
       {named.length > 0 && (
         <>
-          <p class="prose"><b>Its description names:</b></p>
+          <p class="prose"><b>Names:</b></p>
           <ul class="tl">{named.map((n) => (
-            <li><div class="h"><a href={`/tools/${n.slug}/`}>{n.name}</a></div><div class="d">{n.desc}</div></li>
+            <li><div class="h">{starOf(n.slug) && <Star title={starOf(n.slug)!.reason} />}<a href={`/tools/${n.slug}/`}>{n.name}</a></div><div class="d">{n.desc}</div></li>
           ))}</ul>
         </>
       )}
@@ -84,7 +94,7 @@ All tools: <a href="/tools/">catalogue</a></div>
         <>
           <p class="prose"><b>Named by:</b></p>
           <ul class="tl">{namedBy.map((n) => (
-            <li><div class="h"><a href={`/tools/${n.slug}/`}>{n.name}</a></div><div class="d">{n.desc}</div></li>
+            <li><div class="h">{starOf(n.slug) && <Star title={starOf(n.slug)!.reason} />}<a href={`/tools/${n.slug}/`}>{n.name}</a></div><div class="d">{n.desc}</div></li>
           ))}</ul>
         </>
       )}
@@ -93,19 +103,15 @@ All tools: <a href="/tools/">catalogue</a></div>
 
   <div class="ind tsec">
     <h2 id="shelf">Same shelf</h2>
-    <p class="prose">The rest of {cat?.label.toLowerCase() ?? t.category}, most-cited first. Sharing
-      a category is not a relationship, only a filing decision made upstream.</p>
+    <p class="prose">The rest of {cat?.label.toLowerCase() ?? t.category}, alphabetically. Sharing a
+      category is a filing decision, not a relationship.</p>
     <ul class="tl">
       {top.map((n) => (
         <li>
           <div class="h">
-            {starOf(n.slug) && (
-              <Star title={starOf(n.slug)!.reason} />
-            )}
-            {(n.refs.length > 1 || n.mentions.length > 0 || n.mentionedBy.length > 0)
-              ? <a href={`/tools/${n.slug}/`}>{n.name}</a>
-              : <a href={n.url} rel="noopener">{n.name}</a>}
-            {n.refs.length > 1 && <span class="tref">{n.refs.length} of 3 lists</span>}
+            {starOf(n.slug) && <Star title={starOf(n.slug)!.reason} />}
+            <a href={`/tools/${n.slug}/`}>{n.name}</a>
+            {!n.live.ok && <span class="gone">did not answer</span>}
           </div>
           <div class="d">{n.desc}</div>
         </li>

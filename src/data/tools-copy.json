@@ -1,0 +1,2960 @@
+{
+ "note": "Written for this site, not quoted. `use` is the tool's own most advertised use case, read off its homepage on the date in tools-live.json.",
+ "entries": {
+  "cline": {
+   "desc": "An autonomous coding agent that ships as a VS Code extension, a CLI and an SDK, with read and write access to the working tree.",
+   "punch": "The agent moved out of the chat panel and into the file system.",
+   "use": "Delegating multi-file changes to an agent that edits the repository directly."
+  },
+  "cody": {
+   "desc": "Sourcegraph's assistant, built on top of a code search index rather than on the open file.",
+   "punch": "Retrieval first, generation second.",
+   "use": "Asking questions about a codebase too large to fit in a context window."
+  },
+  "cursor": {
+   "desc": "A fork of VS Code rebuilt so the model is a first-class editor, not a sidebar. Now positions itself as an agent you hand tasks to.",
+   "punch": "The editor stopped completing lines and started accepting assignments.",
+   "use": "Handing off a task and reviewing the diff the agent comes back with."
+  },
+  "github-copilot": {
+   "desc": "The first AI completion tool to reach general availability, now spanning chat, review and agents across editors and GitHub itself.",
+   "punch": "The one that made autocomplete a product category.",
+   "use": "Inline completion and chat inside the editor and the pull request."
+  },
+  "tabnine": {
+   "desc": "A completion assistant that sells on where the code goes rather than on what the model can do: private deployment, no training on your source.",
+   "punch": "Sold to the people who have to sign off, not the people who type.",
+   "use": "AI assistance in an organisation that cannot send source to a vendor."
+  },
+  "warp": {
+   "desc": "Began as a rewritten terminal with structured blocks and history. Now sells itself as infrastructure for running agents across the development lifecycle.",
+   "punch": "It stopped being a terminal while nobody was looking.",
+   "use": "Building and supervising agents across a software delivery pipeline."
+  },
+  "aider": {
+   "desc": "Pair programming in the terminal. Reads the repository, proposes edits, and commits them to git with a message.",
+   "punch": "Every change lands as a commit you can revert.",
+   "use": "Editing a repository from the command line with git as the undo button."
+  },
+  "amazon-codewhisperer": {
+   "desc": "Amazon's original completion assistant. The name is retired and the address now serves Amazon Q Developer.",
+   "punch": "Renamed, not retired.",
+   "use": "Superseded by Amazon Q Developer."
+  },
+  "amazon-q-developer": {
+   "desc": "Amazon's coding assistant, integrated with AWS accounts and services rather than with the editor alone.",
+   "punch": "An assistant that knows which account it is standing in.",
+   "use": "Writing, debugging and refactoring inside an IDE wired to AWS."
+  },
+  "applitools": {
+   "desc": "Visual regression testing. Compares rendered screenshots rather than the DOM, so a layout that moves is caught even when the markup did not change.",
+   "punch": "Diffs pixels, because the DOM lies about what a page looks like.",
+   "use": "Catching visual regressions across browsers and viewports."
+  },
+  "appwrite": {
+   "desc": "An open-source backend server bundling auth, databases, storage and functions behind one API.",
+   "punch": "The Firebase shape, self-hostable.",
+   "use": "Standing up a backend without writing one."
+  },
+  "buildstash": {
+   "desc": "Artifact and release management for teams shipping binaries: mobile, desktop, games, XR and embedded.",
+   "punch": "Built for the builds a container registry was never meant to hold.",
+   "use": "Tracking binary builds through QA and sign-off."
+  },
+  "circleci": {
+   "desc": "A hosted CI platform, one of the older ones, now marketing itself around validating machine-written changes.",
+   "punch": "Validate everything, assume nothing.",
+   "use": "Running tests and deployments on every push."
+  },
+  "claude-code": {
+   "desc": "Anthropic's agentic coding tool. Runs in the terminal with access to the repository, the shell and the test suite.",
+   "punch": "An agent that can run the tests it just broke.",
+   "use": "Working on a codebase from the terminal with tools rather than suggestions."
+  },
+  "codacy": {
+   "desc": "Automated quality and security review with policy enforcement, aimed at teams that need a gate rather than advice.",
+   "punch": "Governance for code nobody read before merging.",
+   "use": "Enforcing quality and security policy across many repositories."
+  },
+  "coderabbit": {
+   "desc": "An automated pull request reviewer that comments line by line and holds a conversation about its own findings.",
+   "punch": "Betting that reviewing is the bottleneck, not writing.",
+   "use": "First-pass review on every pull request."
+  },
+  "continue": {
+   "desc": "An open-source assistant that let you point the editor at any model, local or hosted. Acquired by Cursor.",
+   "punch": "The bring-your-own-model bet, bought by the competition.",
+   "use": "Acquired by Cursor and no longer independent."
+  },
+  "fine": {
+   "desc": "An agent that works from stated requirements and iterates on its own output. The site returned a payment-required error when checked.",
+   "punch": "Requirements in, pull requests out.",
+   "use": "Unverified: the site would not answer."
+  },
+  "gitguardian": {
+   "desc": "Secret detection across repositories, history and connected tools, plus an inventory of the non-human identities those secrets belong to.",
+   "punch": "Finds the key you committed in 2019 and forgot.",
+   "use": "Detecting committed credentials before somebody else does."
+  },
+  "hasura": {
+   "desc": "Generates a GraphQL API over existing databases, so the API is a projection of the schema rather than hand-written.",
+   "punch": "The API is derived, not maintained.",
+   "use": "Exposing an existing database as a governed API."
+  },
+  "jetbrains-ai": {
+   "desc": "AI assistance built into the JetBrains IDEs, using the static analysis and refactoring engine those editors already had.",
+   "punch": "A model bolted onto an index that already understood the code.",
+   "use": "Assistance inside IntelliJ, PyCharm and the rest of the family."
+  },
+  "kilo-code": {
+   "desc": "An open-source agent for VS Code, JetBrains and the CLI. Brings your own API keys at no markup and supports local models.",
+   "punch": "Open source, no markup, keys stay yours.",
+   "use": "Running a coding agent against your own model account."
+  },
+  "kodus": {
+   "desc": "Open-source code review that learns a team's conventions and reviews against them rather than against a generic ruleset.",
+   "punch": "The open alternative to the review bots.",
+   "use": "Self-hosted automated review tuned to one team's habits."
+  },
+  "linear": {
+   "desc": "Issue tracking built around speed and keyboard use, now positioning itself as the place both people and agents pick up work.",
+   "punch": "Opinionated about process so you do not have to configure one.",
+   "use": "Planning and tracking product work."
+  },
+  "magic-patterns": {
+   "desc": "Turns prompts into interface code, constrained by an existing design system rather than inventing components.",
+   "punch": "Prototypes in your own components, not generic ones.",
+   "use": "Generating UI prototypes that match a design system."
+  },
+  "mintlify": {
+   "desc": "Documentation hosting that keeps pages in step with the codebase, now aimed as much at agents reading docs as at people.",
+   "punch": "Docs as a retrieval surface, not a website.",
+   "use": "Publishing product documentation that updates itself."
+  },
+  "netlify": {
+   "desc": "Static hosting with build pipelines, edge functions and preview deploys. One of the two that defined the category.",
+   "punch": "Made 'push to deploy' the default expectation.",
+   "use": "Deploying a site straight from a git branch."
+  },
+  "octomind": {
+   "desc": "Generated and maintained Playwright tests with automated test case discovery. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "opencode": {
+   "desc": "An open-source terminal coding agent, model-agnostic, with the whole loop visible in the repository.",
+   "punch": "The agent loop, readable.",
+   "use": "Running an auditable coding agent locally."
+  },
+  "pixee": {
+   "desc": "Application security that filters findings and opens fixes as pull requests, selling on noise reduction rather than on detection count.",
+   "punch": "Aimed at the false-positive problem, not the detection problem.",
+   "use": "Turning security findings into merged fixes."
+  },
+  "plausible": {
+   "desc": "Lightweight open-source analytics with no cookies and no cross-site identifiers. Self-hostable.",
+   "punch": "Counts visits without building a profile.",
+   "use": "Site analytics that does not require a consent banner."
+  },
+  "playwright": {
+   "desc": "Browser automation across Chromium, Firefox and WebKit, with a single API and real waiting instead of sleeps.",
+   "punch": "The one that made cross-browser testing boring.",
+   "use": "Automating and testing a site in real browsers."
+  },
+  "potpie": {
+   "desc": "Builds task-specific agents against a knowledge graph of one codebase, rather than one general agent for everything.",
+   "punch": "One agent per job, grounded in your repository.",
+   "use": "Creating custom agents scoped to a single codebase."
+  },
+  "pulumi": {
+   "desc": "Infrastructure as code in general-purpose languages, so loops, types and tests come from the language rather than from a DSL.",
+   "punch": "Infrastructure in a language that already has a test runner.",
+   "use": "Defining cloud infrastructure in TypeScript, Go or Python."
+  },
+  "qodo": {
+   "desc": "Formerly CodiumAI. Generates tests and reviews changes, with the emphasis on covering behaviour rather than producing code.",
+   "punch": "Started at the tests and worked backwards.",
+   "use": "Generating tests and reviewing pull requests."
+  },
+  "readme": {
+   "desc": "Hosted API reference documentation with a console readers can call endpoints from.",
+   "punch": "Documentation you can send a request from.",
+   "use": "Publishing interactive API reference docs."
+  },
+  "render": {
+   "desc": "Application hosting for services, databases and cron, positioned between a platform-as-a-service and raw cloud.",
+   "punch": "Heroku's shape without Heroku's pricing history.",
+   "use": "Deploying a web service and its database together."
+  },
+  "snyk": {
+   "desc": "Dependency, container and code scanning, sold around fixing rather than reporting, and now around what machine-written code introduces.",
+   "punch": "Made the vulnerability database a build step.",
+   "use": "Scanning dependencies and code for known vulnerabilities."
+  },
+  "spacelift": {
+   "desc": "Orchestration for infrastructure pipelines across Terraform, OpenTofu and Ansible, with policy applied between plan and apply.",
+   "punch": "The approval gate that Terraform never shipped with.",
+   "use": "Running infrastructure changes through policy and review."
+  },
+  "strapi": {
+   "desc": "An open-source headless CMS in JavaScript, self-hosted, with the content model defined in code.",
+   "punch": "The CMS you run yourself.",
+   "use": "Managing content behind an API you control."
+  },
+  "supabase": {
+   "desc": "Postgres with auth, storage, realtime and generated APIs around it. The database is the product, not an abstraction over one.",
+   "punch": "It is just Postgres, which is the whole argument.",
+   "use": "Building on a managed Postgres with batteries attached."
+  },
+  "supermaven": {
+   "desc": "Completion built for latency and a very large context window, competing on speed rather than on agent features.",
+   "punch": "Chose to be fast rather than to be an agent.",
+   "use": "Low-latency inline completion with whole-repository context."
+  },
+  "tabby": {
+   "desc": "A self-contained, self-hosted completion server. No source leaves the network it runs on.",
+   "punch": "Copilot's shape, inside your firewall.",
+   "use": "Running code completion entirely on your own hardware."
+  },
+  "terraform": {
+   "desc": "The declarative infrastructure tool that made state files and plan output an industry convention.",
+   "punch": "Everyone else is compared to this.",
+   "use": "Declaring and provisioning infrastructure across clouds."
+  },
+  "testim": {
+   "desc": "Recorded UI tests with machine-assisted locators, aimed at keeping tests alive when the interface shifts underneath them.",
+   "punch": "Built around the fact that selectors rot.",
+   "use": "Authoring and maintaining UI tests that survive redesigns."
+  },
+  "vercel": {
+   "desc": "Hosting built around Next.js, which it also maintains. Now sells itself as infrastructure for agents as well as pages.",
+   "punch": "Owns the framework and the place it runs.",
+   "use": "Deploying a Next.js application and its edge functions."
+  },
+  "visual-studio-intellicode": {
+   "desc": "Microsoft's pre-Copilot completion work, ranking suggestions by what similar codebases actually did.",
+   "punch": "Statistical completion, from before the models got large.",
+   "use": "Context-ranked completion inside Visual Studio."
+  },
+  "windsurf": {
+   "desc": "An agentic editor that was acquired and folded in. The address now serves Devin Desktop.",
+   "punch": "Absorbed: the URL now belongs to somebody else.",
+   "use": "Now served as Devin Desktop."
+  },
+  "10web": {
+   "desc": "Generates and hosts WordPress sites, with the build and the hosting sold as one product.",
+   "punch": "WordPress without meeting WordPress.",
+   "use": "Generating a hosted WordPress site from a description."
+  },
+  "16x-prompt": {
+   "desc": "A desktop tool for assembling code context and prompts by hand before sending them to a model.",
+   "punch": "Treats context assembly as the actual work.",
+   "use": "Managing what goes into a prompt across several model APIs."
+  },
+  "ably": {
+   "desc": "Hosted realtime messaging with delivery guarantees and presence, sold on what happens when connections drop.",
+   "punch": "Sells the reconnection, not the websocket.",
+   "use": "Realtime messaging that survives a flaky network."
+  },
+  "abstra": {
+   "desc": "Automation for finance operations, built as workflows rather than as spreadsheets.",
+   "punch": "Aimed at the spreadsheet that became a system.",
+   "use": "Automating financial operations workflows."
+  },
+  "actyx": {
+   "desc": "A peer-to-peer runtime for factory floor software that keeps working when the network to the cloud does not.",
+   "punch": "Built for the shop floor, where the uplink is optional.",
+   "use": "Running distributed applications on factory hardware."
+  },
+  "adaptable": {
+   "desc": "Template-driven deployment of applications and databases. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "agent-cost-guardrails": {
+   "desc": "Budget limits for agent frameworks, so a loop that misbehaves stops at a number instead of at an invoice.",
+   "punch": "A spend ceiling for something that can spend on its own.",
+   "use": "Capping cost in CrewAI, AutoGen and LangGraph runs."
+  },
+  "agent-shadow-brain": {
+   "desc": "Listed as a background analysis agent. The repository returns 404.",
+   "punch": "Gone: the repository is not there.",
+   "use": "Unavailable."
+  },
+  "agentset": {
+   "desc": "Open-source retrieval infrastructure for question answering, with the pipeline exposed rather than hidden behind an endpoint.",
+   "punch": "RAG with the seams visible.",
+   "use": "Building a retrieval-backed chat or search product."
+  },
+  "agentsmesh": {
+   "desc": "Assigns work to a group of agents and tracks it, treating them as a team roster rather than as one assistant.",
+   "punch": "Org chart as a product feature.",
+   "use": "Coordinating several agents against tracked tasks."
+  },
+  "agx": {
+   "desc": "Runs coding agents as long-lived workers with objectives and memory, so a session survives being interrupted.",
+   "punch": "Agents that resume instead of restarting.",
+   "use": "Keeping agent work going across sessions."
+  },
+  "ai-dev-jobs": {
+   "desc": "A job board narrowed to machine learning and AI engineering roles.",
+   "punch": "A job board, filtered.",
+   "use": "Finding or posting AI engineering roles."
+  },
+  "ai-dev-jobs-mcp": {
+   "desc": "The same job board exposed over MCP so an agent can search it. The endpoint refused a plain request.",
+   "punch": "A job board with a tool interface.",
+   "use": "Searching job listings from inside an agent."
+  },
+  "ai-sdk-by-vercel": {
+   "desc": "A TypeScript toolkit that puts one interface in front of many model providers, including streaming and tool calls.",
+   "punch": "One API, so the provider becomes a config value.",
+   "use": "Building model-backed features in TypeScript."
+  },
+  "aicodeslopmonitor": {
+   "desc": "Scans public repositories and reports how much of the code looks machine-generated.",
+   "punch": "Measures the thing everyone is arguing about.",
+   "use": "Estimating machine-written code across GitHub."
+  },
+  "aicommits": {
+   "desc": "A small CLI that writes the commit message from the staged diff.",
+   "punch": "One job, done at the moment you were going to type anyway.",
+   "use": "Generating a commit message from staged changes."
+  },
+  "aide": {
+   "desc": "An agent that spends more compute at inference time on harder engineering problems rather than answering immediately.",
+   "punch": "Buys accuracy with time.",
+   "use": "Working through engineering tasks that need more than one pass."
+  },
+  "airbrake": {
+   "desc": "Error monitoring and alerting, one of the earlier hosted exception trackers.",
+   "punch": "Predates most of what it competes with.",
+   "use": "Catching and grouping production exceptions."
+  },
+  "airpinpoint": {
+   "desc": "Asset tracking over consumer tag hardware, with geofences and shareable live links.",
+   "punch": "Logistics tracking on hardware built for lost keys.",
+   "use": "Tracking physical items at scale."
+  },
+  "airtable": {
+   "desc": "A relational database wearing a spreadsheet, with automations and an API on top.",
+   "punch": "The spreadsheet that admits it is a database.",
+   "use": "Running a business process that outgrew a spreadsheet."
+  },
+  "alfred": {
+   "desc": "A macOS launcher with hotkeys, text expansion and scripted workflows.",
+   "punch": "Keyboard-first, and scriptable to the point of being a runtime.",
+   "use": "Launching and automating things on a Mac without the mouse."
+  },
+  "algolia": {
+   "desc": "Hosted search built for typing latency, with ranking and synonyms as configuration rather than as code.",
+   "punch": "Optimised for the keystroke, not the query.",
+   "use": "Adding fast search to a site or application."
+  },
+  "amazon-codeguru-reviewer": {
+   "desc": "Amazon's automated review service. The address now serves CodeGuru Profiler, which is about runtime cost rather than review.",
+   "punch": "The link has moved on to a different product.",
+   "use": "Now serves CodeGuru Profiler."
+  },
+  "amazon-q-developer-cli": {
+   "desc": "Amazon Q in the terminal: completion for hundreds of CLIs, natural language chat and command generation.",
+   "punch": "Autocomplete for the commands nobody remembers.",
+   "use": "Completing and explaining shell commands."
+  },
+  "amp": {
+   "desc": "Sourcegraph's agent and development environment, including unsupervised runs in hosted sandboxes.",
+   "punch": "Lets the agent off the leash on purpose.",
+   "use": "Running agents unsupervised against a repository."
+  },
+  "ansible": {
+   "desc": "Agentless configuration management over SSH, with playbooks in YAML and no daemon on the target.",
+   "punch": "Won by requiring nothing on the machine it configures.",
+   "use": "Configuring servers and running operational playbooks."
+  },
+  "anteon": {
+   "desc": "Kubernetes monitoring using eBPF, so service maps come from the kernel rather than from instrumented code.",
+   "punch": "Observability without touching the application.",
+   "use": "Mapping and monitoring a Kubernetes cluster with no code changes."
+  },
+  "anymail-finder": {
+   "desc": "Finds work email addresses from a name and a domain, and charges only for the ones it can verify.",
+   "punch": "Prices itself on the deliverable, not the lookup.",
+   "use": "Building a contact list from names and company domains."
+  },
+  "apideck": {
+   "desc": "One API in front of many accounting and finance integrations, so a vendor's quirks stay on their side of it.",
+   "punch": "Sells you out of writing the twentieth connector.",
+   "use": "Shipping many SaaS integrations behind a single interface."
+  },
+  "apidog": {
+   "desc": "API design, mocking, testing and documentation in one desktop tool, generated from requests you have already made.",
+   "punch": "The four API tools, collapsed into one.",
+   "use": "Producing API documentation from real requests."
+  },
+  "apify": {
+   "desc": "A marketplace and runtime for web scrapers, with the scheduling, proxies and storage already solved.",
+   "punch": "Scraping as an app store.",
+   "use": "Running or buying a scraper without operating the infrastructure."
+  },
+  "apitable": {
+   "desc": "An open-source visual database with automation, positioned against the closed spreadsheet-database products.",
+   "punch": "The Airtable shape, self-hostable.",
+   "use": "Running a visual database you can host yourself."
+  },
+  "apitemplate-io": {
+   "desc": "Generates PDFs and images from reusable templates over an API, so document rendering is not something you build.",
+   "punch": "Templating as a service, because PDF generation is nobody's core work.",
+   "use": "Producing PDFs and images from an API call."
+  },
+  "applozic": {
+   "desc": "Chat and messaging SDKs. The site presents an expired or misconfigured certificate and would not load.",
+   "punch": "Unreachable: the certificate does not validate.",
+   "use": "Unavailable."
+  },
+  "artifactory": {
+   "desc": "A binary repository for every package format at once, plus containers and model artifacts, with retention and promotion policy.",
+   "punch": "One registry so you stop running six.",
+   "use": "Storing and promoting build artifacts across formats."
+  },
+  "aserto": {
+   "desc": "Fine-grained authorization as a service, so permission checks stop being scattered if-statements.",
+   "punch": "Pulls authorization out of the handlers.",
+   "use": "Adding role or relationship-based access control to an application."
+  },
+  "augment-code": {
+   "desc": "An agent platform aimed at the organisation rather than the individual engineer, which is where it draws its dividing line.",
+   "punch": "Argues the gap is organisational, not personal.",
+   "use": "Running coding agents with organisation-wide context and control."
+  },
+  "auth0": {
+   "desc": "Hosted identity: login, federation, multi-factor and the standards work nobody wants to implement twice.",
+   "punch": "Made buying authentication respectable.",
+   "use": "Adding login and identity to an application."
+  },
+  "autify": {
+   "desc": "Test automation aimed at quality teams rather than at engineers, with tests authored and maintained without code.",
+   "punch": "Written for the QA seat, not the IDE.",
+   "use": "Authoring end-to-end tests without writing code."
+  },
+  "autogen": {
+   "desc": "Microsoft's framework for multi-agent conversations, where agents pass work between each other under a defined protocol.",
+   "punch": "Made agents talking to agents a research programme.",
+   "use": "Building systems where several agents collaborate on a task."
+  },
+  "aws": {
+   "desc": "The cloud that set the vocabulary. Nearly everything else in this catalogue either runs on it or is defined against it.",
+   "punch": "Everyone else's baseline.",
+   "use": "Running essentially any workload on rented infrastructure."
+  },
+  "aws-cognito": {
+   "desc": "Amazon's managed identity for consumer applications, priced and scaled for very large user pools.",
+   "punch": "Identity, if you are already inside AWS.",
+   "use": "Managing customer sign-up and sign-in at scale."
+  },
+  "aws-step-functions": {
+   "desc": "Orchestrates AWS services as a state machine, so retries and failure branches are configuration rather than code.",
+   "punch": "The retry logic you keep rewriting, declared once.",
+   "use": "Coordinating serverless work into a durable workflow."
+  },
+  "azure": {
+   "desc": "Microsoft's cloud, strongest where an organisation already runs on Windows, Active Directory and Office.",
+   "punch": "Wins on what the enterprise already bought.",
+   "use": "Running cloud workloads inside a Microsoft estate."
+  },
+  "baremetrics": {
+   "desc": "Subscription analytics that reads the billing system and produces the revenue metrics from it.",
+   "punch": "Reads Stripe so nobody has to build the dashboard.",
+   "use": "Tracking recurring revenue, churn and expansion."
+  },
+  "base44": {
+   "desc": "Describes an application in plain language and produces a working one, hosting included.",
+   "punch": "Aimed at people who will never open the repository.",
+   "use": "Building a working app without writing code."
+  },
+  "bat": {
+   "desc": "A replacement for cat with syntax highlighting, line numbers and git markers, paged by default.",
+   "punch": "cat, if it had been written after colour existed.",
+   "use": "Reading a file in the terminal and being able to see it."
+  },
+  "bazaarvoice": {
+   "desc": "Collects consumer reviews and syndicates them across retailer and brand sites.",
+   "punch": "Distribution, not just collection.",
+   "use": "Running ratings and reviews across a retail network."
+  },
+  "beam": {
+   "desc": "Sandboxes, queues and model inference with fast cold starts, sold on how quickly a container becomes ready.",
+   "punch": "Competes on boot time.",
+   "use": "Running short-lived containers or model inference on demand."
+  },
+  "bearer": {
+   "desc": "Static analysis for security and privacy risk, focused on where sensitive data flows. Acquired by Cycode.",
+   "punch": "Absorbed: the page now belongs to the acquirer.",
+   "use": "Acquired by Cycode."
+  },
+  "bearer-cli": {
+   "desc": "The open-source scanner behind Bearer. Finds and ranks security and privacy risk in source, and still runs on its own.",
+   "punch": "The engine outlived the company page.",
+   "use": "Scanning source for security and privacy issues from the command line."
+  },
+  "beeceptor": {
+   "desc": "Mock API endpoints created in seconds, generated from a prompt or from captured traffic, across REST, GraphQL and gRPC.",
+   "punch": "A fake backend before the real one exists.",
+   "use": "Standing up a mock endpoint without deploying anything."
+  },
+  "better-stack": {
+   "desc": "Logs, metrics, traces, uptime and on-call in one product, sold against assembling four vendors.",
+   "punch": "One bill instead of the observability shopping list.",
+   "use": "Monitoring, alerting and paging from a single tool."
+  },
+  "bitdive": {
+   "desc": "Records real Java runtime behaviour and turns it into regression tests and review verdicts.",
+   "punch": "Tests written from what production actually did.",
+   "use": "Generating JUnit regression tests from observed behaviour."
+  },
+  "blackbox-ai": {
+   "desc": "Routes many models through one endpoint, or runs an open-weight model as a dedicated deployment.",
+   "punch": "Model choice as a runtime decision.",
+   "use": "Calling many models, or one private one, through a single API."
+  },
+  "blackfire-io": {
+   "desc": "Continuous profiling for PHP and other runtimes, aimed at finding the slow function rather than the slow request.",
+   "punch": "Profiles in production, not on a laptop.",
+   "use": "Finding performance bottlenecks in a running application."
+  },
+  "bolt-diy": {
+   "desc": "The open version of Bolt: prompt, run and edit full-stack applications in the browser against any model you choose.",
+   "punch": "Same idea, your model, your fork.",
+   "use": "Building web applications in the browser with a model of your choosing."
+  },
+  "bolt-new": {
+   "desc": "Builds and deploys full web applications from a prompt, running the whole toolchain in the browser.",
+   "punch": "No local environment at any point.",
+   "use": "Going from a description to a deployed site in one session."
+  },
+  "boxyhq-enterprise-sso": {
+   "desc": "Open-source SAML and OIDC single sign-on, so enterprise login is not a rewrite. The address now serves Ory.",
+   "punch": "The enterprise SSO checkbox, as a library.",
+   "use": "Adding enterprise SSO to a product that did not have it."
+  },
+  "braintree": {
+   "desc": "PayPal's payment platform for merchants who need cards, wallets and PayPal behind one integration.",
+   "punch": "PayPal's answer to being only PayPal.",
+   "use": "Accepting cards and wallets through one payment integration."
+  },
+  "brood-box": {
+   "desc": "Runs coding agents inside hardware-isolated microVMs, so an agent with shell access cannot reach the host.",
+   "punch": "Assumes the agent will do something you did not authorise.",
+   "use": "Sandboxing an autonomous agent away from your machine."
+  },
+  "browserless": {
+   "desc": "Hosted headless browsers for agents and scrapers, with stealth and authenticated sessions handled.",
+   "punch": "Someone else's problem when the browser crashes.",
+   "use": "Giving an agent a real browser it does not have to operate."
+  },
+  "bucket": {
+   "desc": "Feature flags for TypeScript, typed so a flag that does not exist fails at compile time.",
+   "punch": "Flags the compiler knows about.",
+   "use": "Rolling features out behind typed flags."
+  },
+  "builder-ai": {
+   "desc": "Assembled custom software from reusable parts. The site fails its TLS handshake and does not load.",
+   "punch": "Unreachable: the connection is refused at the handshake.",
+   "use": "Unavailable."
+  },
+  "builder-io-fusion": {
+   "desc": "Puts designers, engineers and marketers on one codebase, with visual edits landing as real code.",
+   "punch": "Removes the handoff by removing the second artefact.",
+   "use": "Editing a live product visually without forking the code."
+  },
+  "bump-sh": {
+   "desc": "Publishes API documentation from OpenAPI, with change detection between versions and MCP servers generated alongside.",
+   "punch": "Treats a spec change as an event worth announcing.",
+   "use": "Publishing and versioning API docs from a specification."
+  },
+  "burnd": {
+   "desc": "Parsed local agent session logs to find where the money went. The repository returns 404.",
+   "punch": "Gone: the repository is not there.",
+   "use": "Unavailable."
+  },
+  "butterfish": {
+   "desc": "Puts a model inside the shell itself, so the prompt and the terminal are the same prompt.",
+   "punch": "The assistant lives in the shell, not beside it.",
+   "use": "Getting model help without leaving the command line."
+  },
+  "bytebase": {
+   "desc": "Schema migration and change review for databases, with the same approval flow across twenty engines.",
+   "punch": "Code review, applied to the schema.",
+   "use": "Reviewing and applying database changes safely."
+  },
+  "bytescale": {
+   "desc": "File storage with image and video processing on the delivery path, so transforms are URL parameters.",
+   "punch": "The transform is a query string.",
+   "use": "Storing and serving processed media."
+  },
+  "camunda": {
+   "desc": "Process orchestration for long-running work that spans people, systems and now agents, with the model as the executable.",
+   "punch": "BPMN, still standing, now aimed at agents.",
+   "use": "Coordinating multi-step processes with humans in the loop."
+  },
+  "capacity": {
+   "desc": "Asks questions about an idea, then builds and hosts the application including accounts, payments and a domain.",
+   "punch": "Interviews you instead of taking a prompt.",
+   "use": "Producing a hosted application from a conversation."
+  },
+  "carbone": {
+   "desc": "Generates documents from templates and JSON: PDF, DOCX, XLSX and the rest of the office formats.",
+   "punch": "Report generation without a report server.",
+   "use": "Rendering business documents from application data."
+  },
+  "ccr": {
+   "desc": "A searchable shell history that is project-aware, synced and encrypted, replacing reverse search.",
+   "punch": "Because the command you want was three projects ago.",
+   "use": "Finding a command you ran once, months back."
+  },
+  "chakra-ui": {
+   "desc": "A React component system with accessibility and theming built into the primitives rather than layered on.",
+   "punch": "Accessible by construction, not by audit.",
+   "use": "Building a React interface from composable components."
+  },
+  "checkmarx": {
+   "desc": "Enterprise application security, combining several scan types and consolidating findings into one risk view.",
+   "punch": "Sold to the security organisation, not the developer.",
+   "use": "Scanning applications across an enterprise portfolio."
+  },
+  "checksum-ai": {
+   "desc": "Generates, runs and maintains end-to-end tests automatically, and claims to resolve most of its own failures.",
+   "punch": "Aimed at the maintenance cost, not the authoring cost.",
+   "use": "Keeping an end-to-end suite alive as the product changes."
+  },
+  "chromatic": {
+   "desc": "Visual, interaction and accessibility review for component libraries, built by the Storybook maintainers.",
+   "punch": "Review at the component, before it reaches a page.",
+   "use": "Catching UI regressions in a component library."
+  },
+  "clarifai": {
+   "desc": "Computer vision and model deployment APIs. The site timed out on every attempt.",
+   "punch": "Unreachable: the connection timed out.",
+   "use": "Unverified: the site would not answer."
+  },
+  "claude": {
+   "desc": "Anthropic's model family, and the one this catalogue's own tooling is written against.",
+   "punch": "The model behind a good deal of this list.",
+   "use": "Analysis, writing and code across long context."
+  },
+  "claude-desktop": {
+   "desc": "Claude as a desktop application, with MCP connections to local tools and files.",
+   "punch": "Where MCP stopped being a specification and became a menu.",
+   "use": "Connecting a model to local tools and data."
+  },
+  "claude-mcp-servers": {
+   "desc": "A directory of MCP servers. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "clerk": {
+   "desc": "Authentication with the interface components included, built for React and Next.js first.",
+   "punch": "Ships the login screen, not only the endpoint.",
+   "use": "Adding user accounts to a React application."
+  },
+  "clirank": {
+   "desc": "Scores APIs on how usable they are without a human: auth method, headless operation, pricing transparency.",
+   "punch": "Rates APIs for the machine, not the reader.",
+   "use": "Choosing an API an agent can actually operate."
+  },
+  "cloudinary": {
+   "desc": "Media storage with transformation and delivery, the long-standing default for images that must exist at twelve sizes.",
+   "punch": "The resize pipeline you did not have to write.",
+   "use": "Storing, transforming and delivering images and video."
+  },
+  "cloudsight": {
+   "desc": "Image recognition returning natural language descriptions rather than label sets.",
+   "punch": "Answers in sentences, not in tags.",
+   "use": "Describing the contents of an image."
+  },
+  "cloudsmith": {
+   "desc": "Managed package and container hosting with provenance and access control across formats.",
+   "punch": "A registry with an audit trail.",
+   "use": "Distributing packages and containers with controlled access."
+  },
+  "codachi": {
+   "desc": "A virtual pet that lives in the Claude Code status line and reacts to what you are doing.",
+   "punch": "Does nothing useful, on purpose.",
+   "use": "Putting a tamagotchi in your status line."
+  },
+  "code-intelligence-ci-fuzz": {
+   "desc": "Automated fuzz testing for C and C++ in CI. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "code-llama": {
+   "desc": "Meta's open-weight code model family, released with inference code and licence terms permitting commercial use.",
+   "punch": "Made a serious code model something you could download.",
+   "use": "Running a code model on hardware you control."
+  },
+  "codebase-recon": {
+   "desc": "Reads git history to understand a codebase before opening a single file, on the theory that the commits say more than the code.",
+   "punch": "Starts with the history, not the source.",
+   "use": "Orienting an agent in an unfamiliar repository."
+  },
+  "codecosts": {
+   "desc": "Compares the price of coding assistants side by side, with a calculator for seat and usage models.",
+   "punch": "The pricing page nobody vendor will write.",
+   "use": "Working out what an assistant actually costs per seat."
+  },
+  "codeflash": {
+   "desc": "Searches for a faster version of Python code and verifies the replacement still behaves identically before proposing it.",
+   "punch": "Optimisation with a correctness proof attached.",
+   "use": "Speeding up Python without changing what it does."
+  },
+  "codegeex": {
+   "desc": "An open multilingual code model and editor extension, developed largely outside the Western vendor set.",
+   "punch": "A reminder that this field is not only American.",
+   "use": "Completion from an open multilingual code model."
+  },
+  "codeium": {
+   "desc": "A free completion tool that became Windsurf and was then acquired. The address now serves Devin Desktop.",
+   "punch": "Absorbed: the URL now belongs to somebody else.",
+   "use": "Now served as Devin Desktop."
+  },
+  "codename-goose": {
+   "desc": "Block's open-source agent that installs, executes, edits and tests, against whatever model you point it at.",
+   "punch": "Extensible where most agents are opinionated.",
+   "use": "Running an open agent that can operate your machine."
+  },
+  "codeparrot": {
+   "desc": "A VS Code assistant narrowed to front-end components rather than to all code.",
+   "punch": "Picked one job instead of every job.",
+   "use": "Generating front-end components inside VS Code."
+  },
+  "codeql": {
+   "desc": "GitHub's query language for code. Treats a codebase as a database and a vulnerability class as a query you can write yourself.",
+   "punch": "Security findings you can express as a query.",
+   "use": "Writing custom static analysis for a specific bug class."
+  },
+  "codesquire": {
+   "desc": "A browser extension bringing completion to notebooks and query editors. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "codestral": {
+   "desc": "Mistral's code model, available through their platform and for local deployment under their licence.",
+   "punch": "Europe's entry in the code model race.",
+   "use": "Code completion and generation from a Mistral model."
+  },
+  "codex-infinity": {
+   "desc": "Runs long autonomous coding sessions in the cloud with orchestration across them.",
+   "punch": "Sells session length as the feature.",
+   "use": "Leaving an agent running on a task unattended."
+  },
+  "codspeed": {
+   "desc": "Continuous performance testing in CI, measuring instruction counts so results do not move with runner noise.",
+   "punch": "Benchmarks that survive a noisy CI machine.",
+   "use": "Catching a performance regression in a pull request."
+  },
+  "coframe": {
+   "desc": "Runs continuous optimisation on a live site, generating and testing interface variants without a person writing them.",
+   "punch": "A/B testing where the model writes the B.",
+   "use": "Automatically optimising site copy and layout for conversion."
+  },
+  "cognee": {
+   "desc": "Open-source memory for agents, combining graph, vector and relational retrieval so recall survives the session.",
+   "punch": "Memory as infrastructure, not as a longer prompt.",
+   "use": "Giving an agent state that persists between runs."
+  },
+  "commento": {
+   "desc": "A privacy-respecting embeddable comment system. The site returns 404.",
+   "punch": "Gone: the page is not there.",
+   "use": "Unavailable."
+  },
+  "configcat": {
+   "desc": "Feature flags priced per flag rather than per seat, which is an unusual position in this category.",
+   "punch": "Unlimited seats, which is the whole pitch.",
+   "use": "Toggling features without a deploy."
+  },
+  "contentful": {
+   "desc": "A headless CMS built for many channels at once, now positioning content as something agents consume as well as browsers.",
+   "punch": "Content as an API, from before that was obvious.",
+   "use": "Managing content delivered to several front ends."
+  },
+  "context7": {
+   "desc": "Pulls version-correct library documentation into a coding agent, so the answer matches the version you have installed.",
+   "punch": "Fixes the model citing an API that was removed two releases ago.",
+   "use": "Giving an agent current docs for the exact version in use."
+  },
+  "copilot-workspace": {
+   "desc": "GitHub's agentic environment, taking an issue through plan, edit and pull request inside the platform.",
+   "punch": "Starts at the issue, not at the file.",
+   "use": "Turning an issue into a reviewed pull request."
+  },
+  "copilotkit": {
+   "desc": "React components for putting agent interfaces into a product, plus the protocol underneath them.",
+   "punch": "The front end of agents, which most frameworks skip.",
+   "use": "Building an in-app agent interface."
+  },
+  "corbado": {
+   "desc": "Passkey rollout and analytics on top of an existing identity provider rather than in place of one.",
+   "punch": "Adds passkeys without replacing what you already run.",
+   "use": "Introducing passkeys to a large existing user base."
+  },
+  "corgea": {
+   "desc": "Finds, triages and fixes vulnerabilities across code, packages, infrastructure and containers.",
+   "punch": "Triage is the product; detection is table stakes.",
+   "use": "Turning a scanner backlog into applied fixes."
+  },
+  "corsfix": {
+   "desc": "A hosted CORS proxy for front-end code that needs a resource whose server will not send the header.",
+   "punch": "Solves a problem that should not exist, which is why it does.",
+   "use": "Fetching a third-party resource from the browser without CORS errors."
+  },
+  "coval": {
+   "desc": "Testing and evaluation for voice agents, covering the full path from simulation to production review.",
+   "punch": "Voice agents fail in ways a text test suite cannot see.",
+   "use": "Proving a voice agent behaves before it takes calls."
+  },
+  "cratedb": {
+   "desc": "A distributed SQL database for time series and real-time analytics at volumes a single node cannot hold.",
+   "punch": "SQL on top of a shape that usually forces you off SQL.",
+   "use": "Querying high-volume machine data in real time."
+  },
+  "crawlbase": {
+   "desc": "Crawling infrastructure with proxy rotation and blocking handled, sold as a data pipeline rather than a library.",
+   "punch": "Sells the part of scraping that is actually hard.",
+   "use": "Extracting web data at volume without fighting blocks."
+  },
+  "create-xyz": {
+   "desc": "Turns a description into a working application, aimed at people who will not open a terminal.",
+   "punch": "The prompt is the entire interface.",
+   "use": "Building an app or site by describing it."
+  },
+  "crewai": {
+   "desc": "A framework for agents with defined roles that hand work between each other, plus a runtime for operating them.",
+   "punch": "Modelled on a team, down to the job titles.",
+   "use": "Running several role-based agents on one process."
+  },
+  "cron": {
+   "desc": "A calendar built for keyboard speed and scheduling across time zones. Acquired by Notion.",
+   "punch": "A calendar that treats time zones as a first-class problem.",
+   "use": "Scheduling across time zones without arithmetic."
+  },
+  "cronai": {
+   "desc": "Scheduled jobs with a model in the loop, so a recurring task can make a judgement rather than only fire.",
+   "punch": "cron, if the job could decide something.",
+   "use": "Running recurring work that needs a decision each time."
+  },
+  "cursor-mcp-directory": {
+   "desc": "A community index of MCP servers and plugins usable from Cursor.",
+   "punch": "The plugin list, before there was a plugin list.",
+   "use": "Finding an MCP server to connect to an editor."
+  },
+  "cycle-io": {
+   "desc": "A control plane that provisions infrastructure and runs distributed applications without requiring an operations team.",
+   "punch": "Aimed at teams too small to hire a platform engineer.",
+   "use": "Running containers across servers without building a platform."
+  },
+  "cypress": {
+   "desc": "Browser testing that runs inside the page, giving direct access to application state during a test.",
+   "punch": "Ran in the browser when everyone else drove it from outside.",
+   "use": "Writing front-end tests with the app's own internals in reach."
+  },
+  "daily-dev": {
+   "desc": "A news feed for developers, personalised, replacing the browser new tab page.",
+   "punch": "Occupies the tab you open by accident.",
+   "use": "Keeping up with development news without hunting for it."
+  },
+  "databutton": {
+   "desc": "Listed as an app-building agent. The address now serves Riff, a procurement and logistics product.",
+   "punch": "The domain moved on to a different business.",
+   "use": "Now serves an unrelated product."
+  },
+  "datadog": {
+   "desc": "Metrics, logs, traces and a great deal more in one platform. The default answer for large-scale monitoring, and priced like it.",
+   "punch": "You will find everything, and you will find the bill.",
+   "use": "Monitoring infrastructure and applications in one place."
+  },
+  "datocms": {
+   "desc": "A headless CMS with a strong editorial interface and a GraphQL API built for performance budgets.",
+   "punch": "Built for the editor as much as the developer.",
+   "use": "Managing content for a performance-sensitive front end."
+  },
+  "dbforge-ai-assistant": {
+   "desc": "Writes, explains and optimises SQL inside a database IDE rather than in a chat window.",
+   "punch": "Model help where the query plan is.",
+   "use": "Writing and tuning SQL inside a database tool."
+  },
+  "dbt": {
+   "desc": "Transformation as version-controlled SQL with tests and lineage. Turned analytics work into software engineering.",
+   "punch": "Brought code review to the warehouse.",
+   "use": "Building tested, documented data models in SQL."
+  },
+  "debuggai": {
+   "desc": "Exercises a web application the way a user would and reports what breaks, with no test code written.",
+   "punch": "Testing without a test suite.",
+   "use": "Finding bugs in a web app without authoring tests."
+  },
+  "deepseek-coder": {
+   "desc": "An open-weight code model that closed much of the gap to proprietary systems, released with weights and paper.",
+   "punch": "The release that made 'open weights are behind' harder to say.",
+   "use": "Running a strong code model on your own hardware."
+  },
+  "deepsite": {
+   "desc": "Builds and deploys websites from a description, hosted on open model infrastructure.",
+   "punch": "Site generation on open weights.",
+   "use": "Producing a hosted site from a prompt."
+  },
+  "deepsource": {
+   "desc": "Automated review and static analysis positioned around the volume of machine-written code now reaching pull requests.",
+   "punch": "Aimed at the review queue, which is where the new bottleneck is.",
+   "use": "Automating code review across repositories."
+  },
+  "deployhq": {
+   "desc": "Deploys from a git host to servers with build steps, zero-downtime releases and one-click rollback.",
+   "punch": "Deployment for the estate that is not on Kubernetes.",
+   "use": "Deploying a site to servers straight from a repository."
+  },
+  "deployramp": {
+   "desc": "Wraps risky pull requests in feature flags, rolls them out gradually while watching errors, then removes the flag.",
+   "punch": "Automates the flag you were going to forget to delete.",
+   "use": "Releasing risky changes progressively without manual flag work."
+  },
+  "depot": {
+   "desc": "Remote build infrastructure with persistent caching, aimed at container and CI builds that repeat most of their work.",
+   "punch": "Sells the cache, which is where the time actually goes.",
+   "use": "Making container and CI builds faster."
+  },
+  "devactivity": {
+   "desc": "Analytics over engineering activity, producing contribution and delivery metrics from repository data.",
+   "punch": "Measures the team, which is always contentious.",
+   "use": "Reporting on engineering delivery from git data."
+  },
+  "developerhub": {
+   "desc": "Hosted documentation for product docs, knowledge bases and API reference.",
+   "punch": "Documentation hosting without building a site.",
+   "use": "Publishing product and API documentation."
+  },
+  "devin-ai": {
+   "desc": "An autonomous software engineer running parallel cloud agents. The company that set expectations for this category, and absorbed two competitors.",
+   "punch": "Defined the category, then bought the competition.",
+   "use": "Assigning engineering work to cloud agents."
+  },
+  "devon": {
+   "desc": "An open agent for autonomous coding. The site timed out on every attempt.",
+   "punch": "Unreachable: the connection timed out.",
+   "use": "Unverified: the site would not answer."
+  },
+  "diagramgpt": {
+   "desc": "Generates architecture and sequence diagrams from a text description, from the Eraser team.",
+   "punch": "Diagrams without opening a drawing tool.",
+   "use": "Producing a diagram from a written description."
+  },
+  "dialogflow": {
+   "desc": "Google's conversational agent platform, now running on Gemini, with the older intent model still underneath.",
+   "punch": "Survived the shift from intents to models.",
+   "use": "Building conversational agents on Google's stack."
+  },
+  "diffblue-cover": {
+   "desc": "Writes Java unit tests by reinforcement learning against the code, verifying each one compiles and passes before proposing it.",
+   "punch": "Not a language model, which is the point it makes.",
+   "use": "Generating verified unit tests for large Java codebases."
+  },
+  "digital-ocean-app-platform": {
+   "desc": "DigitalOcean's managed application hosting, deploying from a repository without cluster management.",
+   "punch": "The simple tier of a simple cloud.",
+   "use": "Deploying an app without touching servers."
+  },
+  "digital-toolpad": {
+   "desc": "Ninety-odd small utilities for PDF, image, text and JSON that run entirely in the browser, with nothing uploaded.",
+   "punch": "Local by construction, which is unusual for this genre.",
+   "use": "Converting or inspecting a file without sending it anywhere."
+  },
+  "digitalocean": {
+   "desc": "A cloud that competed on comprehensible pricing and documentation rather than on breadth, now pushing inference too.",
+   "punch": "Won developers by being possible to understand.",
+   "use": "Running servers and managed services with predictable pricing."
+  },
+  "directus": {
+   "desc": "Wraps an existing SQL database with an admin interface and REST, GraphQL and MCP APIs, without owning the schema.",
+   "punch": "Points at your database instead of replacing it.",
+   "use": "Putting an admin panel and API over a database you already have."
+  },
+  "docker": {
+   "desc": "Made the container image a unit of distribution. The reason a build on one machine runs on another.",
+   "punch": "Changed what 'it works on my machine' even means.",
+   "use": "Packaging an application so it runs the same anywhere."
+  },
+  "docraptor": {
+   "desc": "HTML to PDF over an API with proper CSS Paged Media support, which most converters do badly.",
+   "punch": "Takes page breaks seriously, which is the whole difficulty.",
+   "use": "Rendering print-quality PDFs from HTML."
+  },
+  "docusaurus": {
+   "desc": "Meta's React documentation site generator, with versioning and search built in.",
+   "punch": "The default for open-source docs, largely by being there first.",
+   "use": "Publishing versioned project documentation."
+  },
+  "docusign": {
+   "desc": "Electronic signature, with an API for embedding the agreement step into a product.",
+   "punch": "The signature is a workflow, not a file.",
+   "use": "Collecting legally binding signatures inside an application."
+  },
+  "docuwriter-ai": {
+   "desc": "Generates structured documentation for a whole codebase from the repository itself.",
+   "punch": "Documents what is there, not what was intended.",
+   "use": "Producing documentation for an undocumented codebase."
+  },
+  "doppler": {
+   "desc": "Secret management that syncs into every environment and runtime, so configuration stops living in a shared file.",
+   "punch": "Kills the .env everyone emailed each other.",
+   "use": "Distributing secrets across environments and services."
+  },
+  "durable": {
+   "desc": "Generates a small business website with marketing and customer tools attached.",
+   "punch": "Aimed at the trade, not the developer.",
+   "use": "Getting a small business online quickly."
+  },
+  "dyad-sh": {
+   "desc": "An open-source desktop app builder that runs locally against any model, with the code staying yours.",
+   "punch": "Local, open, and explicit about lock-in.",
+   "use": "Building full-stack apps on your own machine with your own model."
+  },
+  "dyte": {
+   "desc": "Real-time audio and video as a toolkit, so live features do not require running media infrastructure.",
+   "punch": "Video calling without meeting WebRTC.",
+   "use": "Embedding voice and video into an application."
+  },
+  "easypost": {
+   "desc": "One API across many carriers for rates, labels and tracking.",
+   "punch": "Abstracts the carriers, who all disagree.",
+   "use": "Buying and tracking parcel shipments programmatically."
+  },
+  "ellipsis": {
+   "desc": "Runs managed agents defined as config files in your repository, reviewing pull requests and building features.",
+   "punch": "The agent's configuration is reviewed like any other code.",
+   "use": "Running repository-defined agents on pull requests."
+  },
+  "embold": {
+   "desc": "Static analysis focused on structural technical debt and anti-patterns rather than only on defects.",
+   "punch": "Measures the shape of the codebase, not only its bugs.",
+   "use": "Tracking technical debt across a codebase."
+  },
+  "encore": {
+   "desc": "Infers infrastructure from application code, so the cloud resources come from what the program declares it needs.",
+   "punch": "The application describes its own infrastructure.",
+   "use": "Shipping backend services without writing Terraform."
+  },
+  "endor-labs": {
+   "desc": "Application security aimed at reachability: whether a vulnerable function is actually called, not only present.",
+   "punch": "Answers whether the vulnerability is reachable.",
+   "use": "Cutting dependency findings down to the ones that matter."
+  },
+  "envkey": {
+   "desc": "End-to-end encrypted environment and secret syncing. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "eslint": {
+   "desc": "The pluggable JavaScript linter. Its rule set became the medium teams argue about style in.",
+   "punch": "Where JavaScript conventions are actually written down.",
+   "use": "Enforcing code style and catching errors in JavaScript."
+  },
+  "exa": {
+   "desc": "A modern ls with colours, icons and git awareness. The site timed out; the project is now maintained as eza.",
+   "punch": "Superseded by a fork that kept going.",
+   "use": "Unverified: the site would not answer."
+  },
+  "export-sdk": {
+   "desc": "PDF generation with a template editor, an API and no-code integrations.",
+   "punch": "Design the document, then call it.",
+   "use": "Producing PDFs from a designed template."
+  },
+  "factory": {
+   "desc": "Agents, called Droids, that carry work across coding, testing and deployment rather than stopping at the diff.",
+   "punch": "Names its agents, which tells you the intended relationship.",
+   "use": "Automating engineering tasks end to end."
+  },
+  "fern": {
+   "desc": "Generates SDKs and documentation from an API specification, so client libraries are output rather than maintenance.",
+   "punch": "The SDK stops being a repository somebody owns.",
+   "use": "Producing client libraries and docs from OpenAPI."
+  },
+  "fernand": {
+   "desc": "Customer support software built for speed and keyboard use, aimed at SaaS teams.",
+   "punch": "Support software that respects the agent's hands.",
+   "use": "Running a support inbox without a heavyweight helpdesk."
+  },
+  "fiberplane": {
+   "desc": "Tooling for operating and observing agent systems, from a team that previously built collaborative incident notebooks.",
+   "punch": "Control plane thinking, applied to agents.",
+   "use": "Building and observing agent-driven software work."
+  },
+  "fig": {
+   "desc": "Brought IDE-style autocomplete to the terminal. Acquired by Amazon and folded into Amazon Q. The site returns a server error.",
+   "punch": "Absorbed: the work continues under another name.",
+   "use": "Superseded by Amazon Q Developer CLI."
+  },
+  "figma": {
+   "desc": "The design tool that moved interface work into the browser and made multiplayer editing the default.",
+   "punch": "Killed the design file as a thing you email.",
+   "use": "Designing interfaces collaboratively."
+  },
+  "figma-ai": {
+   "desc": "Model features inside Figma for search, generation and the repetitive parts of design work.",
+   "punch": "Aimed at the busywork, not the concept.",
+   "use": "Speeding up design tasks inside Figma."
+  },
+  "firebase": {
+   "desc": "Google's mobile and web backend: realtime data, auth, hosting and functions with client SDKs.",
+   "punch": "Made backendless development a real option.",
+   "use": "Building an app with no server of your own."
+  },
+  "firebase-auth": {
+   "desc": "Firebase's authentication, including federated providers and phone sign-in, usable without the rest of the suite.",
+   "punch": "The part of Firebase people adopt on its own.",
+   "use": "Adding sign-in to a mobile or web app."
+  },
+  "flagsmith": {
+   "desc": "Open-source feature flags with segmentation, available hosted, private cloud or on-premise.",
+   "punch": "Flags you can run inside your own network.",
+   "use": "Managing feature flags without a third party holding them."
+  },
+  "flatfile": {
+   "desc": "Handles the customer data import: extraction, mapping, validation and the mess in the spreadsheet they sent.",
+   "punch": "Owns the worst part of onboarding.",
+   "use": "Importing messy customer data into a product."
+  },
+  "fleet": {
+   "desc": "JetBrains' distributed editor, using the IntelliJ engine but separating the interface from where the code is processed.",
+   "punch": "JetBrains' answer to the editor being somewhere else.",
+   "use": "Editing locally or remotely with full language intelligence."
+  },
+  "flutterflow": {
+   "desc": "Visual development for Flutter, producing real Dart that can be exported and taken away.",
+   "punch": "Visual building that gives the source back.",
+   "use": "Building Flutter applications visually."
+  },
+  "fly-io": {
+   "desc": "Runs applications and now agent sandboxes close to users, with virtual machines rather than shared containers.",
+   "punch": "Gives the agent a whole computer.",
+   "use": "Running workloads near users, or giving an agent a machine."
+  },
+  "flyway": {
+   "desc": "Versioned database migrations. Plain SQL files with an order and a checksum, which is most of the problem solved.",
+   "punch": "Migration as a numbered file, and that is enough.",
+   "use": "Applying database schema changes in a known order."
+  },
+  "forge": {
+   "desc": "Generates full-stack applications from a description, with verification in the loop rather than a debugging cycle.",
+   "punch": "Claims to check its own output before handing it over.",
+   "use": "Producing a working full-stack application from a description."
+  },
+  "formspree": {
+   "desc": "A form backend for static sites, so an HTML form can submit without any server behind it.",
+   "punch": "The one server a static site still needed.",
+   "use": "Accepting form submissions from a site with no backend."
+  },
+  "framer-ai": {
+   "desc": "Generates editable pages inside Framer, with the design canvas and publishing already there.",
+   "punch": "Generation into a design tool, not into a repository.",
+   "use": "Producing a publishable site that a designer can still edit."
+  },
+  "freepik": {
+   "desc": "Stock assets and generative image tools for design work. The site refused an automated request.",
+   "punch": "Stock imagery, now generated as well as licensed.",
+   "use": "Sourcing or generating design assets."
+  },
+  "frigade": {
+   "desc": "In-product onboarding and adoption flows that learn the product rather than being scripted screen by screen.",
+   "punch": "Onboarding without hard-coding the tour.",
+   "use": "Guiding users through a product in-app."
+  },
+  "fusionauth": {
+   "desc": "Full identity and user management, downloadable and self-hostable with no per-user pricing pressure.",
+   "punch": "Auth you can run on your own hardware and read the source of.",
+   "use": "Running authentication entirely inside your own infrastructure."
+  },
+  "future-agi": {
+   "desc": "Evaluation and observability for agents, aimed at diagnosing why a run failed rather than only that it did.",
+   "punch": "Debugging for systems with no stack trace.",
+   "use": "Finding out why an agent produced the wrong answer."
+  },
+  "fzf": {
+   "desc": "A general-purpose fuzzy finder that composes with any command producing lines. One of the most-copied ideas in terminal tooling.",
+   "punch": "A filter so good it became a keybinding everywhere.",
+   "use": "Selecting interactively from any list in the shell."
+  },
+  "gecko-security": {
+   "desc": "Security analysis that reasons about a codebase as a whole rather than matching patterns file by file.",
+   "punch": "Argues that context is what pattern matching lacks.",
+   "use": "Finding vulnerabilities that need whole-codebase understanding."
+  },
+  "gemini": {
+   "desc": "Google's model family, with very long context and native multimodal input.",
+   "punch": "Competes on how much you can put in.",
+   "use": "Reasoning over long documents, code and mixed media."
+  },
+  "gemini-cli": {
+   "desc": "Google's open-source terminal agent, putting Gemini in the shell with tool access.",
+   "punch": "Google's entry in the terminal agent race, open sourced.",
+   "use": "Running a Gemini-backed agent from the command line."
+  },
+  "geonode": {
+   "desc": "Residential proxy network and scraper API sold on transparent per-gigabyte pricing.",
+   "punch": "Competes on price clarity in a market that avoids it.",
+   "use": "Routing scraping traffic through residential addresses."
+  },
+  "ghost": {
+   "desc": "Open-source publishing with newsletters and paid subscriptions built in, run by a non-profit foundation.",
+   "punch": "The blog that comes with a business model.",
+   "use": "Publishing a site with paid subscriptions attached."
+  },
+  "git-ai": {
+   "desc": "A git extension that records which parts of a repository were machine-generated.",
+   "punch": "Makes provenance a property of the commit.",
+   "use": "Tracking how much of a codebase an agent wrote."
+  },
+  "git-parsec": {
+   "desc": "Manages git worktrees from ticket to pull request, built for running several agent workflows in parallel.",
+   "punch": "Worktrees as the unit of parallel agent work.",
+   "use": "Running several agents on one repository without collisions."
+  },
+  "gitbook": {
+   "desc": "A documentation platform with docs-as-code support that also answers user questions and reports what is missing.",
+   "punch": "Reports the gaps as well as hosting the pages.",
+   "use": "Publishing documentation and learning what readers cannot find."
+  },
+  "gitbook-ai": {
+   "desc": "GitBook's AI features, listed as a separate product. That page now returns 404.",
+   "punch": "Folded into the main product.",
+   "use": "Now part of GitBook itself."
+  },
+  "github-actions": {
+   "desc": "CI that lives in the repository it builds. Workflows are YAML in the tree, and the marketplace supplies the steps.",
+   "punch": "Won CI by already being where the code was.",
+   "use": "Running builds, tests and deployments on repository events."
+  },
+  "github-copilot-cli": {
+   "desc": "Copilot inside GitHub's command line tool, for the parts of the workflow that never leave the terminal.",
+   "punch": "The assistant, where gh already was.",
+   "use": "Getting model help while working with GitHub from the shell."
+  },
+  "gitlab": {
+   "desc": "Source control, CI, registry, security scanning and issue tracking as one application rather than as an assembled toolchain.",
+   "punch": "Argues the whole toolchain should be one product.",
+   "use": "Running the entire delivery pipeline in one place."
+  },
+  "gitlab-ai": {
+   "desc": "GitLab's AI features, listed separately. That page now returns 404 and the capability sits inside the main product.",
+   "punch": "Folded into the main product.",
+   "use": "Now part of GitLab itself."
+  },
+  "glide": {
+   "desc": "Builds internal business software from a spreadsheet, a file or a prompt, aimed at operations teams rather than engineers.",
+   "punch": "The spreadsheet becomes the application.",
+   "use": "Turning existing data into an internal tool."
+  },
+  "gocodeo": {
+   "desc": "An agent inside the editor that builds, questions and tests, sold on producing code that is ready rather than illustrative.",
+   "punch": "Insists on the test step.",
+   "use": "Building and testing features inside the IDE."
+  },
+  "google-antigravity": {
+   "desc": "Google's agent-first development platform, with browser control and multi-agent orchestration.",
+   "punch": "Google's second answer, after Code Assist.",
+   "use": "Running orchestrated agents with browser access."
+  },
+  "google-cloud-platform": {
+   "desc": "Google's cloud. Strongest in data, machine learning and the parts of Kubernetes it originally wrote.",
+   "punch": "Wrote Kubernetes, then had to compete on everything else.",
+   "use": "Running data and machine learning workloads at scale."
+  },
+  "google-code-assist": {
+   "desc": "Gemini-backed completion and chat wired into Google Cloud's own services and consoles.",
+   "punch": "An assistant that already knows your project ID.",
+   "use": "Coding assistance inside a Google Cloud environment."
+  },
+  "google-drive-memyard": {
+   "desc": "A public Google Drive index published as a repository. A listing artefact rather than a developer tool.",
+   "punch": "Ended up in the catalogue by being a link.",
+   "use": "Browsing a shared Drive index."
+  },
+  "google-vision-ai": {
+   "desc": "Pre-trained image and video recognition APIs: labels, text, faces and objects without training a model.",
+   "punch": "Vision without a training run.",
+   "use": "Extracting labels and text from images."
+  },
+  "gpt-engineer": {
+   "desc": "An early experiment in generating whole codebases from a prompt. It became Lovable, and says so on its own repository.",
+   "punch": "The prototype that turned into a company.",
+   "use": "Superseded by Lovable."
+  },
+  "gpt-5": {
+   "desc": "OpenAI's frontier model line. The catalogue entry points at the company rather than at a product page.",
+   "punch": "The entry is a company, not a tool.",
+   "use": "General reasoning, writing and code."
+  },
+  "gpt4all": {
+   "desc": "Runs open models locally on ordinary hardware, with a desktop application rather than a command line.",
+   "punch": "Local models for people who will not compile anything.",
+   "use": "Running a model on your own machine with no cloud."
+  },
+  "gptutor": {
+   "desc": "A VS Code extension that explains code rather than writing it, aimed at reading unfamiliar sources.",
+   "punch": "Explains instead of generating, which is rarer.",
+   "use": "Understanding code you did not write."
+  },
+  "greptile": {
+   "desc": "Pull request review with an index of the whole repository behind it, so comments can reference code outside the diff.",
+   "punch": "Reviews the diff against the codebase, not against itself.",
+   "use": "Automated review that understands the surrounding code."
+  },
+  "growthbook": {
+   "desc": "Open-source experimentation and feature flags that run against the data warehouse rather than a vendor's event store.",
+   "punch": "Experiments where your data already lives.",
+   "use": "Running A/B tests on warehouse data."
+  },
+  "hackerone-code": {
+   "desc": "Continuous secure code review from a company whose main business is paying people to break software.",
+   "punch": "Backed by an actual bug bounty population.",
+   "use": "Reviewing code for security inside the development workflow."
+  },
+  "hanko": {
+   "desc": "Open-source passkey and passwordless authentication, self-hostable, with the data staying yours.",
+   "punch": "Passkeys without handing identity to a vendor.",
+   "use": "Adding passkeys and second factors to an application."
+  },
+  "harness": {
+   "desc": "A delivery platform covering pipelines, feature flags, cost and verification, with automated rollback on bad deploys.",
+   "punch": "Tries to own everything between commit and production.",
+   "use": "Managing the whole software delivery lifecycle."
+  },
+  "haystack": {
+   "desc": "Modular building blocks for retrieval and agent pipelines, aimed at production rather than at demonstrations.",
+   "punch": "Components, not a framework that owns your program.",
+   "use": "Assembling a retrieval or agent pipeline that has to run in production."
+  },
+  "heap": {
+   "desc": "Analytics that captures every interaction automatically, so questions can be asked about events nobody thought to instrument.",
+   "punch": "Records first, decides what mattered later.",
+   "use": "Answering product questions you did not instrument for."
+  },
+  "helicone-ai": {
+   "desc": "A proxy in front of model calls that records cost, latency and content, and routes between providers.",
+   "punch": "One line of config to find out what the models cost.",
+   "use": "Monitoring and routing model API traffic."
+  },
+  "helium-mcp": {
+   "desc": "An MCP server for news with bias scoring. The repository returns 404.",
+   "punch": "Gone: the repository is not there.",
+   "use": "Unavailable."
+  },
+  "heroku": {
+   "desc": "The platform that invented the modern deploy: push a branch, get a running application. Everything after it is a reaction.",
+   "punch": "Defined the category, then lost it on price.",
+   "use": "Running an application without managing infrastructure."
+  },
+  "heybounce": {
+   "desc": "Email validation before sending, protecting sender reputation from hard bounces.",
+   "punch": "Cheaper than the reputation damage.",
+   "use": "Checking an address is real before you mail it."
+  },
+  "highlight-io": {
+   "desc": "Open-source session replay and error monitoring. The address now serves LaunchDarkly.",
+   "punch": "Absorbed: the URL now belongs to somebody else.",
+   "use": "Now served by LaunchDarkly."
+  },
+  "hive-intelligence": {
+   "desc": "Connects an agent to live cryptocurrency market data, with the source of each answer attached.",
+   "punch": "Shows its working, which most data APIs do not.",
+   "use": "Giving an agent real market numbers rather than guesses."
+  },
+  "hopp": {
+   "desc": "Screen sharing and remote control built for pair programming, with latency and text clarity as the priorities.",
+   "punch": "Built by people who tried to pair over a meeting tool.",
+   "use": "Pairing remotely without unreadable text."
+  },
+  "horizon-ui": {
+   "desc": "A component boilerplate with generative UI pieces included. The site returned a payment-required error.",
+   "punch": "A starting template, not a framework.",
+   "use": "Unverified: the site would not answer."
+  },
+  "hunter-io": {
+   "desc": "Finds and verifies professional email addresses from a domain, one of the older tools in this category.",
+   "punch": "The incumbent everyone else is compared to.",
+   "use": "Finding a contact address at a company."
+  },
+  "hypertune": {
+   "desc": "Feature flags and configuration with generated TypeScript types, so a flag is checked by the compiler.",
+   "punch": "Configuration the type system can see.",
+   "use": "Managing flags and config in a typed codebase."
+  },
+  "image-charts": {
+   "desc": "Renders charts as images from a URL, for emails and PDFs where JavaScript cannot run.",
+   "punch": "Charts for the places a chart library cannot go.",
+   "use": "Embedding a chart in an email or report."
+  },
+  "imagekit": {
+   "desc": "Real-time image and video optimisation with a digital asset manager attached.",
+   "punch": "Delivery and library in one product.",
+   "use": "Storing, transforming and delivering media."
+  },
+  "imgix": {
+   "desc": "Image processing and delivery driven by URL parameters, one of the earliest to work this way.",
+   "punch": "Made the URL the image editor.",
+   "use": "Serving optimised images without a build step."
+  },
+  "imitate-email": {
+   "desc": "Captures outbound mail in development so a test run cannot reach a real inbox.",
+   "punch": "Stops the staging environment emailing your customers.",
+   "use": "Testing transactional email safely."
+  },
+  "increase": {
+   "desc": "An API-first bank for technology companies, giving direct access to payment rails rather than a wrapper over one.",
+   "punch": "A bank with an API, not an API over a bank.",
+   "use": "Building financial products on direct rail access."
+  },
+  "infisical": {
+   "desc": "Open-source secret and identity management covering people, machines and agents, self-hostable.",
+   "punch": "Secrets for the machines as well as the staff.",
+   "use": "Managing secrets and machine identities in one place."
+  },
+  "infracost": {
+   "desc": "Shows the cost of an infrastructure change in the pull request, before it is applied.",
+   "punch": "Puts the invoice in the diff.",
+   "use": "Seeing what a Terraform change will cost before merging."
+  },
+  "instatus": {
+   "desc": "Status pages and incident communication, fast to set up and fast to load when everything else is down.",
+   "punch": "The page that must stay up when nothing else does.",
+   "use": "Telling customers about an incident."
+  },
+  "intelli-shell": {
+   "desc": "Command completion and a searchable library of commands in the shell, working like editor IntelliSense.",
+   "punch": "Autocomplete for the shell, from outside a vendor.",
+   "use": "Recalling and completing commands you use rarely."
+  },
+  "intellij-idea": {
+   "desc": "JetBrains' Java and Kotlin IDE. Its static analysis and refactoring engine set the standard the rest of the field measures against.",
+   "punch": "Still the deepest understanding of a codebase in any editor.",
+   "use": "Serious Java and Kotlin development."
+  },
+  "interval": {
+   "desc": "Built internal tools as plain server-side code. The address now serves an unrelated networking company.",
+   "punch": "The domain moved on to a different business.",
+   "use": "Now serves an unrelated product."
+  },
+  "jamsocket": {
+   "desc": "A backend for session-based applications and sync engines. Joining Modal.",
+   "punch": "Absorbed: the team is moving to Modal.",
+   "use": "Acquired by Modal."
+  },
+  "jan": {
+   "desc": "An open-source desktop client that runs local models or connects to hosted ones, with the same interface for both.",
+   "punch": "Local and cloud behind one window.",
+   "use": "Running open models on a laptop with a real interface."
+  },
+  "jenkins": {
+   "desc": "The open-source automation server that most of the industry's CI ran on, and much of it still does.",
+   "punch": "Older than most of this list, still deployed everywhere.",
+   "use": "Running builds and deployments on your own infrastructure."
+  },
+  "jenkins-x": {
+   "desc": "Opinionated Kubernetes-native CI/CD built on Jenkins. The domain now serves unrelated content.",
+   "punch": "The domain moved on.",
+   "use": "Now serves unrelated content."
+  },
+  "jest": {
+   "desc": "The JavaScript test runner that bundled assertions, mocking, snapshots and coverage into one install.",
+   "punch": "Made testing JavaScript a single dependency.",
+   "use": "Running unit tests in a JavaScript project."
+  },
+  "jetbrains-qodana": {
+   "desc": "Takes the inspections from JetBrains IDEs and runs them in CI, so the pipeline enforces what the editor suggests.",
+   "punch": "The editor's warnings, made blocking.",
+   "use": "Running IDE-grade static analysis in a pipeline."
+  },
+  "jfrog-xray": {
+   "desc": "Scans artifacts in the repository for open-source risk, with lineage across the build chain.",
+   "punch": "Scans the artifact, not only the manifest.",
+   "use": "Finding vulnerable dependencies inside built artifacts."
+  },
+  "json-viewer": {
+   "desc": "A browser tool for reading, validating and formatting large JSON without an editor.",
+   "punch": "For the payload too big to paste into a terminal.",
+   "use": "Inspecting a large JSON document quickly."
+  },
+  "jsonfix": {
+   "desc": "Repairs malformed JSON, which is a common problem when the producer was a language model.",
+   "punch": "Exists because models emit not-quite-JSON.",
+   "use": "Fixing JSON that will not parse."
+  },
+  "junieai": {
+   "desc": "JetBrains' agent that planned, wrote and tested inside their IDEs. That address now returns 404 and the feature sits inside the IDEs.",
+   "punch": "Folded into the IDEs it lived in.",
+   "use": "Now part of the JetBrains IDEs."
+  },
+  "jupyter-ai": {
+   "desc": "Model assistance inside JupyterLab, where the notebook cell is the unit rather than the file.",
+   "punch": "Meets data work where it already happens.",
+   "use": "Getting model help inside a notebook."
+  },
+  "katalon-studio": {
+   "desc": "Test management and automation for web, mobile, API and desktop in one platform, aimed at QA organisations.",
+   "punch": "Covers desktop, which almost nothing else does.",
+   "use": "Running one test platform across four kinds of application."
+  },
+  "keenio": {
+   "desc": "Managed event streaming on Kafka, so analytics events can be collected without operating a cluster.",
+   "punch": "Kafka, without the cluster.",
+   "use": "Collecting and streaming product events."
+  },
+  "keyhippo": {
+   "desc": "Extends Postgres row-level security to cover API key authentication, keeping authorization in the database.",
+   "punch": "Auth stays in the place that holds the data.",
+   "use": "Issuing API keys enforced by Postgres itself."
+  },
+  "kinde": {
+   "desc": "Authentication, access management and billing together, on the argument that a SaaS needs all three on day one.",
+   "punch": "Bundles the two things every SaaS builds twice.",
+   "use": "Adding auth and subscription billing at once."
+  },
+  "kinsta": {
+   "desc": "Managed WordPress and application hosting on Google's infrastructure, sold on performance and support.",
+   "punch": "Premium WordPress hosting, priced accordingly.",
+   "use": "Hosting WordPress without operating it."
+  },
+  "kiro": {
+   "desc": "Turns prompts into executable specifications, then checks the code against them, rather than generating and hoping.",
+   "punch": "Writes the spec first, which is the unusual part.",
+   "use": "Building from a specification an agent can verify against."
+  },
+  "kite": {
+   "desc": "An early completion product that shut down and open-sourced its work. The domain is listed for sale.",
+   "punch": "Gone: the domain is for sale.",
+   "use": "Unavailable."
+  },
+  "knock": {
+   "desc": "Notification infrastructure: templates, preferences, batching and delivery across channels.",
+   "punch": "The notification system nobody wants to build twice.",
+   "use": "Sending cross-channel product notifications."
+  },
+  "kombai": {
+   "desc": "Generates front-end code from designs, aiming at production markup rather than an approximation of the layout.",
+   "punch": "Design to code, judged on the code.",
+   "use": "Turning a design into shippable front-end code."
+  },
+  "koyeb": {
+   "desc": "Serverless deployment across CPUs, GPUs and accelerators in many regions, without cluster management.",
+   "punch": "GPUs without a Kubernetes cluster.",
+   "use": "Deploying compute-heavy services close to users."
+  },
+  "kubernetes": {
+   "desc": "The container orchestrator that became the industry's default substrate, and the reason platform engineering is a job.",
+   "punch": "Won, and created an entire economy of things to make it bearable.",
+   "use": "Scheduling and scaling containers across machines."
+  },
+  "kushoai": {
+   "desc": "Agents that live in CI and handle testing, self-healing and monitoring rather than being invoked by a person.",
+   "punch": "Agents as pipeline residents.",
+   "use": "Automating test maintenance inside CI."
+  },
+  "lambdatest": {
+   "desc": "Cloud browser and device grid for running tests across many real environments in parallel.",
+   "punch": "Rents the browsers you cannot install.",
+   "use": "Testing across browsers and devices you do not own."
+  },
+  "laminar": {
+   "desc": "Open-source tracing and evaluation for agents, built around finding the step where a run went wrong.",
+   "punch": "A stack trace for something that has none.",
+   "use": "Debugging why an agent run failed."
+  },
+  "langchain": {
+   "desc": "The framework that popularised chaining model calls with tools and memory, now positioned as an agent engineering platform.",
+   "punch": "Defined the vocabulary, then had to defend it.",
+   "use": "Building applications that chain models, tools and memory."
+  },
+  "langfuse": {
+   "desc": "Open-source tracing, evaluation and prompt management for model applications, self-hostable.",
+   "punch": "Observability for models, without sending the traces away.",
+   "use": "Tracing and evaluating model calls in production."
+  },
+  "launchable": {
+   "desc": "Predicts which tests are worth running for a given change, cutting execution time by skipping the rest.",
+   "punch": "Bets that most of your suite is irrelevant to most changes.",
+   "use": "Running only the tests a change could break."
+  },
+  "launchdarkly": {
+   "desc": "The feature flag platform that made progressive delivery a standard practice, now extending to controlling agents in production.",
+   "punch": "Turned the if-statement into a control plane.",
+   "use": "Releasing changes gradually with a kill switch."
+  },
+  "lemonsqueezy": {
+   "desc": "Sells digital products as merchant of record, taking on sales tax and VAT compliance.",
+   "punch": "Sells you out of the tax problem.",
+   "use": "Selling software globally without handling tax."
+  },
+  "lightrun": {
+   "desc": "Adds logs and metrics to a running application without redeploying, for the bug that only happens in production.",
+   "punch": "A print statement you can insert into production.",
+   "use": "Investigating an incident without shipping a build."
+  },
+  "lil-bots": {
+   "desc": "A playground for small bots and scripts, deliberately informal.",
+   "punch": "Hack around and find out.",
+   "use": "Writing and running small automation scripts."
+  },
+  "lingo-dev": {
+   "desc": "Localisation engines that hold glossaries, brand voice and per-locale model choices, callable from code or CI.",
+   "punch": "Translation memory, rebuilt around models.",
+   "use": "Translating a product consistently across releases."
+  },
+  "liquibase": {
+   "desc": "Database change management with migrations expressed in XML, YAML, JSON or SQL, and rollback defined alongside.",
+   "punch": "The one that always insisted on the rollback.",
+   "use": "Versioning and reversing database schema changes."
+  },
+  "litellm": {
+   "desc": "A gateway that speaks the OpenAI format to a hundred providers, with cost tracking, guardrails and load balancing.",
+   "punch": "Makes provider choice a configuration line.",
+   "use": "Calling many model providers through one interface."
+  },
+  "llamafile": {
+   "desc": "Packages a model and its runtime into a single executable file that runs on several operating systems without installation.",
+   "punch": "A model you can email.",
+   "use": "Distributing a runnable model as one file."
+  },
+  "llamaindex": {
+   "desc": "Data framework for connecting documents to models, including the parsing of formats that resist extraction.",
+   "punch": "Started at ingestion, which is where retrieval actually fails.",
+   "use": "Turning documents into retrievable context."
+  },
+  "lm-studio": {
+   "desc": "A desktop application for running local models, with a server mode that speaks the OpenAI API.",
+   "punch": "Local models behind the API everything already speaks.",
+   "use": "Running and serving open models from a laptop."
+  },
+  "loadmill": {
+   "desc": "Turns written requirements and tickets into executable test flows for web and mobile.",
+   "punch": "Starts at the ticket, not at the selector.",
+   "use": "Generating test flows from plain-language requirements."
+  },
+  "lob": {
+   "desc": "Physical mail as an API, with a print and delivery network behind it.",
+   "punch": "An API call that arrives in an envelope.",
+   "use": "Sending personalised physical mail programmatically."
+  },
+  "localai": {
+   "desc": "An open-source drop-in replacement for the OpenAI API that runs models locally, including without a GPU.",
+   "punch": "The same API, on hardware you already own.",
+   "use": "Serving local models to software written for OpenAI."
+  },
+  "localazy": {
+   "desc": "Translation automation that keeps context and leaves final quality decisions with people.",
+   "punch": "Automates the drafting, not the sign-off.",
+   "use": "Shipping software in many languages."
+  },
+  "locize": {
+   "desc": "Continuous localisation from the authors of i18next, keeping translation in step with the code that uses it.",
+   "punch": "Built by the people who wrote the library underneath it.",
+   "use": "Managing translations that ship with each release."
+  },
+  "loginradius": {
+   "desc": "Customer identity and access management with residency and privacy compliance as the selling point.",
+   "punch": "Sold on where the identity data is allowed to sit.",
+   "use": "Running consumer identity under regional data rules."
+  },
+  "logrocket": {
+   "desc": "Session replay joined to console output, network activity and errors, so a bug report becomes a recording.",
+   "punch": "Shows you what the user did, not what they remember doing.",
+   "use": "Reproducing a user-reported bug exactly."
+  },
+  "logseq": {
+   "desc": "Open-source outliner storing notes as plain files on your disk, with a graph built over them.",
+   "punch": "Your notes stay files, which is the whole point.",
+   "use": "Keeping linked notes without a vendor holding them."
+  },
+  "loom": {
+   "desc": "Asynchronous screen recording, replacing a meeting with something people can watch at speed.",
+   "punch": "Made 'I will record a video' a normal answer.",
+   "use": "Explaining something without arranging a call."
+  },
+  "loops": {
+   "desc": "Marketing, lifecycle and transactional email in one product, aimed at software teams rather than marketing departments.",
+   "punch": "One sender for both kinds of email.",
+   "use": "Sending product and marketing email from the same place."
+  },
+  "lovable": {
+   "desc": "Builds and hosts applications from conversation, grown out of the gpt-engineer experiment.",
+   "punch": "The research project that became a business.",
+   "use": "Building a working product without writing code."
+  },
+  "mabl": {
+   "desc": "Low-code test automation with self-healing locators, aimed at keeping a suite running through interface change.",
+   "punch": "Assumes the tests will break and plans for it.",
+   "use": "Maintaining end-to-end tests as the UI moves."
+  },
+  "mage": {
+   "desc": "Generates a full-stack React, Node and Prisma application on the Wasp framework from a description.",
+   "punch": "Opinionated stack, which is why the output compiles.",
+   "use": "Scaffolding a complete web application."
+  },
+  "magic": {
+   "desc": "A research company building models for very long context code work rather than a product you install today.",
+   "punch": "A laboratory in a list of tools.",
+   "use": "Research toward very long context code reasoning."
+  },
+  "magicbell": {
+   "desc": "Notification infrastructure across email, push, Slack and SMS, with user preferences handled.",
+   "punch": "The preference centre nobody wants to build.",
+   "use": "Delivering notifications with per-user preferences."
+  },
+  "magicloops": {
+   "desc": "Combines model steps and real code into small automations, for people who will not write the whole script.",
+   "punch": "Half prompt, half program, deliberately.",
+   "use": "Automating a task that needs both judgement and code."
+  },
+  "mailgun": {
+   "desc": "Transactional email APIs with deliverability tooling, one of the long-standing options for programmatic sending.",
+   "punch": "Sells deliverability, which is the part that is hard.",
+   "use": "Sending and tracking transactional email at volume."
+  },
+  "mapbox": {
+   "desc": "Maps, geocoding and navigation as SDKs and APIs, with control over cartographic styling.",
+   "punch": "The maps you can restyle.",
+   "use": "Putting a custom-styled map into an application."
+  },
+  "maple": {
+   "desc": "Open-source observability built on OpenTelemetry, so the instrumentation is not vendor-specific.",
+   "punch": "Standard instrumentation, replaceable backend.",
+   "use": "Collecting traces, logs and metrics without lock-in."
+  },
+  "marscode": {
+   "desc": "ByteDance's cloud IDE with a built-in assistant, supporting a wide language range.",
+   "punch": "A reminder that this market is not only Western.",
+   "use": "Coding in a browser IDE with model assistance."
+  },
+  "mastra": {
+   "desc": "A TypeScript agent framework with memory, tools, MCP and tracing built in rather than assembled.",
+   "punch": "Agents for the TypeScript side of the house.",
+   "use": "Building production agents in TypeScript."
+  },
+  "material-ui": {
+   "desc": "The React component library that put a complete design system within reach of any project, now themeable beyond Material Design.",
+   "punch": "The default answer for a decade of React projects.",
+   "use": "Building a React interface from a mature component set."
+  },
+  "maxim-ai": {
+   "desc": "A gateway in front of models and agents providing routing, guardrails, governance and observability.",
+   "punch": "A control plane between your code and the models.",
+   "use": "Governing and monitoring model traffic centrally."
+  },
+  "mcp-market": {
+   "desc": "A directory of MCP servers connecting assistants to tools like Figma, Databricks and Ghidra.",
+   "punch": "The catalogue that appeared as soon as the protocol did.",
+   "use": "Finding an MCP server for a specific tool."
+  },
+  "mcp-server-finder": {
+   "desc": "Another index of MCP servers, searchable by capability.",
+   "punch": "One of several directories competing to be the registry.",
+   "use": "Searching for an MCP server by what it does."
+  },
+  "mcp-so": {
+   "desc": "An MCP server directory with a focus on connecting applications to tools and workflows.",
+   "punch": "Short domain, long list.",
+   "use": "Discovering MCP servers to connect to an assistant."
+  },
+  "mcpservers-net": {
+   "desc": "Listed as an MCP directory. The domain is now parked and offered for sale.",
+   "punch": "Gone: the domain is for sale.",
+   "use": "Unavailable."
+  },
+  "meilisearch": {
+   "desc": "An open-source search engine tuned for typo tolerance and instant results, simple enough to run yourself.",
+   "punch": "Fast search without an Elasticsearch cluster.",
+   "use": "Adding search to a product you host yourself."
+  },
+  "memclaw": {
+   "desc": "Persistent project memory for agent sessions, with isolated workspaces and the stored memory visible.",
+   "punch": "Memory you can read, which is unusual.",
+   "use": "Keeping agent context across sessions and people."
+  },
+  "mend": {
+   "desc": "Formerly WhiteSource. Application and dependency security, now extended to cover model and agent risk.",
+   "punch": "Renamed once, repositioned twice.",
+   "use": "Managing open-source and AI risk across applications."
+  },
+  "mentat": {
+   "desc": "A command-line coding assistant that edited across files. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "metercall": {
+   "desc": "Runs agents and workflows locally with dry-run defaults and your own keys, so nothing leaves the machine.",
+   "punch": "Local-first, and dry-run until you say otherwise.",
+   "use": "Running agents without sending code or keys anywhere."
+  },
+  "meticulous": {
+   "desc": "Generates and maintains front-end browser tests automatically from real usage, without written assertions.",
+   "punch": "Coverage you did not have to author.",
+   "use": "Getting front-end test coverage without writing tests."
+  },
+  "metorial": {
+   "desc": "One place for staff, agents and clients to connect tools, with access control and tracing across them.",
+   "punch": "Tool access as an administrated thing.",
+   "use": "Governing which agents can reach which tools."
+  },
+  "microsoft-power-apps": {
+   "desc": "Low-code business applications inside the Microsoft estate, reaching the data those organisations already hold.",
+   "punch": "Wins wherever the answer is already 'we use Microsoft'.",
+   "use": "Building internal business apps on Microsoft data."
+  },
+  "middleware": {
+   "desc": "Full-stack observability with real-time monitoring, positioned on cost against the incumbents.",
+   "punch": "Competes on the observability bill.",
+   "use": "Monitoring infrastructure and applications affordably."
+  },
+  "minimax-code-review": {
+   "desc": "A GitHub Action that runs code review through MiniMax models.",
+   "punch": "Review as a workflow step, not a service.",
+   "use": "Adding model review to a GitHub Actions pipeline."
+  },
+  "miro": {
+   "desc": "An infinite collaborative canvas that became the default for distributed workshops and diagramming.",
+   "punch": "The whiteboard that survived everyone going home.",
+   "use": "Running a workshop or diagramming with a distributed team."
+  },
+  "mixpanel": {
+   "desc": "Product analytics built around events and funnels, now with replay, experiments and flags attached.",
+   "punch": "Event analytics, from before every tool had it.",
+   "use": "Understanding how people move through a product."
+  },
+  "mojoauth": {
+   "desc": "Passwordless authentication that stores no passwords at all, removing the credential database as a target.",
+   "punch": "Nothing to breach if nothing is stored.",
+   "use": "Signing users in with passkeys, magic links or one-time codes."
+  },
+  "multiplayer": {
+   "desc": "Connects a coding agent to production signals so it fixes real defects rather than producing speculative changes.",
+   "punch": "Aimed squarely at agent-generated noise.",
+   "use": "Letting an agent fix bugs using production evidence."
+  },
+  "mux": {
+   "desc": "Video infrastructure: encoding, delivery and analytics behind an API, built by people from the streaming industry.",
+   "punch": "Video that works without hiring a video team.",
+   "use": "Adding reliable video playback to a product."
+  },
+  "n8n": {
+   "desc": "Workflow automation you can self-host, with code steps where the visual editor runs out, and model nodes throughout.",
+   "punch": "The automation tool you can run inside your own network.",
+   "use": "Automating processes across services without a SaaS holding them."
+  },
+  "nango": {
+   "desc": "Infrastructure for building and maintaining hundreds of API integrations, including the auth and sync nobody budgets for.",
+   "punch": "Owns the integrations nobody wants to keep alive.",
+   "use": "Shipping and maintaining many third-party integrations."
+  },
+  "neon": {
+   "desc": "Serverless Postgres with branching, so a database copy for a pull request costs almost nothing.",
+   "punch": "Made branching a database a normal thing to do.",
+   "use": "Giving every branch its own Postgres."
+  },
+  "neovim": {
+   "desc": "A Vim fork with an embedded Lua runtime and a language server protocol client, which made the modern plugin ecosystem possible.",
+   "punch": "Rebuilt Vim's foundations without breaking Vim.",
+   "use": "Editing text in a terminal, configured exactly as you want."
+  },
+  "neuledge": {
+   "desc": "Prepackaged local documentation for coding assistants, so framework reference is available without rate limits.",
+   "punch": "Docs cached locally, because the network is not free.",
+   "use": "Giving an assistant framework docs without fetching them."
+  },
+  "new-relic": {
+   "desc": "One of the original application performance monitoring platforms, now covering the whole telemetry stack.",
+   "punch": "Was measuring response times before observability had a name.",
+   "use": "Correlating telemetry across an application estate."
+  },
+  "ngrok": {
+   "desc": "Exposes a local port on a public URL with TLS, which is how most webhooks get tested for the first time.",
+   "punch": "The tunnel that made webhook development possible.",
+   "use": "Giving localhost a public address."
+  },
+  "nhost": {
+   "desc": "Managed Postgres, GraphQL, auth, storage and functions as one backend, open-source underneath.",
+   "punch": "The Supabase shape, through a GraphQL door.",
+   "use": "Standing up a GraphQL backend without operating it."
+  },
+  "not-human-search": {
+   "desc": "A search engine indexed for agents rather than people, covering tools, MCP servers and APIs.",
+   "punch": "Search built for the reader who is not a reader.",
+   "use": "Letting an agent find tools and APIs."
+  },
+  "notion": {
+   "desc": "Documents, databases and wikis in one workspace, now with agents that act on the contents.",
+   "punch": "Replaced four tools by being adequate at all of them.",
+   "use": "Keeping team documentation and structured data together."
+  },
+  "novu": {
+   "desc": "Open-source notification infrastructure across in-app, email and SMS, self-hostable.",
+   "punch": "The notification layer, without a vendor holding it.",
+   "use": "Running product notifications on your own infrastructure."
+  },
+  "nullify-ai": {
+   "desc": "Finds vulnerabilities, proves they are real, and pushes each fix to the owner until it merges.",
+   "punch": "Chases the fix, not just the finding.",
+   "use": "Getting security fixes actually merged."
+  },
+  "nylas": {
+   "desc": "One API across email, calendar and contacts providers, hiding the differences between Gmail, Microsoft and IMAP.",
+   "punch": "Abstracts the mail servers that disagree with each other.",
+   "use": "Reading and writing a user's email and calendar."
+  },
+  "obsidian": {
+   "desc": "A local-first notes application over plain Markdown files, with linking and a plugin ecosystem.",
+   "punch": "Files on disk, which is why people trust it.",
+   "use": "Keeping a private linked knowledge base."
+  },
+  "octotree": {
+   "desc": "A browser extension that adds a file tree and navigation to GitHub's web interface.",
+   "punch": "Fixes the one thing GitHub's file view lacks.",
+   "use": "Navigating a repository in the browser."
+  },
+  "oh-dear": {
+   "desc": "Uptime, certificate expiry, DNS, broken links and cron monitoring in one small product.",
+   "punch": "Covers the checks that only matter once.",
+   "use": "Watching a site's health without a monitoring platform."
+  },
+  "okta": {
+   "desc": "Enterprise identity and single sign-on, the default in organisations large enough to have an identity team.",
+   "punch": "The identity provider your customer's security review expects.",
+   "use": "Federating identity across an enterprise's applications."
+  },
+  "ollama": {
+   "desc": "Runs open models locally with one command, and serves them over a simple API. The reason most people's first local model worked.",
+   "punch": "Made running a model as easy as pulling an image.",
+   "use": "Running open models on your own machine."
+  },
+  "omni-skills-forge": {
+   "desc": "A skill manager for assistants. The repository returns 404.",
+   "punch": "Gone: the repository is not there.",
+   "use": "Unavailable."
+  },
+  "ona": {
+   "desc": "Cloud software engineers running under orchestration and kernel-level isolation, from the team behind Gitpod.",
+   "punch": "Isolation at the kernel, because the agent runs code.",
+   "use": "Running a governed team of cloud coding agents."
+  },
+  "onecompiler": {
+   "desc": "An online IDE covering seventy languages, useful when the environment matters less than running the snippet.",
+   "punch": "For the language you need once.",
+   "use": "Running code in a language you have not installed."
+  },
+  "open-interpreter": {
+   "desc": "An agent that writes and runs code locally to complete a task, with the machine as the tool.",
+   "punch": "Gave a model a shell, early and deliberately.",
+   "use": "Letting a model operate your computer to finish a job."
+  },
+  "openai-codex-cli": {
+   "desc": "OpenAI's terminal coding agent, running against their models with local file and command access.",
+   "punch": "OpenAI's answer in the terminal.",
+   "use": "Running an OpenAI-backed agent on a local repository."
+  },
+  "openase": {
+   "desc": "Turns tickets into working code, with agents picking up issues rather than being prompted.",
+   "punch": "The queue is the interface.",
+   "use": "Automating work straight from an issue tracker."
+  },
+  "opencage": {
+   "desc": "Forward and reverse geocoding built on open data, with predictable pricing and no usage surprises.",
+   "punch": "Geocoding on open data, priced plainly.",
+   "use": "Turning addresses into coordinates and back."
+  },
+  "openhands-2": {
+   "desc": "The open-source, model-agnostic platform for cloud coding agents, formerly OpenDevin. The active project.",
+   "punch": "The one that kept going after the rename.",
+   "use": "Running open coding agents in the cloud."
+  },
+  "openhands": {
+   "desc": "The old OpenDevin address. The domain no longer resolves; the project continues as OpenHands.",
+   "punch": "Renamed: the work moved to a new address.",
+   "use": "Superseded by OpenHands at its current address."
+  },
+  "openmagic": {
+   "desc": "A toolbar over any running web app: select an element, describe a change, and it edits the real source.",
+   "punch": "Points at the rendered page and edits the file behind it.",
+   "use": "Changing an interface by pointing at it."
+  },
+  "openmeter": {
+   "desc": "Usage metering and entitlements for consumption pricing, open source, now part of Kong.",
+   "punch": "The meter behind usage-based billing.",
+   "use": "Billing customers for what they actually consumed."
+  },
+  "openrouter": {
+   "desc": "One API across nearly every model, with prices and availability compared in the open.",
+   "punch": "Turned the model market into a price list.",
+   "use": "Calling and comparing many models through one endpoint."
+  },
+  "opik": {
+   "desc": "Open-source evaluation and tracing for agent systems, from the Comet team.",
+   "punch": "Evaluation treated as a permanent fixture, not a one-off.",
+   "use": "Testing and monitoring agents continuously."
+  },
+  "ory": {
+   "desc": "Open-source identity and access management, API-first and self-hostable, assembled from separate services.",
+   "punch": "Identity as components you can run yourself.",
+   "use": "Running authentication and authorization on your own infrastructure."
+  },
+  "oso": {
+   "desc": "Authorization for agents in production: access control, monitoring and least privilege applied automatically.",
+   "punch": "Answers what the agent is allowed to touch.",
+   "use": "Constraining what an agent can do in production."
+  },
+  "outerbase": {
+   "desc": "A database interface with model assistance, aimed at people who need the data without knowing the schema.",
+   "punch": "A database client for the rest of the team.",
+   "use": "Exploring and editing a database without writing SQL."
+  },
+  "paddle": {
+   "desc": "Merchant of record for software, handling tax, fraud and payments so a small team can sell globally.",
+   "punch": "Takes the compliance, not just the payment.",
+   "use": "Selling software worldwide without a tax department."
+  },
+  "pagerduty": {
+   "desc": "Incident response and on-call scheduling. The product that made paging a discipline rather than a phone tree.",
+   "punch": "Defined what being on call means.",
+   "use": "Routing alerts to whoever is awake and responsible."
+  },
+  "pagerly": {
+   "desc": "On-call scheduling and incident response run inside Slack, where the team already is.",
+   "punch": "Incident management without a second window.",
+   "use": "Managing on-call rotations from Slack."
+  },
+  "panora": {
+   "desc": "Automates purchase order entry for distributors and wholesalers, reading documents into an order system.",
+   "punch": "A vertical product that ended up in a developer list.",
+   "use": "Removing manual order entry from a distribution business."
+  },
+  "parasoft": {
+   "desc": "Enterprise test automation spanning static analysis, unit, API and functional testing, common in regulated industries.",
+   "punch": "Built for the audit, which is why it is thorough.",
+   "use": "Testing under standards that require evidence."
+  },
+  "pdfblade": {
+   "desc": "Listed as an HTML to PDF API. The domain now serves an unrelated online gambling site. Do not follow this link expecting the original product.",
+   "punch": "Repurposed: the domain now serves something else entirely.",
+   "use": "Unavailable. The address changed hands."
+  },
+  "pdfshift": {
+   "desc": "HTML and CSS to PDF over an API, with high-fidelity rendering and no browser to maintain.",
+   "punch": "Someone else runs the headless Chrome.",
+   "use": "Converting HTML to PDF without hosting a renderer."
+  },
+  "pearai": {
+   "desc": "An open-source editor fork with model features. The site's certificate has expired.",
+   "punch": "Unreachable: the certificate expired.",
+   "use": "Unverified: the site would not answer."
+  },
+  "penpot": {
+   "desc": "Open-source design software built on web standards, so files are open formats rather than a vendor's binary.",
+   "punch": "The design tool you can self-host.",
+   "use": "Designing interfaces without a proprietary file format."
+  },
+  "percy": {
+   "desc": "Visual regression testing, now part of BrowserStack, comparing rendered snapshots across builds.",
+   "punch": "Visual diffing, absorbed into a larger grid.",
+   "use": "Catching unintended visual changes between builds."
+  },
+  "permit-io": {
+   "desc": "Authorization as a service with policy as code, covering role, attribute and relationship models.",
+   "punch": "Permissions as a policy file, not scattered checks.",
+   "use": "Managing fine-grained permissions across services."
+  },
+  "perplexity-pro": {
+   "desc": "Search that answers with citations rather than links, with model choice on the paid tier.",
+   "punch": "Cites its sources, which is the entire product.",
+   "use": "Researching a question and seeing where the answer came from."
+  },
+  "phi-4": {
+   "desc": "A fourteen-billion parameter Microsoft Research model that performs above its size on reasoning, largely through training data quality.",
+   "punch": "An argument that data beats parameter count.",
+   "use": "Running capable reasoning on modest hardware."
+  },
+  "phind": {
+   "desc": "A search and answer engine for developers. The site now returns 404.",
+   "punch": "Gone: the page is not there.",
+   "use": "Unavailable."
+  },
+  "pieces-app": {
+   "desc": "Builds a local memory of your work so decisions and context can be recovered and fed to other tools.",
+   "punch": "Remembers the week you already forgot.",
+   "use": "Recovering what you were doing and why."
+  },
+  "pinecone": {
+   "desc": "Managed vector search at large scale, the product that made vector databases a category.",
+   "punch": "Named the category, then had to defend it against Postgres.",
+   "use": "Searching billions of embeddings by similarity."
+  },
+  "pingram": {
+   "desc": "One API for email, SMS, voice and WhatsApp, with the telecom registration handled.",
+   "punch": "Four channels, one integration, and the paperwork done.",
+   "use": "Sending messages across channels from one interface."
+  },
+  "pintura": {
+   "desc": "A JavaScript image editor that embeds into any stack, for cropping and editing inside your own product.",
+   "punch": "The editor you were going to build badly.",
+   "use": "Letting users crop and edit images in your app."
+  },
+  "pirsch": {
+   "desc": "Cookie-free open-source analytics, light enough that the script is not a performance decision.",
+   "punch": "Analytics with no consent banner attached.",
+   "use": "Measuring traffic without tracking individuals."
+  },
+  "placekit": {
+   "desc": "Address autocomplete and geocoding, built for the checkout field rather than for mapping.",
+   "punch": "Aimed at the address form, which everyone gets wrong.",
+   "use": "Completing addresses as a user types."
+  },
+  "plaid": {
+   "desc": "Connects applications to bank accounts for balances, transactions and payments. The layer most fintech is built on.",
+   "punch": "The plumbing under most financial products you have used.",
+   "use": "Letting a user connect their bank to your product."
+  },
+  "plain": {
+   "desc": "Composable customer support infrastructure for B2B teams, assembled rather than configured.",
+   "punch": "Support as components, not as a helpdesk.",
+   "use": "Building a support workflow that fits an unusual product."
+  },
+  "plandex": {
+   "desc": "An open-source terminal agent built for large projects, with planning and change staging across many files.",
+   "punch": "Designed for repositories too big for one context window.",
+   "use": "Running an agent across a large codebase from the terminal."
+  },
+  "planetscale": {
+   "desc": "Managed Vitess and Postgres with schema branching and non-blocking migrations at scale.",
+   "punch": "Brought Vitess to teams who could never have run it.",
+   "use": "Running a database that has to survive real scale."
+  },
+  "platform-sh": {
+   "desc": "Managed hosting with cloned environments per branch. The address now leads to Upsun, its successor product.",
+   "punch": "Continued under a new name.",
+   "use": "Now served as Upsun."
+  },
+  "pocketbase": {
+   "desc": "An entire backend in a single Go binary: database, auth, file storage and admin interface.",
+   "punch": "One file, which is the whole argument.",
+   "use": "Standing up a backend with no infrastructure at all."
+  },
+  "poeticmetric": {
+   "desc": "Free and open-source privacy-first web analytics, licensed to stay that way.",
+   "punch": "Free as in freedom, and says so first.",
+   "use": "Self-hosting site analytics with no vendor."
+  },
+  "posthog": {
+   "desc": "Product analytics, replay, flags and experiments in one open-source platform, now diagnosing and fixing issues too.",
+   "punch": "Absorbed four product categories and kept the source open.",
+   "use": "Running product analytics and experiments in one place."
+  },
+  "postman": {
+   "desc": "The API client that became the industry's shared workspace for specifications, mocks and tests.",
+   "punch": "How most teams first learned to talk about an API.",
+   "use": "Designing, testing and documenting APIs collaboratively."
+  },
+  "praisonai": {
+   "desc": "A framework for autonomous agents that research, plan and code, aimed at removing boilerplate work.",
+   "punch": "Sells a workforce, not a library.",
+   "use": "Running self-directed agents on recurring work."
+  },
+  "prettier": {
+   "desc": "The opinionated formatter that ended style arguments by refusing to have options.",
+   "punch": "Won by giving you nothing to configure.",
+   "use": "Formatting code identically across a team."
+  },
+  "promptfoo": {
+   "desc": "Testing, evaluation and red-teaming for prompts and agents, including vulnerability scanning.",
+   "punch": "Treats a prompt as something you can regression-test.",
+   "use": "Comparing model behaviour and probing for weaknesses."
+  },
+  "propel": {
+   "desc": "A serverless ClickHouse platform for customer-facing analytics, without operating the cluster.",
+   "punch": "ClickHouse without the operations burden.",
+   "use": "Embedding analytics dashboards into a product."
+  },
+  "propelauth": {
+   "desc": "Business-to-business authentication with organisations, roles and self-service admin built in.",
+   "punch": "Multi-tenancy assumed from the start.",
+   "use": "Adding B2B auth with organisation management."
+  },
+  "propexo": {
+   "desc": "Syncs property management systems into a warehouse through pre-built connectors.",
+   "punch": "A vertical integration product that landed in a developer list.",
+   "use": "Getting proptech data into a warehouse."
+  },
+  "proxy-sentinel": {
+   "desc": "Proxy management that charges for the service rather than per gigabyte of traffic.",
+   "punch": "Attacks the pricing model, not the technology.",
+   "use": "Managing proxy traffic without per-gigabyte cost."
+  },
+  "pullrequest": {
+   "desc": "Automated review combined with human expert oversight, so findings are checked before they reach the author.",
+   "punch": "Puts a person behind the bot.",
+   "use": "Getting reviewed by an expert you do not employ."
+  },
+  "pulsemcp": {
+   "desc": "A daily-updated directory of MCP servers, one of the more actively maintained indexes.",
+   "punch": "Updated daily, which most directories are not.",
+   "use": "Finding a current MCP server for a data source."
+  },
+  "pulumi-ai": {
+   "desc": "Pulumi's agent for provisioning, governing and optimising infrastructure with enterprise controls.",
+   "punch": "An agent with permission to change infrastructure, which is the interesting part.",
+   "use": "Automating infrastructure changes under policy."
+  },
+  "pythagora": {
+   "desc": "Listed as an automated development platform. The address now serves Pazi, a differently positioned product.",
+   "punch": "Repositioned under a new name.",
+   "use": "Now serves a different product."
+  },
+  "qoddi": {
+   "desc": "Application hosting positioned directly as a Heroku replacement, across several runtimes.",
+   "punch": "Built for people leaving Heroku.",
+   "use": "Deploying an application with a Heroku-style workflow."
+  },
+  "qoder": {
+   "desc": "Alibaba's programming platform with completion, conversational coding and generation.",
+   "punch": "The Chinese market's entry, with global ambitions.",
+   "use": "Coding with an assistant outside the Western vendor set."
+  },
+  "qodo-pr-agent": {
+   "desc": "The original open-source pull request reviewer, still maintained separately from the commercial product built on it.",
+   "punch": "The open version that started the commercial one.",
+   "use": "Running an open review bot on your own pull requests."
+  },
+  "qovery-deploy-skill": {
+   "desc": "An agent skill for deploying to Kubernetes, portable across any assistant that reads a skill file.",
+   "punch": "Deployment knowledge as a file an agent can load.",
+   "use": "Letting an agent deploy to Kubernetes."
+  },
+  "quivr": {
+   "desc": "Listed as an open-source retrieval assistant. The address now serves a customer support automation product.",
+   "punch": "Repositioned into a different market.",
+   "use": "Now serves a different product."
+  },
+  "quix": {
+   "desc": "Stream processing in Python for sensor and test-rig data, aimed at hardware engineering.",
+   "punch": "Streaming for the factory, not the feed.",
+   "use": "Processing real-time data from physical equipment."
+  },
+  "qwen2-5-coder": {
+   "desc": "Alibaba's open-weight code model line. The repository has moved on to Qwen3-Coder.",
+   "punch": "Superseded by its own next version.",
+   "use": "Running an open code model, now at a later release."
+  },
+  "radar": {
+   "desc": "Location and device signals for fraud detection and operations, sold on accuracy of the signal.",
+   "punch": "Geolocation as a fraud input.",
+   "use": "Verifying location and device in a transaction."
+  },
+  "radix-ui": {
+   "desc": "Unstyled, accessible React primitives. Provides behaviour and leaves appearance entirely to you.",
+   "punch": "Ships the hard part and none of the opinions.",
+   "use": "Building accessible components with your own styling."
+  },
+  "railway": {
+   "desc": "Deploys applications, databases and services from a repository with infrastructure inferred rather than configured.",
+   "punch": "Made the config file optional.",
+   "use": "Deploying an app and its dependencies without setup."
+  },
+  "rainforest-qa": {
+   "desc": "Combined automated testing with crowd-sourced manual testers. The site redirects endlessly and will not load.",
+   "punch": "Unreachable: the redirects do not terminate.",
+   "use": "Unverified: the site would not answer."
+  },
+  "raycast": {
+   "desc": "A macOS launcher with an extension store, window management and scripts, that replaced Spotlight for a lot of people.",
+   "punch": "Became a platform by starting as a launcher.",
+   "use": "Running commands and extensions from one keystroke."
+  },
+  "raycast-ai": {
+   "desc": "Models available from the Raycast launcher, with extensions so the answer can act on the machine.",
+   "punch": "A model behind a keyboard shortcut.",
+   "use": "Asking a model something without opening a browser."
+  },
+  "react-developer-tools": {
+   "desc": "Browser extension for inspecting the React component tree, props, state and render performance.",
+   "punch": "Standard equipment for React work.",
+   "use": "Debugging a React application in the browser."
+  },
+  "readme-ai": {
+   "desc": "Generates a README from a repository, covering the projects that never got one.",
+   "punch": "Writes the file everyone skips.",
+   "use": "Producing a README for an undocumented project."
+  },
+  "redux-devtools": {
+   "desc": "Time-travel debugging for Redux: replay actions, inspect state at each step, and reload without losing it.",
+   "punch": "Made state changes something you could rewind.",
+   "use": "Debugging state transitions in a Redux application."
+  },
+  "refact-ai": {
+   "desc": "An open-source agent for coding, debugging and testing, self-hostable with full repository context.",
+   "punch": "Open, and runnable inside your own network.",
+   "use": "Running a coding agent on infrastructure you control."
+  },
+  "reflect": {
+   "desc": "Codeless web and mobile testing, now part of SmartBear, with tests recorded rather than written.",
+   "punch": "Absorbed into a larger testing portfolio.",
+   "use": "Recording end-to-end tests without code."
+  },
+  "reflex": {
+   "desc": "Builds full web applications in pure Python, compiling the front end so no JavaScript is written.",
+   "punch": "Web apps for people who do not want to leave Python.",
+   "use": "Building a web interface without touching the front-end stack."
+  },
+  "relay": {
+   "desc": "A repository with no published description. The catalogue entry carries little beyond the link.",
+   "punch": "Listed, but the project says nothing about itself.",
+   "use": "Undocumented."
+  },
+  "replit": {
+   "desc": "A browser development environment that turned into an app builder, with hosting and databases attached.",
+   "punch": "Started as an IDE for learners and became a factory.",
+   "use": "Building and hosting an application entirely in the browser."
+  },
+  "replit-agent": {
+   "desc": "Replit's agent, which plans, builds and deploys inside the same environment it runs in.",
+   "punch": "The agent and the runtime are the same product.",
+   "use": "Going from description to deployed app without leaving one tab."
+  },
+  "replit-ai": {
+   "desc": "Replit's assistant features, now largely folded into the agent experience.",
+   "punch": "Absorbed into the agent.",
+   "use": "Assistance inside the Replit environment."
+  },
+  "repohistory": {
+   "desc": "Keeps GitHub traffic statistics past the fourteen days GitHub retains them for.",
+   "punch": "Exists because GitHub throws the data away.",
+   "use": "Tracking repository traffic over the long term."
+  },
+  "repowise": {
+   "desc": "Codebase intelligence: health scores, generated documentation, dead code detection and architectural history.",
+   "punch": "Reports on the codebase rather than editing it.",
+   "use": "Understanding the state of a repository you inherited."
+  },
+  "resend": {
+   "desc": "Transactional email for developers, with templates written in React and a deliverability-first pitch.",
+   "punch": "Made sending email feel like a modern API again.",
+   "use": "Sending transactional email from an application."
+  },
+  "respan": {
+   "desc": "Model observability, evaluation, prompt optimisation and a gateway, unified in one control plane.",
+   "punch": "Routing and watching, in one place.",
+   "use": "Operating model traffic with evaluation attached."
+  },
+  "retool-ai": {
+   "desc": "Internal tools built from components over your own data, now with model features in the builder.",
+   "punch": "The admin panel nobody wants to write, generated.",
+   "use": "Building an internal tool over existing databases."
+  },
+  "revert": {
+   "desc": "An open-source unified API for B2B integrations. The domain no longer resolves.",
+   "punch": "Gone: the domain does not resolve.",
+   "use": "Unavailable."
+  },
+  "roboflow": {
+   "desc": "The full computer vision pipeline: annotation, training, evaluation and deployment.",
+   "punch": "Covers the labelling, which is where vision projects die.",
+   "use": "Building and shipping a computer vision model."
+  },
+  "rocket-new": {
+   "desc": "Rapid application development from natural language. The site refused an automated request.",
+   "punch": "Generation aimed at speed above all.",
+   "use": "Unverified: the site would not answer."
+  },
+  "rollbar": {
+   "desc": "Real-time error monitoring connecting exceptions to releases and session replays.",
+   "punch": "Ties the error to the deploy that caused it.",
+   "use": "Tracking and grouping production errors."
+  },
+  "roo-code": {
+   "desc": "An open-source agent fork that grew its own direction. The address now presents Roomote, a hosted teammate that opens pull requests.",
+   "punch": "The fork that became its own product.",
+   "use": "Running an agent that opens reviewable pull requests."
+  },
+  "rookout": {
+   "desc": "Live debugging with non-breaking breakpoints, collecting data from running code without stopping it.",
+   "punch": "A breakpoint that does not pause production.",
+   "use": "Inspecting live code from development through production."
+  },
+  "rosebud-ai": {
+   "desc": "Generates playable games from prompts, with deployment included.",
+   "punch": "Games as the output, which is a harder target than a page.",
+   "use": "Building a small game without writing code."
+  },
+  "rovo-dev": {
+   "desc": "Atlassian's development agent, reaching into Jira and Confluence where the work is already described.",
+   "punch": "Starts from the ticket, because Atlassian owns the ticket.",
+   "use": "Working from Jira issues with an agent that can read them."
+  },
+  "runmyjob": {
+   "desc": "CI runners billed by real usage rather than idle time, compatible with GitLab and GitHub workflows.",
+   "punch": "Attacks the idle runner bill.",
+   "use": "Running existing CI pipelines for less."
+  },
+  "sanity": {
+   "desc": "A headless CMS that treats content as structured data with a query language, rather than as documents.",
+   "punch": "Content as a queryable dataset.",
+   "use": "Modelling content that several applications consume."
+  },
+  "scalekit": {
+   "desc": "Identity built for agents: delegated identity, scoped permissions, tool calling and an audit trail.",
+   "punch": "Answers who the agent is acting as.",
+   "use": "Giving agents scoped, auditable access to systems."
+  },
+  "scrapingant": {
+   "desc": "A scraping API with headless Chrome, rotating proxies and an MCP server for agent access.",
+   "punch": "Scraping with an agent-shaped door.",
+   "use": "Extracting web data from code or from an agent."
+  },
+  "scrapingbee": {
+   "desc": "Handles proxies, headless browsers and blocking so the calling code only deals with the extracted data.",
+   "punch": "Sells the infrastructure, not the parser.",
+   "use": "Scraping pages without operating browsers."
+  },
+  "screenshot-to-code": {
+   "desc": "Converts a screenshot into working HTML, React or Vue, one of the earliest demonstrations of the idea.",
+   "punch": "The demo that convinced a lot of people at once.",
+   "use": "Turning a picture of an interface into markup."
+  },
+  "searchapi": {
+   "desc": "Structured JSON from search engine results, including ads, related searches and rich elements.",
+   "punch": "Parses the parts of the page nobody else returns.",
+   "use": "Getting search results as structured data."
+  },
+  "segment": {
+   "desc": "A customer data platform that collects events once and routes them to every downstream tool. Now part of Twilio.",
+   "punch": "One integration instead of thirty analytics snippets.",
+   "use": "Collecting product events and fanning them out."
+  },
+  "semantic-kernel": {
+   "desc": "Microsoft's SDK for embedding models into applications, with planners and plugins as first-class parts.",
+   "punch": "Enterprise-shaped from the beginning.",
+   "use": "Adding model orchestration to a .NET or Python application."
+  },
+  "semgrep": {
+   "desc": "Static analysis with rules that look like the code they match, so a team can write its own checks in an afternoon.",
+   "punch": "Custom rules you can actually read.",
+   "use": "Enforcing security and correctness patterns in source."
+  },
+  "sendgrid": {
+   "desc": "Long-standing transactional and marketing email at large volume. Now part of Twilio.",
+   "punch": "The one that carried a lot of the internet's email.",
+   "use": "Sending high-volume transactional email."
+  },
+  "sentry": {
+   "desc": "Error and performance monitoring built for developers, with the source open and the stack trace as the centre of the product.",
+   "punch": "Made the stack trace a shared artefact.",
+   "use": "Finding and fixing errors in production."
+  },
+  "sequin": {
+   "desc": "Bidirectional sync between third-party APIs and your Postgres, replacing polling and webhook handling.",
+   "punch": "Makes the API a table.",
+   "use": "Querying a third-party API as if it were your own database."
+  },
+  "serpapi": {
+   "desc": "Real-time search results as structured data, with proxies and captchas handled.",
+   "punch": "Sells the part of scraping search that is legally and technically hard.",
+   "use": "Programmatic access to search engine results."
+  },
+  "shellgpt": {
+   "desc": "A command-line tool that turns a description into a shell command, and can run it.",
+   "punch": "For the flag you look up every single time.",
+   "use": "Getting the right command without leaving the terminal."
+  },
+  "sherlo": {
+   "desc": "Visual regression testing for React Native, comparing screenshots on iOS and Android simulators.",
+   "punch": "Covers mobile, where most visual tooling stops.",
+   "use": "Catching visual regressions in a React Native app."
+  },
+  "signatureapi": {
+   "desc": "Electronic signatures as a developer-first API, priced below the incumbents.",
+   "punch": "Signatures without the enterprise sales process.",
+   "use": "Embedding legally binding signing into a workflow."
+  },
+  "slab": {
+   "desc": "A team knowledge base built for readability, with integrations into the tools the content refers to.",
+   "punch": "Optimised for the person reading it later.",
+   "use": "Keeping internal documentation people actually read."
+  },
+  "smartystreets": {
+   "desc": "Address verification and standardisation for postal and international addresses.",
+   "punch": "Turns what a user typed into what the postal service accepts.",
+   "use": "Validating and correcting addresses at entry."
+  },
+  "smol-developer": {
+   "desc": "The first library to embed a developer agent inside another application, and an influential prototype.",
+   "punch": "A small experiment that a lot of products grew out of.",
+   "use": "Embedding a coding agent in your own program."
+  },
+  "socket": {
+   "desc": "Supply chain security that inspects what a dependency actually does, rather than only checking it against a vulnerability list. The site refused an automated request.",
+   "punch": "Reads the package's behaviour, not just its version.",
+   "use": "Blocking malicious dependencies before they install."
+  },
+  "softr": {
+   "desc": "Builds portals and internal tools over existing data sources without code.",
+   "punch": "A front end for the spreadsheet that runs the business.",
+   "use": "Giving non-technical users an interface to your data."
+  },
+  "sonar": {
+   "desc": "Code quality and security verification, the hosted side of the SonarQube family.",
+   "punch": "The quality gate a lot of enterprises standardised on.",
+   "use": "Verifying code quality across an organisation."
+  },
+  "sonarqube": {
+   "desc": "Self-hosted static analysis with quality gates that can block a merge, now positioned against machine-written code.",
+   "punch": "The gate, running on your own server.",
+   "use": "Enforcing quality thresholds in a pipeline."
+  },
+  "sourcery": {
+   "desc": "Automated review in GitHub, GitLab or the editor, suggesting refactors rather than only flagging problems.",
+   "punch": "Proposes the rewrite, not just the complaint.",
+   "use": "Getting refactoring suggestions on every change."
+  },
+  "speakeasy": {
+   "desc": "Began with SDK generation from API specifications, now positioned around governing agents and MCP servers.",
+   "punch": "Moved from SDKs to the agent control plane.",
+   "use": "Generating SDKs and governing agent access to APIs."
+  },
+  "specstory": {
+   "desc": "Captures every assistant conversation from Cursor, Copilot, Claude Code and Codex, stored locally.",
+   "punch": "Keeps the transcript nobody else keeps.",
+   "use": "Recovering what you and the model actually agreed."
+  },
+  "split": {
+   "desc": "Feature flags joined to impact data, so a rollout reports whether the change made metrics better or worse.",
+   "punch": "Connects the flag to the consequence.",
+   "use": "Measuring whether a released change helped."
+  },
+  "sqitch": {
+   "desc": "Database change management without a migration numbering scheme, using dependencies and plain SQL instead.",
+   "punch": "Rejected sequential migrations on principle.",
+   "use": "Managing schema changes across database engines."
+  },
+  "ssojet": {
+   "desc": "Adds enterprise single sign-on to an existing product without rewriting its authentication.",
+   "punch": "The enterprise checkbox, without the rebuild.",
+   "use": "Connecting a B2B product to customer identity providers."
+  },
+  "stack-auth": {
+   "desc": "Listed as open-source authentication. The address now presents Hexclave, a broader platform including payments and analytics.",
+   "punch": "Widened its scope and its name.",
+   "use": "Now serves a broader platform."
+  },
+  "stackspot-ai": {
+   "desc": "An enterprise development platform from Zup, built around reusable internal standards. Primarily documented in Portuguese.",
+   "punch": "Built for one large organisation first, then sold.",
+   "use": "Standardising development across a large engineering estate."
+  },
+  "starcoder-2": {
+   "desc": "An open code model from the BigCode project, trained on permissively licensed source with the data provenance published.",
+   "punch": "Published what it was trained on, which almost nobody does.",
+   "use": "Running a code model whose training data is documented."
+  },
+  "statsig": {
+   "desc": "Experimentation, feature management and product analytics in one platform, with statistics done properly.",
+   "punch": "Takes the statistics seriously, which most flag tools do not.",
+   "use": "Running experiments and flags with trustworthy results."
+  },
+  "stigg": {
+   "desc": "Pricing, entitlements and usage metering as infrastructure, so a pricing change is not a code change.",
+   "punch": "Pricing that product can edit without a deploy.",
+   "use": "Changing plans and limits without shipping code."
+  },
+  "stitch": {
+   "desc": "Google's interface generator for mobile and web, aimed at the early ideation stage.",
+   "punch": "Built for the first draft, not the final screen.",
+   "use": "Producing interface concepts quickly."
+  },
+  "storybook": {
+   "desc": "Builds and documents UI components in isolation, which turned the component library into a real artefact.",
+   "punch": "Made the component the unit of front-end work.",
+   "use": "Developing and reviewing components outside the app."
+  },
+  "stream": {
+   "desc": "Activity feeds, chat and video as APIs on an edge network, so social features do not require building the hard parts.",
+   "punch": "The feed and the chat, both already solved.",
+   "use": "Adding chat or a social feed to a product."
+  },
+  "stripe-payments": {
+   "desc": "The payments API that made accepting money a library call. Documentation quality alone reset expectations for the industry.",
+   "punch": "Changed what developers expect from any API.",
+   "use": "Accepting payments in an application."
+  },
+  "stytch": {
+   "desc": "Authentication APIs with fraud and device intelligence attached, covering passwordless and enterprise flows.",
+   "punch": "Auth with the fraud problem included.",
+   "use": "Signing users in while filtering abuse."
+  },
+  "sublime-text": {
+   "desc": "A fast native editor, still commercial, whose speed and multiple cursors set expectations everything since has had to meet.",
+   "punch": "Still the benchmark for how fast an editor can feel.",
+   "use": "Editing large files without waiting."
+  },
+  "supabase-ai": {
+   "desc": "Supabase's AI features, listed separately. That page returns 404 and the capability lives inside the main product.",
+   "punch": "Folded into the main product.",
+   "use": "Now part of Supabase itself."
+  },
+  "supercode-sh": {
+   "desc": "An extension for Codex and Cursor adding token optimisation, curated skills and specification-driven work.",
+   "punch": "Tunes the assistant rather than replacing it.",
+   "use": "Making an existing assistant cheaper and more directed."
+  },
+  "supertokens": {
+   "desc": "Open-source authentication you self-host, with the session logic readable rather than opaque.",
+   "punch": "Auth you can step through in a debugger.",
+   "use": "Running authentication without a third party in the path."
+  },
+  "swarmclaw": {
+   "desc": "A self-hosted runtime for multiple agents with memory, MCP tools, schedules and delegation between them.",
+   "punch": "An agent runtime you can run on your own metal.",
+   "use": "Operating several coordinated agents privately."
+  },
+  "swarmvault": {
+   "desc": "A local-first knowledge graph and retrieval store for agent memory, built on a published pattern.",
+   "punch": "Memory that stays on the machine.",
+   "use": "Giving agents a private, persistent knowledge base."
+  },
+  "swe-agent": {
+   "desc": "Takes a GitHub issue and attempts a fix with the model of your choice. The academic work that grounded a lot of the benchmarks.",
+   "punch": "The research the whole category cites.",
+   "use": "Automatically attempting a fix from an issue."
+  },
+  "sweep": {
+   "desc": "An assistant for JetBrains IDEs that turns issues into pull requests.",
+   "punch": "Aimed at the JetBrains side, which most agents ignore.",
+   "use": "Converting issues into changes inside a JetBrains IDE."
+  },
+  "swiftype": {
+   "desc": "Hosted site and application search. Acquired by Elastic and folded into its search products.",
+   "punch": "Absorbed into Elastic.",
+   "use": "Now part of Elastic's search offering."
+  },
+  "swimm": {
+   "desc": "Documentation coupled to the code it describes, so a change that invalidates a document is caught in CI. Now aimed at legacy modernisation.",
+   "punch": "Fails the build when the docs go stale.",
+   "use": "Keeping documentation honest as code changes."
+  },
+  "synth": {
+   "desc": "A local-first research and experimentation workshop for running many trials on your own machine.",
+   "punch": "Research iterations measured per minute.",
+   "use": "Running experiments locally rather than in a hosted notebook."
+  },
+  "synthscan": {
+   "desc": "Scans a repository and estimates how much of it was machine-generated.",
+   "punch": "Puts a number on a question everyone is asking informally.",
+   "use": "Measuring machine-written code in a codebase."
+  },
+  "sysdig": {
+   "desc": "Cloud security from runtime back to source, built on the open-source Falco project for kernel-level detection.",
+   "punch": "Detection from the kernel, not from the logs.",
+   "use": "Detecting threats in running containers."
+  },
+  "tailwind-css": {
+   "desc": "Utility classes instead of stylesheets. Divided the front-end world and then won most of it.",
+   "punch": "Everyone objected, then adopted it.",
+   "use": "Styling an interface without leaving the markup."
+  },
+  "task-master": {
+   "desc": "A task management system that drops into coding assistants, giving an agent an ordered plan to work through.",
+   "punch": "Gives the agent a backlog instead of a prompt.",
+   "use": "Breaking work into tasks an agent completes in order."
+  },
+  "teleporthq": {
+   "desc": "A visual builder with headless content modelling and clean code export.",
+   "punch": "Visual building that hands the code back.",
+   "use": "Designing a site and exporting real front-end code."
+  },
+  "tempo": {
+   "desc": "Turns feedback, issues and requirements into reviewed pull requests, with people approving the decisions that matter.",
+   "punch": "Automates the work and keeps the judgement.",
+   "use": "Going from customer feedback to a reviewed change."
+  },
+  "terraform-cloud": {
+   "desc": "Hosted Terraform with remote state, policy and a standard workflow. Now part of the HashiCorp platform.",
+   "punch": "State management, which is where self-hosted Terraform hurts.",
+   "use": "Running Terraform with shared state and policy."
+  },
+  "terrateam": {
+   "desc": "GitOps-native Terraform and OpenTofu automation, driven from pull requests rather than a separate console.",
+   "punch": "The plan output belongs in the pull request.",
+   "use": "Running infrastructure changes through git review."
+  },
+  "testrigor": {
+   "desc": "End-to-end tests written in plain English, with locators inferred so tests survive markup changes.",
+   "punch": "Tests that do not name a single CSS selector.",
+   "use": "Writing tests that outlive a front-end rewrite."
+  },
+  "testsigma": {
+   "desc": "Agentic test automation that generates, runs, heals and diagnoses tests, then scores release confidence.",
+   "punch": "Reports a confidence number, not just a pass rate.",
+   "use": "Automating a test suite and knowing whether to ship."
+  },
+  "theneo-io": {
+   "desc": "API documentation built for people and agents together, with private portals, changelogs and MCP output.",
+   "punch": "Publishes for the agent as well as the reader.",
+   "use": "Shipping API docs that agents can consume."
+  },
+  "tinybird": {
+   "desc": "ClickHouse behind managed ingestion and API endpoints, so an analytical query becomes a URL.",
+   "punch": "The query is the endpoint.",
+   "use": "Shipping user-facing analytics without a data team."
+  },
+  "tldr": {
+   "desc": "Community-maintained simplified man pages, showing the five examples you actually wanted.",
+   "punch": "The man page, minus the parts nobody reads.",
+   "use": "Remembering how to use a command in ten seconds."
+  },
+  "tldraw-make-real": {
+   "desc": "Draw an interface on a canvas and get working code back. An early demonstration that shifted expectations.",
+   "punch": "A sketch became a running page, and everyone noticed.",
+   "use": "Turning a rough drawing into a working interface."
+  },
+  "tmuxai": {
+   "desc": "An assistant that watches the tmux pane and offers help from what is on screen, without taking control.",
+   "punch": "Reads the terminal instead of replacing it.",
+   "use": "Getting context-aware help inside an existing tmux session."
+  },
+  "tolgee": {
+   "desc": "Open-source localisation with in-app translation, so strings are edited where they appear.",
+   "punch": "Translate in place, not in a spreadsheet.",
+   "use": "Localising an application without leaving it."
+  },
+  "toprank": {
+   "desc": "Open-source marketing and search skills packaged for agents to load and use.",
+   "punch": "Domain expertise as a loadable skill.",
+   "use": "Giving an agent search and marketing capability."
+  },
+  "trae": {
+   "desc": "ByteDance's assistant and editor, positioned around collaboration with the developer rather than replacement.",
+   "punch": "Another entry from outside the usual vendor set.",
+   "use": "Coding with an assistant integrated into the editor."
+  },
+  "trigger-dev": {
+   "desc": "Open-source background jobs and workflows in TypeScript, with retries, queues and long-running tasks that survive deploys.",
+   "punch": "Long-running work that does not die on redeploy.",
+   "use": "Running durable background tasks in TypeScript."
+  },
+  "trophy": {
+   "desc": "Gamification features as a drop-in layer: streaks, achievements and progress, without building the mechanics.",
+   "punch": "The retention mechanics, prebuilt.",
+   "use": "Adding streaks and achievements to an app."
+  },
+  "twilio": {
+   "desc": "SMS, voice, video and messaging APIs. The company that made telecoms something you call from code.",
+   "punch": "Turned the phone network into an API.",
+   "use": "Sending messages or making calls programmatically."
+  },
+  "typesense-cloud": {
+   "desc": "Hosted typo-tolerant search on the open-source Typesense engine, distributed globally.",
+   "punch": "Open engine, managed operation.",
+   "use": "Adding fast search without running the cluster."
+  },
+  "ubiq": {
+   "desc": "Finds sensitive data, maps who can reach it, and enforces policy while the system is running.",
+   "punch": "Data security applied at runtime, not in a report.",
+   "use": "Controlling access to sensitive data as it is used."
+  },
+  "uizard": {
+   "desc": "Interface design for people without design training, working from templates and sketches.",
+   "punch": "Design for the founder who has no designer.",
+   "use": "Producing interface mockups without design skills."
+  },
+  "umami": {
+   "desc": "Open-source privacy-first analytics, self-hostable, one of the most widely adopted alternatives to the incumbent.",
+   "punch": "Small, self-hosted, and enough.",
+   "use": "Measuring site traffic without third-party tracking."
+  },
+  "unkey": {
+   "desc": "API key management, rate limiting and gateway observability as one platform.",
+   "punch": "The key-handling code you were about to write again.",
+   "use": "Issuing and rate-limiting API keys."
+  },
+  "unleash": {
+   "desc": "Open-source feature flags built for enterprises, with a private and secure deployment model.",
+   "punch": "Flags for organisations that will not use a hosted one.",
+   "use": "Running feature management inside your own network."
+  },
+  "upstash": {
+   "desc": "Serverless Redis, vector and search, priced per request, which suits functions that idle most of the time.",
+   "punch": "Pays nothing when nothing is happening.",
+   "use": "Adding a cache or vector store to serverless functions."
+  },
+  "userfront": {
+   "desc": "Listed as authentication infrastructure. The address now presents a compliance-focused AI productivity product.",
+   "punch": "Repositioned into a different market.",
+   "use": "Now serves a different product."
+  },
+  "v0-by-vercel": {
+   "desc": "A duplicate entry for v0. This particular link has expired and no longer resolves to the product.",
+   "punch": "Dead link: the same product lives at v0.dev.",
+   "use": "Superseded by the v0.dev entry."
+  },
+  "v0-dev": {
+   "desc": "Vercel's generative interface tool, producing React and Tailwind you can iterate on and then take into a project.",
+   "punch": "Generates into the stack Vercel already owns.",
+   "use": "Designing and iterating on full-stack interfaces."
+  },
+  "vault": {
+   "desc": "HashiCorp's secret management: dynamic credentials, leases and encryption as a service. Set the pattern for the category.",
+   "punch": "Made short-lived credentials a realistic thing to run.",
+   "use": "Issuing and rotating secrets across an infrastructure."
+  },
+  "veracode": {
+   "desc": "Enterprise application security testing with risk management, common where an external attestation is required.",
+   "punch": "Bought for the report as much as the scan.",
+   "use": "Managing application risk across a large portfolio."
+  },
+  "vercel-ai-sdk": {
+   "desc": "A duplicate entry for the AI SDK, filed under models rather than assistants. One toolkit, two rows.",
+   "punch": "The catalogue lists it twice.",
+   "use": "See the AI SDK by Vercel entry."
+  },
+  "vessel": {
+   "desc": "Native integrations with go-to-market tools, built for products that must sync with a customer's CRM.",
+   "punch": "Owns the CRM integration nobody enjoys.",
+   "use": "Syncing product data with customer CRMs."
+  },
+  "vibedoctor": {
+   "desc": "Scans applications built quickly with assistants for security, performance and quality problems, with uptime monitoring attached.",
+   "punch": "Named for exactly the codebase it expects to find.",
+   "use": "Auditing an app that was generated rather than written."
+  },
+  "vitest": {
+   "desc": "A test runner built on Vite, sharing the project's own transform pipeline so tests and source are configured once.",
+   "punch": "Reuses the build you already have.",
+   "use": "Running unit tests in a Vite project."
+  },
+  "vonage": {
+   "desc": "Voice, messaging and video APIs alongside unified communications, from a carrier-scale business.",
+   "punch": "Communications APIs with a telecom behind them.",
+   "use": "Adding voice or messaging to a product."
+  },
+  "vs-code-mcp-directory": {
+   "desc": "The GitHub MCP Registry, centralising MCP servers for discovery from VS Code and elsewhere.",
+   "punch": "The registry attempt from the platform that hosts the code.",
+   "use": "Finding and installing MCP servers."
+  },
+  "vscode": {
+   "desc": "The editor that took the market. Free, extensible, and now shipping agent workflows in the box.",
+   "punch": "Won on extensions, then kept winning.",
+   "use": "General purpose editing with an extension for everything."
+  },
+  "vulert": {
+   "desc": "Software composition analysis from manifest files alone, with no agent to install.",
+   "punch": "Scans the lockfile, installs nothing.",
+   "use": "Monitoring dependencies for vulnerabilities without an agent."
+  },
+  "wappalyzer": {
+   "desc": "Identifies the technology a site runs on, used for both competitive research and sales prospecting.",
+   "punch": "Reads a site's stack off the page.",
+   "use": "Finding out what a site is built with."
+  },
+  "warp-ai": {
+   "desc": "Warp's agent mode, where plain English drives multi-step terminal work. Now part of Warp's broader platform.",
+   "punch": "The terminal that takes instructions.",
+   "use": "Completing multi-step shell workflows by describing them."
+  },
+  "web-developer": {
+   "desc": "A long-standing browser extension adding a toolbar of inspection and debugging utilities.",
+   "punch": "Predates the browser's own developer tools.",
+   "use": "Inspecting and manipulating a page from a toolbar."
+  },
+  "webflow-ai": {
+   "desc": "Webflow's AI features for generating and optimising site content inside their visual builder.",
+   "punch": "Generation inside a tool designers already use.",
+   "use": "Building and optimising sites in Webflow."
+  },
+  "webscrapinghq": {
+   "desc": "Managed scraping delivered as a service: they operate the scrapers and hand over the data.",
+   "punch": "Buys the data, not the scraper.",
+   "use": "Getting web data without maintaining extraction code."
+  },
+  "websolr": {
+   "desc": "Hosted Apache Solr, a long-running option for teams already committed to Solr.",
+   "punch": "Solr, without running Solr.",
+   "use": "Operating a Solr index without managing servers."
+  },
+  "webstorm": {
+   "desc": "JetBrains' JavaScript and TypeScript IDE, with the deepest static understanding available for those languages.",
+   "punch": "Knows your JavaScript better than your JavaScript does.",
+   "use": "Serious front-end and Node development."
+  },
+  "what-the-diff": {
+   "desc": "Summarises a pull request in plain language, aimed at the reviewer facing a large diff.",
+   "punch": "Explains the diff before you read it.",
+   "use": "Understanding a large pull request quickly."
+  },
+  "wiggum-cli": {
+   "desc": "An open autonomous agent that scans a stack, generates specifications through interviews, and works from them.",
+   "punch": "Interviews you before it writes anything.",
+   "use": "Producing specifications and code for an existing codebase."
+  },
+  "wopee-io": {
+   "desc": "Explores a web application from a URL, generates Playwright tests, runs them and repairs them when the interface changes.",
+   "punch": "Starts from a URL and ends with a maintained suite.",
+   "use": "Getting browser test coverage without authoring it."
+  },
+  "workos": {
+   "desc": "The enterprise feature set as APIs: single sign-on, directory sync and audit logs, sold as the fastest route through a security review.",
+   "punch": "Sells the enterprise checklist as a library.",
+   "use": "Making a product enterprise-ready without building the plumbing."
+  },
+  "xyd": {
+   "desc": "An open-source documentation framework with themes, OpenAPI and GraphQL support and a plugin system.",
+   "punch": "Docs framework with no configuration ceremony.",
+   "use": "Publishing documentation from an open-source toolchain."
+  },
+  "yepcode": {
+   "desc": "Runs code, including machine-generated code, in secure sandboxes with dependencies and secrets handled.",
+   "punch": "A safe place to execute code you did not write.",
+   "use": "Executing generated or third-party code safely."
+  },
+  "yotpo": {
+   "desc": "Reviews, loyalty and referral marketing for commerce, used across the customer journey rather than only at the product page.",
+   "punch": "Reviews as a marketing channel.",
+   "use": "Collecting and reusing customer reviews in commerce."
+  },
+  "z-ai-code-review": {
+   "desc": "A GitHub Action running code review through Z.ai models.",
+   "punch": "Review as a workflow step.",
+   "use": "Adding model review to a GitHub Actions pipeline."
+  },
+  "zeabur": {
+   "desc": "Deployment with an agent that handles the infrastructure side, positioned as the operations half of assistant-written code.",
+   "punch": "An agent for the part after the code is written.",
+   "use": "Deploying and operating an application through an agent."
+  },
+  "zed": {
+   "desc": "A native, multiplayer editor from the people who built Atom and Tree-sitter, written for latency above all.",
+   "punch": "The Atom team's second attempt, and much faster.",
+   "use": "Editing and pairing in a native, low-latency editor."
+  },
+  "zenrows": {
+   "desc": "Web data infrastructure for agents and applications, including pages behind protection.",
+   "punch": "Built for the pages that do not want to be read.",
+   "use": "Fetching and extracting data from protected sites."
+  },
+  "zoho-apptics": {
+   "desc": "Mobile application analytics covering usage, crashes and engagement, part of the Zoho suite.",
+   "punch": "Analytics from the suite that already has everything else.",
+   "use": "Measuring how a mobile app is used."
+  },
+  "zx": {
+   "desc": "Google's tool for writing shell scripts in JavaScript, with the awkward parts of bash quoting handled.",
+   "punch": "Shell scripting for people who gave up on bash.",
+   "use": "Writing automation scripts in JavaScript instead of bash."
+  },
+  "zyntra": {
+   "desc": "Unlimited disposable inboxes with API access, for testing email flows and QA.",
+   "punch": "An inbox per test run.",
+   "use": "Testing email delivery without real mailboxes."
+  }
+ }
+}
