@@ -13,12 +13,18 @@ of the site, where nothing is deleted.
 
 ## High: identity and attribution
 
-- [ ] **P01** Errata 7.1 credited to A. Rahman and K. Osei
+- [x] **P01** Errata 7.1 credited to A. Rahman and K. Osei
   <br>`index §7`, `errata.xml`. Corrections attributed to named people who did not
   send them. First thing to swap when a real correction arrives.
+  <br>**Closed 2026-09-04.** The attribution was fabricated and is withdrawn. Erratum 7.36, which
+  also records that Section 12 thanked somebody for the 02:40 ClickHouse rollback on the same day
+  erratum 7.19 removed that event from note 3.4 as the prototype's invention.
 
-- [ ] **P02** Errata 7.4 credited to S. Datta
+- [x] **P02** Errata 7.4 credited to S. Datta
   <br>`index §7`, `errata.xml`. Same.
+  <br>**Closed 2026-09-04.** The attribution was fabricated and is withdrawn. Erratum 7.36, which
+  also records that Section 12 thanked somebody for the 02:40 ClickHouse rollback on the same day
+  erratum 7.19 removed that event from note 3.4 as the prototype's invention.
 
 - [x] **P03** OpenPGP fingerprint `REPL ACEM EWIT HREA LFIN GERP RINT 0000 0000 0000`
   <br>`index §9.3`. Closed by T30.
@@ -284,8 +290,11 @@ does not.
   tracked separately at P21 because they were never illustrative, only unconfirmed. They are the site's central claim about itself, so they
   want a deliberate pass.
 
-- [ ] **P13** Acknowledgement to the operations engineer in Chattogram
+- [x] **P13** Acknowledgement to the operations engineer in Chattogram
   <br>`index §12`.
+  <br>**Closed 2026-09-04.** The attribution was fabricated and is withdrawn. Erratum 7.36, which
+  also records that Section 12 thanked somebody for the 02:40 ClickHouse rollback on the same day
+  erratum 7.19 removed that event from note 3.4 as the prototype's invention.
 
 - [x] **P14** security.txt `Expires: 2027-08-13`
   <br>`.well-known/security.txt`. Wants annual rotation, and a reminder that outlives
