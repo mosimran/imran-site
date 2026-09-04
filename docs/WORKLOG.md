@@ -3694,3 +3694,41 @@ as valid Atom with id, title, updated and self link, and no entry is missing a r
 to 2026-09-04 and 3.9 is its newest entry. No entry is dated 2026-01-01 or 2022 any more.
 
 **Deployed.** Pending merge.
+
+## The site thanked three people who do not exist
+
+**The worst content defect found here, and it was tracked and left open for three weeks.**
+
+Section 12 thanked an operations engineer in Chattogram for taking a call at 02:40 during a
+ClickHouse cutover. Errata 7.1 and 7.4 credited corrections to A. Rahman, K. Osei and S. Datta.
+None of them sent anything and the call did not happen. All five attributions are the handoff
+prototype's, tracked since 2026-08-13 as P13, P01 and P02.
+
+**The compounding part.** On 2026-09-03 erratum 7.19 removed a figure from note 3.4 describing
+"one rollback executed cleanly at 02:40" because it was invented. The same invented night stayed
+on the front page as a thank-you. Section 3 withdrew the event and Section 12 went on being
+grateful for it, in a document whose argument is that a claim and its retraction travel together.
+
+I removed that figure myself and did not check where else the event appeared. A grep for the
+string would have found it in a second.
+
+**Why it outranks the invented figures.** A fabricated metric misrepresents a system. A
+fabricated credit misrepresents a person: it puts a stranger's name against work they did not do,
+in the section built to record what the author got wrong. Errata 7.1 and 7.4 were the site's
+evidence that it takes correction seriously, and they were furniture.
+
+**Fixed.** Section 12 now says no reader has yet sent a correction that changed anything, and
+that every entry in Section 7 to date is the author finding his own error. The credits on 7.1 and
+7.4 are withdrawn rather than deleted, each carrying a notice quoting the attribution it
+displayed, in the pattern erratum 7.12 set. `creditedTo` is gone from both, so no fabricated name
+renders as a live credit on the page or in the feed; verified in the built output. Entry 7.4 also
+corrects an axis on "Figure 3 of the ClickHouse note", and 3.4 has never had a figure.
+
+Erratum 7.36. P01, P02 and P13 closed, taking the ledger to 7 open of 25, and none of the seven
+attributes anything to a person.
+
+**Validated.** `check`, `revised`, `mobile`, `print`, `visible` all exit 0. 0 WCAG2AA errors.
+Prose scan clean. 02:40 now appears only in erratum 7.19 and in note 3.4's disclaimer, both
+quoting it as removed.
+
+**Deployed.** Pending merge.

@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-04', change: 'Section 12 thanked three people who do not exist, one for an event Section 3 had already withdrawn. Credits on 7.1 and 7.4 withdrawn. Erratum 7.36.' },
   { date: '2026-09-04', change: 'The feed dated every implementation note to January, and 3.1 to 2022, because it used the system start date as the document date. Erratum 7.35.' },
   { date: '2026-09-04', change: 'Implementation 3.9 rewritten: it described the document model when the system is an MCP server for operating any API. Erratum 7.34.' },
   { date: '2026-09-04', change: 'Section 3 gains 3.9, an API spec editor whose document is the specification and whose every view is a pure function of it.' },
