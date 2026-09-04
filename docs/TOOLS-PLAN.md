@@ -1,6 +1,29 @@
 # A tools section
 
-Rev A, 4 September 2026. Exploration and a recommendation. Nothing is built.
+Rev B, 5 September 2026. Built and deployed as T47. Rev A was exploration; this
+revision records where the plan held and where the data contradicted it.
+
+**Where Rev A was right.** Not one big graph: the drawing would have been a hairball. Real pages
+per category rather than a filter widget. No logos, for the reasons in section 5. Type only.
+
+**Where Rev A was wrong.** It assumed integrations would be recoverable from the source lists and
+that the argument would be about how to draw a hundred-node graph legibly. The edges barely exist:
+one tool's description names another 85 times across 591 tools, and eleven of the fourteen
+categories contain no internal edges at all. A curated list describes each product on its own
+terms. Two categories get a drawing; the rest carry a paragraph saying why there is none.
+
+**What Rev A did not anticipate at all.** The three source lists contain no programming languages,
+no runtimes, no operating system tools and no editors anyone here uses. They are catalogues of
+developer-facing products. So the ingest could never have produced "the tools I use", however it
+was presented, and the section had to become two lists rather than one: a cited catalogue and a
+short hand-written overlay carrying evidence. That split is now the thing the front page explains
+first.
+
+**Still unbuilt.** Section 6 argued that recording what was dropped and why is what stops this
+being a CV appendix. It remains the strongest recommendation here and it is not implemented,
+because it needs the owner. So do the depth vocabulary and the wider stack beyond this repository.
+
+Original Rev A text follows unchanged.
 
 - [1. What was asked for, and what survives contact with the constraints](#1-what-was-asked-for-and-what-survives-contact-with-the-constraints)
 - [2. Four ways to draw a cloud, and why three of them fail here](#2-four-ways-to-draw-a-cloud-and-why-three-of-them-fail-here)
