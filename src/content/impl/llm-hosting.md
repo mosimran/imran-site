@@ -3,6 +3,7 @@ section: "3.8"
 title: "Custom LLM training and hosting"
 summary: "Open weight models fine tuned and served on self managed GPU infrastructure for clients whose data cannot reach a public API, with promotion gated on evaluation."
 slug: "llm-hosting"
+revised: 2026-09-03
 state: production
 stack: ["LoRA / PEFT", "self-managed GPU", "quantisation", "model registry", "private cloud / on-prem"]
 result: []

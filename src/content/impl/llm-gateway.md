@@ -3,6 +3,7 @@ section: "3.2"
 title: "Sovereign LLM gateway"
 summary: "One control plane over several model backends, the self-hosted ones running on two GPUs we own. Redaction runs before routing, fallback is deterministic and stamped, quotas are per tenant and per model."
 slug: "llm-gateway"
+revised: 2026-09-03
 state: production
 stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "Qwen", "GPT-4o", "2 GPUs, self-hosted inference"]
 result: []

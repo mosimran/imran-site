@@ -3,6 +3,7 @@ section: "3.3"
 title: "Webhook ingestion with delivery guarantees"
 summary: "A shared receiver for API and social media callbacks. Every event is accepted once, replayable forever, and never lost because a downstream service was having a bad afternoon."
 slug: "ingest-rs"
+revised: 2026-09-03
 state: production
 stack: ["Rust (tokio)", "RabbitMQ", "PostgreSQL", "MinIO"]
 result: ["100% webhook receipt rate"]

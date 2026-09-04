@@ -3,6 +3,7 @@ section: "3.1"
 title: "Mevrik: agentic customer experience platform"
 summary: "Multi-tenant conversational automation for banks and telecom operators. One image ships to public cloud and to air-gapped estates, and configuration alone decides which."
 slug: "mevrik-cx"
+revised: 2026-09-03
 state: production
 since: 2022-01
 stack: ["Go", "Python", "TypeScript / Next.js", "Flutter", "gRPC + protobuf", "PostgreSQL + pgvector", "ClickHouse", "Redis", "NATS JetStream", "MinIO / S3", "Docker", "Kubernetes", "Helm", "OpenTelemetry"]
