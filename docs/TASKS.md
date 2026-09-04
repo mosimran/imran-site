@@ -342,6 +342,10 @@ it needs the owner.
   invented figure, and five say plainly which measurements would matter and that they are not
   published. Adding three more systems from a résumé, with figures nobody has checked against
   the rule set on 2026-09-03, would have traded that for coverage.
+  <br>**Partly reopened 2026-09-04 as T46.** The owner supplied an engineering blog he wrote
+  covering the field service platform named above. The objection recorded here was to figures
+  from a résumé that nobody had checked; that source carries architecture and failure modes and
+  no figures worth publishing, so the objection does not reach it. One system, not three.
 
 - [x] **T44** `johnefemer.com` nameservers to Cloudflare, or drop the claim
   <br>*Ships:* yes. *Validated by:* `node scripts/check-live.mjs https://johnefemer.com`
@@ -369,6 +373,19 @@ it needs the owner.
   <br>**Closed 2026-09-03, proven live.** Both serving hosts return 200 with a `Contact:` line,
   and both `Canonical:` URLs the file declares now resolve. `check-live.mjs` failed on both
   hosts before the deploy and passes on both after it.
+
+- [ ] **T46** Section 3 and 5 from the NuForce engineering blog
+  <br>*Ships:* yes. *Plan:* [NUFORCE-PLAN.md](NUFORCE-PLAN.md), Rev A.
+  <br>*Blocked on the owner:* confidence values and retirement conditions for the papers, and
+  whether the note may name the platform.
+  <br>Five posts read 2026-09-04. Recommended set is one implementation note, 3.10 on workforce
+  activity from check-in to invoice line, and one paper, 5.24 on a capability whose declaration,
+  routing and implementation live apart and silently disconnect. A second paper, 5.25 on why
+  "the data is missing" is not a diagnosis, is optional.
+  <br>**This reopens part of T43**, which was closed on 2026-09-03 with no expansion. The
+  reasoning there was that the résumé's figures had not been checked against the rule set. This
+  source is the owner's own engineering blog and carries architecture rather than figures, so
+  that reasoning does not reach it. Section 7 of the plan says so at length.
 
 ---
 
