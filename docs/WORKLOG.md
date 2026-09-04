@@ -4223,3 +4223,41 @@ failure the errata keep naming: a green result confirmed against something adjac
 it claimed to measure.
 
 **Deployed.** Pending merge.
+
+
+## The share link moved into the masthead, and the copy button did not happen
+
+**What changed.** The short link was a line under the paper's title. It is now a line in
+the document masthead, under `State:`, reading `Share: https://mosthofaimran.com/l/5-24`.
+The masthead is the first block on the page and it is already where this document puts its
+identifiers, so the link reads as apparatus rather than as a widget bolted under the title.
+
+Two things fell out of the move. The stylesheet got 33 bytes back, because the line no
+longer needs its own block layout and only keeps `user-select:all`. And a URL is a single
+unbreakable token, so it needed `overflow-wrap:anywhere`: above 600px the masthead is still
+two columns of about 318px, and 39 characters of monospace is close enough to that to be
+worth not guessing about. Checked at all 14 widths from 360 to 768 rather than reasoned
+about.
+
+**The copy button was asked for and is not built.** Click to copy with the label changing
+to "Copied" needs JavaScript, and no CSS or HTML mechanism reaches the clipboard. That is
+the site's oldest claim and it is enforced in three places at once: the budget caps
+executable scripts at zero, the CSP is `default-src 'none'` with `script-src` holding only
+the JSON-LD hashes, and the colophon publishes "ships no script" with three errata leaning
+on it. The full cost was put to the owner, including that CLAUDE.md requires the constraint
+be raised deliberately with an erratum written first rather than weakened quietly, and the
+answer was to keep the claim.
+
+**What was refused outright.** Faking it. A CSS `:active` rule can swap the text to
+"Copied" without anything being copied, and that is a control which presents as working.
+It would have shipped on paper 5.24, whose entire argument is that a thing which answers
+incorrectly is worse than a thing that cannot answer. What ships instead is what the
+platform actually provides: one click selects the whole URL, and right-click on a desktop
+or long-press on a phone offers Copy Link with the operating system's own confirmation.
+
+**Validated.** `npm run check` exit 0. Index 54,128 of 60,000, inlined CSS 11,873 of
+12,000, down 33 bytes. `npm run mobile` clean on a paper, a note, the papers index and the
+front page at every width from 360 to 768, which is the check that matters here because the
+change puts an unbreakable 32-character token into a narrow column.
+
+**Deployed.** Merged to `main` and shipped by Actions.

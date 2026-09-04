@@ -17,8 +17,9 @@ const ident = identifier(p.slug, d.history.length)
 // what has been handed out, and a page that computed its own code could disagree
 // with a link somebody already printed. check-short.mjs fails the build if this
 // page stops printing it.
-const short = (ledger as Record<string, { target: string }>)[d.section.replace(/\./g, '-')]
-const shortUrl = short ? new URL(`/l/${d.section.replace(/\./g, '-')}`, Astro.site).href : null
+const code = d.section.replace(/\./g, '-')
+const shortPath = `/l/${code}`
+const shortUrl = (ledger as Record<string, unknown>)[code] ? new URL(shortPath, Astro.site).href : null
 const expires = expiresOn(d.revised)
 const expired = isExpired(d.revised)
 const ld = paperLd({
@@ -35,7 +36,7 @@ const ld = paperLd({
 Internet-Draft
 {ident}
 Confidence: {d.confidence ?? 'n/a'}
-State: {d.state}</div>
+State: {d.state}{shortUrl ? '\nShare: ' : ''}{shortUrl && <a class="sl" href={shortPath}>{shortUrl}</a>}</div>
     <div class="r"><b>M. Imran</b>
 {d.published ? `Published ${iso(d.published)}` : 'Not yet published'}
 Revised {iso(d.revised)}
@@ -45,7 +46,6 @@ Expires: {fmt(expires)}</div>
   <div class="title">
     <h1>{d.state === 'retracted' ? <s>{d.title}</s> : d.title}</h1>
     <div class="sub">{d.summary}</div>
-    {shortUrl && <p class="sl">Share <a href={`/l/${d.section.replace(/\./g, '-')}`}>{shortUrl}</a></p>}
   </div>
 
   {expired && (
