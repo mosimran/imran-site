@@ -2774,7 +2774,7 @@ paraphrased, so the document cannot drift from the measurement.
 
 **What is next.** T36. No further planning.
 
-## T36 — implementation note 3.3 written
+## T36: implementation note 3.3 written
 
 **Changed.** `src/content/impl/ingest-rs.md` written: a shared webhook receiver used by
 several platforms, covering the accept path, why it is one service rather than one per
@@ -3780,8 +3780,9 @@ ever on the front page. The intro did not say the table was a selection, so nine
 section.
 
 This is erratum 7.15 again, which found exactly this in Section 3, generated it, and wrote that
-the shape is always a fact typed twice. Section 5 was two hundred lines further down the same
-file and the fix stopped at the section that had gone wrong. It is generated now, nine most
+the shape is always a fact typed twice. Section 5 was about fifty lines further down the same
+file and the fix stopped at the section that had gone wrong. That distance was published as "two
+hundred lines" and was never counted; erratum 7.38 corrects it. It is generated now, nine most
 recently revised of however many exist, with both numbers in the intro. Erratum 7.37.
 
 Checked before replacing it: nothing on the table disagreed with the collection. It was wrong by

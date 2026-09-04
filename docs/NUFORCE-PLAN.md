@@ -53,7 +53,7 @@ named failure mode of the category, and nowhere near a route or a parameter name
 
 ## 4. What the five posts yield
 
-**"From check-in to invoice line" (2026-08-27) — an implementation note, and the richest of
+**"From check-in to invoice line" (2026-08-27) is an implementation note, and the richest of
 the five.** An append-only ledger with projections rather than several tables. Three
 independent axes kept as separate fields because one enum cannot express them: attendance as
 payroll truth, activity as a dispatch estimate, liveness computed at read time from
@@ -64,7 +64,7 @@ geofence that flags rather than blocks. Unmatched invoice lines surfaced as uncl
 rather than dropped. And a sequencing constraint worth the whole note: the console does not
 ship before the thing that produces its data.
 
-**"A tool has three halves" (2026-08-12) — a paper, and the strongest thing in the corpus.** A
+**"A tool has three halves" (2026-08-12) is a paper, and the strongest thing in the corpus.** A
 capability lives in three places: a declaration that it exists, a route that dispatches to it,
 and an implementation that does the work. Nothing checked that the three referred to the same
 thing, so a rename landed in one, declarations existed with no implementation behind them, and
@@ -72,21 +72,21 @@ implementations existed that the engine never listed. It presents as working, wh
 than absence. The answer is tests that walk all three bidirectionally, a boot-time
 reconciliation that logs rather than kills, and shipping dark with reads first.
 
-**"The data was fine every time" (2026-08-11) — a paper.** Three bugs in a week all presenting
+**"The data was fine every time" (2026-08-11) is a paper.** Three bugs in a week all presenting
 as missing data. None was data loss: one table was never seeded outside local, one view fetched
 fields and never rendered them while a list expected a different case convention, and one
 handler dropped a filter and returned the whole account. The argument is that "the data is
 missing" names a symptom and forecloses the diagnosis, and the replacement is three questions
 answerable in a minute each: is the row there, is it in the response, does the view render it.
 
-**"The balance is the feature" (2026-07-15) — a paper candidate, weaker alone.** Every term in
+**"The balance is the feature" (2026-07-15) is a paper candidate, weaker alone.** Every term in
 a computed balance is sourced rather than typed, and accrual happens on read rather than by a
 batch job. The claim is that a number a person keys in is a number that drifts, and the
 trustworthiness comes from nobody being able to key it in. Good, and close enough to the
 "one source, many surfaces" argument this site already makes that it may be better as a
 section inside another paper than as its own.
 
-**"Invite to operate" (2026-07-15) — material, not a piece.** Its useful content is that
+**"Invite to operate" (2026-07-15) is material rather than a piece.** Its useful content is that
 invitations lived only in a cache with a time to live, so a flush erased them with no audit
 trail, and that a lifecycle nobody can observe cannot be reversed either. That is one good
 paragraph, and it belongs inside the paper about distributed capability rather than standing
