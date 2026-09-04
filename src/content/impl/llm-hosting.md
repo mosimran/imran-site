@@ -25,7 +25,7 @@ choices, hardware, tuning parameters and per-client configuration are deliberate
 LoRA and PEFT over domain corpora for terminology, tone and Bangla performance, served on self
 managed GPU infrastructure in private cloud and on-premise installs, with promotion gated on
 evaluation and model changes moving through a registry under the same change control as code.
-This note reports no figures, and section 4 names the three that would matter.</div>
+This note publishes no measurements, and section 4 names the three that would matter.</div>
 
 ## 1. The constraint
 

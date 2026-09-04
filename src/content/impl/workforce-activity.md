@@ -24,7 +24,7 @@ decisions, and the failure modes this shape has. It is a solution path for a sys
 built rather than a disclosure of that system's internals. Schema, table and field names,
 identifiers, client versions, thresholds, customer configuration and the internal document
 numbering are deliberately absent.
-<br><br>This note reports no figures, and section 4 names the ones that would matter.</div>
+<br><br>This note publishes no measurements, and section 4 names the ones that would matter.</div>
 
 ## 1. The constraint
 
