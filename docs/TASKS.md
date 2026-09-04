@@ -374,7 +374,7 @@ it needs the owner.
   and both `Canonical:` URLs the file declares now resolve. `check-live.mjs` failed on both
   hosts before the deploy and passes on both after it.
 
-- [ ] **T46** Section 3 and 5 from the NuForce engineering blog
+- [x] **T46** Section 3 and 5 from the NuForce engineering blog
   <br>*Ships:* yes. *Plan:* [NUFORCE-PLAN.md](NUFORCE-PLAN.md), Rev A.
   <br>*Blocked on the owner:* confidence values and retirement conditions for the papers, and
   whether the note may name the platform.
@@ -386,6 +386,15 @@ it needs the owner.
   reasoning there was that the résumé's figures had not been checked against the rule set. This
   source is the owner's own engineering blog and carries architecture rather than figures, so
   that reasoning does not reach it. Section 7 of the plan says so at length.
+  <br>**Closed 2026-09-04. The owner said to decide, so the blocked items were decided rather
+  than left.** 3.10 written on workforce activity, 5.24 on a capability living in three places,
+  5.25 on why "the data is missing" is not a diagnosis. All three reference designs under the
+  rule in CLAUDE.md, none carrying a figure.
+  <br>Decisions taken: the platform is not named in any of the three, because unlike 3.1 the
+  source is a blog written for a product's own audience and naming it turns a reference design
+  into a case study. Confidence values are the drafter's at the draft tier, tracked at P26. The
+  balance argument folded into 3.10 section 2.5 as sourced attribution rather than becoming a
+  third paper, because it is the same claim about derived numbers this site already makes.
 
 ---
 
