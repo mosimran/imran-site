@@ -3732,3 +3732,67 @@ Prose scan clean. 02:40 now appears only in erratum 7.19 and in note 3.4's discl
 quoting it as removed.
 
 **Deployed.** Pending merge.
+
+## Three pieces written from the NuForce engineering blog
+
+**The owner said to decide, so the blocked items in the plan were decided rather than deferred.**
+
+**3.10, attendance as a ledger and the line it eventually bills.** The constraint is that three
+consumers want to know where somebody was and want different answers: payroll wants a defensible
+record, dispatch wants a working estimate now, a screen wants to know who is connected. One enum
+admits one axis, so they are three fields over one append-only ledger. Seven failure modes, five
+fixed and two open, all drawn from the source. 6/7, missing figures alone.
+
+**5.24, a capability lives in three places and nothing checks they agree.** A declaration, a
+route, an implementation, and no type system joins them because the join is a string. The claim
+is that the drift is structural rather than a matter of care, and that the result presents as
+working, which is worse than absent. It generalises past AI tooling to plugin hosts, permission
+tables and every RPC surface.
+
+**5.25, "the data is missing" is not a diagnosis.** Three bugs in a week, one sentence between
+them, three unrelated causes and no storage fault. The phrase converts an observation into a
+claim about the far end of the system before anybody has looked. Replaced by three questions that
+partition the stack.
+
+**Decisions taken on the owner's behalf, and the reasoning for each.**
+
+*The platform is not named in any of the three.* 3.1 names Mevrik, so there was precedent either
+way. The source here is a blog written for a product's own audience, and naming it turns a
+reference design into a case study, which is the opposite of what the disclaimer promises.
+
+*Confidence values are the drafter's, at the draft tier, deliberately.* 0.70 and 0.65. A
+confidence value on this site is the author's credence and nobody else can hold it, so both were
+placed low enough that the schema classes them as drafts and both pages say so on their face.
+Setting them at the higher tier would have claimed his credence for him. P26 tracks it, the same
+way P21 did for 5.15 and 5.16.
+
+*The balance argument folded into 3.10 rather than becoming a third paper.* "Every term sourced,
+not typed" is the same claim about derived numbers this site already makes in several places, and
+it does real work inside the attribution section where it is concrete.
+
+**Retirement conditions were drafted, and they are the more consequential half.** They say what
+evidence would make him withdraw each claim. A condition he would not honour is worse than none,
+so P26 asks him to read them rather than the numbers.
+
+**Found while making room: the Section 5 table had not shown a new claim since launch.** Nine
+rows of hand-written HTML listing 5.1 to 5.9, with fourteen papers written since and none of them
+ever on the front page. The intro did not say the table was a selection, so nine rows read as the
+section.
+
+This is erratum 7.15 again, which found exactly this in Section 3, generated it, and wrote that
+the shape is always a fact typed twice. Section 5 was two hundred lines further down the same
+file and the fix stopped at the section that had gone wrong. It is generated now, nine most
+recently revised of however many exist, with both numbers in the intro. Erratum 7.37.
+
+Checked before replacing it: nothing on the table disagreed with the collection. It was wrong by
+omission rather than on its face, which is why it lasted.
+
+**Nothing from the do-not-publish list leaked.** Verified by grep against all eleven items in
+section 3 of the plan: internal RFC numbers, table names, a customer record identifier, client
+versions, the copilot's name, endpoint paths and environment defaults. Zero hits across the three
+new files.
+
+**Validated.** `check`, `mobile`, `print`, `visible`, `prose` all clean. 0 WCAG2AA errors.
+Section 3 at 63 of 70 items across ten notes. T46 closed, P26 opened, 8 open of 26.
+
+**Deployed.** Pending merge.

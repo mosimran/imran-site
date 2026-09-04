@@ -283,6 +283,19 @@ does not.
   reader can learn from is legitimate and stays disclaimed; attaching a measurement nobody took
   is not, whatever the prose around it claims.
 
+- [ ] **P26** Confidence values on papers 5.24 and 5.25
+  <br>`src/content/papers/three-halves.md`, `data-is-missing.md`. Set to 0.70 and 0.65 by the
+  drafter on 2026-09-04 when the owner said to decide. A confidence value on this site is the
+  author's own credence and nobody else can hold it for him, so both were placed at the draft
+  tier deliberately: the schema then classes them as drafts, both pages say so on their face,
+  and nothing is claimed at the higher tier on his behalf.
+  <br>Each paper carries a note saying the value is the drafter's. This is the same row P21 was
+  for 5.15 and 5.16, and it closes the same way: the owner states his own number, or leaves them
+  where they are and says so.
+  <br>The retirement conditions were drafted too, and they are the more consequential half. They
+  say what evidence would make him withdraw each claim, and a condition he would not honour is
+  worse than none.
+
 ## Low
 
 - [ ] **P12** Confidence values on all 14 papers

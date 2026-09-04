@@ -18,6 +18,10 @@ import { history } from '../lib/history'
 // PHP to Rust" and "89% fewer nodes" on the front page. An erratum that the
 // homepage contradicts is worse than no erratum. Same fix as Appendix A: one
 // source, two surfaces.
+const papersRecent = (await getCollection('papers'))
+  .sort((a, b) => +b.data.revised - +a.data.revised)
+const SHOWN = 9
+
 const impl = (await getCollection('impl'))
   .sort((a, b) => Number(a.data.section.split('.')[1]) - Number(b.data.section.split('.')[1]))
 const chip = (s: string) => (s === 'production' ? 'ok' : s === 'retired' ? 'bad' : s === 'unwritten' ? '' : 'warn')
@@ -256,51 +260,18 @@ mosthofaimran.com
   <!-- ---------------- 5 ---------------- -->
   <h2 id="s5">5. Position Papers <a class="hash" href="#s5">#</a></h2>
   <div class="ind">
-    <p class="dim" style="max-width:80ch">Claims, with confidence values and revision dates. Full index at
-    <a href="/papers/">Section 5, complete</a>. Feed at <a href="#s9">/feed.xml</a>.</p>
+    <p class="dim" style="max-width:80ch">Claims, with confidence values and revision dates. The
+    {SHOWN} most recently revised of {papersRecent.length} are below; all of them are at
+    <a href="/papers/">Section 5, complete</a>. Feed at <a href="#s91">/feed.xml</a>.</p>
     <table class="rt">
       <thead><tr><th style="width:46px">§</th><th>Claim</th><th style="width:1%">Conf.</th><th style="width:1%">State</th><th style="width:1%">Revised</th></tr></thead>
       <tbody>
-      <tr><td class="n" data-l="Section">5.1</td>
-        <td class="hd" data-l="Paper"><a href="/papers/competence-porn/">Competence Theatre</a>
-          <span class="sub">Watching a skilled person work and assembling a system you never read produce the same feeling as competence. Neither supplies the part that matters during an incident.</span></td>
-        <td class="num" data-l="Confidence">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-31</td></tr>
-      <tr><td class="n" data-l="Section">5.2</td>
-        <td class="hd" data-l="Paper"><a href="/papers/vibe-coding/">Vibe Coding and the IKEA Effect</a>
-          <span class="sub">We overvalue systems assembled from parts we never read. Assembly produces the sensation of understanding without the substance.</span></td>
-        <td class="num" data-l="Confidence">0.75</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-31</td></tr>
-      <tr><td class="n" data-l="Section">5.3</td>
-        <td class="hd" data-l="Paper"><a href="/papers/algorithmic-homophily/">Algorithmic Homophily</a>
-          <span class="sub">Your timeline is a cache with no invalidation policy. It returns the priors you arrived with, warmed.</span></td>
-        <td class="num" data-l="Confidence">0.60</td><td data-l="State"><span class="chip warn">Revising</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.4</td>
-        <td class="hd" data-l="Paper"><a href="/papers/easy-button-tax/">The Easy Button Tax</a>
-          <span class="sub">Removed friction is relocated friction. The invoice arrives during the incident, denominated in hours you do not have.</span></td>
-        <td class="num" data-l="Confidence">0.85</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.5</td>
-        <td class="hd" data-l="Paper"><a href="/papers/on-prem/">On-Premise Is Not a Downgrade</a>
-          <span class="sub">Sovereignty is an architectural constraint, not a punishment. Design for it early and it stops costing you.</span></td>
-        <td class="num" data-l="Confidence">0.90</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.6</td>
-        <td class="hd" data-l="Paper"><a href="/papers/retry-storm/">The Retry Storm You Built On Purpose</a>
-          <span class="sub">Exponential backoff without jitter synchronises your clients. You shipped the accelerant, then wrote a postmortem about the fire.</span></td>
-        <td class="num" data-l="Confidence">0.95</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.7</td>
-        <td class="hd" data-l="Paper"><a href="/papers/chestertons-fence/">Chesterton's Fence Has a Git Blame</a>
-          <span class="sub">The argument for reading history before deleting it, aimed at the specific case where the history is one line and a date.</span></td>
-        <td class="num" data-l="Confidence">0.80</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.8</td>
-        <td class="hd" data-l="Paper"><a href="/papers/rag-search/">RAG Is a Search Problem in a Trench Coat</a>
-          <span class="sub">The embedding model is rarely the bottleneck. The chunking strategy is an information retrieval decision made in an afternoon and never revisited.</span></td>
-        <td class="num" data-l="Confidence">0.70</td><td data-l="State"><span class="chip ok">Holding</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.9</td>
-        <td class="hd" data-l="Paper"><a href="/papers/ship-of-theseus/">The Ship of Theseus Passes Its Integration Tests</a>
-          <span class="sub">On strangler-fig migrations, and the moment where the new system is technically complete and nobody can say when it became itself.</span></td>
-        <td class="num" data-l="Confidence">0.55</td><td data-l="State"><span class="chip warn">Draft</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
-      <tr><td class="n" data-l="Section">5.10</td>
-        <td class="hd" data-l="Paper"><s>Vector Databases Are a Fad</s>
-          <span class="sub">Withdrawn in full. See Section 7.2.</span></td>
-        <td class="num" data-l="Confidence">n/a</td><td data-l="State"><span class="chip bad">Retracted</span></td><td class="num" data-l="Revised">2026-08-14</td></tr>
+      {papersRecent.slice(0, SHOWN).map((p) => (
+        <tr><td class="n" data-l="Section">{p.data.section}</td>
+        <td class="hd" data-l="Paper"><a href={`/papers/${p.slug}/`}>{p.data.title}</a>
+          <span class="sub">{p.data.summary}</span></td>
+        <td class="num" data-l="Confidence">{p.data.confidence ?? 'n/a'}</td><td data-l="State"><span class={`chip ${p.data.state === 'holding' ? 'ok' : p.data.state === 'retracted' ? 'bad' : ''}`}>{p.data.state.charAt(0).toUpperCase() + p.data.state.slice(1)}</span></td><td class="num" data-l="Revised">{p.data.revised.toISOString().slice(0, 10)}</td></tr>
+      ))}
       </tbody>
     </table>
     <p style="margin-top:14px"><a href="/papers/">Complete index →</a></p>
