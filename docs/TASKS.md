@@ -396,10 +396,14 @@ it needs the owner.
   balance argument folded into 3.10 section 2.5 as sourced attribution rather than becoming a
   third paper, because it is the same claim about derived numbers this site already makes.
 
-- [ ] **T47** A tools section
+- [x] **T47** A tools section
   <br>*Ships:* yes. *Plan:* [TOOLS-PLAN.md](TOOLS-PLAN.md), Rev A.
-  <br>*Blocked on the owner:* logos or type, whether dropped tools are in scope, launch size,
-  whether a page-scoped style block is acceptable, and the depth vocabulary.
+  <br>*Built:* 591 tools ingested from three awesome-lists at a pinned commit, plus a
+  thirteen-entry overlay of what demonstrably builds and serves this site. 141 pages, a zero-JS
+  server-rendered search, and category graphs only where the data has edges.
+  <br>*Still the owner's:* logos or type (shipped as type), whether dropped tools are in scope
+  (not built), the depth vocabulary (not recorded), and whether the page-scoped stylesheet is
+  acceptable. See the T47 worklog entry.
   <br>A `tools` collection with three generated surfaces: an index, a page per category carrying
   a small readable map, and a page per tool carrying its neighbourhood. Not one big graph: a
   hundred nodes is a hairball and the site's figures already scroll sideways at 600px.

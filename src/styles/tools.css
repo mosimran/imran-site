@@ -1,0 +1,89 @@
+/*
+ * Scoped to the tools section, imported only by the pages under /tools/.
+ *
+ * It is a second stylesheet, which is a deviation from BUILD.md section 6, and
+ * the reason is arithmetic rather than preference: the inlined sheet is at
+ * 11,806 bytes of a 12,000 byte cap, and the index does not import this file, so
+ * the budget the cap protects is untouched. Astro inlines it into the tools
+ * pages, so it is still zero extra requests for a reader.
+ */
+
+.tsec{max-width:66ch}
+
+/* ---------- search ---------- */
+/* A real form with a real GET. There is no JavaScript here and there is not
+   going to be any, so the submit goes to a Pages Function that renders results
+   server-side. Without the function this degrades to a 404 rather than to a
+   silently dead box, which is the honest failure. */
+.tfind{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 6px}
+.tfind input{flex:1 1 12em;min-width:0;font:inherit;font-family:var(--mono);font-size:15px;
+  padding:11px 12px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--rule);border-radius:2px}
+.tfind input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.tfind button{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  padding:11px 18px;min-height:44px;cursor:pointer;color:var(--paper);background:var(--accent);
+  border:1px solid var(--accent);border-radius:2px}
+.tfind button:hover{background:var(--ink);border-color:var(--ink)}
+
+/* ---------- category grid ---------- */
+.tcats{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:2px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));margin:14px 0}
+.tcat{background:var(--paper);padding:12px 13px;text-decoration:none;border:0;display:block}
+.tcat:hover,.tcat:focus-visible{background:var(--sheet)}
+.tcat b{display:block;font-family:var(--mono);font-size:13px;color:var(--ink);
+  font-weight:600;line-height:1.35}
+.tcat .n{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em}
+.tcat .b{display:block;font-family:var(--text);font-size:13.5px;color:var(--dim);
+  line-height:1.45;margin-top:5px}
+
+/* ---------- tool list ---------- */
+/* Rows rather than a table. A table of 115 tools becomes a stack of label/value
+   cards on a phone, which is four lines of chrome per tool and unreadable at
+   that length. */
+.tl{list-style:none;margin:14px 0;padding:0;border-top:1px solid var(--rule)}
+.tl li{padding:11px 0 12px;border-bottom:1px solid var(--rule)}
+.tl .h{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+.tl .h a,.tl .h b{font-family:var(--mono);font-size:14.5px;font-weight:600;
+  line-height:1.35;word-break:break-word}
+.tl .d{font-family:var(--text);font-size:15px;line-height:1.5;color:var(--dim);
+  margin-top:3px;max-width:62ch}
+.tl .m{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:6px;
+  display:flex;gap:6px 12px;flex-wrap:wrap;align-items:center}
+.tl .m a{font-size:11.5px}
+
+/* The cross-reference count. Two lists carrying the same tool is the only
+   popularity signal in the data, so it is shown as a count of lists and never
+   as a score, a rank or a rating. */
+.tref{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent);
+  padding:1px 6px;border-radius:2px;white-space:nowrap}
+.trole{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid color-mix(in srgb,var(--ok) 50%,transparent);color:var(--ok);
+  padding:1px 6px;border-radius:2px;white-space:nowrap}
+
+/* ---------- evidence rows in the used table ---------- */
+.tev{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:5px;word-break:break-word}
+.tev b{color:var(--ink);font-weight:600}
+
+/* ---------- source manifest ---------- */
+.tsrc{list-style:none;margin:12px 0;padding:0}
+.tsrc li{font-family:var(--mono);font-size:12.5px;line-height:1.6;padding:8px 0;
+  border-bottom:1px solid var(--rule);color:var(--dim)}
+.tsrc b{font-size:13.5px;color:var(--ink)}
+
+/* ---------- letter jump ---------- */
+.tjump{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 4px}
+.tjump a{font-family:var(--mono);font-size:12px;min-width:30px;min-height:30px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--rule);border-radius:2px;text-decoration:none}
+.tjump a:hover,.tjump a:focus-visible{background:var(--sheet);border-color:var(--accent)}
+
+@media screen and (max-width:520px){
+  .tcats{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .tfind button{flex:1 1 100%}
+}
+
+/* The search input has a visible placeholder but no visible label. A placeholder
+   is not a label: it disappears on focus and several screen readers skip it. */
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}

@@ -12,7 +12,7 @@ import { chromium } from 'playwright'
 import { readFileSync } from 'node:fs'
 
 const BASE = (process.argv[2] || process.env.BASE || 'http://127.0.0.1:8822').replace(/\/$/, '')
-const PATHS = ['/', '/papers/', '/impl/mevrik-cx/', '/errata/']
+const PATHS = ['/', '/papers/', '/impl/mevrik-cx/', '/errata/', '/tools/', '/tools/in/devops/']
 
 // A4 at 96dpi is 794px, and Chrome lays a printed page out inside the page
 // margins, so the width CSS sees is roughly 673px. Emulating print media at a

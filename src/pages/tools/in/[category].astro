@@ -1,0 +1,146 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Doc from '../../../layouts/Doc.astro'
+import '../../../styles/tools.css'
+import { categories, bySlug, used } from '../../../lib/tools'
+
+export const getStaticPaths = (() => {
+  return categories.map((c) => ({ params: { category: c.key }, props: { c } }))
+}) satisfies GetStaticPaths
+
+const { c } = Astro.props
+const list = [...c.tools].sort((a, b) => b.refs.length - a.refs.length || a.name.localeCompare(b.name))
+const hasPage = (slug: string) => {
+  const t = bySlug.get(slug)
+  return !!t && (t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0)
+}
+const inSet = new Set(c.tools.map((t) => t.slug))
+
+/*
+ * The internal graph: an edge is one tool's description naming another tool in
+ * the same category. Drawn only when it is small enough to read, which on this
+ * data means two categories out of fourteen. Everywhere else the page says the
+ * graph is empty rather than manufacturing one out of shared shelf space.
+ */
+const pairs: Array<[string, string]> = []
+for (const t of c.tools) for (const m of t.mentions) if (inSet.has(m)) pairs.push([t.slug, m])
+const nodeSlugs = [...new Set(pairs.flat())]
+const drawable = nodeSlugs.length >= 2 && nodeSlugs.length <= 16
+
+// Ring layout. A force simulation needs JavaScript and a ring is legible at this
+// size anyway: every node sits on a circle and every edge is a straight chord.
+const R = 150
+const CX = 300
+const CY = 175
+const pos = new Map(nodeSlugs.map((s, i) => {
+  const a = (i / nodeSlugs.length) * Math.PI * 2 - Math.PI / 2
+  return [s, { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), a }]
+}))
+const usedHere = used.filter((u) => u.category === c.key)
+---
+<Doc title={`${c.label}, tools`} description={`${c.tools.length} tools catalogued under ${c.label.toLowerCase()}. ${c.blurb}`}>
+  <div class="mast">
+    <div>Off the Bit
+<b>Tools: {c.label}</b>
+Category: Catalogue
+Count: {c.tools.length} catalogued</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+All tools: <a href="/tools/">catalogue</a></div>
+  </div>
+
+  <div class="title">
+    <h1>{c.label}</h1>
+    <div class="sub">{c.blurb}</div>
+  </div>
+
+  <div class="ind tsec">
+    <div class="memo">{c.tools.length} tools, quoted from the source lists that carry them.
+      A row here is a citation, not an endorsement, and nothing on this page claims any of these is
+      used here. The short list that is, with the file proving each one, is on the
+      {' '}<a href="/tools/#used">catalogue front page</a>.</div>
+  </div>
+
+  {usedHere.length > 0 && (
+    <div class="ind tsec">
+      <h2 id="used">Used here, in this category</h2>
+      <ul class="tl">
+        {usedHere.map((u) => (
+          <li>
+            <div class="h"><a href={u.url} rel="noopener">{u.name}</a><span class="trole">{u.role}</span></div>
+            {u.note && <div class="d">{u.note}</div>}
+            <div class="tev"><b>Evidence:</b> {u.evidence}</div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <div class="ind tsec">
+    <h2 id="graph">How these relate</h2>
+    {drawable ? (
+      <>
+        <p class="prose">An edge means one tool's description names another. {pairs.length} edges
+          between {nodeSlugs.length} of the {c.tools.length} tools here. The other
+          {' '}{c.tools.length - nodeSlugs.length} are described without reference to anything else
+          in this category, which is normal for a curated list and is why this drawing is small.</p>
+        <figure>
+          <div class="dia" tabindex="0" role="group" aria-label={`Integration graph for ${c.label}: ${pairs.length} edges between ${nodeSlugs.length} tools`}>
+            <svg viewBox="0 0 600 350" width="600" height="350" role="img" aria-hidden="true">
+              {pairs.map(([a, b]) => (
+                <line x1={pos.get(a)!.x} y1={pos.get(a)!.y} x2={pos.get(b)!.x} y2={pos.get(b)!.y}
+                  stroke="currentColor" stroke-width="1" opacity="0.35" />
+              ))}
+              {nodeSlugs.map((s) => {
+                const p = pos.get(s)!
+                const right = Math.cos(p.a) > -0.1
+                return (
+                  <>
+                    <circle cx={p.x} cy={p.y} r="4" fill="currentColor" />
+                    <text x={p.x + (right ? 9 : -9)} y={p.y + 3}
+                      text-anchor={right ? 'start' : 'end'} font-size="11">{bySlug.get(s)?.name ?? s}</text>
+                  </>
+                )
+              })}
+            </svg>
+          </div>
+          <figcaption>Integrations named in descriptions, {c.label.toLowerCase()}. Scrolls sideways on a narrow screen.</figcaption>
+        </figure>
+      </>
+    ) : (
+      <p class="prose">No graph. An edge here means one tool's description names another tool in
+        this category, and on this data there {pairs.length === 0 ? 'are none' : `is only ${pairs.length}`}.
+        The source lists describe each product on its own terms, so the text rarely mentions what a
+        thing works with. Drawing a cloud from shared category membership instead would connect
+        everything to everything and say nothing.</p>
+    )}
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="list">All {c.tools.length}</h2>
+    <p class="prose">Ordered by how many of the three source lists carry each one, then by name.</p>
+    <ul class="tl">
+      {list.map((t) => (
+        <li>
+          <div class="h">
+            {hasPage(t.slug) ? <a href={`/tools/${t.slug}/`}>{t.name}</a> : <a href={t.url} rel="noopener">{t.name}</a>}
+            {t.refs.length > 1 && <span class="tref">{t.refs.length} of 3 lists</span>}
+          </div>
+          <div class="d">{t.desc}</div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="other">Other categories</h2>
+    <div class="tcats">
+      {categories.filter((x) => x.key !== c.key).map((x) => (
+        <a class="tcat" href={`/tools/in/${x.key}/`}>
+          <span class="n">{x.tools.length}</span><b>{x.label}</b></a>
+      ))}
+    </div>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Tools</span><span>[{c.label}]</span></div>
+</Doc>

@@ -1,0 +1,151 @@
+---
+import Doc from '../../layouts/Doc.astro'
+import '../../styles/tools.css'
+import { categories, crossReferenced, sources, tools, used, roles, usedPending, generated, bySlug } from '../../lib/tools'
+
+const detail = (slug: string) => `/tools/${slug}/`
+const hasPage = (slug: string) => {
+  const t = bySlug.get(slug)
+  return !!t && (t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0)
+}
+const edges = tools.reduce((n, t) => n + t.mentions.length, 0)
+---
+<Doc
+  title="Tools"
+  description={`Two lists kept apart: ${used.length} tools with evidence that this site is built with them, and ${tools.length} catalogued from three public lists at a pinned commit.`}>
+
+  <div class="mast">
+    <div>Off the Bit
+<b>Tools</b>
+Category: Catalogue
+Count: {used.length} with evidence, {tools.length} catalogued</div>
+    <div class="r"><b>M. Imran</b>
+Index: <a href="/">draft</a>
+Sources: 3 lists</div>
+  </div>
+
+  <div class="title">
+    <h1>Tools</h1>
+    <div class="sub">Two lists, kept apart on purpose. One is short and carries evidence. The other is long and carries citations.</div>
+  </div>
+
+  <div class="ind">
+    <div class="memo">The difference between these two halves is the only thing on this page worth
+      being careful about. <b>Used here</b> is {used.length} tools, and every row names the file in
+      this repository that proves it. <b>Catalogued</b> is {tools.length} tools parsed out of three
+      public lists at a pinned commit: it records what those lists say, and it does not record that
+      anyone here has opened any of them. Merging the two would produce a claim of fluency across
+      six hundred products, which nobody has.</div>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="find">Find</h2>
+    <form class="tfind" method="get" action="/tools/search">
+      <label class="vh" for="q">Search the catalogue</label>
+      <input id="q" name="q" type="search" placeholder="postgres, terminal, code review" autocomplete="off" required>
+      <button type="submit">Search</button>
+    </form>
+    <p class="dim" style="font-family:var(--mono);font-size:12px;margin:2px 0 0">
+      Searches names and descriptions. Answered server-side, because the reading path here ships
+      no JavaScript and a search box that needs a bundle to work is a search box this site cannot have.</p>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="used">Used here</h2>
+    <p class="prose">These build, check or serve this site. The evidence column is the point: each
+      one names a file you can open in the repository and confirm, rather than asking you to take a
+      rating on trust.</p>
+    <ul class="tl">
+      {used.map((u) => (
+        <li>
+          <div class="h">
+            <a href={u.url} rel="noopener">{u.name}</a>
+            <span class="trole">{u.role}</span>
+          </div>
+          {u.note && <div class="d">{u.note}</div>}
+          <div class="tev"><b>Evidence:</b> {u.evidence}</div>
+          {u.catalogue && hasPage(u.catalogue) && (
+            <div class="m"><a href={detail(u.catalogue)}>also in the catalogue</a></div>
+          )}
+        </li>
+      ))}
+    </ul>
+    <p class="prose"><b>What the three words mean.</b>
+      {Object.entries(roles).map(([k, v]) => (<><br /><b>{k}</b> {v}</>))}</p>
+    <p class="prose dim">{usedPending}</p>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="categories">By category</h2>
+    <p class="prose">Sixty-eight headings across the three source lists, collapsed into fourteen.
+      The mapping is written out in <span class="kw">scripts/ingest-tools.mjs</span> rather than
+      guessed from keywords, so a heading renamed upstream fails the ingest instead of quietly
+      refiling a hundred tools.</p>
+    <div class="tcats">
+      {categories.map((c) => (
+        <a class="tcat" href={`/tools/in/${c.key}/`}>
+          <span class="n">{c.tools.length}</span>
+          <b>{c.label}</b>
+          <span class="b">{c.blurb}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="most">Carried by more than one list</h2>
+    <p class="prose">Whether a second list bothered to include a tool is the only popularity signal
+      these sources contain. It is weak. It is also real, which is more than can be said for a star
+      count copied off a badge, and it is the honest answer to "what is most used" from data that
+      does not record use. {crossReferenced.length} of {tools.length} tools clear it.</p>
+    <ul class="tl">
+      {crossReferenced.map((t) => (
+        <li>
+          <div class="h">
+            {hasPage(t.slug)
+              ? <a href={detail(t.slug)}>{t.name}</a>
+              : <a href={t.url} rel="noopener">{t.name}</a>}
+            <span class="tref">{t.refs.length} of 3 lists</span>
+          </div>
+          <div class="d">{t.desc}</div>
+          <div class="m"><a href={`/tools/in/${t.category}/`}>{t.category}</a></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="sources">Sources</h2>
+    <p class="prose">Read at the commit named below, not at whatever those repositories say today.
+      The ingest runs by hand and its output is committed, because a build that reaches the network
+      is a build whose result depends on a stranger's uptime. Descriptions are quoted from the list
+      that supplied them; all three licences permit it and two require the attribution that this
+      page carries.</p>
+    <ul class="tsrc">
+      {sources.map((s) => (
+        <li><b><a href={s.url} rel="noopener">{s.title}</a></b><br />
+          {s.entries} entries, read at <span class="kw">{s.commitShort}</span> of {s.commitDate}.
+          Licence: <a href={s.licenceUrl} rel="noopener">{s.licence}</a>.</li>
+      ))}
+    </ul>
+    <p class="prose dim">Ingested {generated}. The oldest source has not been touched since
+      {' '}{sources.map((s) => s.commitDate).sort()[0]}, so treat its rows as a snapshot of that
+      date rather than as current.</p>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="graph">On the word "cloud"</h2>
+    <p class="prose">This was asked for as a cloud, with every tool visibly wired to the ones it
+      relates to. The data does not support that drawing, and the honest thing is to say so on the
+      page rather than to invent the wiring.</p>
+    <p class="prose">An edge here means one tool's description names another tool in the catalogue.
+      That yields {edges} edges across {tools.length} tools, and eleven of the fourteen categories
+      contain no internal edges at all. The reason is structural: a curated list describes each
+      product on its own terms, so the text almost never mentions what a thing integrates with.
+      Where a graph exists it is drawn on the category page. Where it does not, that page says so
+      and lists the tools instead. A hundred nodes wired by shared category would look like a cloud
+      and would mean nothing.</p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Tools</span><span>[Catalogue]</span></div>
+</Doc>
