@@ -3837,3 +3837,50 @@ Erratum 7.39.
 pages in both schemes. Diagrams broken: 0. Undefined classes: 0.
 
 **Deployed.** Pending merge.
+
+## Reading pass over 5.24, 5.25 and 3.10
+
+**Read as a reader rather than as their writer, which found three things.**
+
+**5.24's title threw away the best idea in the source.** It shipped as "A Capability Lives in
+Three Places and Nothing Checks They Agree", a description of the fact. The source said "a tool
+has three halves", which is the argument compressed into three words: the parts do not add up,
+and a reader who notices the arithmetic is wrong has already understood the failure. The slug has
+said `three-halves` since publication, which is proof the good title was known and not used. It
+is "A Capability Has Three Halves" now.
+
+**Neither paper had a figure, and the section's own pattern says they should.** Every paper here
+over about seventeen hundred words carries a drawing; every one under about eleven hundred does
+not. Both new papers sat in between and were doing nothing to earn the exception.
+
+For 5.24 the drawing is the claim: three boxes that never join, connected by a string no type
+system can follow, with the four ways they come apart listed against the join that failed. For
+5.25 it carries the paper's only actionable content, three questions that partition a stack,
+which were buried in prose where a reader would have to reconstruct them to use them.
+
+**Section 3 of 5.24 was the weakest part and it was the crux.** It asserted that a broken
+capability is worse than a missing one without saying what the cost is. The cost is partial
+completion: a refusal at the door leaves the system as it was, and an advertised capability that
+fails halfway leaves three of five steps applied and a record created without its link. Absence
+is a locked door; this is a door onto a staircase with a missing step, and the caller is already
+carrying something.
+
+**3.10 needed no structural work.** Its opening is the strongest thing in it. Reading it did
+surface a wording collision across the notes: three of them opened with "this note reports no
+figures" directly above a drawing labelled Figure 1, the same word doing two jobs. They say
+"publishes no measurements" now. The section heading and its auto-generated anchor are untouched,
+because that anchor is a URL.
+
+**The prose checker was counting its own vocabulary.** After it was widened to `docs/` it
+reported three uses of "not just X but Y", all of them the worklog naming the pattern while
+describing the check. It now ignores the quoted placeholder form and still catches the real
+construction, proven by adding one.
+
+Erratum 7.40. Neither claim changed and neither confidence value moved; both are still the
+drafter's at the draft tier, tracked at P26.
+
+**Validated.** `check`, `mobile`, `print`, `visible` all exit 0. 0 WCAG2AA errors. Prose scan
+clean across 82 files. Diagrams broken 0, undefined classes 0. 5.24 is 1521 words with a figure,
+5.25 is 1202 with a figure.
+
+**Deployed.** Pending merge.

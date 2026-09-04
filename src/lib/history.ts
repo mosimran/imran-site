@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-04', change: 'Papers 5.24 and 5.25 revised after a reading pass: 5.24 retitled, both given the figure their argument needed. Erratum 7.40.' },
   { date: '2026-09-04', change: 'Every diagram on the site was broken by a blank line inside its SVG, and had been since each was written. Erratum 7.39.' },
   { date: '2026-09-04', change: 'Section 3 gains 3.10 and Section 5 gains 5.24 and 5.25, written from the owner\'s engineering blog. The Section 5 table is generated: it had shown the same nine papers since launch. Erratum 7.37.' },
   { date: '2026-09-04', change: 'Section 12 thanked three people who do not exist, one for an event Section 3 had already withdrawn. Credits on 7.1 and 7.4 withdrawn. Erratum 7.36.' },

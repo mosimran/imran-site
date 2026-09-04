@@ -21,7 +21,7 @@ in front of an API it has never seen: the constraint that shapes it, the decisio
 and the failure modes the shape has. It is a solution path for a system like the one built
 rather than a disclosure of that system's internals. Tool names, schemas, deployment
 configuration, credential handling specifics and customer data are deliberately absent.
-<br><br>This note reports no figures, and section 4 names the ones that would matter.</div>
+<br><br>This note publishes no measurements, and section 4 names the ones that would matter.</div>
 
 ## 1. The constraint
 

@@ -24,7 +24,8 @@ for (const dir of DIRS) {
     const raw = readFileSync(`${dir}/${f}`, 'utf8')
     const plain = raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')
     em += (plain.match(/—/g) || []).length
-    notjust += (plain.match(/not just .{0,40}? but /gi) || []).length
+    notjust += (plain.match(/not just .{0,40}? but /gi) || [])
+      .filter((m) => !/not just X but/i.test(m)).length
     for (const h of plain.match(HYPE) || []) hypeHits.push(`${dir}/${f}: ${h}`)
     const sents = plain.split(/(?<=[.!?]) /).map((s) => s.trim()).filter(Boolean)
     for (let i = 0; i < sents.length - 1; i++) {
