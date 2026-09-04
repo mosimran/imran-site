@@ -4261,3 +4261,61 @@ front page at every width from 360 to 768, which is the check that matters here 
 change puts an unbreakable 32-character token into a narrow column.
 
 **Deployed.** Merged to `main` and shipped by Actions.
+---
+
+## T50, 2026-09-05: the catalogue describes itself now
+
+**What changed.** The tools catalogue stopped quoting other people and started describing tools in
+its own words, from the tools' own pages.
+
+*Every homepage was fetched.* `scripts/fetch-tools.mjs` requested all 591, recording status, final
+URL after redirects, title, meta description and first heading. 539 answered. The 52 that did not
+were asked again by `scripts/reprobe-tools.mjs` in a real browser, one at a time, because 22 of
+them were bot blocks rather than dead sites, and recording a live site as dead would put a false
+claim on the page. 19 more answered. Both outputs are committed; the build reaches no network.
+
+*All 591 descriptions were rewritten*, plus a punch line and the use case each tool advertises most
+prominently. Written from the fetched pages, in batches, with every entry checked against the
+constraint that a description may say what a tool claims and does, and a punch line may characterise
+where it sits, but neither pronounces it good or implies anyone here has used it. Validated
+mechanically afterwards: 591 of 591 present, no missing fields, zero em dashes, zero hype
+adjectives, no "not just X but Y".
+
+*Every mention of the source directories is gone.* No links, no names, no per-tool listing block,
+no citation counts and no ranking derived from them. Original descriptions carry no attribution
+obligation, so removing the quotations removed the licence requirement with them. One sentence
+survives on the front page saying the names were gathered from public directories, unnamed, because
+a list that will not say where it started is worse than one that does. Flagged for the owner.
+
+*Ordering lost its basis and had to change.* The old order was how many directories carried a tool.
+Ranking by a source a reader can no longer see is not a ranking. Everything is alphabetical now,
+and the liveness check replaced it as the thing worth reading: a fact about the tool rather than a
+fact about somebody's list.
+
+*The star is a tooltip.* It was printing a paragraph under a heading that said "Used here", which
+described the star rather than the tool. The explanation is now the star's own accessible name, and
+that heading on a tool page introduces what the tool is sold for.
+
+**What the fetch found.** 33 unreachable: nine dead domains, ten 404s, three broken certificates,
+three timeouts. 19 more refuse automated requests and are probably fine; each says which it is. 143
+answered from a different address than the one listed. Continue acquired by Cursor. Windsurf and
+Codeium both serving Devin Desktop. Bearer serving Cycode, Highlight.io serving LaunchDarkly,
+Jamsocket joining Modal, Fig folded into Amazon Q. One entry's domain now serves an online gambling
+site, and that page says so instead of linking to it as a tool.
+
+**A published URL broke, and was caught before deploy.** Pages existed for the 126 tools that had
+more than a one-line quote. When the quotes became written descriptions, the condition selecting
+those 126 went with them, and the rebuild silently dropped live pages: `/tools/warp/` returned 404
+in a local screenshot. Every tool has a page now, all 591, because a generation rule that can narrow
+can break a published address. Asserted: none of the 126 previously published paths is missing, and
+no tool is without a page. Erratum 7.46.
+
+**Validated.** `npm run check` exit 0. 651 pages. Budgets: index 54,161 of 60,000, inlined CSS
+11,906 of 12,000, third-party requests 0, `_headers` 42 rules of 100. `mobile` clean across 14
+viewports, `visible`, `print`, `contrast` and `links` clean, prose 0 em dashes.
+
+**Worth watching.** The inlined stylesheet is at 11,906 bytes of a 12,000 cap, 94 bytes of
+headroom. That is not from this work: tools styles are scoped to the tools pages and the index does
+not import them. It is the next constraint that will bind.
+
+**Deployed.** Pending merge.

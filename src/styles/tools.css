@@ -80,11 +80,6 @@
 .tev b{color:var(--ink);font-weight:600}
 
 /* ---------- source manifest ---------- */
-.tsrc{list-style:none;margin:12px 0;padding:0}
-.tsrc li{font-family:var(--mono);font-size:12.5px;line-height:1.6;padding:8px 0;
-  border-bottom:1px solid var(--rule);color:var(--dim)}
-.tsrc b{font-size:13.5px;color:var(--ink)}
-
 /* ---------- letter jump ---------- */
 .tjump{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0 4px}
 .tjump a{font-family:var(--mono);font-size:12px;min-width:30px;min-height:30px;
@@ -126,10 +121,27 @@
   0%,100%{filter:drop-shadow(0 0 2px color-mix(in srgb,var(--accent) 45%,transparent))}
   50%{filter:drop-shadow(0 0 7px color-mix(in srgb,var(--accent) 95%,transparent))}
 }
-/* The reason, printed rather than hidden in a tooltip. A star whose meaning is
-   only available on hover is not available on a phone at all. */
-.why{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-top:5px;
-  word-break:break-word}
-.why b{font-weight:600}
-.legend{font-family:var(--mono);font-size:12px;color:var(--dim);margin:10px 0 0;
-  padding:9px 12px;border:1px solid var(--rule);border-radius:2px;max-width:70ch}
+/* The star's reason is its <title>, which is both the accessible name and the
+   tooltip. It is not printed as a paragraph any more: a star only ever appears
+   next to a row that already states, in visible text, why it is there. */
+
+/* ---------- the written line ---------- */
+/* A punch line sits under the description, in the second ink, because it is a
+   characterisation rather than a fact and the change of colour says so. */
+.punch{font-family:var(--mono);font-size:12px;color:var(--accent);margin-top:5px;
+  line-height:1.45;max-width:74ch}
+.punchline{font-family:var(--mono);font-size:14px;color:var(--accent);margin:0;
+  line-height:1.5;max-width:70ch}
+
+/* ---------- tools that did not answer ---------- */
+/* Struck through rather than removed. Nothing on this site is deleted, and a
+   tool that has gone is worth knowing about, so the row stays and says why. */
+.gone{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--flag);border:1px solid color-mix(in srgb,var(--flag) 45%,transparent);
+  padding:1px 6px;border-radius:2px;white-space:nowrap}
+.tl .h a.gone-link{text-decoration:line-through;text-decoration-thickness:1px;
+  text-decoration-color:color-mix(in srgb,var(--flag) 70%,transparent)}
+.memo.warnbox{border-left-color:var(--flag)}
+@media screen and (min-width:761px){
+  .tl .h .gone{margin-left:auto}
+}

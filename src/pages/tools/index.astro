@@ -2,18 +2,19 @@
 import Doc from '../../layouts/Doc.astro'
 import Star from '../../components/Star.astro'
 import '../../styles/tools.css'
-import { categories, crossReferenced, sources, tools, used, roles, usedPending, generated, bySlug, starOf, starMeaning } from '../../lib/tools'
+import { categories, tools, used, roles, usedPending, checked, unreachable, moved, starOf } from '../../lib/tools'
 
-const detail = (slug: string) => `/tools/${slug}/`
-const hasPage = (slug: string) => {
-  const t = bySlug.get(slug)
-  return !!t && (t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0)
-}
 const edges = tools.reduce((n, t) => n + t.mentions.length, 0)
+const withGraph = categories.filter((c) => {
+  const inSet = new Set(c.tools.map((t) => t.slug))
+  const nodes = new Set<string>()
+  for (const t of c.tools) for (const m of t.mentions) if (inSet.has(m)) { nodes.add(t.slug); nodes.add(m) }
+  return nodes.size >= 2 && nodes.size <= 16
+}).length
 ---
 <Doc
   title="Tools"
-  description={`Two lists kept apart: ${used.length} tools with evidence that this site is built with them, and ${tools.length} catalogued from three public lists at a pinned commit.`}>
+  description={`${tools.length} tools, described here rather than quoted, and ${used.length} with evidence that they build or serve this site. Every homepage checked on ${checked}.`}>
 
   <div class="mast">
     <div>Off the Bit
@@ -22,21 +23,21 @@ Category: Catalogue
 Count: {used.length} with evidence, {tools.length} catalogued</div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
-Sources: 3 lists</div>
+Checked: {checked}</div>
   </div>
 
   <div class="title">
     <h1>Tools</h1>
-    <div class="sub">Two lists, kept apart on purpose. One is short and carries evidence. The other is long and carries citations.</div>
+    <div class="sub">Two lists, kept apart on purpose. One is short and carries evidence. The other is long and carries no claim at all.</div>
   </div>
 
-  <div class="ind">
-    <div class="memo">The difference between these two halves is the only thing on this page worth
-      being careful about. <b>Used here</b> is {used.length} tools, and every row names the file in
-      this repository that proves it. <b>Catalogued</b> is {tools.length} tools parsed out of three
-      public lists at a pinned commit: it records what those lists say, and it does not record that
-      anyone here has opened any of them. Merging the two would produce a claim of fluency across
-      six hundred products, which nobody has.</div>
+  <div class="ind tsec">
+    <div class="memo">The difference between the two halves is the only thing here worth being
+      careful about. <b>Used here</b> is {used.length} tools, and every row names the file in this
+      repository that proves it. <b>Catalogued</b> is {tools.length} tools described from their own
+      homepages: what each one is, what it is sold for, and whether it still answers. None of that
+      is a claim that anyone here has used them. Merging the two would read as fluency across six
+      hundred products, which nobody has.</div>
   </div>
 
   <div class="ind tsec">
@@ -47,16 +48,15 @@ Sources: 3 lists</div>
       <button type="submit">Search</button>
     </form>
     <p class="dim" style="font-family:var(--mono);font-size:12px;margin:2px 0 0">
-      Searches names and descriptions. Answered server-side, because the reading path here ships
-      no JavaScript and a search box that needs a bundle to work is a search box this site cannot have.</p>
+      Searches names and descriptions, answered server-side. The reading path here ships no
+      JavaScript, and a search box that needs a bundle to work is a search box this site cannot have.</p>
   </div>
 
   <div class="ind tsec">
     <h2 id="used">Used here</h2>
-    <p class="prose">These build, check or serve this site. The evidence column is the point: each
-      one names a file you can open in the repository and confirm, rather than asking you to take a
-      rating on trust.</p>
-    <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
+    <p class="prose">These build, check or serve this site. The evidence line is the point: each one
+      names a file you can open in the repository and confirm, rather than asking you to take a
+      rating on trust. They are the only starred entries on the site.</p>
     <ul class="tl">
       {used.map((u) => (
         <li>
@@ -67,9 +67,6 @@ Sources: 3 lists</div>
           </div>
           {u.note && <div class="d">{u.note}</div>}
           <div class="tev"><b>Evidence:</b> {u.evidence}</div>
-          {u.catalogue && hasPage(u.catalogue) && (
-            <div class="m"><a href={detail(u.catalogue)}>also in the catalogue</a></div>
-          )}
         </li>
       ))}
     </ul>
@@ -80,10 +77,8 @@ Sources: 3 lists</div>
 
   <div class="ind tsec">
     <h2 id="categories">By category</h2>
-    <p class="prose">Sixty-eight headings across the three source lists, collapsed into fourteen.
-      The mapping is written out in <span class="kw">scripts/ingest-tools.mjs</span> rather than
-      guessed from keywords, so a heading renamed upstream fails the ingest instead of quietly
-      refiling a hundred tools.</p>
+    <p class="prose">Fourteen shelves. Each page lists everything on it, alphabetically, with a
+      drawing where the entries actually reference each other and a note where they do not.</p>
     <div class="tcats">
       {categories.map((c) => (
         <a class="tcat" href={`/tools/in/${c.key}/`}>
@@ -96,62 +91,49 @@ Sources: 3 lists</div>
   </div>
 
   <div class="ind tsec">
-    <h2 id="most">Carried by more than one list</h2>
-    <p class="prose">Whether a second list bothered to include a tool is the only popularity signal
-      these sources contain. It is weak. It is also real, which is more than can be said for a star
-      count copied off a badge, and it is the honest answer to "what is most used" from data that
-      does not record use. {crossReferenced.length} of {tools.length} tools clear it.</p>
+    <h2 id="checked">What the check found</h2>
+    <p class="prose">Every homepage in the catalogue was fetched on {checked}, twice: once plainly,
+      then again in a real browser for the ones that refused. That is where the descriptions come
+      from, and it is the only way to find out that something is gone.</p>
+    <p class="prose"><b>{unreachable.length} of {tools.length} did not answer.</b> Some are dead
+      domains, some return 404, some present an expired certificate, and a few simply refuse
+      automated requests and are probably fine. Each one says which. They stay listed, struck
+      through, because nothing here is deleted.</p>
     <ul class="tl">
-      {crossReferenced.map((t) => (
+      {unreachable.map((t) => (
         <li>
-          <div class="h">
-            {starOf(t.slug) && (
-              <Star title={starOf(t.slug)!.reason} />
-            )}
-            {hasPage(t.slug)
-              ? <a href={detail(t.slug)}>{t.name}</a>
-              : <a href={t.url} rel="noopener">{t.name}</a>}
-            <span class="tref">{t.refs.length} of 3 lists</span>
-          </div>
+          <div class="h"><a href={`/tools/${t.slug}/`} class="gone-link">{t.name}</a>
+            <span class="gone">{t.live.reason}</span></div>
           <div class="d">{t.desc}</div>
-          {starOf(t.slug) && <div class="why"><b>Used here:</b> {starOf(t.slug)!.reason}</div>}
-          <div class="m"><a href={`/tools/in/${t.category}/`}>{t.category}</a></div>
         </li>
       ))}
     </ul>
-  </div>
-
-  <div class="ind tsec">
-    <h2 id="sources">Sources</h2>
-    <p class="prose">Read at the commit named below, not at whatever those repositories say today.
-      The ingest runs by hand and its output is committed, because a build that reaches the network
-      is a build whose result depends on a stranger's uptime. Descriptions are quoted from the list
-      that supplied them; all three licences permit it and two require the attribution that this
-      page carries.</p>
-    <ul class="tsrc">
-      {sources.map((s) => (
-        <li><b><a href={s.url} rel="noopener">{s.title}</a></b><br />
-          {s.entries} entries, read at <span class="kw">{s.commitShort}</span> of {s.commitDate}.
-          Licence: <a href={s.licenceUrl} rel="noopener">{s.licence}</a>.</li>
-      ))}
-    </ul>
-    <p class="prose dim">Ingested {generated}. The oldest source has not been touched since
-      {' '}{sources.map((s) => s.commitDate).sort()[0]}, so treat its rows as a snapshot of that
-      date rather than as current.</p>
+    <p class="prose"><b>{moved.length} answered from a different address than the one listed.</b>
+      Some are ordinary redirects. Others are acquisitions, renames, or a domain that changed hands
+      and now sells something else entirely. Each tool's page names where it actually led.</p>
   </div>
 
   <div class="ind tsec">
     <h2 id="graph">On the word "cloud"</h2>
-    <p class="prose">This was asked for as a cloud, with every tool visibly wired to the ones it
-      relates to. The data does not support that drawing, and the honest thing is to say so on the
-      page rather than to invent the wiring.</p>
-    <p class="prose">An edge here means one tool's description names another tool in the catalogue.
-      That yields {edges} edges across {tools.length} tools, and eleven of the fourteen categories
-      contain no internal edges at all. The reason is structural: a curated list describes each
-      product on its own terms, so the text almost never mentions what a thing integrates with.
-      Where a graph exists it is drawn on the category page. Where it does not, that page says so
-      and lists the tools instead. A hundred nodes wired by shared category would look like a cloud
-      and would mean nothing.</p>
+    <p class="prose">This was asked for as a cloud, with every tool wired to the ones it relates to.
+      The data does not support that drawing and the honest thing is to say so here rather than to
+      invent the wiring.</p>
+    <p class="prose">An edge means one entry names another by name. That yields {edges} edges across
+      {' '}{tools.length} tools, and only {withGraph} of the fourteen categories have enough of them
+      to draw. Products are described on their own terms, so the text almost never says what a thing
+      works with. Where a graph exists it is on the category page. Where it does not, that page says
+      so and lists the tools instead. A hundred nodes wired by shared category would look like a
+      cloud and would mean nothing.</p>
+  </div>
+
+  <div class="ind tsec">
+    <h2 id="how">How this was built</h2>
+    <p class="prose">The list of names was assembled from public directories of developer tools.
+      Nothing else came from them: every description, every line about what a tool is sold for, and
+      every judgement about where it sits was written here from the product's own homepage.</p>
+    <p class="prose dim">Re-running the check is one command, and the results are committed rather
+      than fetched at build time. A page that reaches the network to render is a page that depends
+      on a stranger's uptime.</p>
   </div>
 
   <div class="foot"><span>Imran</span><span>Tools</span><span>[Catalogue]</span></div>

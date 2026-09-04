@@ -3,24 +3,19 @@ import type { GetStaticPaths } from 'astro'
 import Doc from '../../../layouts/Doc.astro'
 import Star from '../../../components/Star.astro'
 import '../../../styles/tools.css'
-import { categories, bySlug, used, starOf, starMeaning } from '../../../lib/tools'
+import { categories, bySlug, used, starOf, checked } from '../../../lib/tools'
 
 export const getStaticPaths = (() => {
   return categories.map((c) => ({ params: { category: c.key }, props: { c } }))
 }) satisfies GetStaticPaths
 
 const { c } = Astro.props
-const list = [...c.tools].sort((a, b) => b.refs.length - a.refs.length || a.name.localeCompare(b.name))
-const hasPage = (slug: string) => {
-  const t = bySlug.get(slug)
-  return !!t && (t.refs.length > 1 || t.mentions.length > 0 || t.mentionedBy.length > 0)
-}
+const list = c.tools
 const inSet = new Set(c.tools.map((t) => t.slug))
 
 /*
- * The internal graph: an edge is one tool's description naming another tool in
- * the same category. Drawn only when it is small enough to read, which on this
- * data means two categories out of fourteen. Everywhere else the page says the
+ * The internal graph: an edge is one entry naming another in the same category.
+ * Drawn only when it is small enough to read. Everywhere else the page says the
  * graph is empty rather than manufacturing one out of shared shelf space.
  */
 const pairs: Array<[string, string]> = []
@@ -28,8 +23,8 @@ for (const t of c.tools) for (const m of t.mentions) if (inSet.has(m)) pairs.pus
 const nodeSlugs = [...new Set(pairs.flat())]
 const drawable = nodeSlugs.length >= 2 && nodeSlugs.length <= 16
 
-// Ring layout. A force simulation needs JavaScript and a ring is legible at this
-// size anyway: every node sits on a circle and every edge is a straight chord.
+// Ring layout. A force simulation needs JavaScript and a ring reads fine at
+// this size: every node sits on a circle and every edge is a straight chord.
 const R = 150
 const CX = 300
 const CY = 175
@@ -38,13 +33,14 @@ const pos = new Map(nodeSlugs.map((s, i) => {
   return [s, { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), a }]
 }))
 const usedHere = used.filter((u) => u.category === c.key)
+const dead = list.filter((t) => !t.live.ok).length
 ---
 <Doc title={`${c.label}, tools`} description={`${c.tools.length} tools catalogued under ${c.label.toLowerCase()}. ${c.blurb}`}>
   <div class="mast">
     <div>Off the Bit
 <b>Tools: {c.label}</b>
 Category: Catalogue
-Count: {c.tools.length} catalogued</div>
+Count: {c.tools.length} catalogued{dead > 0 && `, ${dead} not answering`}</div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
 All tools: <a href="/tools/">catalogue</a></div>
@@ -56,16 +52,15 @@ All tools: <a href="/tools/">catalogue</a></div>
   </div>
 
   <div class="ind tsec">
-    <div class="memo">{c.tools.length} tools, quoted from the source lists that carry them.
-      A row here is a citation, not an endorsement, and nothing on this page claims any of these is
-      used here. The short list that is, with the file proving each one, is on the
+    <div class="memo">{c.tools.length} tools, described here from their own homepages. A row is a
+      description, not an endorsement, and nothing on this page claims any of these is used here.
+      The short list that is, with the file proving each one, is on the
       {' '}<a href="/tools/#used">catalogue front page</a>.</div>
   </div>
 
   {usedHere.length > 0 && (
     <div class="ind tsec">
       <h2 id="used">Used here, in this category</h2>
-      <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
       <ul class="tl">
         {usedHere.map((u) => (
           <li>
@@ -82,12 +77,12 @@ All tools: <a href="/tools/">catalogue</a></div>
     <h2 id="graph">How these relate</h2>
     {drawable ? (
       <>
-        <p class="prose">An edge means one tool's description names another. {pairs.length} edges
-          between {nodeSlugs.length} of the {c.tools.length} tools here. The other
+        <p class="prose">An edge means one entry names another. {pairs.length} edges between
+          {' '}{nodeSlugs.length} of the {c.tools.length} tools here. The other
           {' '}{c.tools.length - nodeSlugs.length} are described without reference to anything else
-          in this category, which is normal for a curated list and is why this drawing is small.</p>
+          on this shelf, which is normal and is why the drawing is small.</p>
         <figure>
-          <div class="dia" tabindex="0" role="group" aria-label={`Integration graph for ${c.label}: ${pairs.length} edges between ${nodeSlugs.length} tools`}>
+          <div class="dia" tabindex="0" role="group" aria-label={`Reference graph for ${c.label}: ${pairs.length} edges between ${nodeSlugs.length} tools`}>
             <svg viewBox="0 0 600 350" width="600" height="350" role="img" aria-hidden="true">
               {pairs.map(([a, b]) => (
                 <line x1={pos.get(a)!.x} y1={pos.get(a)!.y} x2={pos.get(b)!.x} y2={pos.get(b)!.y}
@@ -106,40 +101,38 @@ All tools: <a href="/tools/">catalogue</a></div>
               })}
             </svg>
           </div>
-          <figcaption>Integrations named in descriptions, {c.label.toLowerCase()}. Scrolls sideways on a narrow screen.</figcaption>
+          <figcaption>Entries that name each other, {c.label.toLowerCase()}. Scrolls sideways on a narrow screen.</figcaption>
         </figure>
       </>
     ) : (
-      <p class="prose">No graph. An edge here means one tool's description names another tool in
-        this category, and on this data there {pairs.length === 0 ? 'are none' : `is only ${pairs.length}`}.
-        The source lists describe each product on its own terms, so the text rarely mentions what a
-        thing works with. Drawing a cloud from shared category membership instead would connect
-        everything to everything and say nothing.</p>
+      <p class="prose">No graph. An edge here means one entry names another on the same shelf, and
+        on this data there {pairs.length === 0 ? 'are none' : `is only ${pairs.length}`}. Products
+        are described on their own terms, so the text rarely mentions what a thing works with.
+        Drawing a cloud from shared category membership instead would connect everything to
+        everything and say nothing.</p>
     )}
   </div>
 
   <div class="ind tsec">
     <h2 id="list">All {c.tools.length}</h2>
-    <p class="prose">Ordered by how many of the three source lists carry each one, then by name.</p>
+    <p class="prose">Alphabetical. Checked on {checked}; anything that did not answer says so.</p>
     <ul class="tl">
       {list.map((t) => (
         <li>
           <div class="h">
-            {starOf(t.slug) && (
-              <Star title={starOf(t.slug)!.reason} />
-            )}
-            {hasPage(t.slug) ? <a href={`/tools/${t.slug}/`}>{t.name}</a> : <a href={t.url} rel="noopener">{t.name}</a>}
-            {t.refs.length > 1 && <span class="tref">{t.refs.length} of 3 lists</span>}
+            {starOf(t.slug) && <Star title={starOf(t.slug)!.reason} />}
+            <a href={`/tools/${t.slug}/`} class={t.live.ok ? undefined : 'gone-link'}>{t.name}</a>
+            {!t.live.ok && <span class="gone">{t.live.reason}</span>}
           </div>
           <div class="d">{t.desc}</div>
-          {starOf(t.slug) && <div class="why"><b>Used here:</b> {starOf(t.slug)!.reason}</div>}
+          <div class="punch">{t.punch}</div>
         </li>
       ))}
     </ul>
   </div>
 
   <div class="ind tsec">
-    <h2 id="other">Other categories</h2>
+    <h2 id="other">Other shelves</h2>
     <div class="tcats">
       {categories.filter((x) => x.key !== c.key).map((x) => (
         <a class="tcat" href={`/tools/in/${x.key}/`}>
