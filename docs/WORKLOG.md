@@ -3952,3 +3952,74 @@ carries them.
 against production after deploy, not before, because a local server does not serve `_headers`.
 
 **Deployed.** Pending merge.
+
+---
+
+## T47, 2026-09-05: the tools catalogue
+
+**What changed.** A tools section at `/tools/`, built in two halves that are kept apart on
+purpose.
+
+*The catalogue* is 591 tools ingested from three public awesome-lists at a pinned commit:
+`awesome-devtools` (Unlicense), `awesome-ai-coding-tools` (MIT) and `awesome-developer-first`
+(CC BY 4.0). `scripts/ingest-tools.mjs` fetches, parses, merges and writes `src/data/tools.json`.
+It runs by hand and its output is committed, because a build that reaches the network is a build
+whose result depends on a stranger's uptime. Sixty-eight source headings collapse into fourteen
+categories through an explicit mapping, and an unmapped heading fails the ingest rather than
+quietly refiling a hundred tools.
+
+*The overlay* is thirteen tools that build, check or serve this site, and every row names the file
+in this repository that proves it. It is hand-written in `src/data/tools-used.json`. Nothing in it
+is inferred from the ingested lists.
+
+Three generated surfaces: `/tools/`, `/tools/in/<category>/` for the fourteen categories, and
+`/tools/<slug>/` for the 126 tools that have more on the page than a one-line quote. 141 new
+pages. Search is a Pages Function at `/tools/search`, a plain GET from a plain form, rendered
+server-side, so the reading path still ships zero bytes of JavaScript.
+
+**What the data would not support.** This was asked for as a cloud with every tool wired to its
+neighbours. An edge here means one tool's description names another, which yields 85 edges across
+591 tools, and eleven of the fourteen categories have no internal edges at all. A curated list
+describes each product on its own terms, so the text rarely says what a thing integrates with.
+The two categories with a real graph get one drawn. The rest say so on the page. Wiring the
+catalogue by shared category would have looked like a cloud and meant nothing.
+
+**What could not be answered honestly.** "Most used" was asked for. No list on GitHub records what
+anyone uses, so the sort is cross-list citation count, labelled everywhere as the count of source
+lists that carry a tool and never as a rank or a rating. Forty-eight tools clear it. The owner's
+own depth of use is not recorded, and the page says that rather than estimating.
+
+**Two defects found while building, neither shipped.**
+
+The CSP generator wrote one `_headers` rule per page. Cloudflare Pages enforces a hard limit of
+100 rules and silently skips the rest. At 44 pages that was invisible; the catalogue took the site
+to 185, and roughly half the pages would have served with no policy at all, reported only as a
+warning in a build log. Pages are now grouped by the policy they need: the 26 carrying JSON-LD
+keep an exact rule each, and a directory whose pages all want the identical policy collapses to
+one wildcard. 191 rules became 41. Every page's policy is unchanged. The limit is now asserted at
+build time and fails it. Verified: 185 pages, each covered by exactly one policy, none uncovered,
+none doubled, no wildcard shadowing a JSON-LD page.
+
+The budget check counted hyperlinks as third-party requests, and could not see `srcset` or CSS
+`url()` at all. Erratum 7.44.
+
+**Validated.** `npm run check` exit 0 in a clean worktree carrying only this work. Budgets: index
+54,061 of 60,000, inlined CSS 11,806 of 12,000 unchanged, third-party requests 0, zero script
+tags. `npm run mobile` clean across all 14 viewports on `/tools/`, four category pages and a tool
+page. `npm run a11y` 0 WCAG2AA errors on every tools page in both colour schemes. `visible`,
+`print` and `links` clean. The search function was exercised under `wrangler pages dev`: five
+queries, an empty query, a no-result query, and five reflected-XSS payloads, none of which
+produced markup. It answers with `default-src 'none'` and no `script-src`, so an injection could
+not execute even if the escaping failed.
+
+**A second stylesheet, which BUILD.md section 6 does not allow.** `src/styles/tools.css` is
+imported only by the tools pages. The inlined sheet is at 11,806 bytes of a 12,000 cap and the
+index does not import this file, so the budget the cap protects is untouched and it is still zero
+extra requests for a reader. Flagged for the owner rather than assumed.
+
+**What is not done.** The overlay is thirteen entries because thirteen are provable from this
+repository. The owner's wider stack, the depth vocabulary, and whether dropped tools are in scope
+are still open. The tools plan argued that recording what was dropped and why is the thing that
+would stop this being a CV appendix, and that remains unbuilt.
+
+**Deployed.** Pending merge.
