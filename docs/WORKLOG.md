@@ -3666,12 +3666,18 @@ wrong: a missing date fails the build the way a paper without retirement conditi
 were taken from git rather than chosen. `since` stays, because it is a real fact about a system
 and a useless one about a document.
 
-**The fix introduces a new way to be wrong, and it is guarded.** A note can be edited without its
-date being bumped, which hides the change just as effectively. `check-revised.mjs` compares every
-declared date against git and fails when a file has moved and its date has not. It skips on
-shallow history rather than guessing, and both CI checkouts now fetch full history so it can
-actually run. Both paths proven, and the schema rejection proven separately by deleting a date
-and watching the build fail.
+**The fix introduces a new way to be wrong, and the guard for it failed on its own commit.**
+`check-revised.mjs` compared each declared date against git and failed the build on divergence.
+It failed in CI immediately: adding a `revised` field to nine files changed nine files, so every
+date was stale against git the moment it was written.
+
+The error underneath is that `revised` means the date the content last meaningfully changed and
+git records the date the file last changed for any reason. Gating on git asserts that every edit
+is a revision, which is false. It is a reporter now: it prints the divergence and a person
+decides whether a typo or a meaning moved. Same measurement error as the four already recorded
+this week, made by me while writing the entry about them.
+
+The schema requirement stands and is proven: deleting a date fails the build.
 
 **One reported finding was mine, not the site's.** I recorded that both feeds lacked a
 `rel="self"` link. Both have one and always did. My query treated an XML element with no children

@@ -8,6 +8,18 @@
 // all. `revised` fixes that and introduces a new way to be wrong: a note edited
 // without bumping it. Git knows the truth, so this asks git. Erratum 7.35.
 //
+// A REPORTER, never a gate, and the reason is worth stating because the first
+// version of this file was a gate and failed on the commit that created it.
+//
+// `revised` means the date the content last meaningfully changed. Git records
+// the date the file last changed for any reason, including adding this very
+// field, fixing a typo or reflowing a paragraph. Those are different questions
+// and only a person can answer the first. Gating on git asserts that every edit
+// is a revision, which is false, and it made eight notes "stale" the moment
+// their dates were introduced.
+//
+// So it prints divergence for someone to judge and exits 0. Erratum 7.35.
+//
 // Skips rather than guesses when history is unavailable, which is what a shallow
 // clone gives. A check that cannot see the answer should say so, not invent one.
 import { execSync } from 'node:child_process'
@@ -38,11 +50,14 @@ for (const f of readdirSync(DIR).filter((x) => x.endsWith('.md'))) {
   if (declared < actual) stale.push(`${f}: says ${declared}, last changed ${actual}`)
 }
 
-console.log(`\nrevised dates\n  notes checked  ${checked}\n  stale          ${stale.length}`)
+console.log(`\nrevised dates\n  notes checked          ${checked}`)
+console.log(`  file newer than date  ${stale.length}`)
 for (const s of stale) console.log(`    ${s}`)
 if (stale.length) {
-  console.error('\nrevised check FAILED: a note changed and its revised date did not.')
-  console.error('The feed sorts on this, so a stale date hides the change from subscribers.\n')
-  process.exit(1)
+  console.log('\n  Each of these changed after the date it declares. That is correct when the')
+  console.log('  edit was a typo or a field like this one, and wrong when the meaning moved.')
+  console.log('  The feed sorts on the declared date, so a real revision left unbumped is')
+  console.log('  invisible to subscribers. Reporter, not a gate: only a person can tell')
+  console.log('  which of those happened.')
 }
 console.log('')
