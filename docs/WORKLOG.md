@@ -4127,4 +4127,30 @@ ignores `_redirects`: all four failed before they passed. One earlier attempt at
 itself a false negative, because `grep pattern file >> file` writes nothing, and the check was
 reported as not firing when the breakage had never been applied. Checked rather than believed.
 
-**Deployed.** Merged to `main` and shipped by Actions.
+**The first deploy went red, and the site was fine.** `check` passed, the upload succeeded, and
+the step after it failed: the primary answered 404 for `/l/5-14` at 18:39:55 while the alias
+answered 301 at 18:39:56. Both were correct by hand a few minutes later, and all three hosts
+including `imran-site.pages.dev` serve the redirect now. The deployment shipped. The check was
+faster than the CDN.
+
+**What that exposed is worth more than the fix.** This assertion is the only one in
+`check-live.mjs` that asks for a path which did not exist in the previous deployment. `/`,
+`/papers/`, `/errata/` and `security.txt` all pass perfectly against a stale edge still serving
+the last build, so the file that exists to prove a deploy arrived has never actually been able
+to tell. It has been checking that the site is fine, not that this deployment shipped. A green
+deploy job has meant less than it looked like it did, which is the same shape as erratum 7.6 and
+7.23: a check reading an artifact adjacent to the claim.
+
+So the assertion stays as the canary and is retried rather than raced: up to ten attempts over
+54 seconds, reporting the count when it takes more than one. If that number starts creeping,
+propagation is getting slower and that is a thing worth knowing. Proven both ways, that it
+passes on the first attempt against production and that it still fails, after 54 seconds and
+saying so, against a server that ignores `_redirects`.
+
+Nothing here is an erratum. The site publishes no claim about live verification; the gap was in
+the repository's own checks and is recorded where it belongs.
+
+**Deployed.** Merged to `main` and shipped by Actions. Verified on both serving hosts by request:
+`/l/5-14` answers 301 with `Location: /papers/kubernetes-for-a-bicycle/` on
+`mosthofaimran.com`, `imran.com.bd` and `imran-site.pages.dev`, and `/l/` serves the map at 200
+on both serving hosts.
