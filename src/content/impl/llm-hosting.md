@@ -3,7 +3,7 @@ section: "3.8"
 title: "Custom LLM training and hosting"
 summary: "Open weight models fine tuned and served on self managed GPU infrastructure for clients whose data cannot reach a public API, with promotion gated on evaluation."
 slug: "llm-hosting"
-revised: 2026-09-03
+revised: 2026-09-04
 state: production
 stack: ["LoRA / PEFT", "self-managed GPU", "quantisation", "model registry", "private cloud / on-prem"]
 result: []
@@ -122,7 +122,9 @@ answered a question a customer is now complaining about.
 
 **2.5. Routing per task, on cost and latency and accuracy together.** Work that carries no
 residency requirement can go to a commercial API, which keeps the reserved hardware occupied by
-the work that has nowhere else to go. Paper 5.17 makes this argument at length.
+the work that has nowhere else to go. Paper 5.17 makes this argument at length. It is a property
+of the design rather than a description of this estate, which runs open weights only, and the
+router is what makes that a configuration rather than an architecture.
 
 ## 3. Why a client pays for this
 

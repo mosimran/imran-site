@@ -3884,3 +3884,34 @@ clean across 82 files. Diagrams broken 0, undefined classes 0. 5.24 is 1521 word
 5.25 is 1202 with a figure.
 
 **Deployed.** Pending merge.
+
+## A proprietary model was listed in the sovereign gateway's stack
+
+**The owner caught it.** Note 3.2's stack listed GPT-4o beside Ollama and Qwen. It is not open
+weight, cannot be self-hosted, and the note's own opening argument three paragraphs below is that
+a model you can install is a model whose weights, prompts and logs never leave a room you
+control.
+
+The name came from erratum 7.14, which recorded the model choices supplied on 2026-09-03. It was
+written into the list without anybody asking whether all three could be installed. The list was
+treated as a list rather than as an argument, and every item in a stack is an assertion about
+what the system is.
+
+**The architecture keeps the slot and the note now says it is empty here.** A gateway of this
+kind exists so that reaching an external model is a per-tenant policy decision rather than a
+deployment variable, and that mechanism is worth describing whether or not anything sits behind
+it: the policy that would gate an external model is the same policy that proves a sovereign
+tenant cannot reach one by accident. The diagram labels that backend unused rather than hosted.
+
+Note 3.8 described routing residency-free work to a commercial API. That is a property of the
+reference design for a mixed estate and it now says so, because two notes implying different
+things about the same deployment is the drift this site keeps finding in itself.
+
+**Not an invented figure and not a fabricated credit.** It is a claim that contradicted another
+claim on the same page. Erratum 7.41.
+
+**Validated.** `npm run check` exit 0. Diagrams broken 0, undefined classes 0. GPT-4o appears
+nowhere in the notes. `npm run revised` reports six files newer than their declared date, which
+is the reporter working as intended after a day of edits and is for a person to judge.
+
+**Deployed.** Pending merge.

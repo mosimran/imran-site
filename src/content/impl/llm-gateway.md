@@ -3,9 +3,9 @@ section: "3.2"
 title: "Sovereign LLM gateway"
 summary: "One control plane over several model backends, the self-hosted ones running on two GPUs we own. Redaction runs before routing, fallback is deterministic and stamped, quotas are per tenant and per model."
 slug: "llm-gateway"
-revised: 2026-09-03
+revised: 2026-09-04
 state: production
-stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "Qwen", "GPT-4o", "2 GPUs, self-hosted inference"]
+stack: ["Python (FastAPI)", "Redis", "OpenSearch", "PostgreSQL", "Ollama", "Qwen", "open-weight models only", "2 GPUs, self-hosted inference"]
 result: []
 fallsOverAt: "The quota path. It is the one component every call passes through and the one that holds state, so it saturates before the model adapters do. The rate at which that happens is a property of a specific deployment and is not published here."
 metrics:
@@ -48,8 +48,11 @@ That is why the local backends run on two GPUs we own rather than on rented infe
 you can install is a model whose weights, prompts and logs never leave a room you control, and
 it is the only version of this a regulator can be shown rather than told about. The models
 chosen for those slots have to self-host and still support tool calling, which is a smaller set
-than it sounds. A hosted frontier model sits alongside them for tenants whose data
-classification permits it.
+than it sounds. The architecture has a slot for a hosted model, reachable only by a
+tenant whose data classification permits external inference, and this deployment does not use
+it: every model behind the gateway is open weight and runs on hardware in the room. The slot
+matters anyway, because the policy that would gate it is the same policy that proves the local
+tenants cannot reach one.
 
 ## 2. The decisions, and where each one is enforced
 
@@ -78,8 +81,8 @@ classification permits it.
 <text x="543" y="40" font-size="9.5" text-anchor="middle">self-hosted, 2 GPUs</text>
 <text class="d" x="543" y="55" font-size="8.5" text-anchor="middle">weights never leave the room</text>
 <rect x="456" y="70" width="174" height="40" rx="3" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="4 3"/>
-<text x="543" y="86" font-size="9.5" text-anchor="middle">hosted frontier model</text>
-<text class="r" x="543" y="101" font-size="8.5" text-anchor="middle">only if classification permits</text>
+<text x="543" y="86" font-size="9.5" text-anchor="middle">hosted model, unused here</text>
+<text class="r" x="543" y="101" font-size="8.5" text-anchor="middle">the slot policy would gate</text>
 <line class="sd" x1="86" y1="14" x2="640" y2="14" stroke-width="1" stroke-dasharray="3 3"/>
 <text class="d" x="92" y="11" font-size="8.5">the boundary: rules enforced here, not delegated to the backend</text>
 <text class="d" x="10" y="140" font-size="9" letter-spacing=".9">EVERY RESPONSE, WITHOUT EXCEPTION</text>
