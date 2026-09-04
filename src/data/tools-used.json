@@ -6,35 +6,113 @@
   "serves": "Runs in production, on the request path of a real visitor."
  },
  "pending": "Depth of use across the owner's wider work is not recorded yet. The vocabulary above describes this repository only, which is the part that can be checked by reading it.",
+ "star": {
+  "meaning": "A star means the tool earned its place here: it is used to build, check or serve this site and the row names the file that proves it. It is not a quality rating. Nothing in the catalogue is starred for being good, because this site has no evidence about six hundred products and a star handed out on impression is exactly the kind of unearned claim the rest of the document argues against.",
+  "extra": {},
+  "extraNote": "Slugs from the catalogue may be starred here, but each one needs a written reason and that reason is printed next to the star. An entry without a reason fails the build."
+ },
  "used": [
-  { "name": "Astro", "url": "https://astro.build/", "category": "workflow", "role": "builds",
-    "evidence": "package.json, astro.config.mjs", "note": "Static output only. No island is hydrated, because the reading path ships zero bytes of JavaScript." },
-  { "name": "TypeScript", "url": "https://www.typescriptlang.org/", "category": "workflow", "role": "builds",
-    "evidence": "package.json, tsconfig.json" },
-  { "name": "Zod", "url": "https://zod.dev/", "category": "workflow", "role": "builds",
-    "evidence": "src/content/config.ts", "note": "The schema is the editorial policy. A paper without retirement conditions fails the build rather than shipping quietly." },
-  { "name": "Node.js", "url": "https://nodejs.org/", "category": "workflow", "role": "builds",
-    "evidence": "package.json engines, every script in scripts/" },
-  { "name": "Playwright", "url": "https://playwright.dev/", "category": "testing", "role": "checks",
-    "catalogue": "playwright",
-    "evidence": "scripts/check-mobile.mjs, check-print.mjs, check-visible.mjs", "note": "Fourteen viewports, both sides of every breakpoint. Added after a phone rendered 517 pixels of content inside 375." },
-  { "name": "pa11y", "url": "https://pa11y.org/", "category": "testing", "role": "checks",
-    "evidence": "scripts/check-a11y.mjs", "note": "Runs axe. Caught four keyboard traps the day the figures were repaired." },
-  { "name": "Lighthouse", "url": "https://developer.chrome.com/docs/lighthouse/", "category": "testing", "role": "checks",
-    "evidence": "scripts/check-lighthouse.mjs" },
-  { "name": "GitHub Actions", "url": "https://github.com/features/actions", "category": "devops", "role": "checks",
-    "catalogue": "github-actions",
-    "evidence": ".github/workflows/", "note": "Every gate runs with if: !cancelled(), because a job that stops at the first failure was hiding the checks behind it." },
-  { "name": "Cloudflare Pages", "url": "https://pages.cloudflare.com/", "category": "hosting", "role": "serves",
-    "evidence": ".github/workflows deploy step, wrangler pages deploy" },
-  { "name": "Cloudflare D1", "url": "https://developers.cloudflare.com/d1/", "category": "data", "role": "serves",
-    "evidence": "functions/_lib/gate.ts", "note": "Holds the rate-limit and token state behind the CV gate. Nothing else on the site touches a database." },
-  { "name": "Wrangler", "url": "https://developers.cloudflare.com/workers/wrangler/", "category": "devops", "role": "serves",
-    "evidence": ".github/workflows, pinned rather than floating", "note": "Called directly rather than through an action wrapper: one fewer third party in the release path." },
-  { "name": "Resend", "url": "https://resend.com/", "category": "commerce", "role": "serves",
-    "catalogue": "resend",
-    "evidence": "functions/_lib/cv-email.ts", "note": "Sends the single-use CV link. The only outbound mail this site sends." },
-  { "name": "Git", "url": "https://git-scm.com/", "category": "workflow", "role": "builds",
-    "evidence": "scripts/check-revised.mjs reads commit dates to verify every note's revised field" }
+  {
+   "name": "Astro",
+   "url": "https://astro.build/",
+   "category": "workflow",
+   "role": "builds",
+   "evidence": "package.json, astro.config.mjs",
+   "note": "Static output only. No island is hydrated, because the reading path ships zero bytes of JavaScript."
+  },
+  {
+   "name": "TypeScript",
+   "url": "https://www.typescriptlang.org/",
+   "category": "workflow",
+   "role": "builds",
+   "evidence": "package.json, tsconfig.json"
+  },
+  {
+   "name": "Zod",
+   "url": "https://zod.dev/",
+   "category": "workflow",
+   "role": "builds",
+   "evidence": "src/content/config.ts",
+   "note": "The schema is the editorial policy. A paper without retirement conditions fails the build rather than shipping quietly."
+  },
+  {
+   "name": "Node.js",
+   "url": "https://nodejs.org/",
+   "category": "workflow",
+   "role": "builds",
+   "evidence": "package.json engines, every script in scripts/"
+  },
+  {
+   "name": "Playwright",
+   "url": "https://playwright.dev/",
+   "category": "testing",
+   "role": "checks",
+   "catalogue": "playwright",
+   "evidence": "scripts/check-mobile.mjs, check-print.mjs, check-visible.mjs",
+   "note": "Fourteen viewports, both sides of every breakpoint. Added after a phone rendered 517 pixels of content inside 375."
+  },
+  {
+   "name": "pa11y",
+   "url": "https://pa11y.org/",
+   "category": "testing",
+   "role": "checks",
+   "evidence": "scripts/check-a11y.mjs",
+   "note": "Runs axe. Caught four keyboard traps the day the figures were repaired."
+  },
+  {
+   "name": "Lighthouse",
+   "url": "https://developer.chrome.com/docs/lighthouse/",
+   "category": "testing",
+   "role": "checks",
+   "evidence": "scripts/check-lighthouse.mjs"
+  },
+  {
+   "name": "GitHub Actions",
+   "url": "https://github.com/features/actions",
+   "category": "devops",
+   "role": "checks",
+   "catalogue": "github-actions",
+   "evidence": ".github/workflows/",
+   "note": "Every gate runs with if: !cancelled(), because a job that stops at the first failure was hiding the checks behind it."
+  },
+  {
+   "name": "Cloudflare Pages",
+   "url": "https://pages.cloudflare.com/",
+   "category": "hosting",
+   "role": "serves",
+   "evidence": ".github/workflows deploy step, wrangler pages deploy"
+  },
+  {
+   "name": "Cloudflare D1",
+   "url": "https://developers.cloudflare.com/d1/",
+   "category": "data",
+   "role": "serves",
+   "evidence": "functions/_lib/gate.ts",
+   "note": "Holds the rate-limit and token state behind the CV gate. Nothing else on the site touches a database."
+  },
+  {
+   "name": "Wrangler",
+   "url": "https://developers.cloudflare.com/workers/wrangler/",
+   "category": "devops",
+   "role": "serves",
+   "evidence": ".github/workflows, pinned rather than floating",
+   "note": "Called directly rather than through an action wrapper: one fewer third party in the release path."
+  },
+  {
+   "name": "Resend",
+   "url": "https://resend.com/",
+   "category": "commerce",
+   "role": "serves",
+   "catalogue": "resend",
+   "evidence": "functions/_lib/cv-email.ts",
+   "note": "Sends the single-use CV link. The only outbound mail this site sends."
+  },
+  {
+   "name": "Git",
+   "url": "https://git-scm.com/",
+   "category": "workflow",
+   "role": "builds",
+   "evidence": "scripts/check-revised.mjs reads commit dates to verify every note's revised field"
+  }
  ]
 }

@@ -1,8 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Doc from '../../../layouts/Doc.astro'
+import Star from '../../../components/Star.astro'
 import '../../../styles/tools.css'
-import { categories, bySlug, used } from '../../../lib/tools'
+import { categories, bySlug, used, starOf, starMeaning } from '../../../lib/tools'
 
 export const getStaticPaths = (() => {
   return categories.map((c) => ({ params: { category: c.key }, props: { c } }))
@@ -64,10 +65,11 @@ All tools: <a href="/tools/">catalogue</a></div>
   {usedHere.length > 0 && (
     <div class="ind tsec">
       <h2 id="used">Used here, in this category</h2>
+      <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
       <ul class="tl">
         {usedHere.map((u) => (
           <li>
-            <div class="h"><a href={u.url} rel="noopener">{u.name}</a><span class="trole">{u.role}</span></div>
+            <div class="h"><Star title={u.evidence} /><a href={u.url} rel="noopener">{u.name}</a><span class="trole">{u.role}</span></div>
             {u.note && <div class="d">{u.note}</div>}
             <div class="tev"><b>Evidence:</b> {u.evidence}</div>
           </li>
@@ -123,10 +125,14 @@ All tools: <a href="/tools/">catalogue</a></div>
       {list.map((t) => (
         <li>
           <div class="h">
+            {starOf(t.slug) && (
+              <Star title={starOf(t.slug)!.reason} />
+            )}
             {hasPage(t.slug) ? <a href={`/tools/${t.slug}/`}>{t.name}</a> : <a href={t.url} rel="noopener">{t.name}</a>}
             {t.refs.length > 1 && <span class="tref">{t.refs.length} of 3 lists</span>}
           </div>
           <div class="d">{t.desc}</div>
+          {starOf(t.slug) && <div class="why"><b>Used here:</b> {starOf(t.slug)!.reason}</div>}
         </li>
       ))}
     </ul>

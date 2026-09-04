@@ -1,8 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Doc from '../../layouts/Doc.astro'
+import Star from '../../components/Star.astro'
 import '../../styles/tools.css'
-import { tools, neighbours, categoryOf, sourceById, used, type Tool } from '../../lib/tools'
+import { tools, neighbours, categoryOf, sourceById, used, starOf, starMeaning, type Tool } from '../../lib/tools'
 
 /*
  * A page per tool, but not for all 591 of them. A page exists when there is
@@ -25,7 +26,8 @@ const { t } = Astro.props as { t: Tool }
 const cat = categoryOf.get(t.category)
 const { named, namedBy, shelf } = neighbours(t)
 const mine = used.find((u) => u.catalogue === t.slug)
-const cited = t.refs.map((r) => sourceById.get(r)!).filter(Boolean)
+const host = new URL(t.url).hostname.replace(/^www\./, '')
+const star = starOf(t.slug)
 const quotedFrom = sourceById.get(t.descFrom)
 const top = shelf.slice(0, 8)
 ---
@@ -34,14 +36,14 @@ const top = shelf.slice(0, 8)
     <div>Off the Bit
 <b>Tools: {t.name}</b>
 Category: <a href={`/tools/in/${t.category}/`}>{cat?.label ?? t.category}</a>
-Cited by: {t.refs.length} of 3 lists</div>
+Site: <a href={t.url} rel="noopener">{host}</a></div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
 All tools: <a href="/tools/">catalogue</a></div>
   </div>
 
   <div class="title">
-    <h1>{t.name}</h1>
+    <h1>{star && <Star title={star.reason} />} {t.name}</h1>
     <div class="sub">{t.desc}</div>
   </div>
 
@@ -56,33 +58,14 @@ All tools: <a href="/tools/">catalogue</a></div>
   {mine && (
     <div class="ind tsec">
       <h2 id="used">Used here</h2>
+      <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
       <ul class="tl"><li>
-        <div class="h"><a href={mine.url} rel="noopener">{mine.name}</a><span class="trole">{mine.role}</span></div>
+        <div class="h"><Star title={mine.evidence} /><a href={mine.url} rel="noopener">{mine.name}</a><span class="trole">{mine.role}</span></div>
         {mine.note && <div class="d">{mine.note}</div>}
         <div class="tev"><b>Evidence:</b> {mine.evidence}</div>
       </li></ul>
     </div>
   )}
-
-  <div class="ind tsec">
-    <h2 id="where">Where it is listed</h2>
-    <ul class="tsrc">
-      {cited.map((s) => (
-        <li><b><a href={s.url} rel="noopener">{s.title}</a></b><br />
-          filed under {t.headings.join(', ')}. Read at <span class="kw">{s.commitShort}</span> of {s.commitDate}.
-          Licence: <a href={s.licenceUrl} rel="noopener">{s.licence}</a>.</li>
-      ))}
-    </ul>
-    <p class="prose"><a href={t.url} rel="noopener">{t.url}</a></p>
-    {t.alsoAt && t.alsoAt.length > 0 && (
-      <p class="prose dim">Also listed at {t.alsoAt.join(', ')}. Merged into one entry during
-        ingest, because the source lists carried the same product under different URLs.</p>
-    )}
-    {t.alsoFiledUnder.length > 0 && (
-      <p class="prose dim">One source files it under
-        {' '}{t.alsoFiledUnder.map((c) => categoryOf.get(c)?.label ?? c).join(' and ')} instead.</p>
-    )}
-  </div>
 
   {(named.length > 0 || namedBy.length > 0) && (
     <div class="ind tsec">
@@ -116,6 +99,9 @@ All tools: <a href="/tools/">catalogue</a></div>
       {top.map((n) => (
         <li>
           <div class="h">
+            {starOf(n.slug) && (
+              <Star title={starOf(n.slug)!.reason} />
+            )}
             {(n.refs.length > 1 || n.mentions.length > 0 || n.mentionedBy.length > 0)
               ? <a href={`/tools/${n.slug}/`}>{n.name}</a>
               : <a href={n.url} rel="noopener">{n.name}</a>}

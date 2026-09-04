@@ -1,7 +1,8 @@
 ---
 import Doc from '../../layouts/Doc.astro'
+import Star from '../../components/Star.astro'
 import '../../styles/tools.css'
-import { categories, crossReferenced, sources, tools, used, roles, usedPending, generated, bySlug } from '../../lib/tools'
+import { categories, crossReferenced, sources, tools, used, roles, usedPending, generated, bySlug, starOf, starMeaning } from '../../lib/tools'
 
 const detail = (slug: string) => `/tools/${slug}/`
 const hasPage = (slug: string) => {
@@ -55,10 +56,12 @@ Sources: 3 lists</div>
     <p class="prose">These build, check or serve this site. The evidence column is the point: each
       one names a file you can open in the repository and confirm, rather than asking you to take a
       rating on trust.</p>
+    <p class="legend"><Star title="A star means the tool is used here, with evidence" /> {starMeaning}</p>
     <ul class="tl">
       {used.map((u) => (
         <li>
           <div class="h">
+            <Star title={u.evidence} />
             <a href={u.url} rel="noopener">{u.name}</a>
             <span class="trole">{u.role}</span>
           </div>
@@ -102,12 +105,16 @@ Sources: 3 lists</div>
       {crossReferenced.map((t) => (
         <li>
           <div class="h">
+            {starOf(t.slug) && (
+              <Star title={starOf(t.slug)!.reason} />
+            )}
             {hasPage(t.slug)
               ? <a href={detail(t.slug)}>{t.name}</a>
               : <a href={t.url} rel="noopener">{t.name}</a>}
             <span class="tref">{t.refs.length} of 3 lists</span>
           </div>
           <div class="d">{t.desc}</div>
+          {starOf(t.slug) && <div class="why"><b>Used here:</b> {starOf(t.slug)!.reason}</div>}
           <div class="m"><a href={`/tools/in/${t.category}/`}>{t.category}</a></div>
         </li>
       ))}

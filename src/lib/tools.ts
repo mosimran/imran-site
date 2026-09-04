@@ -64,6 +64,37 @@ export const used = overlay.used as Used[]
 export const roles = overlay.vocabulary as Record<string, string>
 export const usedPending: string = overlay.pending
 
+/*
+ * The star.
+ *
+ * It marks a tool that earned its place: used to build, check or serve this
+ * site, with a file in this repository named as the proof. It is deliberately
+ * not a quality mark. A glowing star handed out on impression across six
+ * hundred products nobody here has opened would be the same unearned claim the
+ * rest of this document spends its time arguing against, and it would be the
+ * one on the site that no reader could check.
+ *
+ * `extra` exists so the owner can star a catalogue tool that is not in the
+ * overlay. Every star carries a reason and the reason is printed beside it.
+ */
+export interface Star { reason: string; role?: string }
+
+const starData = overlay.star as { meaning: string; extra: Record<string, string> }
+export const starMeaning: string = starData.meaning
+
+export const stars = new Map<string, Star>()
+for (const u of used) {
+  if (u.catalogue) stars.set(u.catalogue, { reason: u.evidence, role: u.role })
+}
+for (const [slug, reason] of Object.entries(starData.extra ?? {})) {
+  if (!reason || !reason.trim()) {
+    throw new Error(`tools-used.json: star for "${slug}" has no reason. A star without one is decoration.`)
+  }
+  stars.set(slug, { reason })
+}
+
+export const starOf = (slug: string): Star | undefined => stars.get(slug)
+
 export const taxonomy = catalogue.taxonomy as Record<string, { label: string; blurb: string }>
 
 export const bySlug = new Map(tools.map((t) => [t.slug, t]))
