@@ -411,6 +411,29 @@ it needs the owner.
   dropped and why. Without it this is a CV appendix, and it would be the only section here that
   only accumulates.
 
+- [x] **T48** A short link for every numbered document
+  <br>*Ships:* yes. *Plan:* [SHORTLINK-PLAN.md](SHORTLINK-PLAN.md), Rev C.
+  <br>*Validated by:* `npm run check` exit 0, `npm run mobile` and `npm run a11y` clean on the
+  new map page, and `wrangler pages dev dist` answering
+  `301 Location: /papers/kubernetes-for-a-bicycle/` for `/l/5-14` and `/l/5-14/`.
+  <br>**Closed 2026-09-05.** 35 codes, one per paper and implementation note. A code is the
+  document's own section number with the dot replaced by a hyphen, so 5.14 is `/l/5-14`.
+  <br>The owner rejected a dot in the path and that settled the scheme rather than
+  complicating it: the errata page has written section numbers with a hyphen since it was
+  built, and the errata sources are named `7-25.md`, so the substitution is this repository's
+  own convention rather than one invented for short links.
+  <br>Five decisions were delegated and all five were taken. `5-14` over `p14`, because it
+  needs no explanation on the map page. The canonical host is printed on the paper, with the
+  shorter alias documented at `/l/`. Implementation notes are included and errata are not,
+  because errata are anchors on a shared page rather than pages. No click counting, which would
+  need a Function, a D1 write and a new row in the processor table for a number nobody needs.
+  No QR codes.
+  <br>Two things were found rather than built. `check-links.mjs` had never opened
+  `dist/_redirects`, so a rule pointing at a page that no longer existed would have failed
+  silently at the edge; it now treats a redirect source as resolving and fails on a destination
+  that does not. And the inlined stylesheet is at 11,906 of 12,000 bytes, which makes CSS the
+  binding budget for whatever wants a rule next.
+
 ---
 
 ## Ordering notes

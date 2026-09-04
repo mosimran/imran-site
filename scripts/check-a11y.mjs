@@ -13,7 +13,7 @@ const CORE = ['/', '/papers/', '/papers/competence-porn/', '/impl/llm-gateway/',
   // The tools catalogue. The category pages carrying a graph are picked up by the
   // figure scan below; these two are not, and the index carries the only form on
   // the site outside the CV gate.
-  '/tools/', '/tools/in/editors/', '/tools/github-copilot/']
+  '/tools/', '/tools/in/editors/', '/tools/github-copilot/', '/l/']
 const withFigures = execSync("grep -rl '<svg' dist --include=index.html", { encoding: 'utf8' })
   .trim().split('\n').filter(Boolean)
   .map((f) => f.replace(/^dist/, '').replace(/index\.html$/, ''))

@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content'
+import Doc from '../../layouts/Doc.astro'
+import ledger from '../../data/shortlinks.json'
+
+/*
+ * The published map.
+ *
+ * A short link is a URL that hides where it goes, and on a site whose argument is
+ * that a claim carries its provenance that is the wrong default. Three things fix
+ * it and this page is the second: the code is the document's own section number
+ * rather than a random string, the whole mapping is published here, and the
+ * redirect is a 301 to a real page so the address bar shows the truth a moment
+ * later. check-short.mjs fails the build if this page is missing a code.
+ */
+const entries = Object.entries(ledger as Record<string, { section: string; target: string; since: string }>)
+const papers = await getCollection('papers')
+const notes = await getCollection('impl')
+const titles = new Map<string, string>()
+for (const x of [...papers, ...notes]) titles.set(x.data.section, x.data.title)
+
+const rows = entries.map(([code, e]) => ({ code, ...e, title: titles.get(e.section) ?? '' }))
+const issued = rows.map((r) => r.since).sort()
+const first = issued[0] ?? 'none yet'
+const last = issued[issued.length - 1] ?? 'none yet'
+---
+<Doc title="Short links" description="Every short link this site has issued, what it points at, and the date it was issued.">
+  <div class="mast">
+    <div>Off the Bit
+<b>Short links</b>
+Codes: {rows.length}
+Scheme: /l/ + section number</div>
+    <div class="r"><b>M. Imran</b>
+First issued {first}
+Last issued {last}
+Permanent</div>
+  </div>
+
+  <div class="title">
+    <h1>Short links</h1>
+    <div class="sub">Every code this site has issued, what it points at, and when it was handed out.</div>
+  </div>
+
+  <h2 id="how">How the code is made</h2>
+  <div class="ind prose">
+    <p>A short link is the document's own section number with the dot replaced by a
+    hyphen. Paper 5.14 is <code>/l/5-14</code>. Implementation note 3.2 is
+    <code>/l/3-2</code>. Nothing is hashed and nothing is random, so a link tells you
+    where it goes before you follow it, and this page lets you check that rather than
+    take it on trust.</p>
+    <p>The hyphen is not a decision made here. This document has written section
+    numbers that way since the errata page was built, because a dot in a path reads as
+    a file extension and gets swallowed when a URL ends a sentence.</p>
+    <p>Both serving hosts answer the same codes.
+    <code>imran.com.bd/l/5-14</code> is the same document as
+    <code>mosthofaimran.com/l/5-14</code>, and neither redirects to the other: the
+    canonical tag on the page does that work, which is the arrangement Section 2 of
+    the index already describes.</p>
+  </div>
+
+  <h2 id="permanent">What a code promises</h2>
+  <div class="ind prose">
+    <p>A code is issued once and never moved. Not renamed, not repointed at a
+    different document, not withdrawn if a paper is retracted: a retracted paper keeps
+    its page, struck through, with the reason attached, and its short link keeps
+    landing there. The build fails if any code in this table changes what it points
+    at, which is the only reason a permanent redirect is safe to print on paper.</p>
+    <p>Nothing is counted. Following one of these tells this site nothing, because
+    there is nothing at the other end but a redirect written into a static file.</p>
+  </div>
+
+  <h2 id="map">The map</h2>
+  <div class="ind">
+    <table class="rt">
+      <thead><tr><th style="width:74px">Code</th><th>Document</th><th style="width:104px">Issued</th></tr></thead>
+      <tbody>{rows.map((r) => (
+        <tr>
+          <td class="n" data-l="Code"><a href={`/l/${r.code}`}>{r.code}</a></td>
+          <td data-l="Document"><a href={r.target}>{r.section} {r.title}</a></td>
+          <td class="hd n" data-l="Issued">{r.since}</td>
+        </tr>
+      ))}</tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Short links</span><span>{rows.length} codes</span></div>
+</Doc>

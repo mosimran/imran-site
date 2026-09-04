@@ -4024,6 +4024,136 @@ would stop this being a CV appendix, and that remains unbuilt.
 
 **Deployed.** Pending merge.
 
+## T48, 2026-09-05: a short link for every numbered document
+
+**What changed.** Every paper and implementation note now has a second, shorter address.
+`https://mosthofaimran.com/papers/kubernetes-for-a-bicycle/` is 58 characters and
+`https://imran.com.bd/l/5-14` is 27. Thirty-five codes, one per numbered document.
+
+**The code is the section number, hyphenated.** Not a hash. A hash is longer at six
+characters (34 against 32 on the primary host), unreadable, case-sensitive when read aloud,
+and needs a collision check to earn none of that back. The section number is a name this
+document already uses in its masthead, its headings and every erratum.
+
+The dot was the owner's objection and it was right. `5.14` in a path reads as a file
+extension and gets swallowed by autolinkers when a URL ends a sentence. The answer was
+already in the repository: `errata/index.astro` has built its anchors with
+`.replace('.', '-')` since it was written, and the errata sources are named `7-25.md`. So
+`/l/5-14` is this site's existing convention rather than a new one, which is why it needs no
+explanation anywhere except the map page.
+
+**A short link hides where it goes, and this site argues against exactly that.** Three
+things answer it, and all three are built. The code is derived from the document rather than
+random, so a link says what it is before you follow it. The whole mapping is published at
+`/l/` with the date each code was issued. And the redirect is a 301 to a real page, so the
+address bar shows the truth a moment later.
+
+**Sharing with minimal attention, at zero bytes of JavaScript.** The link sits under the
+title where it cannot be missed, printed as a complete URL rather than as a word. `.sl a`
+carries `user-select:all`, so one gesture takes the whole URL instead of a fragment of it,
+and it stays an anchor so long-press on a phone and right-click on a desktop both offer Copy
+Link. A copy button would have cost the zero-JavaScript budget for one saved keystroke.
+
+**Append-only, enforced.** `src/data/shortlinks.json` is the ledger. `scripts/shortlinks.mjs`
+issues codes by hand and refuses to repoint one; `check-short.mjs` compares the ledger against
+`git show HEAD:` and fails the build if a published code was moved or deleted. This is the
+only reason a permanent redirect is safe to hand out: browsers cache a 301 indefinitely and a
+reader may have printed it. Six other invariants are checked, including that every page
+actually prints its own link, because a short link nobody can see is just a redirect.
+
+Issuing is deliberately not a build step. A build that mutates a checked-in file hands out
+permanent URLs as a side effect of typing `npm run build`. `npm run shortlinks` issues, the
+check fails the build until it has been run, and the failure names the command.
+
+**Found: `check-links.mjs` had never read `dist/_redirects`.** It has reported "every internal
+link resolves" while the one redirect rule on the site was unverified in both directions. No
+live defect came of it, which is the only reason this is a worklog paragraph and not an
+erratum: the claim was narrow rather than false. It now counts a redirect source as resolving,
+and fails on any rule whose destination is not a real page. 71 rules in 36 paths, 0 dead.
+
+**Validated.** `npm run check` exit 0. Budgets: index 54,161 of 60,000, inlined CSS 11,906 of
+12,000, third-party requests 0, executable script tags 0. Short link check 7 of 7. Links: 0
+broken, 0 dead rules, 0 prototype anchors lost. The redirect itself was exercised in the real
+runtime under `wrangler pages dev dist`, not asserted from the file: `/l/5-14` and `/l/5-14/`
+both answer `301` with `Location: /papers/kubernetes-for-a-bicycle/`, `/l/3-2` follows through
+to §3.2, `/l/` serves the map at 200, an unissued code 404s, and `/cv/` still resolves, so the
+new prefix collides with nothing.
+
+The `Location` is a path and not an absolute URL, checked on purpose. An absolute one would
+send `imran.com.bd` traffic to the primary and turn an alias that serves into an alias that
+redirects, which is a different decision from the one PLAN section 2.1 records.
+`check-live.mjs` now asserts both of those against production on every serving host.
+
+`npm run mobile` clean at all 14 widths from 360 to 768 on `/l/`, which was the page worth
+checking because its map is a table and tables are what scroll sideways here. `npm run a11y`
+0 WCAG2AA errors on `/l/` in both colour schemes. Both scripts had their default path lists
+extended to include it, so it stays checked rather than having been checked once.
+
+**The CSS budget is the thing to watch.** The share line cost 100 bytes and the inlined sheet
+is at 11,906 of 12,000. The next rule anybody wants does not fit without either raising the
+cap in BUILD.md section 6 deliberately or taking bytes back from somewhere. Said here rather
+than discovered by whoever writes it.
+
+**What is not done.** No click counting, by decision: it needs a Function, a D1 write and a
+row in the processor table, and the disclosure is the expensive part rather than the code.
+No QR codes. Errata have no codes, because they are anchors on a shared page and a redirect
+to a fragment is a different mechanism that would need verifying rather than assuming.
+
+**Reviewed afterwards, and it found four things.** Worth recording because three of them were
+in the checks rather than in the feature, which is the failure mode this log keeps returning to.
+
+*`--emit` was not idempotent.* Run outside a build it appended the rules again, so the file
+doubled every time. `astro build` clears `dist`, which is exactly why the normal path hid it,
+and duplicate rules are invisible at the edge because the first match wins. Nothing would ever
+have reported it. It truncates at its own marker now, and `check-short.mjs` counts rules per
+code so a doubled file fails.
+
+*`check-links.mjs` only saw a rule that carried a status code.* The status is optional in a
+Pages rule and defaults to 302, so a rule written without one was skipped by the very scan
+added in this task to catch dead destinations. The gap was one commit old.
+
+*`check-live.mjs` reported a pass against a 404.* "Location is a path" was tested as the
+absence of a scheme, and a missing header has no scheme, so a response with no redirect in it
+at all came back green. It requires the header now. Same shape as erratum 7.6 and small enough
+to have shipped unnoticed.
+
+*The map page rendered `undefined`* for its first and last issued dates if the ledger were
+ever empty.
+
+**Each fix was proven by breaking it first**, which is the standard the deploy workflow states
+and the reason to trust the ones that pass. A duplicated rule, a deleted half of a pair, a
+status-less rule pointing at a missing page, and the live assertion run against a server that
+ignores `_redirects`: all four failed before they passed. One earlier attempt at that proof was
+itself a false negative, because `grep pattern file >> file` writes nothing, and the check was
+reported as not firing when the breakage had never been applied. Checked rather than believed.
+
+**The first deploy went red, and the site was fine.** `check` passed, the upload succeeded, and
+the step after it failed: the primary answered 404 for `/l/5-14` at 18:39:55 while the alias
+answered 301 at 18:39:56. Both were correct by hand a few minutes later, and all three hosts
+including `imran-site.pages.dev` serve the redirect now. The deployment shipped. The check was
+faster than the CDN.
+
+**What that exposed is worth more than the fix.** This assertion is the only one in
+`check-live.mjs` that asks for a path which did not exist in the previous deployment. `/`,
+`/papers/`, `/errata/` and `security.txt` all pass perfectly against a stale edge still serving
+the last build, so the file that exists to prove a deploy arrived has never actually been able
+to tell. It has been checking that the site is fine, not that this deployment shipped. A green
+deploy job has meant less than it looked like it did, which is the same shape as erratum 7.6 and
+7.23: a check reading an artifact adjacent to the claim.
+
+So the assertion stays as the canary and is retried rather than raced: up to ten attempts over
+54 seconds, reporting the count when it takes more than one. If that number starts creeping,
+propagation is getting slower and that is a thing worth knowing. Proven both ways, that it
+passes on the first attempt against production and that it still fails, after 54 seconds and
+saying so, against a server that ignores `_redirects`.
+
+Nothing here is an erratum. The site publishes no claim about live verification; the gap was in
+the repository's own checks and is recorded where it belongs.
+
+**Deployed.** Merged to `main` and shipped by Actions. Verified on both serving hosts by request:
+`/l/5-14` answers 301 with `Location: /papers/kubernetes-for-a-bicycle/` on
+`mosthofaimran.com`, `imran.com.bd` and `imran-site.pages.dev`, and `/l/` serves the map at 200
+on both serving hosts.
 ---
 
 ## T49, 2026-09-05: catalogue descriptions repaired, listing block removed, a star

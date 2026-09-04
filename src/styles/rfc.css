@@ -95,6 +95,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(-
           font-weight:700;margin:0 0 8px;line-height:1.45}
 .title .sub{font-size:clamp(12.5px,3.2vw,13.5px);color:var(--dim);max-width:60ch;margin:0 auto}
 
+/* The share line under a title. user-select:all is the entire interaction
+   budget: one gesture takes the whole URL instead of a word of it, and a copy
+   button would cost JavaScript this document does not have. It stays an anchor
+   so long-press on a phone and right-click on a desktop both offer Copy Link. */
+.sl{margin:12px 0 0;font-size:12.4px;color:var(--dim)}
+.sl a{-webkit-user-select:all;user-select:all}
+
 /* ---------- structure ---------- */
 h2{font-size:clamp(14px,3.6vw,15px);font-weight:700;margin:clamp(32px,7vw,44px) 0 12px;
    letter-spacing:.02em;scroll-margin-top:60px}

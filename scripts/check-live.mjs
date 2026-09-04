@@ -146,6 +146,73 @@ for (const path of PATHS) {
   }
   console.log('')
 }
+
+// Short links, on the host that is actually serving.
+//
+// A short link is the one URL on this site that is printed on paper and read
+// aloud, so it is the one that hurts most when it silently stops working. It
+// lives in dist/_redirects, which no local check can execute: only the edge
+// knows whether the rule was shipped and honoured. check-short.mjs proves the
+// file says the right thing, and this proves the file is being obeyed.
+//
+// The Location must be a path. An absolute one would send imran.com.bd traffic
+// to the primary and turn an alias that serves into an alias that redirects,
+// which is the arrangement PLAN section 2.1 deliberately does not use.
+{
+  const code = '5-14'
+  const want = '/papers/kubernetes-for-a-bicycle/'
+
+  /*
+   * Retried, and the retry is the point.
+   *
+   * This runs seconds after `wrangler pages deploy` returns, and it is the only
+   * assertion on this list that asks for a path which did not exist in the
+   * previous deployment. Every other one, `/`, `/papers/`, `/errata/`,
+   * `security.txt`, passes perfectly well against a stale edge still serving the
+   * last build, which means this file has never been able to tell whether the
+   * deploy it just ran actually arrived.
+   *
+   * So this is the canary, and it went red the first time it flew: on
+   * 2026-09-04 the primary answered 404 at 18:39:55 while the alias answered 301
+   * at 18:39:56, and both were correct by hand a few minutes later. The
+   * deployment was fine. The check was faster than the CDN.
+   *
+   * Failing immediately turns that into a red build for a site that is serving
+   * correctly. Not checking turns it into no signal at all. Waiting up to a
+   * minute and reporting how long it took is the honest version, and the attempt
+   * count is worth reading: if it starts creeping, propagation is getting slower
+   * and that is a real thing to know.
+   */
+  const ATTEMPTS = 10
+  const GAP_MS = 6000
+  let status = 0, location = null, error = null, tries = 0
+
+  for (tries = 1; tries <= ATTEMPTS; tries++) {
+    try {
+      const r = await fetch(`${BASE}/l/${code}`, { headers: { 'User-Agent': UA }, redirect: 'manual' })
+      status = r.status
+      location = r.headers.get('location')
+      error = null
+    } catch (e) {
+      error = e.message
+    }
+    if (status === 301 && location === want) break
+    if (tries < ATTEMPTS) await new Promise((res) => setTimeout(res, GAP_MS))
+  }
+
+  const settled = Math.min(tries, ATTEMPTS)
+  const detail = error
+    ? `${error} after ${settled} attempts`
+    : `${status} -> ${location ?? 'no Location'}${settled > 1 ? `, after ${settled} attempts over ${((settled - 1) * GAP_MS) / 1000}s` : ''}`
+
+  console.log(`  /l/${code}`)
+  pass('short link is a 301 to the paper', status === 301 && location === want, detail)
+  // Requires a Location rather than merely not finding a scheme in one. Without
+  // the first half this line reported ok against a 404, which is a green result
+  // for a response that has no redirect in it at all.
+  pass('Location is a path, so the host is kept', !!location && !/^https?:/i.test(location), location ?? 'none')
+  console.log('')
+}
 }
 
 if (failures.length) {
