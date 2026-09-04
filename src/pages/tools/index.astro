@@ -2,7 +2,7 @@
 import Doc from '../../layouts/Doc.astro'
 import Star from '../../components/Star.astro'
 import '../../styles/tools.css'
-import { categories, tools, used, roles, usedPending, checked, unreachable, moved, starOf } from '../../lib/tools'
+import { categories, tools, used, roles, usedPending, checked, unreachable, moved } from '../../lib/tools'
 
 const edges = tools.reduce((n, t) => n + t.mentions.length, 0)
 const withGraph = categories.filter((c) => {
@@ -62,7 +62,7 @@ Checked: {checked}</div>
         <li>
           <div class="h">
             <Star title={u.evidence} />
-            <a href={u.url} rel="noopener">{u.name}</a>
+            <a href={u.url} target="_blank" rel="noopener">{u.name}</a>
             <span class="trole">{u.role}</span>
           </div>
           {u.note && <div class="d">{u.note}</div>}

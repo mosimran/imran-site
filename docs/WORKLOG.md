@@ -4319,3 +4319,79 @@ headroom. That is not from this work: tools styles are scoped to the tools pages
 not import them. It is the next constraint that will bind.
 
 **Deployed.** Pending merge.
+
+
+## The tools graph is removed, and the catalogue links open where they belong
+
+**Three changes to the tools section, all from the owner reading the built pages.**
+
+**External links open in a new tab.** Ten anchors across the three tools pages, every one that
+leaves this site. A reader on a catalogue page is browsing a list, and following a tool should
+not cost them their place in it. They already carried `rel="noopener"`; they now carry
+`target="_blank"` as well. Left alone deliberately: citations inside paper prose, where a link
+is part of a sentence being read rather than a row being scanned, and where forcing a new tab
+is a different decision.
+
+**The star definition went from 74 words to 29.** It said what a star means, then argued at
+length about why nothing in the catalogue is starred for being good. The argument belongs in
+the source comment that already carries it, not in a legend printed on three pages. What
+remains says the thing: used to build, check or serve this site, the row names the file that
+proves it, not a quality rating.
+
+**The graph is gone, and the numbers are why.** Measured across the catalogue rather than
+recalled: eight of the fourteen categories have no internal edges at all; five of the six that
+drew had between two and four connected tools; `docs` published a two-node vertical line taking
+350px of page. The one category with a real shape, ai-assistants at 19 nodes and 17 edges, was
+the one the 16-node cap excluded. The rule admitted every drawing not worth making and rejected
+the only one that was.
+
+Beside it sat a paragraph explaining what an edge meant. That is a description of a mechanism,
+not a fact about tools, and on the categories with no graph it was a paragraph whose entire
+content was that there was nothing to show.
+
+The cause is in the source data. An awesome-list entry introduces a product on its own terms
+and rarely names what it works with, so the edges are not there to find. Manufacturing them
+from shared category membership was rejected when the section was planned and is still the
+wrong answer.
+
+**What replaced it.** This landed on top of T50, which had just replaced the quoted list
+descriptions with the tools' own homepage copy and added a liveness probe, so the stats are
+built from what that left: how many tools, the date the descriptions were last checked, how
+many of those homepages did not answer, and how many are used to build this site. The
+liveness count is the one worth having. A catalogue that admits how much of itself has rotted
+is more use than one that does not look.
+
+The one clause worth keeping from the old caveat stayed, in eight words: a row is a
+description, not an endorsement.
+
+**The star complaint was already answered, and answered too far.** The owner asked for the
+star definition to be cut from 74 words to something short. T50 had got there first by a
+better route: it deleted the legend entirely, on the stated ground that "a star only ever
+appears next to a row that already states, in visible text, why it is there." That is the
+right rule. It was not true.
+
+T50 removed the legend and, in the same commit, removed the `Used here:` line from the
+catalogue rows and `.why` from the stylesheet. On the devops category page that left three
+stars and two visible reasons: the starred row in the catalogue list showed a gold star, a
+description and nothing saying what the star meant. The definition went from too long to
+absent, which is the same defect facing the other way, and on a page whose argument is that a
+mark should carry its evidence.
+
+Fixed by making the premise true rather than by restoring the paragraph: a starred catalogue
+row states its reason again, in the `.tev` style T50 kept for exactly that purpose. Three
+stars, three visible reasons. Checked on the built page rather than in the template, and
+checked on the tool pages too, where every starred page already carried one.
+
+Not an erratum. The false claim was in a source comment, and what reached a reader was an
+unexplained icon rather than an untrue statement. A dead `starOf` import that T50 left in
+`tools/index.astro` went with it.
+
+The shortened 29-word definition stays in `tools-used.json` and is now unused by any page,
+which is worth knowing if a legend is ever wanted again.
+
+**Validated.** `npm run check` exit 0, `budget`, `links`, `mobile`, `print` and `visible` all
+exit 0, `a11y` 0 WCAG2AA errors across 50 pages in both colour schemes. Index 54,128 of 60,000,
+inlined CSS 11,873 of 12,000, both unchanged by this. TOOLS-PLAN.md carries a Rev C recording
+that its own section 2 was superseded by its own data.
+
+**Deployed.** Merged to `main` and shipped by Actions.

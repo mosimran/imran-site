@@ -181,3 +181,47 @@ ship thirty tools with real edges than a hundred with none.
 - **Depth vocabulary.** Something with edges: "shipped production systems in it", "use weekly",
   "read the docs once". Anything on a one-to-five scale will be read as self-assessment and
   discounted.
+
+---
+
+## Rev C, 5 September 2026: the drawing is gone
+
+Rev B said two categories get a drawing and the rest carry a paragraph saying why there is
+none. Both halves of that shipped and both were wrong, and the owner said so from a
+screenshot of each.
+
+**The paragraph explained the mechanism instead of saying anything.** "An edge means one
+tool's description names another. 1 edges between 2 of the 31 tools here." A reader who did
+not ask how an edge is defined learns nothing from that, and a reader who did is being told
+about a drawing rather than about the tools.
+
+**The drawing was worse.** The numbers, measured across the whole catalogue rather than
+recalled:
+
+| Category | Tools | Nodes | Edges |
+| --- | --- | --- | --- |
+| ai-assistants | 115 | 19 | 17 |
+| devops | 34 | 12 | 11 |
+| testing | 66 | 4 | 3 |
+| data | 35 | 4 | 2 |
+| security | 45 | 3 | 2 |
+| workflow | 88 | 3 | 2 |
+| docs | 31 | 2 | 1 |
+| eight others | 322 | 0 | 0 |
+
+Eight of fourteen categories have no edges at all. Five of the six that drew had between two
+and four connected tools, so `docs` published a two-node vertical line occupying 350px. And
+the one category with a real shape, ai-assistants at 19 nodes, was excluded by the 16-node cap
+the plan itself set: the rule admitted every drawing not worth making and rejected the only
+one that was.
+
+**The cause is the source data, not the drawing.** An awesome-list entry introduces a product
+on its own terms and rarely names what it works with, so the edges do not exist to be found.
+Rev A already rejected manufacturing them from shared category membership, on the grounds
+that it would connect everything to everything, and that reasoning holds.
+
+Removed. This landed on top of T50, which had already replaced the quoted list descriptions
+with homepage copy and added a liveness probe, so what each category page carries instead is
+built from that: the count, the date the descriptions were last checked, how many of those
+homepages did not answer, and how many tools are used to build this site. Section 2's argument
+for a per-category map is superseded by its own data.

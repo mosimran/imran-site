@@ -11,29 +11,27 @@ export const getStaticPaths = (() => {
 
 const { c } = Astro.props
 const list = c.tools
-const inSet = new Set(c.tools.map((t) => t.slug))
-
 /*
- * The internal graph: an edge is one entry naming another in the same category.
- * Drawn only when it is small enough to read. Everywhere else the page says the
- * graph is empty rather than manufacturing one out of shared shelf space.
+ * There is no graph here, and the data is the reason.
+ *
+ * An edge would have been one entry naming another in the same category.
+ * Measured across the whole catalogue: eight of the fourteen categories have no
+ * internal edges at all, five of the remaining six have between two and four
+ * connected tools, and the only category with a real shape, ai-assistants at 19
+ * nodes, was the one the old 16-node cap excluded. The rule admitted every
+ * drawing not worth making and rejected the only one that was, so `docs`
+ * published a two-node vertical line occupying 350px of the page.
+ *
+ * The paragraph beside it defined what an edge was, which tells a reader about
+ * the drawing rather than about the tools. Removed on 2026-09-05. `mentions`
+ * still earns its keep on a tool's own page, where naming the two or three
+ * things an entry mentions is a fact rather than a picture.
  */
-const pairs: Array<[string, string]> = []
-for (const t of c.tools) for (const m of t.mentions) if (inSet.has(m)) pairs.push([t.slug, m])
-const nodeSlugs = [...new Set(pairs.flat())]
-const drawable = nodeSlugs.length >= 2 && nodeSlugs.length <= 16
-
-// Ring layout. A force simulation needs JavaScript and a ring reads fine at
-// this size: every node sits on a circle and every edge is a straight chord.
-const R = 150
-const CX = 300
-const CY = 175
-const pos = new Map(nodeSlugs.map((s, i) => {
-  const a = (i / nodeSlugs.length) * Math.PI * 2 - Math.PI / 2
-  return [s, { x: CX + R * Math.cos(a), y: CY + R * Math.sin(a), a }]
-}))
 const usedHere = used.filter((u) => u.category === c.key)
 const dead = list.filter((t) => !t.live.ok).length
+const usedLine = usedHere.length === 0
+  ? 'None of them is used to build this site.'
+  : `${usedHere.length} ${usedHere.length === 1 ? 'is' : 'are'} used to build this site, starred with the file that proves it.`
 ---
 <Doc title={`${c.label}, tools`} description={`${c.tools.length} tools catalogued under ${c.label.toLowerCase()}. ${c.blurb}`}>
   <div class="mast">
@@ -52,10 +50,9 @@ All tools: <a href="/tools/">catalogue</a></div>
   </div>
 
   <div class="ind tsec">
-    <div class="memo">{c.tools.length} tools, described here from their own homepages. A row is a
-      description, not an endorsement, and nothing on this page claims any of these is used here.
-      The short list that is, with the file proving each one, is on the
-      {' '}<a href="/tools/#used">catalogue front page</a>.</div>
+    <div class="memo">{c.tools.length} tools, described from their own homepages and last
+      checked {checked}.{dead > 0 && ` ${dead} of those homepages did not answer.`} {usedLine}
+      {' '}A row is a description, not an endorsement.</div>
   </div>
 
   {usedHere.length > 0 && (
@@ -64,7 +61,7 @@ All tools: <a href="/tools/">catalogue</a></div>
       <ul class="tl">
         {usedHere.map((u) => (
           <li>
-            <div class="h"><Star title={u.evidence} /><a href={u.url} rel="noopener">{u.name}</a><span class="trole">{u.role}</span></div>
+            <div class="h"><Star title={u.evidence} /><a href={u.url} target="_blank" rel="noopener">{u.name}</a><span class="trole">{u.role}</span></div>
             {u.note && <div class="d">{u.note}</div>}
             <div class="tev"><b>Evidence:</b> {u.evidence}</div>
           </li>
@@ -73,45 +70,6 @@ All tools: <a href="/tools/">catalogue</a></div>
     </div>
   )}
 
-  <div class="ind tsec">
-    <h2 id="graph">How these relate</h2>
-    {drawable ? (
-      <>
-        <p class="prose">An edge means one entry names another. {pairs.length} edges between
-          {' '}{nodeSlugs.length} of the {c.tools.length} tools here. The other
-          {' '}{c.tools.length - nodeSlugs.length} are described without reference to anything else
-          on this shelf, which is normal and is why the drawing is small.</p>
-        <figure>
-          <div class="dia" tabindex="0" role="group" aria-label={`Reference graph for ${c.label}: ${pairs.length} edges between ${nodeSlugs.length} tools`}>
-            <svg viewBox="0 0 600 350" width="600" height="350" role="img" aria-hidden="true">
-              {pairs.map(([a, b]) => (
-                <line x1={pos.get(a)!.x} y1={pos.get(a)!.y} x2={pos.get(b)!.x} y2={pos.get(b)!.y}
-                  stroke="currentColor" stroke-width="1" opacity="0.35" />
-              ))}
-              {nodeSlugs.map((s) => {
-                const p = pos.get(s)!
-                const right = Math.cos(p.a) > -0.1
-                return (
-                  <>
-                    <circle cx={p.x} cy={p.y} r="4" fill="currentColor" />
-                    <text x={p.x + (right ? 9 : -9)} y={p.y + 3}
-                      text-anchor={right ? 'start' : 'end'} font-size="11">{bySlug.get(s)?.name ?? s}</text>
-                  </>
-                )
-              })}
-            </svg>
-          </div>
-          <figcaption>Entries that name each other, {c.label.toLowerCase()}. Scrolls sideways on a narrow screen.</figcaption>
-        </figure>
-      </>
-    ) : (
-      <p class="prose">No graph. An edge here means one entry names another on the same shelf, and
-        on this data there {pairs.length === 0 ? 'are none' : `is only ${pairs.length}`}. Products
-        are described on their own terms, so the text rarely mentions what a thing works with.
-        Drawing a cloud from shared category membership instead would connect everything to
-        everything and say nothing.</p>
-    )}
-  </div>
 
   <div class="ind tsec">
     <h2 id="list">All {c.tools.length}</h2>
@@ -126,6 +84,7 @@ All tools: <a href="/tools/">catalogue</a></div>
           </div>
           <div class="d">{t.desc}</div>
           <div class="punch">{t.punch}</div>
+          {starOf(t.slug) && <div class="tev"><b>Used here:</b> {starOf(t.slug)!.reason}</div>}
         </li>
       ))}
     </ul>

@@ -34,7 +34,7 @@ const top = shelf.slice(0, 8)
     <div>Off the Bit
 <b>Tools: {t.name}</b>
 Category: <a href={`/tools/in/${t.category}/`}>{cat?.label ?? t.category}</a>
-Site: {t.live.ok ? <a href={t.url} rel="noopener">{t.host}</a> : <span class="gone">{t.host}</span>}</div>
+Site: {t.live.ok ? <a href={t.url} target="_blank" rel="noopener">{t.host}</a> : <span class="gone">{t.host}</span>}</div>
     <div class="r"><b>M. Imran</b>
 Index: <a href="/">draft</a>
 All tools: <a href="/tools/">catalogue</a></div>
@@ -70,7 +70,7 @@ All tools: <a href="/tools/">catalogue</a></div>
     <div class="ind tsec">
       <h2 id="used">Used to build this site</h2>
       <ul class="tl"><li>
-        <div class="h"><Star title={mine.evidence} /><a href={mine.url} rel="noopener">{mine.name}</a><span class="trole">{mine.role}</span></div>
+        <div class="h"><Star title={mine.evidence} /><a href={mine.url} target="_blank" rel="noopener">{mine.name}</a><span class="trole">{mine.role}</span></div>
         {mine.note && <div class="d">{mine.note}</div>}
         <div class="tev"><b>Evidence:</b> {mine.evidence}</div>
       </li></ul>
