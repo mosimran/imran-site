@@ -1,0 +1,178 @@
+---
+import Doc from '../layouts/Doc.astro'
+import { contact, roleLine, vcardCompact } from '../lib/contact'
+import { qr } from '../lib/qr'
+
+/*
+ * A short URL to point a camera at.
+ *
+ * The code carries the contact card itself rather than a link to it, so a phone
+ * can add the entry with the network off. The alternative was to encode
+ * https://mosthofaimran.com/contact.vcf, which makes a much smaller code and a
+ * much easier scan, and then does nothing at all in a room with no signal. The
+ * card is 330 bytes and fits in a 69 module code, which is comfortable to read
+ * off a screen, so the offline version wins.
+ *
+ * The download stays on the page underneath for anyone reading this on the
+ * device they would be scanning with.
+ */
+const payload = vcardCompact()
+const code = qr(payload, `Contact card for ${contact.name}, ${roleLine}`)
+
+/*
+ * The regex lives here rather than in the markup. Written inline as
+ * {contact.code.replace(...)} the slashes inside it confuse the compiler.
+ */
+const codeUrl = contact.code
+const codeHost = contact.code.replace(/^https?:\/\//, '')
+---
+<Doc
+  title="Scan"
+  description={`A QR code carrying the contact card for ${contact.name}, ${roleLine}. Scanning it adds the entry without a download and without a network connection.`}>
+
+  <div class="mast">
+    <div>Off the Bit
+<b>Scan</b>
+Category: Contact
+Carries: vCard 4.0, {code.payloadBytes} bytes</div>
+    <div class="r"><b>M. Imran</b><br />{roleLine}
+Index: <a href="/">draft</a>
+Section: <a href="/#s14">14</a></div>
+  </div>
+
+  <div class="title">
+    <h1>Scan</h1>
+    <div class="sub">Point a camera at this. It carries the card, not a link to the card, so it works with the network off.</div>
+  </div>
+
+  <div class="ind">
+    <figure class="qr">
+      <div class="qrbox" set:html={code.svg} />
+      <figcaption>
+        <b>{contact.name}</b><br />
+        {roleLine}<br />
+        {contact.city}, {contact.country}
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="ind">
+    <div class="memo">Most phone cameras read this without an app: open the camera, hold it steady,
+      and the contact appears as a prompt. The code contains a vCard 4.0 record with the name, role,
+      organisation, mobile number, email, website and city. Nothing is fetched, so nothing is
+      logged and it works in a basement.</div>
+  </div>
+
+  <!--
+    A list rather than a table, and that is not a style choice.
+
+    Astro 5.18.2 duplicates an <a> that sits inside a <table> when both its href
+    and its text are expressions: the row renders correctly and a second, empty
+    copy of the anchor is hoisted out past the closing tag. Two of those failed
+    check-a11y on link-name and on H91.NoContent, in both colour schemes.
+
+    Reduced to a four row page to confirm the boundary. Expression href with
+    literal text is fine; expression href with expression text is not. Outside a
+    table the same anchor is fine, which is why this list works and why Section
+    14 keeps its table: every href in Section 14 is a literal.
+
+    The alternative was to hardcode these two addresses, which would have put a
+    fresh copy of a contact fact on the site during the change whose whole
+    purpose was removing those copies.
+  -->
+  <div class="ind">
+    <h2 id="instead">If the camera will not read it</h2>
+    <ul class="routes">
+      <li><b>Download</b><span><a href="/contact.vcf" download>contact.vcf</a>, the full card. Same source as this code, with a revision stamp and a note the code leaves out.</span></li>
+      <li><b>Email</b><span><a href={`mailto:${contact.email}`}>{contact.email}</a></span></li>
+      <li><b>Code</b><span><a href={codeUrl}>{codeHost}</a></span></li>
+      <li><b>Everything else</b><span><a href="/#s14">Section 14, Author's Address</a></span></li>
+    </ul>
+  </div>
+
+  <div class="ind">
+    <h2 id="how">How it is drawn</h2>
+    <p class="prose">Encoded during the build and written into this page as vector paths. There is
+      no image request, no generator service and no script: the reading path here ships zero bytes
+      of JavaScript, and a QR code is one of the few things that can still be produced under that
+      constraint without giving anything up.</p>
+    <p class="prose dim">Version {code.version}, {code.size} by {code.size} modules, error correction
+      level M. The white background is painted by the drawing rather than inherited from the page,
+      in both colour schemes, because an inverted code is out of specification and older scanners
+      return nothing when they meet one. The short address is mosthofaimran.com/scan.</p>
+  </div>
+
+  <div class="foot"><span>Imran</span><span>Contact</span><span>[Scan]</span></div>
+</Doc>
+
+<style>
+  /*
+   * The code is capped rather than stretched. Past roughly 320px a 69 module
+   * grid gains nothing a camera can use, and on a phone it should still leave
+   * the caption visible without scrolling.
+   */
+  .qr {
+    margin: 22px 0 0;
+    max-width: 320px;
+  }
+  .qrbox {
+    /* The quiet zone is inside the SVG, so the padding here is only visual
+       separation from the page, not part of the code. */
+    background: #ffffff;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 10px;
+    line-height: 0;
+  }
+  .qr figcaption {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--dim);
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+  .qr figcaption b {
+    color: var(--ink);
+    font-size: 13.5px;
+  }
+
+  /* Shaped like the tables elsewhere in the document: a label column, a rule
+     between rows, and the value wrapping under the label on a narrow screen. */
+  .routes {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .routes li {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--text);
+    font-size: var(--fs-prose);
+    line-height: 1.55;
+  }
+  .routes b {
+    flex: none;
+    width: 150px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .routes span { max-width: 62ch; }
+  @media screen and (max-width: 560px) {
+    .routes li { display: block; }
+    .routes b { display: block; width: auto; margin-bottom: 3px; }
+  }
+
+  /* Printed on a card or a slide, the code should be the whole point of the
+     page and the surrounding argument should get out of the way. */
+  @media print {
+    .qr { max-width: 260px; }
+    .qrbox { border: 0; padding: 0; }
+  }
+</style>

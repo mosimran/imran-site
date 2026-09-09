@@ -6,10 +6,11 @@ const SITE = 'https://mosthofaimran.com'
 const LICENSE = 'https://creativecommons.org/licenses/by/4.0/'
 const ASK = 'If you quote a claim, carry its confidence value with it. A 0.60 claim repeated as fact is no longer the author’s claim.'
 
-// Fields come from lib/contact.ts, which /contact.vcf also reads. The name,
-// role, email and location were typed here and in Section 14 separately until
-// 2026-09-03; the role string had already drifted across eight places once,
-// which is erratum 7.9.
+// Fields come from lib/contact.ts, which /contact.vcf and /scan/ also read. The
+// name, role, email and location were typed here and in Section 14 separately
+// until 2026-09-03; the role string had already drifted across eight places
+// once, which is erratum 7.9, and five of those eight still held their own copy
+// until 2026-09-10.
 export const person = () => ({
   '@type': 'Person',
   '@id': `${SITE}/#person`,
@@ -17,6 +18,12 @@ export const person = () => ({
   url: SITE,
   email: contact.email,
   jobTitle: contact.role,
+  // The employer, stated as an Organization rather than folded into the title
+  // string, so a consumer can read the two apart.
+  worksFor: {
+    '@type': 'Organization',
+    name: contact.org,
+  },
   address: {
     '@type': 'PostalAddress',
     addressLocality: contact.city,

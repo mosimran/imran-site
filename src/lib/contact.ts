@@ -1,20 +1,39 @@
 // One source for the author's contact facts.
 //
 // Section 14 publishes these on the page, the JSON-LD carries them for machines,
-// and /contact.vcf hands them to an address book. Three surfaces, and the site's
-// own history says what happens when a fact is typed into more than one of them:
-// the role string drifted across eight places (erratum 7.9) and the Section 3
-// table contradicted an erratum on the front page (erratum 7.15).
+// /contact.vcf hands them to an address book and /scan/ draws them as a QR code.
+// Four surfaces, and the site's own history says what happens when a fact is
+// typed into more than one of them: the role string drifted across eight places
+// (erratum 7.9) and the Section 3 table contradicted an erratum on the front
+// page (erratum 7.15).
 //
-// Nothing here is new. Every field already appears in Section 14, and
-// scripts/check-vcard.mjs asserts that it still does.
+// Erratum 7.9 said the role was corrected in all eight places. It was, and then
+// only three of the eight were wired to read from here. The other five kept
+// their own copy of the string, so the next role change would have reopened the
+// same defect. They all read from this file now, and scripts/check-role.mjs
+// fails the build if the string reappears anywhere else.
 
 export const contact = {
   name: 'Mosthofa Imran',
   family: 'Imran',
   given: 'Mosthofa',
-  role: 'Head of Engineering and Delivery',
+
+  // The owner's words, chosen by him on 2026-09-10. "Chief Technology Officer"
+  // was offered and "CTO" was picked. Erratum 7.9 is the reason that is a
+  // recorded decision rather than a detail: this document published a title its
+  // author did not hold for a year, and the fix was to use the exact string he
+  // uses himself.
+  role: 'CTO',
+  org: 'Betopia Limited',
+
   email: 'hey@mosthofaimran.com',
+
+  // Published in /contact.vcf and in the QR at /scan/, deliberately not in the
+  // page HTML. The owner's decision on 2026-09-10: a number in a downloadable
+  // card is reachable by anyone who wants it, and a number in the markup is
+  // reachable by everyone who scrapes it. Section 14 points at the card.
+  tel: '+8801753891285',
+
   site: 'https://mosthofaimran.com',
   code: 'https://github.com/johnefemer',
   city: 'Dhaka',
@@ -22,6 +41,12 @@ export const contact = {
   tzOffset: '+06:00',
   note: 'Systems carry numbers, arguments carry a confidence value, and Section 7 records what turned out to be wrong.',
 } as const
+
+/** "CTO, Betopia Limited". The masthead, Section 14 and the share card. */
+export const roleLine = `${contact.role}, ${contact.org}`
+
+/** "CTO at Betopia Limited". Inline prose: meta descriptions, alt text, llms.txt. */
+export const roleAt = `${contact.role} at ${contact.org}`
 
 // vCard 4.0, RFC 6350. CRLF endings, because the RFC says so and some address
 // books care.
@@ -35,25 +60,75 @@ export const contact = {
 // sequence, because a card cut through the middle of a UTF-8 character is a card
 // that fails to parse.
 export function vcard(rev: Date): string {
-  const esc = (v: string) => v.replace(/([\\,;])/g, '\\$1')
   const lines = [
     'BEGIN:VCARD',
     'VERSION:4.0',
+    // KIND says this card describes a person rather than an organisation or a
+    // group. Section 6.1.4 makes it optional and defaults it to `individual`,
+    // and stating it costs one line and removes a guess.
+    'KIND:individual',
     `FN:${esc(contact.name)}`,
     `N:${esc(contact.family)};${esc(contact.given)};;;`,
     `TITLE:${esc(contact.role)}`,
+    `ORG:${esc(contact.org)}`,
     `EMAIL;TYPE=work:${contact.email}`,
+    // RFC 6350 section 6.4.1 prefers a tel: URI over free text, because a
+    // number written as text is a number every client has to guess at.
+    `TEL;TYPE="cell,voice,text";VALUE=uri:tel:${contact.tel}`,
     `URL:${contact.site}/`,
     `URL;TYPE=code:${contact.code}`,
     `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
     `TZ:${contact.tzOffset}`,
     `NOTE:${esc(contact.note)}`,
+    // A stable identity for the card, so an address book updating from a second
+    // download replaces the entry rather than adding a duplicate. It has to be a
+    // URI, and the person's own canonical URL is the one URI here that is never
+    // going to change.
+    `UID:${contact.site}/#person`,
     `SOURCE:${contact.site}/contact.vcf`,
+    `PRODID:-//mosthofaimran.com//contact.vcf//EN`,
     `REV:${rev.toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '')}`,
     'END:VCARD',
   ]
   return lines.map(fold).join('\r\n') + '\r\n'
 }
+
+/*
+ * The card the QR at /scan/ carries.
+ *
+ * Shorter than the download, on purpose. A QR grows with its payload, and a
+ * denser code is a code that fails on a bad camera at an angle in poor light,
+ * which is the only situation this one will ever be used in. So the properties
+ * that matter to a phone adding a contact are here and the ones that matter to
+ * a file are not: no NOTE, no SOURCE, no PRODID, and no REV.
+ *
+ * REV in particular is excluded because it changes every build. A QR that
+ * changes when nothing about the contact changed is a diff nobody can review
+ * and a check nobody can pin.
+ */
+export function vcardCompact(): string {
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:4.0',
+    'KIND:individual',
+    `FN:${esc(contact.name)}`,
+    `N:${esc(contact.family)};${esc(contact.given)};;;`,
+    `TITLE:${esc(contact.role)}`,
+    `ORG:${esc(contact.org)}`,
+    `TEL;TYPE="cell,voice,text";VALUE=uri:tel:${contact.tel}`,
+    `EMAIL;TYPE=work:${contact.email}`,
+    `URL:${contact.site}/`,
+    `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
+    `UID:${contact.site}/#person`,
+    'END:VCARD',
+  ]
+  // Not folded. Folding is a rule about a vCard in a file, and a QR payload is
+  // handed to a parser as one string; the continuation spaces would survive
+  // into some clients as part of the value.
+  return lines.join('\r\n') + '\r\n'
+}
+
+const esc = (v: string) => v.replace(/([\\,;])/g, '\\$1')
 
 function fold(line: string): string {
   if (Buffer.byteLength(line) <= 75) return line
