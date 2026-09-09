@@ -91,21 +91,28 @@ pass('has a stable UID', Boolean(field('UID')) && /^[a-z][a-z0-9+.-]*:/i.test(fi
   field('UID') ?? '(absent)')
 pass('has PRODID', Boolean(field('PRODID')), field('PRODID') ?? '(absent)')
 
-// The number, as an E.164 tel: URI rather than as free text a client has to guess at.
+// The number, in E.164, written plainly.
 const tel = field('TEL') ?? ''
-pass('phone is an E.164 tel: URI', /^tel:\+[1-9]\d{7,14}$/.test(tel), tel || '(absent)')
+pass('phone is an E.164 number', /^\+[1-9]\d{7,14}$/.test(tel), tel || '(absent)')
 
 /*
- * And the shape of its parameters, which is not pedantry.
+ * And the shape of its parameters, which is not pedantry. This row was published
+ * wrong twice.
  *
- * Written as TEL;TYPE="cell,voice,text";VALUE=uri this row shipped and appeared
- * in macOS Contacts labelled VALUE rather than mobile: that parser does not take
- * a quoted comma list and falls back to naming the last parameter it saw. So
- * both properties are asserted. No quoted list, and TYPE last.
+ * `TEL;TYPE="cell,voice,text";VALUE=uri:tel:...` displayed in macOS Contacts as a
+ * row labelled VALUE with `tel:` printed as part of the number. Rewritten as
+ * `TEL;VALUE=uri;TYPE=cell:tel:...`, unquoted and with TYPE last, it did exactly
+ * the same thing. That client does not read VALUE on TEL: it names the row after
+ * the parameter and prints the URI scheme as digits.
+ *
+ * EMAIL and ADR on the same card carry TYPE=work and display correctly, so TYPE
+ * was never the problem. These three assert what actually shipped working, and
+ * the first of them is the one that matters.
  */
 const telParams = (unfolded.match(/^TEL((?:;[^:]+)*):/m) || [])[1] ?? ''
+pass('phone carries no VALUE parameter', !/VALUE=/i.test(telParams), telParams || '(none)')
+pass('phone value is not a URI', !/^[a-z][a-z0-9+.-]*:/i.test(tel), tel || '(absent)')
 pass('phone TYPE is not a quoted list', !/TYPE="[^"]*,/.test(telParams), telParams || '(none)')
-pass('phone TYPE is the last parameter', /;TYPE=[^;:"]+$/.test(telParams), telParams || '(none)')
 
 /*
  * And the negative, which is the owner's decision on 2026-09-10 rather than a
@@ -117,7 +124,7 @@ pass('phone TYPE is the last parameter', /;TYPE=[^;:"]+$/.test(telParams), telPa
  * The QR encodes it as vector paths, which is not the digit string, so this
  * scan does not trip on the page that exists to carry it.
  */
-const digits = tel.replace(/^tel:/, '')
+const digits = tel.replace(/^tel:/, '')   // the prefix is gone, the strip is belt and braces
 const leaked = walkHtml('dist').filter((f) => readFileSync(f, 'utf8').includes(digits))
 pass('phone is not in any page HTML', digits !== '' && leaked.length === 0,
   leaked.length ? leaked.slice(0, 3).join(', ') : `${digits} appears in 0 of the built pages`)

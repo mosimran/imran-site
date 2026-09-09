@@ -4500,3 +4500,40 @@ something adjacent to the claim, and the only thing that caught it was a person 
 field by field, share card regenerated. Erratum 7.49, and the document is **-43**.
 
 **Deployed.** Pending merge.
+
+---
+
+## T52b, 2026-09-10: the diagnosis in 7.49 was wrong
+
+**What changed.** The owner downloaded this morning's corrected card and the phone row still read
+**VALUE**, with `tel:` printed as part of the number. Erratum 7.49 had said that was fixed.
+
+The diagnosis was wrong. 7.49 blamed the quoted comma list in `TYPE` and the position of the
+parameter, and neither mattered: macOS Contacts does not read `VALUE` on `TEL` at all, so it names
+the row after the parameter it does not understand and prints the URI scheme as digits. `EMAIL` and
+`ADR` on the same card carry `TYPE=work` and display correctly, which was visible in the first
+screenshot and should have settled it before a fix was written.
+
+The row is `TEL;TYPE=cell:` with the number in plain E.164. That departs from a SHOULD in RFC 6350
+section 6.4.1, which prefers a URI, and the reason is written next to the line. A specification a
+reader's software refuses to follow is not one this card gets to insist on. The QR carries the same
+correction and got smaller for it, 330 bytes to 303.
+
+**Four assertions now cover that row, each proven against both broken forms:** no `VALUE`
+parameter, the value is not a URI, the number is E.164, and `TYPE` is not a quoted list. Two would
+have been enough to catch this; the pair that shipped asserted neither.
+
+**The privacy assertion caught my own erratum.** 7.50 quoted the corrected line with the digits in
+it, and `check-vcard.mjs` failed the build on `dist/errata/index.html`. The number is published in
+the card and in the code and deliberately not in the markup, and the check does not care whose
+paragraph broke that. The erratum says so now, because it is a better demonstration of the rule
+than the rule is.
+
+**What the pair of errata is about.** Twice in one day the checks confirmed syntax and a screenshot
+was the only witness. 7.49 said in as many words that nothing was checking what a reader would see,
+and then shipped a fix that had also never been looked at in the thing that displays it.
+
+**Validated.** `npm run check` exit 0, `check-qr` decodes in both schemes and matches the card field
+by field, share card regenerated. Erratum 7.50, and the document is **-44**.
+
+**Deployed.** Pending merge.

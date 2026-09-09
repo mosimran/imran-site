@@ -84,17 +84,27 @@ export function vcard(rev: Date): string {
     `ORG:${esc(contact.org)}`,
     `EMAIL;TYPE=work:${contact.email}`,
     /*
-     * RFC 6350 section 6.4.1 prefers a tel: URI over free text, because a
-     * number written as text is a number every client has to guess at.
+     * Plain text, not a tel: URI, and no VALUE parameter.
      *
-     * The parameters are unquoted and TYPE comes last, which is not decoration.
-     * Written as TYPE="cell,voice,text";VALUE=uri this row appeared in macOS
-     * Contacts labelled **VALUE** rather than "mobile": that parser does not
-     * take the quoted comma list, and falls back to naming the last parameter
-     * it saw. One unquoted type, with TYPE in the final position, gives every
-     * client something it recognises in the place it looks.
+     * RFC 6350 section 6.4.1 says the value is free-form text by default, for
+     * backward compatibility with vCard 3, and SHOULD be reset to a URI. This
+     * departs from that SHOULD on purpose, and the reason is a screenshot.
+     *
+     * Written as `TEL;TYPE="cell,voice,text";VALUE=uri:tel:...` the row appeared
+     * in macOS Contacts labelled **VALUE**, with `tel:` shown as part of the
+     * number. Rewritten as `TEL;VALUE=uri;TYPE=cell:tel:...`, unquoted and with
+     * TYPE last, it did exactly the same thing. That client does not read the
+     * VALUE parameter on TEL at all: it names the row after it and prints the
+     * URI scheme as if it were digits.
+     *
+     * EMAIL and ADR on this same card carry TYPE=work and display correctly, so
+     * TYPE is not the problem and never was. Removing VALUE is the fix, and a
+     * plain number is what every address book since 1998 expects.
+     *
+     * A specification that a reader's software will not follow is not a
+     * specification this card gets to insist on.
      */
-    `TEL;VALUE=uri;TYPE=cell:tel:${contact.tel}`,
+    `TEL;TYPE=cell:${contact.tel}`,
     /*
      * The professional touchpoints, each one labelled.
      *
@@ -151,7 +161,7 @@ export function vcardCompact(): string {
     `N:${esc(contact.family)};${esc(contact.given)};;;`,
     `TITLE:${esc(contact.role)}`,
     `ORG:${esc(contact.org)}`,
-    `TEL;VALUE=uri;TYPE=cell:tel:${contact.tel}`,
+    `TEL;TYPE=cell:${contact.tel}`,
     `EMAIL;TYPE=work:${contact.email}`,
     `URL:${contact.site}/`,
     `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
