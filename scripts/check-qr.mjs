@@ -141,10 +141,16 @@ for (const name of ['FN', 'N', 'TITLE', 'ORG', 'EMAIL', 'TEL', 'UID', 'ADR']) {
   pass(`${name} matches the download`, Boolean(a) && a === b, a ? a.slice(0, 46) : '(absent from the code)')
 }
 
-// The number is the reason this page exists, so it is asserted as a number
-// rather than as a property that happens to be present.
+/*
+ * The number is the reason this page exists, so it is asserted as a number
+ * rather than as a property that happens to be present.
+ *
+ * Plain digits, no `tel:` scheme. A phone that reads this code shows the row it
+ * is about to save, and macOS Contacts printed the scheme as part of the number
+ * when the card carried a URI. Erratum 7.50.
+ */
 const tel = qrField('TEL') || ''
-pass('the number is an E.164 tel: URI', /^tel:\+[1-9]\d{7,14}$/.test(tel), tel || '(absent)')
+pass('the number is a plain E.164 number', /^\+[1-9]\d{7,14}$/.test(tel), tel || '(absent)')
 
 console.log('')
 if (failures.length) {
