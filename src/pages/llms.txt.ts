@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { getCollection } from 'astro:content'
+import { contact, roleAt } from '../lib/contact'
 const SITE = 'https://mosthofaimran.com'
 
 export const GET: APIRoute = async () => {
@@ -7,7 +8,7 @@ export const GET: APIRoute = async () => {
   const impl = await getCollection('impl')
   const body = `# Mosthofa Imran
 
-> Head of Engineering and Delivery (Dhaka, UTC+6). Builds multi-tenant agentic systems that ship from one
+> ${roleAt} (${contact.city}, UTC+6). Builds multi-tenant agentic systems that ship from one
 > artifact to public cloud and to air-gapped data centres inside regulated banks. Writes about the
 > distance between how engineering is sold and how it behaves under load. The site is structured as
 > a specification: systems carry numbers, arguments carry a confidence value, and Section 7 records

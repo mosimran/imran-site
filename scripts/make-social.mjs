@@ -28,6 +28,31 @@ if (!IDENT) {
   process.exit(1)
 }
 
+/*
+ * The role is read the same way, out of dist/contact.vcf rather than typed here.
+ *
+ * It was typed here, and that made this file one of the eight places the role
+ * string lived when erratum 7.9 found it wrong in all of them. That erratum was
+ * closed by correcting all eight, not by removing the duplication, so five
+ * copies survived and this was one. The card cannot disagree with the document
+ * about who its author is.
+ *
+ * The vCard is the artifact rather than the page because it has a stable line
+ * format, and both are generated from src/lib/contact.ts.
+ */
+if (!existsSync('dist/contact.vcf')) {
+  console.error('\nmake-social: no dist/contact.vcf. Run `npm run build` first.\n')
+  process.exit(1)
+}
+const CARD = readFileSync('dist/contact.vcf', 'utf8')
+const TITLE = (CARD.match(/^TITLE:(.+)$/m) || [])[1]?.trim()
+const ORG = (CARD.match(/^ORG:(.+)$/m) || [])[1]?.trim().replace(/\\([\\,;])/g, '$1')
+if (!TITLE || !ORG) {
+  console.error('\nmake-social: dist/contact.vcf has no TITLE or ORG line.\n')
+  process.exit(1)
+}
+const ROLE_LINE = `${TITLE}, ${ORG}`
+
 const SRC = 'docs/john - avatar 2022.png'
 const W = 1200
 const H = 630
@@ -80,7 +105,7 @@ const text = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" h
   <text x="72" y="232" font-family="${SERIF}" font-size="78" font-weight="700"
         fill="${INK}">Mosthofa Imran</text>
 
-  <text x="72" y="288" font-family="${MONO}" font-size="25" fill="${DIM}">Head of Engineering and Delivery</text>
+  <text x="72" y="288" font-family="${MONO}" font-size="25" fill="${DIM}">${ROLE_LINE}</text>
   <text x="72" y="324" font-family="${MONO}" font-size="25" fill="${DIM}">Dhaka, Bangladesh (UTC+6)</text>
 
   <line x1="72" y1="372" x2="648" y2="372" stroke="${RULE}" stroke-width="1.5"/>

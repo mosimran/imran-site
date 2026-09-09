@@ -13,7 +13,7 @@ import { chromium } from 'playwright'
 
 const BASE = (process.argv[2] || process.env.BASE || 'http://127.0.0.1:8831').replace(/\/$/, '')
 const PATHS = ['/', '/papers/', '/impl/', '/errata/', '/cv/', '/machine/', '/colophon/', '/history/',
-  '/tools/', '/tools/in/devops/', '/tools/github-copilot/']
+  '/tools/', '/tools/in/devops/', '/tools/github-copilot/', '/scan/']
 
 const failures = []
 const browser = await chromium.launch()

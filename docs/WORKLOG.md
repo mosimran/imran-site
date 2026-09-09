@@ -4395,3 +4395,79 @@ inlined CSS 11,873 of 12,000, both unchanged by this. TOOLS-PLAN.md carries a Re
 that its own section 2 was superseded by its own data.
 
 **Deployed.** Merged to `main` and shipped by Actions.
+
+---
+
+## T52, 2026-09-10: the role, the card, and a QR at /scan/
+
+**What changed.** The author is CTO at Betopia Limited. The previous title, Head of Engineering and
+Delivery, stands in Appendix A and in erratum 7.9 rather than being overwritten, which is the
+owner's instruction taken today.
+
+*The role is written down once now.* Erratum 7.9 found it wrong in eight places and closed by
+correcting all eight. Three were wired to `lib/contact.ts` when that file was created on
+2026-09-03; the other five kept their own copy of the string, so this change would have reopened
+7.9 exactly. All eight read from one source. `scripts/check-role.mjs` fails the build if the
+current role, the organisation, or either retired title appears anywhere outside that source, the
+errata, Appendix A and `docs/`. Proven both ways: reintroducing the old string into `llms.txt`
+fails it, and hardcoding the current one back into the masthead fails it. Its first run failed on
+its own ban list, which was correct behaviour and a wrong exemption list.
+
+*The card gained what an address book needs.* `ORG`, `KIND`, `PRODID`, a stable `UID`, and `TEL` as
+an E.164 `tel:` URI. `UID` is the one that matters: without it, a second download is a second
+contact rather than an update, and every phone that ever took this card would keep a duplicate.
+
+*The number is in the card and not in the page.* The owner's decision. `check-vcard.mjs` asserts
+the negative across every built page, and the assertion was proven by putting the digits into
+`index.html` and watching it fail.
+
+*A QR at `/scan/`.* It carries the card itself, not a link to it, so a phone can add the entry with
+no network. Encoded during the build and drawn as vector paths in the page: an image would be a
+second request, a hosted generator a third party, and a client library JavaScript, and all three
+are forbidden. 330 bytes, version 13, 69 modules, error correction M. The drawing paints its own
+white background in both schemes, because an inverted code is out of specification and older
+scanners return nothing when they meet one.
+
+**A live defect found on the way, unrelated to the ask.** The front page published
+`draft-imran-systems-and-arguments-41` and every other page published `-04`, both at once, for
+weeks. `Doc.astro` held `const DOC_HISTORY = 5` under a comment reading "keep in step with
+index.astro", and it never was. `draft.ts` says of the suffix that there is "nothing to maintain
+and nothing that can drift, because it is computed", which was true of the function and untrue of
+one of its two callers. Adding today's Appendix A row would have widened the gap to -42 against
+-04, so it was fixed rather than shipped around. Erratum 7.48, and `scripts/check-ident.mjs` now
+fails the build if more than one identifier is published across `dist`. The document is **-42**.
+
+**A regression I introduced and caught.** Replacing the literal role in the masthead with an
+expression collapsed the newline before it to a space, so the right column read "M. Imran CTO,
+Betopia Limited" on one line. `{'\n'}` looked like the fix and breaks the Astro parse outright.
+`<br />` is correct under `white-space: pre-line` and is what shipped. Caught by reading the
+rendered page rather than by any check, which is worth noting: nothing here asserts the masthead's
+shape.
+
+**A second regression, caught by a11y rather than by eye.** `/scan/` failed `link-name` and
+`H91.NoContent` with four errors across the two colour schemes. Astro 5.18.2 duplicates an `<a>`
+that sits inside a `<table>` when both its href and its text are expressions: the row renders
+correctly and a second, empty copy of the anchor is hoisted out past the closing tag. Reduced to a
+four row page to find the boundary. Expression href with literal text is fine, expression href with
+expression text is not, and outside a table the same anchor is fine. Wrapping the text in a span,
+mapping over an array, and template literals in either position were each tried on the real page
+and none held. The routes on `/scan/` are a list now. Section 14 keeps its table because every href
+in it is a literal, which is why the index has always been clean.
+
+The alternative was to hardcode the two addresses in that table, which would have put a fresh copy
+of a contact fact on the site during the change whose entire purpose was removing those copies.
+
+**Validated.** `npm run check` exit 0, which now includes `check-ident` and `check-role`. 652 pages.
+Budgets: index 54,787 of 60,000, inlined CSS 11,873 of 12,000, third-party requests 0, `_headers`
+43 rules of 100. `check-qr` decodes the code in a browser in both colour schemes and compares it
+field by field against the download, and was proven against four fault classes: an inverted
+palette, corrupted module runs, a diverging `ORG` and a diverging `TEL`. `mobile`, `visible`,
+`print` and `a11y` clean with `/scan/` added to each. The share card was regenerated and reads
+"CTO, Betopia Limited" over `-42`.
+
+**Two build-time dependencies added**, `qrcode` and `jsqr`, plus `@types/qrcode`. Neither ships a
+byte to a reader: one encodes during the build, the other only runs inside the check. Writing a QR
+encoder by hand was considered and rejected, because a Reed-Solomon implementation that is subtly
+wrong produces a code that looks correct and does not scan.
+
+**Deployed.** Pending merge.

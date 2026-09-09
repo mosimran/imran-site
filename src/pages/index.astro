@@ -10,6 +10,7 @@ import '../styles/rfc.css'
 import { identifier, expiresOn, isExpired, fmt, fmtMonth } from '../lib/draft'
 import { website } from '../lib/ld'
 import { history } from '../lib/history'
+import { contact, roleLine, roleAt } from '../lib/contact'
 
 // Section 3's short table, generated. It was eight hand-written rows duplicating
 // the impl collection, and on 2026-09-03 that duplication published a claim the
@@ -42,7 +43,7 @@ const expired = isExpired(revised)
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Mosthofa Imran: Systems, Arguments, and Known Failure Modes</title>
-<meta name="description" content="Mosthofa Imran. Head of Engineering and Delivery. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.">
+<meta name="description" content={`${contact.name}. ${roleAt}. Systems that ship to cloud and to air-gapped data centres, arguments published with a confidence value and a retraction log.`}>
 <link rel="canonical" href={canonical}>
 <link rel="alternate" type="application/atom+xml" title="Position Papers" href="/feed.xml">
 <link rel="alternate" type="application/atom+xml" title="Errata" href="/errata.xml">
@@ -64,13 +65,13 @@ const expired = isExpired(revised)
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Mosthofa Imran, Head of Engineering and Delivery, Dhaka. Systems with numbers, arguments with confidence values, a public retraction log.">
+<meta property="og:image:alt" content={`${contact.name}, ${roleAt}, ${contact.city}. Systems with numbers, arguments with confidence values, a public retraction log.`}>
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Mosthofa Imran">
 <meta name="twitter:description" content="Systems with numbers. Arguments with confidence values. A public retraction log.">
 <meta name="twitter:image" content={cover}>
-<meta name="twitter:image:alt" content="Mosthofa Imran, Head of Engineering and Delivery, Dhaka.">
+<meta name="twitter:image:alt" content={`${contact.name}, ${roleAt}, ${contact.city}.`}>
 <script type="application/ld+json" set:html={JSON.stringify(website(ident))}></script>
 </head>
 <body>
@@ -106,8 +107,7 @@ Intended status: Informational
 Expires: {fmt(expires)}
 Obsoletes: every CV I have written
 Updates: your priors, if it earns it</div>
-    <div class="r"><b>M. Imran</b>
-Head of Engineering and Delivery
+    <div class="r"><b>M. Imran</b><br />{roleLine}
 Dhaka, Bangladesh (UTC+6)
 mosthofaimran.com
 {fmtMonth(revised)}</div>
@@ -505,10 +505,12 @@ mosthofaimran.com
       <thead><tr><th style="width:150px">Channel</th><th>Address</th></tr></thead>
       <tbody>
       <tr><td class="hd" data-l="Channel">Name</td><td data-l="Address">Mosthofa Imran</td></tr>
-      <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">Head of Engineering and Delivery</td></tr>
+      <tr><td class="hd" data-l="Channel">Role</td><td data-l="Address">{contact.role}</td></tr>
+      <tr><td class="hd" data-l="Channel">Organisation</td><td data-l="Address">{contact.org}</td></tr>
       <tr><td class="hd" data-l="Channel">Location</td><td data-l="Address">Dhaka, Bangladesh (UTC+6). Comfortable overlapping with CET mornings and US Pacific evenings.</td></tr>
       <tr><td class="hd" data-l="Channel">Email</td><td data-l="Address"><a href="mailto:hey@mosthofaimran.com">hey@mosthofaimran.com</a>. I read everything and answer most things inside two working days.</td></tr>
-      <tr><td class="hd" data-l="Channel">vCard</td><td data-l="Address"><a href="/contact.vcf" download>contact.vcf</a>, generated from the same source as this table.</td></tr>
+      <tr><td class="hd" data-l="Channel">vCard</td><td data-l="Address"><a href="/contact.vcf" download>contact.vcf</a>, generated from the same source as this table. It carries a mobile number, which this table does not: a number in a downloadable card is reachable by anyone who wants it, and a number in the markup is reachable by everyone who scrapes it.</td></tr>
+      <tr><td class="hd" data-l="Channel">Scan</td><td data-l="Address"><a href="/scan/">mosthofaimran.com/scan</a>. A QR code carrying the card itself, so a phone can add it with the network off.</td></tr>
       <tr><td class="hd" data-l="Channel">Code</td><td data-l="Address"><a href="https://github.com/johnefemer">github.com/johnefemer</a></td></tr>
       <tr><td class="hd" data-l="Channel">Résumé</td><td data-l="Address"><a href="/cv/">Section 6</a></td></tr>
       <tr><td class="hd" data-l="Channel">Key</td><td data-l="Address"><code>/pgp.asc</code> <span class="dim">(not yet published: no key exists, see the ledger)</span>, fingerprint in 9.3</td></tr>

@@ -3,9 +3,19 @@
 // here at T10, when the masthead changes to the Internet-Draft form.
 import '../styles/rfc.css'
 import { identifier } from '../lib/draft'
+import { history } from '../lib/history'
 
-const DOC_HISTORY = 5  // Appendix A rows; keep in step with index.astro
-const ident = identifier('systems-and-arguments', DOC_HISTORY)
+/*
+ * The identifier is computed from Appendix A, exactly as index.astro computes it.
+ *
+ * It was a literal 5 with a comment saying "keep in step with index.astro". It
+ * was never kept in step. Appendix A reached 43 rows while this stayed at 5, so
+ * the front page published draft-imran-systems-and-arguments-41 and every other
+ * page on the site published -04, and both were live at once. A document whose
+ * own identifier disagrees with itself across its own pages is the failure this
+ * site is about. Erratum 7.48.
+ */
+const ident = identifier('systems-and-arguments', history.length)
 
 interface Props {
   title: string

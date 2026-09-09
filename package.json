@@ -10,7 +10,7 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/csp-hashes.mjs && node scripts/shortlinks.mjs --emit && node scripts/sign.mjs",
     "preview": "astro preview",
-    "check": "astro check && node scripts/check-budget.mjs && node scripts/check-links.mjs && node scripts/check-short.mjs && node scripts/check-errata.mjs && node scripts/check-expiry.mjs && node scripts/check-revised.mjs && node scripts/check-vcard.mjs && node scripts/check-social.mjs && node scripts/check-contrast.mjs",
+    "check": "astro check && node scripts/check-budget.mjs && node scripts/check-links.mjs && node scripts/check-short.mjs && node scripts/check-errata.mjs && node scripts/check-expiry.mjs && node scripts/check-revised.mjs && node scripts/check-ident.mjs && node scripts/check-role.mjs && node scripts/check-vcard.mjs && node scripts/check-social.mjs && node scripts/check-contrast.mjs",
     "budget": "node scripts/check-budget.mjs",
     "links": "node scripts/check-links.mjs",
     "shortlinks": "node scripts/shortlinks.mjs",
@@ -33,7 +33,10 @@
     "vcard": "node scripts/check-vcard.mjs",
     "print": "node scripts/check-print.mjs",
     "visible": "node scripts/check-visible.mjs",
-    "revised": "node scripts/check-revised.mjs"
+    "revised": "node scripts/check-revised.mjs",
+    "role": "node scripts/check-role.mjs",
+    "qr": "node scripts/check-qr.mjs",
+    "ident": "node scripts/check-ident.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0"
@@ -42,9 +45,12 @@
     "@astrojs/check": "^0.9.0",
     "@astrojs/sitemap": "^3.7.3",
     "@cloudflare/workers-types": "^5.20260813.1",
+    "@types/qrcode": "^1.5.6",
     "http-server": "^14.1.1",
+    "jsqr": "^1.4.0",
     "pa11y": "^9.1.1",
     "playwright": "^1.49.1",
+    "qrcode": "^1.5.4",
     "typescript": "^5.6.0",
     "wait-on": "^8.0.1"
   }

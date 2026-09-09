@@ -411,6 +411,25 @@ it needs the owner.
   dropped and why. Without it this is a CV appendix, and it would be the only section here that
   only accumulates.
 
+- [x] **T52** The role, the card, and a QR at /scan/
+  <br>*Ships:* yes.
+  <br>*Validated by:* `npm run check` exit 0 (now including `check-ident` and `check-role`),
+  `npm run a11y` 0 WCAG2AA errors, `check-qr` decoding the code in a browser in both colour
+  schemes and matching it field by field against `contact.vcf`, and `mobile`, `visible` and
+  `print` clean with `/scan/` added to each.
+  <br>**Closed 2026-09-10.** The author is CTO at Betopia Limited. The previous title stays in
+  Appendix A and in erratum 7.9 rather than being overwritten, which is the owner's instruction.
+  <br>The role reads from one source now. Erratum 7.9 closed by correcting eight copies rather
+  than removing the duplication, and five of the eight still held their own string, so this
+  change would have reopened it exactly. `check-role.mjs` fails the build on any copy.
+  <br>The card gained `ORG`, `KIND`, `PRODID`, a stable `UID` and `TEL` as an E.164 URI. The
+  number ships in the card and in the QR and not in the page markup, which is the owner's
+  decision, asserted as a negative across every built page.
+  <br>Two defects found on the way. The front page published `-41` while every other page
+  published `-04`, for weeks: erratum 7.48, and `check-ident.mjs` now gates it. And Astro 5.18.2
+  duplicates an anchor inside a table when its href and text are both expressions, which put two
+  empty links on `/scan/`; the routes there are a list now.
+
 - [x] **T48** A short link for every numbered document
   <br>*Ships:* yes. *Plan:* [SHORTLINK-PLAN.md](SHORTLINK-PLAN.md), Rev C.
   <br>*Validated by:* `npm run check` exit 0, `npm run mobile` and `npm run a11y` clean on the
