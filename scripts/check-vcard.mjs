@@ -62,8 +62,18 @@ const [city, country] = [adr.split(';')[3], adr.split(';')[6]]
 pass('city in Section 14', Boolean(city) && s14.includes(city), city || '(absent)')
 pass('country in Section 14', Boolean(country) && s14.includes(country), country || '(absent)')
 
-// github.com/mosimran on the page, https://github.com/mosimran in the card.
-const code = (card.match(/^URL;TYPE=code:(.+)$/m) || [])[1]?.trim() ?? ''
+/*
+ * The touchpoints. Each URL carries a group prefix and a label, so an address
+ * book names the row instead of calling all four of them "home page".
+ */
+const items = [...unfolded.matchAll(/^item(\d+)\.URL:(.+)$/gm)].map(([, n, u]) => ({ n, u: u.trim() }))
+pass('touchpoint URLs are grouped', items.length >= 2, `${items.length} labelled URLs`)
+const unlabelled = items.filter((i) => !new RegExp(`^item${i.n}\\.X-ABLabel:.+$`, 'm').test(unfolded))
+pass('every touchpoint has a label', unlabelled.length === 0,
+  unlabelled.length ? unlabelled.map((i) => i.u).join(', ') : items.map((i) => i.u.replace(/^https?:\/\//, '')).join(' '))
+
+// github.com/johnefemer on the page, https://github.com/johnefemer in the card.
+const code = items.map((i) => i.u).find((u) => /github\.com/.test(u)) ?? ''
 pass('code host in Section 14', Boolean(code) && s14.includes(code.replace(/^https?:\/\//, '')), code || '(absent)')
 
 /*
@@ -84,6 +94,18 @@ pass('has PRODID', Boolean(field('PRODID')), field('PRODID') ?? '(absent)')
 // The number, as an E.164 tel: URI rather than as free text a client has to guess at.
 const tel = field('TEL') ?? ''
 pass('phone is an E.164 tel: URI', /^tel:\+[1-9]\d{7,14}$/.test(tel), tel || '(absent)')
+
+/*
+ * And the shape of its parameters, which is not pedantry.
+ *
+ * Written as TEL;TYPE="cell,voice,text";VALUE=uri this row shipped and appeared
+ * in macOS Contacts labelled VALUE rather than mobile: that parser does not take
+ * a quoted comma list and falls back to naming the last parameter it saw. So
+ * both properties are asserted. No quoted list, and TYPE last.
+ */
+const telParams = (unfolded.match(/^TEL((?:;[^:]+)*):/m) || [])[1] ?? ''
+pass('phone TYPE is not a quoted list', !/TYPE="[^"]*,/.test(telParams), telParams || '(none)')
+pass('phone TYPE is the last parameter', /;TYPE=[^;:"]+$/.test(telParams), telParams || '(none)')
 
 /*
  * And the negative, which is the owner's decision on 2026-09-10 rather than a

@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-10', change: 'The phone row on the contact card was labelled VALUE rather than mobile in a real address book, and two touchpoints both read as home page. The card now labels four. Erratum 7.49.' },
   { date: '2026-09-10', change: 'The author is CTO at Betopia Limited. The previous title, Head of Engineering and Delivery, stands in this appendix and in erratum 7.9 rather than being overwritten. Contact gains an organisation and a mobile number, the card gains the properties an address book files it by, and a QR at /scan/ carries it. Erratum 7.47.' },
   { date: '2026-09-04', change: 'The analytics beacon reported to this origin, not to the CDN, so it still collected nothing and 7.25 said otherwise. Confidence on 5.24 and 5.25 adopted by the author. Errata 7.42, 7.43.' },
   { date: '2026-09-04', change: 'A proprietary model was listed in the sovereign gateway stack, contradicting the note three paragraphs below it. Open weight only now. Erratum 7.41.' },
