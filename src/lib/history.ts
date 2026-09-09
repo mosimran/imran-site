@@ -11,6 +11,7 @@
 export type Revision = { date: string; change: string }
 
 export const history: Revision[] = [
+  { date: '2026-09-10', change: "The note on the contact card is written for a card now rather than borrowed from the document, which cited a section number a stranger holding the card cannot resolve. It travels in the QR too, which took the code from 69 modules to 85 and the drawing from 320px to 380 so a module stays the same size." },
   { date: '2026-09-10', change: 'The phone row on the card was still labelled VALUE after 7.49 said it was fixed, because the diagnosis was wrong: that client does not read the VALUE parameter on TEL at all. Plain number now, no URI. Erratum 7.50.' },
   { date: '2026-09-10', change: 'The phone row on the contact card was labelled VALUE rather than mobile in a real address book, and two touchpoints both read as home page. The card now labels four. Erratum 7.49.' },
   { date: '2026-09-10', change: 'The author is CTO at Betopia Limited. The previous title, Head of Engineering and Delivery, stands in this appendix and in erratum 7.9 rather than being overwritten. Contact gains an organisation and a mobile number, the card gains the properties an address book files it by, and a QR at /scan/ carries it. Erratum 7.47.' },

@@ -107,13 +107,17 @@ Section: <a href="/#s14">14</a></div>
 
 <style>
   /*
-   * The code is capped rather than stretched. Past roughly 320px a 69 module
-   * grid gains nothing a camera can use, and on a phone it should still leave
-   * the caption visible without scrolling.
+   * The cap is set from the module count, not from taste.
+   *
+   * At 69 modules 320px was comfortable. Carrying the note took the code to 85,
+   * and holding the cap would have shrunk every module by a fifth, which is
+   * exactly the thing that makes a code fail on a phone held at an angle in a
+   * dim room. 380px keeps a module the same physical size as before. On a
+   * narrow screen the figure is bounded by the column anyway.
    */
   .qr {
     margin: 22px 0 0;
-    max-width: 320px;
+    max-width: 380px;
   }
   .qrbox {
     /* The quiet zone is inside the SVG, so the padding here is only visual

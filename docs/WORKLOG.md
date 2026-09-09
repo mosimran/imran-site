@@ -4537,3 +4537,39 @@ and then shipped a fix that had also never been looked at in the thing that disp
 by field, share card regenerated. Erratum 7.50, and the document is **-44**.
 
 **Deployed.** Pending merge.
+
+---
+
+## T52c, 2026-09-10: the note is written for a card now
+
+**What changed.** The card's note was the document's own line: "Systems carry numbers, arguments
+carry a confidence value, and Section 7 records what turned out to be wrong." It cites a section
+number that a stranger holding the card cannot resolve. A note on a contact card has one job, which
+is reminding somebody who you were three months later, and that one was written for a reader who
+already had the site open.
+
+Four options were offered and the owner chose the first person one. It says what he builds, in the
+nouns somebody would actually search an address book for, and then what he does with the results.
+
+**The note travels in the code now**, on his instruction, because `/scan/` is the route he actually
+hands people and a note that only reaches the few who download the file is a note almost nobody
+reads. It cost 158 bytes, which took the payload from 303 to 461 and the code from 69 modules to
+85. The drawing went from 320px to 380 with it, so a module stays the same physical size as before
+rather than shrinking by a fifth.
+
+**The QR check was measuring the wrong thing.** It rasterised every module to four pixels
+regardless of the page, which tested the geometry of the drawing and said nothing about whether the
+thing on screen can be read. It now renders at the size the browser is actually painting, times the
+device pixel ratio, at three viewports including a 390px phone, and asserts at least two device
+pixels per module. Currently 3.85 on desktop and 3.48 on a phone. Proven by shrinking the cap to
+120px, which drops it to 1.05 and stops jsQR decoding entirely.
+
+`NOTE` joined the field comparison between the code and the download. The download folds it across
+three lines at 75 octets and the code does not fold at all, so that assertion only passes if the
+unfolding reassembles exactly what the code carries. A fold that ate a space would fail it.
+
+**Validated.** `npm run check` exit 0, `check-qr` clean at three viewports, `mobile`, `visible`,
+`print` clean, a11y 0 errors on `/scan/` in both schemes, share card regenerated. The document
+is **-45**.
+
+**Deployed.** Pending merge.
