@@ -12,6 +12,13 @@
 // decodes to somebody else's details is not a pass.
 //
 // Run against a served build:  node scripts/check-qr.mjs [base]
+//
+// A served build, and not production. Decoding needs jsQR running in the page,
+// and the deployed CSP is `script-src` with one named host, so it refuses the
+// injected script and this fails with a CSP violation rather than a QR problem.
+// That refusal is the policy working. CI serves dist on localhost and runs it
+// there, which is where it belongs anyway: the point is to check the artifact
+// before it ships, not after.
 import { readFileSync, existsSync } from 'node:fs'
 import { chromium } from 'playwright'
 
