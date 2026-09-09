@@ -4471,3 +4471,32 @@ encoder by hand was considered and rejected, because a Reed-Solomon implementati
 wrong produces a code that looks correct and does not scan.
 
 **Deployed.** Pending merge.
+
+---
+
+## T52a, 2026-09-10: the card was correct and displayed wrong
+
+**What changed.** The owner opened the card that shipped this morning and the phone row was
+labelled **VALUE**. `TEL;TYPE="cell,voice,text";VALUE=uri:tel:...` is valid RFC 6350, and macOS
+Contacts does not accept a quoted comma list in `TYPE`, so it falls back to naming the last
+parameter it saw. It is `TEL;VALUE=uri;TYPE=cell:tel:...` now, one unquoted type with `TYPE` last,
+which closes both possibilities.
+
+The same look found the second thing: two bare `URL` lines both displayed as "home page". The card
+carries four labelled touchpoints now, grouped with the `itemN.` prefix from section 3.3 and named
+with `X-ABLabel`: Website, Code, Papers, CV. Clients that do not know the extension see four URL
+properties and ignore the labels. No feed-ranked platform handle is on the card, because Section 14
+says plainly those are not somewhere he publishes.
+
+**Three assertions added, each proven against the form that shipped.** `TYPE` is not a quoted list,
+`TYPE` is the last parameter, and every grouped URL has a matching label.
+
+**The point worth keeping.** `check-vcard.mjs` had eighteen assertions passing over a card whose
+most important row displayed the wrong word. Every one of them checked syntax and none of them
+checked what a reader would see. This is the same shape as the errata about checks confirming
+something adjacent to the claim, and the only thing that caught it was a person opening the file.
+
+**Validated.** `npm run check` exit 0, `check-qr` decodes in both schemes and still matches the card
+field by field, share card regenerated. Erratum 7.49, and the document is **-43**.
+
+**Deployed.** Pending merge.

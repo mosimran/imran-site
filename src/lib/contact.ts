@@ -45,6 +45,17 @@ export const contact = {
 /** "CTO, Betopia Limited". The masthead, Section 14 and the share card. */
 export const roleLine = `${contact.role}, ${contact.org}`
 
+/*
+ * Where to reach him professionally, in the order a stranger would want them.
+ * The card labels each one; the site publishes every one of them already.
+ */
+export const touchpoints: ReadonlyArray<readonly [string, string]> = [
+  ['Website', `${contact.site}/`],
+  ['Code', contact.code],
+  ['Papers', `${contact.site}/papers/`],
+  ['CV', `${contact.site}/cv/`],
+]
+
 /** "CTO at Betopia Limited". Inline prose: meta descriptions, alt text, llms.txt. */
 export const roleAt = `${contact.role} at ${contact.org}`
 
@@ -72,11 +83,36 @@ export function vcard(rev: Date): string {
     `TITLE:${esc(contact.role)}`,
     `ORG:${esc(contact.org)}`,
     `EMAIL;TYPE=work:${contact.email}`,
-    // RFC 6350 section 6.4.1 prefers a tel: URI over free text, because a
-    // number written as text is a number every client has to guess at.
-    `TEL;TYPE="cell,voice,text";VALUE=uri:tel:${contact.tel}`,
-    `URL:${contact.site}/`,
-    `URL;TYPE=code:${contact.code}`,
+    /*
+     * RFC 6350 section 6.4.1 prefers a tel: URI over free text, because a
+     * number written as text is a number every client has to guess at.
+     *
+     * The parameters are unquoted and TYPE comes last, which is not decoration.
+     * Written as TYPE="cell,voice,text";VALUE=uri this row appeared in macOS
+     * Contacts labelled **VALUE** rather than "mobile": that parser does not
+     * take the quoted comma list, and falls back to naming the last parameter
+     * it saw. One unquoted type, with TYPE in the final position, gives every
+     * client something it recognises in the place it looks.
+     */
+    `TEL;VALUE=uri;TYPE=cell:tel:${contact.tel}`,
+    /*
+     * The professional touchpoints, each one labelled.
+     *
+     * Two bare URL lines both showed as "home page" in macOS Contacts, which is
+     * what that client calls a URL it has no name for. The `itemN.` group prefix
+     * is ordinary vCard grouping from RFC 6350 section 3.3, and X-ABLabel is the
+     * extension Apple reads to name the row. A client that does not know the
+     * extension sees four URL properties and ignores the labels, which is the
+     * correct degradation.
+     *
+     * Everything here is a page this site already publishes. No handle on any
+     * feed-ranked platform appears, because Section 14 says plainly that those
+     * exist so people can reach him and are not somewhere he publishes.
+     */
+    ...touchpoints.flatMap(([label, url], i) => [
+      `item${i + 1}.URL:${url}`,
+      `item${i + 1}.X-ABLabel:${esc(label)}`,
+    ]),
     `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
     `TZ:${contact.tzOffset}`,
     `NOTE:${esc(contact.note)}`,
@@ -115,7 +151,7 @@ export function vcardCompact(): string {
     `N:${esc(contact.family)};${esc(contact.given)};;;`,
     `TITLE:${esc(contact.role)}`,
     `ORG:${esc(contact.org)}`,
-    `TEL;TYPE="cell,voice,text";VALUE=uri:tel:${contact.tel}`,
+    `TEL;VALUE=uri;TYPE=cell:tel:${contact.tel}`,
     `EMAIL;TYPE=work:${contact.email}`,
     `URL:${contact.site}/`,
     `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
