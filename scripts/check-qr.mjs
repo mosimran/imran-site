@@ -56,8 +56,22 @@ const results = {}
  * comment: if a future stylesheet reaches into the SVG, the dark run fails here
  * rather than in somebody's hand at a conference.
  */
-for (const scheme of ['light', 'dark']) {
-  const ctx = await browser.newContext({ colorScheme: scheme, viewport: { width: 900, height: 1200 } })
+/*
+ * Two viewports as well as two schemes, and the raster is taken at the size the
+ * code is actually displayed at rather than at a comfortable fixed multiple.
+ *
+ * The first version scaled every module to four pixels regardless of the page,
+ * which tested the geometry of the drawing and said nothing about whether the
+ * thing on screen can be read. When the note went into the payload the code went
+ * from 69 modules to 85, and on a 390px phone that is the difference this check
+ * exists to notice.
+ */
+for (const { scheme, width, label } of [
+  { scheme: 'light', width: 900, label: 'light desktop' },
+  { scheme: 'dark', width: 900, label: 'dark desktop' },
+  { scheme: 'light', width: 390, label: 'light phone  ' },
+]) {
+  const ctx = await browser.newContext({ colorScheme: scheme, viewport: { width, height: 1200 } })
   const page = await ctx.newPage()
   const resp = await page.goto(`${BASE}/scan/`, { waitUntil: 'load' })
   if (!resp || !resp.ok()) {
@@ -67,15 +81,16 @@ for (const scheme of ['light', 'dark']) {
   }
   await page.addScriptTag({ path: JSQR })
 
-  // Rasterise the code at 4 device pixels per module, which is roughly what a
-  // phone camera resolves holding a handset in front of a laptop screen.
+  // Rasterise at the size the browser is painting it, times the device pixel
+  // ratio. That is what a camera pointed at this screen would resolve.
   const out = await page.evaluate(async () => {
     const svg = document.querySelector('.qrbox svg')
     if (!svg) return { error: 'no svg found in .qrbox' }
     const box = svg.viewBox.baseVal
-    const scale = 4
-    const w = Math.round(box.width * scale)
-    const h = Math.round(box.height * scale)
+    const rect = svg.getBoundingClientRect()
+    const dpr = window.devicePixelRatio || 1
+    const w = Math.max(1, Math.round(rect.width * dpr))
+    const h = Math.max(1, Math.round(rect.height * dpr))
 
     const clone = svg.cloneNode(true)
     clone.setAttribute('width', String(w))
@@ -98,30 +113,38 @@ for (const scheme of ['light', 'dark']) {
     return {
       text: found ? found.data : null,
       modules: box.width,
+      // Device pixels per module, which is the number that decides whether a
+      // camera can resolve this. Below about 2 it starts to fail on real phones.
+      perModule: +(w / box.width).toFixed(2),
       corner: `rgb(${corner[0]},${corner[1]},${corner[2]})`,
     }
   })
 
   if (out.error) {
-    pass(`${scheme}: code present in the page`, false, out.error)
+    pass(`${label}: code present in the page`, false, out.error)
     await ctx.close()
     continue
   }
-  pass(`${scheme}: decodes`, Boolean(out.text), out.text ? `${out.text.length} chars` : 'jsQR returned nothing')
-  pass(`${scheme}: background is light`, out.corner === 'rgb(255,255,255)', out.corner)
-  results[scheme] = out.text
+  pass(`${label}: decodes`, Boolean(out.text),
+    out.text ? `${out.text.length} chars at ${out.perModule} device px per module` : 'jsQR returned nothing')
+  pass(`${label}: background is light`, out.corner === 'rgb(255,255,255)', out.corner)
+  // Two device pixels per module is the floor a camera can work with. Anything
+  // below it decodes here and fails in a hand.
+  pass(`${label}: modules are resolvable`, out.perModule >= 2, `${out.perModule} device px per module`)
+  results[label.trim()] = out.text
   await ctx.close()
 }
 await browser.close()
 
-const text = results.light
+const text = results['light desktop']
 if (!text) {
   console.error('\nqr check FAILED: nothing decoded, so nothing can be compared\n')
   process.exit(1)
 }
 
-pass('both schemes decode the same bytes', results.light === results.dark,
-  results.light === results.dark ? 'identical' : 'light and dark differ')
+pass('every viewport decodes the same bytes',
+  new Set(Object.values(results)).size === 1,
+  new Set(Object.values(results)).size === 1 ? 'identical' : 'they differ')
 
 // A phone parses this as a vCard, so it has to look like one.
 pass('decodes to a vCard', /^BEGIN:VCARD\r?\n/.test(text) && /END:VCARD\r?\n?$/.test(text),
@@ -134,8 +157,13 @@ const qrField = (name) =>
 /*
  * Field by field against the downloadable card. The QR is deliberately shorter,
  * so this checks the properties both carry rather than requiring equality.
+ *
+ * NOTE is the interesting one. The download folds it across three lines at 75
+ * octets and the code does not fold at all, so this comparison only passes if
+ * the unfolding above reassembles exactly what the code carries. A fold that
+ * ate a space or split a multi-byte character fails here.
  */
-for (const name of ['FN', 'N', 'TITLE', 'ORG', 'EMAIL', 'TEL', 'UID', 'ADR']) {
+for (const name of ['FN', 'N', 'TITLE', 'ORG', 'EMAIL', 'TEL', 'UID', 'ADR', 'NOTE']) {
   const a = qrField(name)
   const b = cardField(name)
   pass(`${name} matches the download`, Boolean(a) && a === b, a ? a.slice(0, 46) : '(absent from the code)')

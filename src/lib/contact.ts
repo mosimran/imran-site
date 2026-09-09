@@ -39,7 +39,20 @@ export const contact = {
   city: 'Dhaka',
   country: 'Bangladesh',
   tzOffset: '+06:00',
-  note: 'Systems carry numbers, arguments carry a confidence value, and Section 7 records what turned out to be wrong.',
+  /*
+   * Written for a card, not for a search engine.
+   *
+   * It used to read "Systems carry numbers, arguments carry a confidence value,
+   * and Section 7 records what turned out to be wrong." That is the document's
+   * own line and it is meaningless to somebody who has just scanned a code and
+   * has never seen the site: it cites a section number they cannot resolve.
+   *
+   * A note on a contact card has one job, which is reminding a stranger who you
+   * were three months later. So it says what he builds, in the nouns somebody
+   * would actually search their address book for, and then what he does with
+   * the results. First person, because a card is handed over by a person.
+   */
+  note: 'I build multi-tenant platforms that run in public cloud and inside air-gapped banks. I publish what they cost, what they broke, and what I got wrong.',
 } as const
 
 /** "CTO, Betopia Limited". The masthead, Section 14 and the share card. */
@@ -165,6 +178,17 @@ export function vcardCompact(): string {
     `EMAIL;TYPE=work:${contact.email}`,
     `URL:${contact.site}/`,
     `ADR;TYPE=work:;;;${esc(contact.city)};;;${esc(contact.country)}`,
+    /*
+     * The note travels in the code now, on the owner's instruction.
+     *
+     * It costs bytes and bytes cost modules, which is the trade: the code is
+     * denser and marginally harder to read in poor light. It is worth it here
+     * because /scan/ is the route he actually hands people, and a note that only
+     * reaches the few who download the file is a note almost nobody reads.
+     * scripts/check-qr.mjs decodes the rendered result, so the cost is measured
+     * rather than assumed.
+     */
+    `NOTE:${esc(contact.note)}`,
     `UID:${contact.site}/#person`,
     'END:VCARD',
   ]
